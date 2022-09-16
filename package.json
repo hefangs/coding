@@ -1,0 +1,17 @@
+{
+  "name": "technical-site",
+  "version": "1.0.0",
+  "main": "index.js",
+  "license": "MIT",
+  "scripts": {
+    "docs:dev": "vitepress dev docs",
+    "docs:build": "vitepress build docs",
+    "docs:serve": "vitepress serve docs --port 5000",
+    "deploy": "vitepress ./deploy.sh docs"
+  },
+  "devDependencies": {
+    "vitepress": "^1.0.0-alpha.4",
+    "vue": "^3.2.37",
+    "vuepress-plugin-sitemap": "^2.3.1"
+  }
+}
