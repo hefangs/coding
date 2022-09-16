@@ -49,11 +49,9 @@ function sidebarGuide() {
       text: "JavaScript",
       collapsible: true,
       items: [
-        { text: "Vue", link: "/guide/vue" },
-        { text: "React", link: "/guide/react" },
-        { text: "Vite", link: "/guide/vite" },
-        { text: "WebPack", link: "/guide/webpack" },
-        { text: "Test", link: "/guide/test" }
+        { text: "debounce", link: "/guide/javascript/debounce" },
+        { text: "throttle", link: "/guide/javascript/throttle" },
+        { text: "promise", link: "/guide/javascript/promise" }
       ]
     },
     {

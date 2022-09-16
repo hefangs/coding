@@ -4,7 +4,7 @@ layout: home
 h1: he
 
 hero:
-  name: coding-js
+  name: Coding
   text: 小何的笔记文档
   tagline: 记录笔记
   actions:
