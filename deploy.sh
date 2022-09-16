@@ -10,7 +10,7 @@ npm run docs:build
 cd docs/.vitepress/dist
 
 # 如果是发布到自定义域名
-# echo 'www.hefang.site' > CNAME
+echo 'www.hefang.site' > CNAME
 
 git init
 git add -A
@@ -18,8 +18,9 @@ git commit -m 'deploy'
 
 # 如果部署到 https://<USERNAME>.github.io
 # git push -f git@github.com:<USERNAME>/<USERNAME>.github.io.git master
+  git push -f git@github.com:hefangs/coding.git master:gh-pages
 
 # 如果发布到 https://<USERNAME>.github.io/<REPO>
-git push -f git@github.com:hefangs/he-blog.github.io.git main
+# git push -f git@github.com:hefangs/hefangs.github.io.git main:gh-pages
 
 cd -
