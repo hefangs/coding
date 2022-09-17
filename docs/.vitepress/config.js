@@ -52,6 +52,9 @@ function sidebarGuide() {
         { text: "debounce", link: "/guide/javascript/debounce" },
         { text: "throttle", link: "/guide/javascript/throttle" },
         { text: "promise", link: "/guide/javascript/promise" },
+        { text: "new", link: "/guide/javascript/new" },
+        { text: "unique", link: "/guide/javascript/unique" },
+        { text: "instanceof", link: "/guide/javascript/instanceof" },
         { text: "clone-deepClone", link: "/guide/javascript/clone-deepClone" }
       ]
     },
