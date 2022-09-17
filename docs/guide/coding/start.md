@@ -8,12 +8,13 @@
 
 
 ***
-![pic](../../public/notice.png "notice")
+![pic](https://kmcha.com/text2image/%E6%AF%8F%E5%A4%A9%E5%9D%9A%E6%8C%81 "notice")
 
 ***
-![pic](../../public/notice.png "notice")
+![pic](https://kmcha.com/text2image/%E6%AF%8F%E5%A4%A9%E5%9D%9A%E6%8C%81 "notice")
 ***
-![pic](../../public/notice.png "notice")
+![pic](https://kmcha.com/text2image/%E6%AF%8F%E5%A4%A9%E5%9D%9A%E6%8C%81 "notice")
+
 ***
 
 
