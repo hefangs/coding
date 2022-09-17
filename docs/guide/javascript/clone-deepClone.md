@@ -1,5 +1,3 @@
-
-
  # clone和deepClone
 
 ## 浅拷贝
@@ -16,6 +14,7 @@ function clone(obj) {
 }
 ```
 ## 浅拷贝的实现方式：
+
 ## 1.`Object.assign()`
   Object.assign()方法可以把任意多个的源对象自身的可枚举属性拷贝给目标对象，然后返回目标对象
 ```js
