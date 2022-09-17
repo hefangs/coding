@@ -135,9 +135,6 @@ Promise.prototype.catch = function(errCallback){
 // 如果有一个失败则失败,全部成功则成功
 Promise.all = function(arr){
   return new Promise((resolve,reject) => {
-    if(typeof arr !== function){
-      reject(error)
-    }
     if(arr.length === 0){
       resolve([])
     }else{
@@ -179,9 +176,6 @@ Promise.prototype.finally = function(callback){
 // race用来处理多个请求，采用最快的（谁先完成用谁的）
 Promise.finally = function(arr){
   return new Promise((resolve, reject) => {
-    if(typeof arr !== 'function'){
-      reject(error)
-    }
     if(arr.length === 0){
       resolve([])
     }else{

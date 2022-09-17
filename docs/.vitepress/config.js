@@ -51,7 +51,8 @@ function sidebarGuide() {
       items: [
         { text: "debounce", link: "/guide/javascript/debounce" },
         { text: "throttle", link: "/guide/javascript/throttle" },
-        { text: "promise", link: "/guide/javascript/promise" }
+        { text: "promise", link: "/guide/javascript/promise" },
+        { text: "clone&deepClone", link: "/guide/javascript/clone&deepClone" }
       ]
     },
     {
