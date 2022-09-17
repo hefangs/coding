@@ -11,13 +11,13 @@ export default {
       "link",
       {
         rel: "icon",
-        href: "https://user-images.githubusercontent.com/499550/93624428-53932780-f9ae-11ea-8d16-af949e16a09f.png"
+        href: "../public/one-price.png"
       }
     ]
   ],
   themeConfig: {
     siteTitle: "he",
-    logo: "https://user-images.githubusercontent.com/499550/93624428-53932780-f9ae-11ea-8d16-af949e16a09f.png",
+    logo: "../public/one-price.png",
     sidebar: {
       "/guide/": sidebarGuide()
     },
@@ -43,7 +43,7 @@ function sidebarGuide() {
     {
       text: "Coding",
       collapsible: true,
-      items: [{ text: "get-start", link: "/guide/coding/start" }]
+      items: [{ text: "start", link: "/guide/coding/start" }]
     },
     {
       text: "JavaScript",
