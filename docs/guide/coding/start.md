@@ -1,5 +1,20 @@
-# 介绍
-## 写在前面：
+
+
+ # 介绍
+## 写在前面
 
 - 之前一直在`hexo`写笔记，后面node升级版本太高，`hexo`不支持，就放弃了。
 - 现在换到`vitepress`了，这里只是做一个自己学习记录的过程。
+
+
+***
+![pic](../../public/notice.png "notice")
+
+***
+![pic](../../public/notice.png "notice")
+***
+![pic](../../public/notice.png "notice")
+***
+
+
+
