@@ -59,8 +59,8 @@
 - 设置git用户信息
 
   ~~~shell
-  git config user.name "gaojianghua"
-  git config user.email "G598670138@163.com"
+  git config user.name "何方"
+  git config user.email "he529564582@163.com"
   ~~~
 
 -  显示当前分支的版本历史
