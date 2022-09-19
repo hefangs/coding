@@ -52,7 +52,7 @@ let arr2 = arr1.slice()
 function deepClone(obj){
   let target
   if(typeof obj !== Object){
-    throw new Error("Object must be an Object!")
+    throw new Error("obj must be an Object!")
   }
   if(typeof obj === Object){
     for(key in obj){
