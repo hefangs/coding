@@ -30,11 +30,11 @@ Function.prototype.myCall = function (context,...args){
 测试：
 ```js
 let year = 2021
-  obj = {
-    year: 2022
-  }
-  const getDate = function (month,day) {
-    return `${this.year}-${month}-${day}`
+obj = {
+  year: 2022
+}
+const getDate = function (month,day) {
+  return `${this.year}-${month}-${day}`
 }
 console.log(getDate.call(obj,7,9)) // 2022-7-9
 console.log(getDate.myCall(obj,9,19)) // 2022-9-19
@@ -64,11 +64,11 @@ Function.prototype.myApply = function (context,args){
 测试：
 ```js
 let year = 2021
-  obj = {
-    year: 2022
-  }
-  const getDate = function (month,day) {
-    return `${this.year}-${month}-${day}`
+obj = {
+  year: 2022
+}
+const getDate = function (month,day) {
+  return `${this.year}-${month}-${day}`
 }
 console.log(getDate.apply(obj, [7,9]))    // 2022-7-9
 console.log(getDate.myApply(obj, [9,19]))  // 2022-9-19
@@ -100,11 +100,11 @@ Function.prototype.myBind = function (context,...args1) {
 测试：
 ```js
 let year = 2021
-  obj = {
-    year: 2022
-  }
-  const getDate = function (month,day) {
-    return `${this.year}-${month}-${day}`
+obj = {
+  year: 2022
+}
+const getDate = function (month,day) {
+  return `${this.year}-${month}-${day}`
 }
 console.log(getDate.bind(obj)(7,9)) // 2022-7-9
 console.log(getDate.myBind(obj)(9,19)) // 2022-9-19
