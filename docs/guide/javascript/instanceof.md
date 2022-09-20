@@ -16,12 +16,12 @@ function myInstanceOf(a,b) = {
   if(typeof a !== 'object' || a === "null") return false
   if(typeof b ！== "function" ) {
     throw new Error("b must be function")
-    let __proto__ = a.__proto__
+    let proto = a.__proto__
     let prototype = b.prototype
     while (true) {
-      if(__proto__ === null) return false
-      if(__proto__ === prototype) return true
-      __proto__ = __proto__.__proto__
+      if(proto === null) return false
+      if(proto === prototype) return true
+      proto = proto.__proto__
     }
   }
 }
