@@ -57,7 +57,8 @@ function sidebarGuide() {
         { text: "instanceof", link: "/guide/javascript/instanceof" },
         { text: "clone-deepClone", link: "/guide/javascript/clone-deepClone" },
         { text: "call-apply-bind", link: "/guide/javascript/call-apply-bind.md" },
-        { text: "extends", link: "/guide/javascript/extends" }
+        { text: "extends", link: "/guide/javascript/extends" },
+        { text: "draggingDiv", link: "/guide/javascript/draggingDiv" }
       ]
     },
     {
