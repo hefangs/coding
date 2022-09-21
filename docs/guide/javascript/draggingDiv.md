@@ -24,14 +24,14 @@ newDiv.addEventListener("mousedown", e => {
 })
 document.addEventListener("mousemove", e => {
   if (dragging) {
-    const x = e.pageX
-    const y = e.pageY
+    let x = e.pageX
+    let y = e.pageY
     // console.log(e.pageX, e.pageY, "===>移动位置")
-    const deltaX = x - position[0]
-    const deltaY = y - position[1]
+    let deltaX = x - position[0]
+    let deltaY = y - position[1]
     // console.log(deltaX, deltaY, "===>位移距离")
-    const left = parseInt(newDiv.style.left || 0)
-    const top = parseInt(newDiv.style.top || 0)
+    let left = parseInt(newDiv.style.left || 0)
+    let top = parseInt(newDiv.style.top || 0)
     // console.log(left, top, "===>left,top")
     newDiv.style.left = left + deltaX + "px"
     newDiv.style.top = top + deltaY + "px"
