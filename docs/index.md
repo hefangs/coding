@@ -6,11 +6,11 @@ h1: he
 hero:
   name: Coding
   text: 小何的笔记文档
-  tagline: 记录笔记
+  tagline: 记录一些笔记
   actions:
     - theme: brand
       text: 快速开始
-      link: /guide/coding/start
+      link: /post/coding/start
 head:
   - - meta
     - name: keywords

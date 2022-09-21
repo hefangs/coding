@@ -19,7 +19,7 @@ export default {
     siteTitle: "he",
     logo: "https://user-images.githubusercontent.com/499550/93624428-53932780-f9ae-11ea-8d16-af949e16a09f.png",
     sidebar: {
-      "/guide/": sidebarGuide()
+      "/post/": sidebarpost()
     },
     socialLinks: [{ icon: "github", link: "https://github.com/hefangs" }],
     footer: {
@@ -38,36 +38,36 @@ export default {
   }
 }
 
-function sidebarGuide() {
+function sidebarpost() {
   const menus = [
     {
       text: "Coding",
       collapsible: true,
-      items: [{ text: "start", link: "/guide/coding/start" }]
+      items: [{ text: "start", link: "/post/coding/start" }]
     },
     {
       text: "JavaScript",
       collapsible: true,
       items: [
-        { text: "debounce", link: "/guide/javascript/debounce" },
-        { text: "throttle", link: "/guide/javascript/throttle" },
-        { text: "promise", link: "/guide/javascript/promise" },
-        { text: "new", link: "/guide/javascript/new" },
-        { text: "unique", link: "/guide/javascript/unique" },
-        { text: "instanceof", link: "/guide/javascript/instanceof" },
-        { text: "clone-deepClone", link: "/guide/javascript/clone-deepClone" },
-        { text: "call-apply-bind", link: "/guide/javascript/call-apply-bind.md" },
-        { text: "extends", link: "/guide/javascript/extends" },
-        { text: "draggingDiv", link: "/guide/javascript/draggingDiv" }
+        { text: "debounce", link: "/post/javascript/debounce" },
+        { text: "throttle", link: "/post/javascript/throttle" },
+        { text: "promise", link: "/post/javascript/promise" },
+        { text: "new", link: "/post/javascript/new" },
+        { text: "unique", link: "/post/javascript/unique" },
+        { text: "instanceof", link: "/post/javascript/instanceof" },
+        { text: "clone-deepClone", link: "/post/javascript/clone-deepClone" },
+        { text: "call-apply-bind", link: "/post/javascript/call-apply-bind.md" },
+        { text: "extends", link: "/post/javascript/extends" },
+        { text: "draggingDiv", link: "/post/javascript/draggingDiv" }
       ]
     },
     {
       text: "Tools",
       collapsible: true,
       items: [
-        { text: "Nvm", link: "/guide/tools/nvm" },
-        { text: "PM2", link: "/guide/tools/pm2" },
-        { text: "Git", link: "/guide/tools/git" }
+        { text: "Nvm", link: "/post/tools/nvm" },
+        { text: "PM2", link: "/post/tools/pm2" },
+        { text: "Git", link: "/post/tools/git" }
       ]
     }
   ]
