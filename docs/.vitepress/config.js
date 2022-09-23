@@ -57,7 +57,8 @@ function sidebarpost() {
         { text: "clone-deepClone", link: "/post/javascript/clone-deepClone" },
         { text: "call-apply-bind", link: "/post/javascript/call-apply-bind.md" },
         { text: "extends", link: "/post/javascript/extends" },
-        { text: "draggingDiv", link: "/post/javascript/draggingDiv" }
+        { text: "draggingDiv", link: "/post/javascript/draggingDiv" },
+        { text: "lazyLoad", link: "/post/javascript/lazyLoad" }
       ]
     },
     {

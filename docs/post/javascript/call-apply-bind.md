@@ -37,7 +37,7 @@ const getDate = function (month,day) {
   return `${this.year}-${month}-${day}`
 }
 console.log(getDate.call(obj,7,9)) // 2022-7-9
-console.log(getDate.myCall(obj,9,19)) // 2022-9-19
+console.log(getDate.myCall(obj,7,9)) // 2022-7-9
 ```
 
 ## apply
@@ -71,7 +71,7 @@ const getDate = function (month,day) {
   return `${this.year}-${month}-${day}`
 }
 console.log(getDate.apply(obj, [7,9]))    // 2022-7-9
-console.log(getDate.myApply(obj, [9,19]))  // 2022-9-19
+console.log(getDate.myApply(obj, [7,9]))  // 2022-7-9
 ```
 
 ## bind
@@ -107,5 +107,5 @@ const getDate = function (month,day) {
   return `${this.year}-${month}-${day}`
 }
 console.log(getDate.bind(obj)(7,9)) // 2022-7-9
-console.log(getDate.myBind(obj)(9,19)) // 2022-9-19
+console.log(getDate.myBind(obj)(7,9)) // 2022-7-9
 ```
