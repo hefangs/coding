@@ -150,13 +150,16 @@ class Person {
     this.age = age
   }
   run () {
-     console.log(`学生信息: ${this.name}-${this.age}-${this.sex}`)
+     console.log(`学生信息: ${this.name}-${this.age}`)
   }
 }
 class Student extends Person {
   constructor (name,age,sex) {
     super(name,age)
     this.sex = sex
+  }
+  run(){
+    console.log(`学生信息: ${this.name}-${this.age}-${this.sex}`)
   }
 }
 var s1 = new Student('张三',20,'男')
