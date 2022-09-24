@@ -28,12 +28,24 @@
 ```
 ## 3.找出数组中重复出现过的元素
 ```js
-  function repeat(arr) {
-    let res =  arr.filter((item,index,array) =>{
-      return array.indexOf(item) === index && array.lastIndexOf(item) !==index
+function repeat(arr) {
+  let res =  arr.filter((item,index,array) =>{
+    return array.indexOf(item) === index && array.lastIndexOf(item) !==index
+  })
+  return res
+}
+let arr = [1,2,3,1,2,4]
+repeat(arr) //[1,2]
+```
+
+## 4.数组展平
+```js
+function flatten(arr) {
+  return [].concat(...arr.map(item =>{
+    return Array.isArray(item) ? flatten(item) : item
     })
-    return res
-  }
-  let arr = [1,2,3,1,2,4]
-  repeat(arr) 
+  )
+}
+let arr = [[1, 2], 3, [[[4], 5]]]
+flatten(arr) // [1, 2, 3, 4, 5]
 ```
