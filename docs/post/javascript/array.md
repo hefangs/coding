@@ -26,3 +26,14 @@
   let arr = [1,2,3,1,2,4]
   unique(arr) // [1, 2, 3, 4]
 ```
+## 3.找出数组中重复出现过的元素
+```js
+  function repeat(arr) {
+    let res =  arr.filter((item,index,array) =>{
+      return array.indexOf(item) === index && array.lastIndexOf(item) !==index
+    })
+    return res
+  }
+  let arr = [1,2,3,1,2,4]
+  repeat(arr) 
+```
