@@ -52,7 +52,7 @@ function sidebarpost() {
         { text: "throttle", link: "/post/javascript/throttle" },
         { text: "promise", link: "/post/javascript/promise" },
         { text: "new", link: "/post/javascript/new" },
-        { text: "unique", link: "/post/javascript/unique" },
+        { text: "array", link: "/post/javascript/array" },
         { text: "instanceof", link: "/post/javascript/instanceof" },
         { text: "clone-deepClone", link: "/post/javascript/clone-deepClone" },
         { text: "call-apply-bind", link: "/post/javascript/call-apply-bind.md" },
