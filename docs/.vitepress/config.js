@@ -58,7 +58,8 @@ function sidebarpost() {
         { text: "call-apply-bind", link: "/post/javascript/call-apply-bind.md" },
         { text: "extends", link: "/post/javascript/extends" },
         { text: "draggingDiv", link: "/post/javascript/draggingDiv" },
-        { text: "lazyLoad", link: "/post/javascript/lazyLoad" }
+        { text: "lazyLoad", link: "/post/javascript/lazyLoad" },
+        { text: "sort", link: "/post/javascript/sort" }
       ]
     },
     {
