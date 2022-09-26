@@ -10,13 +10,13 @@ export default {
       "link",
       {
         rel: "icon",
-        href: "https://user-images.githubusercontent.com/499550/93624428-53932780-f9ae-11ea-8d16-af949e16a09f.png"
+        href: "../assets/one-price.png"
       }
     ]
   ],
   themeConfig: {
     siteTitle: "he",
-    logo: "https://user-images.githubusercontent.com/499550/93624428-53932780-f9ae-11ea-8d16-af949e16a09f.png",
+    logo: "../assets/one-price.png",
     sidebar: {
       "/post/": sidebarpost()
     },
