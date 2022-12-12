@@ -22,6 +22,9 @@ head:
     - http-equiv: x-dns-prefetch-control
       content: on
   - - meta
+    - http-equiv: Content-Security-Policy
+      content: upgrade-insecure-requests
+  - - meta
     - http-equiv: cache-control
       content: no-cache
 features:
