@@ -68,7 +68,7 @@ function sidebarpost() {
       items: [{ text: 'Git', link: '/post/tools/git' }]
     },
     {
-      text: 'Interviews',
+      text: 'Interview',
       collapsible: true,
       items: [{ text: 'update-20221212', link: '/post/interview/update-20221212' }]
     }
