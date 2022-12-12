@@ -65,11 +65,12 @@ function sidebarpost() {
     {
       text: 'Tools',
       collapsible: true,
-      items: [
-        { text: 'Nvm', link: '/post/tools/nvm' },
-        { text: 'PM2', link: '/post/tools/pm2' },
-        { text: 'Git', link: '/post/tools/git' }
-      ]
+      items: [{ text: 'Git', link: '/post/tools/git' }]
+    },
+    {
+      text: 'Interviews',
+      collapsible: true,
+      items: [{ text: 'update-20221212', link: '/post/interview/update-20221212' }]
     }
   ]
   return menus
