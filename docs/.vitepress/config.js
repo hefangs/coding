@@ -63,14 +63,14 @@ function sidebarpost() {
       ]
     },
     {
+      text: 'Interview',
+      collapsible: true,
+      items: [{ text: 'updated-20221212', link: '/post/interview/updated-20221212' }]
+    },
+    {
       text: 'Tools',
       collapsible: true,
       items: [{ text: 'Git', link: '/post/tools/git' }]
-    },
-    {
-      text: 'Interview',
-      collapsible: true,
-      items: [{ text: 'update-20221212', link: '/post/interview/update-20221212' }]
     }
   ]
   return menus
