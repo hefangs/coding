@@ -69,4 +69,10 @@
   git log
   ~~~
 
-  
+-  删除本地文件已关联的远程仓库并创建新连接
+
+  ~~~shell
+    sudo rm -rf .git 
+    git remote -v
+    git remote remove origin
+  ~~~
