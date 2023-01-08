@@ -76,3 +76,10 @@
     git remote -v
     git remote remove origin
   ~~~
+
+-  关联远程仓库
+
+  ~~~shell
+    git  init
+    git remote add origin xxx
+  ~~~
