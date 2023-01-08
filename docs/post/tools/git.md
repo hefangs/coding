@@ -80,6 +80,6 @@
 -  关联远程仓库
 
   ~~~shell
-    git  init
+    git init
     git remote add origin xxx
   ~~~
