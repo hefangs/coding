@@ -29,7 +29,7 @@
 - 建立远程仓库连接
 
   ~~~shell
-  git remote add origin https://gitee.com/***/a.git
+  git remote add origin  https://gitee.com/***/a.git
   ~~~
 
 - 删除远程仓库关联
@@ -47,7 +47,7 @@
 - 克隆远程仓库项目到本地
 
   ~~~shell
-  git clone https://gitee.com/***/a.git
+  git  clone https://gitee.com/***/a.git
   ~~~
 
 - 查看当前git配置信息
@@ -66,7 +66,7 @@
 -  显示当前分支的版本历史
 
   ~~~shell
-  git log
+  git log  
   ~~~
 
 -  删除本地文件已关联的远程仓库并创建新连接
