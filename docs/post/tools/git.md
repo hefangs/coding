@@ -47,7 +47,7 @@
 - 克隆远程仓库项目到本地
 
   ~~~shell
-  git  clone https://gitee.com/***/a.git
+  git clone https://gitee.com/***/a.git
   ~~~
 
 - 查看当前git配置信息
