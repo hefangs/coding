@@ -14,30 +14,26 @@
 ## promise
 ```js
 // promise
-const PENDING = "PENDING"
-const FULFILLED = "FULFILLED"
-const REJECTED = "REJECTED"
-class Promise {
-  constructor(executor)
-  this.promiseState = "PENDING"
-  this.promiseResult = undefined
-  this.reason = undefined
-  let resolve = data => {
-    if(this.promiseState == "PENDING"){
-      this.promiseState = "FULFILLED"
-      this.promiseResult = data
+function Promise(executor){
+  this.promiseState === 'pending'
+  this.promiseResult === 'null'
+  const self = this
+  function resolve(data){
+    if(self.promiseState === 'pending'){
+      self.promiseState ==='fulfilled'
+      self.promiseResult = data
     }
   }
-  let reject = reason => {
-    if(this.promiseState = "PENDING"){
-      this.promiseState = "REJECTED"
-      this.reason = reason
+  function reject(data){
+      if(self.promiseState === 'pending'){
+      self.promiseState ==='reject'
+      self.promiseResult = data
     }
   }
-  try {
-    executor(this.resolve, this.reject)
-  } catch (error) {
-    reject(error)
+  try{
+    executor(resolve,reject)
+  }
+  catch(e){
   }
 }
 ```
@@ -47,11 +43,11 @@ class Promise {
 class Promise{
     ......
   then(onResolved, onRejected) {
-    if(this.promiseState === "FULFILLED"){
+    if(this.promiseState === "fulfilled"){
       onResolved(this.promiseResult)
     }
-    if(this.promiseState === "REJECTED"){
-      onRejected(this.reason)
+    if(this.promiseState === "rejected"){
+      onRejected(this.promiseResult)
     }
   }
 }
@@ -88,10 +84,10 @@ class Promise{
     }
   }
   then(onResolved, onRejected) {
-    if(this.promiseState === "FULFILLED"){
+    if(this.promiseState === "fulfilled"){
       onResolved(this.promiseResult)
-    }else if(this.promiseState === "REJECTED"){
-      onRejected(this.reason)
+    }else if(this.promiseState === "rejected"){
+      onRejected(this.promiseResult)
     }else{
 // 如果promise的状态是 PENDING，需要将 onResolved 和 onRejected函数存放起来
       this.onResolvedCallbacks.push(() => {
