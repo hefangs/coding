@@ -15,18 +15,18 @@
 ```js
 // promise
 function Promise(executor){
-  this.promiseState === 'pending'
-  this.promiseResult === 'null'
+  this.promiseState = 'pending'
+  this.promiseResult = 'null'
   const self = this
   function resolve(data){
     if(self.promiseState === 'pending'){
-      self.promiseState ==='fulfilled'
+      self.promiseState ='fulfilled'
       self.promiseResult = data
     }
   }
   function reject(data){
       if(self.promiseState === 'pending'){
-      self.promiseState ==='reject'
+      self.promiseState ='rejected'
       self.promiseResult = data
     }
   }
