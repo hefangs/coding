@@ -105,7 +105,15 @@ class Promise{
 // resolve方法用来生成一个直接处于FULFILLED状态的Promise
 Promise.resolve = function(data){
   return new Promise((resolve,reject) => {
-    resolve(data)
+    if(value instanceof Promise){
+      value.then(v=>{
+        resolve(v)
+      },r=>{
+        reject(r)
+      })
+    }else{
+      resolve(value)
+    }
   })
 }
 ```
