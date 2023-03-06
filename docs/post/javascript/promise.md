@@ -103,13 +103,15 @@ class Promise{
 ## resolve方法
 ```js
 // resolve方法用来生成一个直接处于FULFILLED状态的Promise
-Promise.resolve = function(data){
+// 对于传入的数据需要判断是不是promise，如果是则正常流程走
+// 如果不是表示则返回的是一个成功的promise
+Promise.resolve = function(value){
   return new Promise((resolve,reject) => {
     if(value instanceof Promise){
-      value.then(v=>{
-        resolve(v)
-      },r=>{
-        reject(r)
+      value.then((value)=>{
+        resolve(value)
+      },err=>{
+        reject(err)
       })
     }else{
       resolve(value)
@@ -129,8 +131,8 @@ Promise.reject = function(reason){
 ## catch方法
 ```js
 // catch方法用来捕获promise的异常，就相当于一个没有成功的then
-Promise.prototype.catch = function(errCallback){
-  return this.then(null,errCallback)
+Promise.prototype.catch = function(onRejected){
+  return this.then(null,onRejected)
 }
 ```
 ## all方法
@@ -164,11 +166,11 @@ Promise.all = function(promiseAll){
 ```js
 // 不管是resolve还是reject都会调用finally方法
 Promise.prototype.finally = function(callback){
-  return this.then(value => {
+  return this.then((value) => {
     callback()
     return value
   }),
-  err => {
+  (err) => {
     callback()
     throw err
   }
