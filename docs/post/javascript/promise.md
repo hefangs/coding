@@ -177,18 +177,17 @@ Promise.prototype.finally = function(callback){
 ## race方法
 ```js
 // race用来处理多个请求，采用最快的（谁先完成用谁的）
-Promise.finally = function(arr){
+Promise.race = function(promiseRace){
   return new Promise((resolve, reject) => {
-    if(arr.length === 0){
+    if(promiseRace.length === 0){
       resolve([])
     }else{
-      for(let i = 0; i < arr.length; i++) {
-        Promise.resolve(arr[i])
-        .then(data => {
-          resolve(data)
+      for(let i = 0; i < promiseRace.length; i++) {
+       promiseRace[i].then((value) => {
+          resolve(value)
         })
-      }.catch(error => {
-        reject(error)
+      }.catch((reason) => {
+        reject(reason)
       })
     }
   })
