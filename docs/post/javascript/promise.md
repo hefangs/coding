@@ -137,20 +137,19 @@ Promise.prototype.catch = function(errCallback){
 ```js
 // all方法多个异步并发获取最终的结果
 // 如果有一个失败则失败,全部成功则成功
-Promise.all = function(arr){
+Promise.all = function(promiseAll){
   return new Promise((resolve,reject) => {
-    if(arr.length === 0){
+    let arr = []
+    let count = 0
+    if(promiseAll.length === 0){
       resolve([])
     }else{
-      let res = []
-      let count = 0
-      for(let i = 0; i < arr.length; i++) {
-        Promise.resolve(arr[i])
-        .then(data =>{
-          res[i] = data
+      for(let i = 0; i < promiseAll.length; i++) {
+        promiseAll[i].then((value) =>{
+          arr[i] = value
           count += 1
-          if(count === arr.length){
-            resolve(res)
+          if(count === promiseAll.length){
+            resolve(arr)
           }
         })
         .catch(error =>{
