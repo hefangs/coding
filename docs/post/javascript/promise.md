@@ -9,7 +9,7 @@
 - `pending`为初始态，并可以转化为`fulfilled`和`rejected`,
 - 成功时，不可转为其他状态，且必须有一个不可改变的值（`value`）
 - 失败时，不可转为其他状态，且必须有一个不可改变的原因（`reason`）
-- 若是`executor`函数报错 直接执行`reject`);
+- 若是`executor`函数报错 直接执行`reject`;
 
 ## promise
 ```js
@@ -24,10 +24,10 @@ function Promise(executor){
       self.promiseResult = data
     }
   }
-  function reject(data){
+  function reject(reason){
       if(self.promiseState === 'pending'){
       self.promiseState ='rejected'
-      self.promiseResult = data
+      self.promiseResult = reason
     }
   }
   try{
@@ -59,8 +59,8 @@ class Promise{
 class Promise{
   constructor(executor){
     this.promiseResult = "PENDING"
-    this.promiseResult = undefined
-    this.reason = undefined
+    this.promiseResult = null
+    this.reason = null
     this.onResolvedCallbacks = [] // 存放成功的回调
     this.onRejectedCallbacks = [] // 存放失败的回调
     let resolve = data => {
@@ -107,7 +107,7 @@ class Promise{
 // 如果不是表示则返回的是一个成功的promise
 Promise.resolve = function(value){
   return new Promise((resolve,reject) => {
-    if(value instanceof Promise){
+    if(value instanceOf Promise){
       value.then((value)=>{
         resolve(value)
       },err=>{
@@ -188,8 +188,8 @@ Promise.race = function(promiseRace){
        promiseRace[i].then((value) => {
           resolve(value)
         })
-      }.catch((reason) => {
-        reject(reason)
+      }.catch((e) => {
+        reject(e)
       })
     }
   })
