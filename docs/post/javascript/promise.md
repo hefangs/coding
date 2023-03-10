@@ -55,7 +55,7 @@ class Promise{
 ```js
 // then 第二种：
 //当promise去调用then方法时，当前的promise一直处于pending状态，
-//我们需要先将成功和失败的回调分别存放起来,触发resolve或reject,依次调用成功或失败的回调
+//我们需要先将成功和失败的回调分别存放起来,触发resolve或reject,依次调用成功或失败的回调 
 class Promise{
   constructor(executor){
     this.promiseResult = "PENDING"
