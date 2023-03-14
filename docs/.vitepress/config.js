@@ -55,17 +55,26 @@ function sidebarpost() {
         { text: 'array', link: '/post/javascript/array' },
         { text: 'instanceof', link: '/post/javascript/instanceof' },
         { text: 'clone-deepClone', link: '/post/javascript/clone-deepClone' },
-        { text: 'call-apply-bind', link: '/post/javascript/call-apply-bind.md' },
+        {
+          text: 'call-apply-bind',
+          link: '/post/javascript/call-apply-bind.md'
+        },
         { text: 'extends', link: '/post/javascript/extends' },
         { text: 'draggingDiv', link: '/post/javascript/draggingDiv' },
         { text: 'lazyLoad', link: '/post/javascript/lazyLoad' },
-        { text: 'sort', link: '/post/javascript/sort' }
+        { text: 'sort', link: '/post/javascript/sort' },
+        {
+          text: 'Symbol.iterator',
+          link: '/post/javascript/对象新增Symbol.iterator'
+        }
       ]
     },
     {
       text: 'Interview',
       collapsible: true,
-      items: [{ text: 'updated-20221212', link: '/post/interview/updated-20221212' }]
+      items: [
+        { text: 'updated-20221212', link: '/post/interview/updated-20221212' }
+      ]
     },
     {
       text: 'Tools',
