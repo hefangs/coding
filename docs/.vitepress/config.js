@@ -40,33 +40,41 @@ export default {
 function sidebarpost() {
   const menus = [
     {
-      text: 'Coding',
+      text: 'At',
       collapsible: true,
-      items: [{ text: 'start', link: '/post/coding/start' }]
+      items: [{ text: 'start', link: '/post/at/start' }]
     },
     {
-      text: 'JavaScript',
+      text: 'Coding',
       collapsible: true,
       items: [
-        { text: 'debounce', link: '/post/javascript/debounce' },
-        { text: 'throttle', link: '/post/javascript/throttle' },
-        { text: 'promise', link: '/post/javascript/promise' },
-        { text: 'new', link: '/post/javascript/new' },
-        { text: 'array', link: '/post/javascript/array' },
-        { text: 'instanceof', link: '/post/javascript/instanceof' },
-        { text: 'clone-deepClone', link: '/post/javascript/clone-deepClone' },
+        { text: 'debounce', link: '/post/coding/debounce' },
+        { text: 'throttle', link: '/post/coding/throttle' },
+        { text: 'promise', link: '/post/coding/promise' },
+        { text: 'new', link: '/post/coding/new' },
+        { text: 'array', link: '/post/coding/array' },
+        { text: 'instanceof', link: '/post/coding/instanceof' },
+        { text: 'clone-deepClone', link: '/post/coding/clone-deepClone' },
         {
           text: 'call-apply-bind',
-          link: '/post/javascript/call-apply-bind.md'
+          link: '/post/coding/call-apply-bind.md'
         },
-        { text: 'extends', link: '/post/javascript/extends' },
-        { text: 'draggingDiv', link: '/post/javascript/draggingDiv' },
-        { text: 'lazyLoad', link: '/post/javascript/lazyLoad' },
-        { text: 'sort', link: '/post/javascript/sort' },
+        { text: 'extends', link: '/post/coding/extends' },
+        { text: 'draggingDiv', link: '/post/coding/draggingDiv' },
+        { text: 'lazyLoad', link: '/post/coding/lazyLoad' },
+        { text: 'sort', link: '/post/coding/sort' },
         {
           text: 'Symbol.iterator',
-          link: '/post/javascript/对象新增Symbol.iterator'
+          link: '/post/coding/对象新增Symbol.iterator'
         }
+      ]
+    },
+    {
+      text: 'Vue',
+      collapsible: true,
+      items: [
+        { text: 'vue2.0', link: '/post/vue/vue2.0' },
+        { text: 'vue3.0', link: '/post/vue/vue3.0' }
       ]
     },
     {
