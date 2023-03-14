@@ -178,7 +178,7 @@ Promise.prototype.finally = function(callback){
 ```
 ## race方法
 ```js
-// race用来处理多个请求，采用最快的（谁先完成用谁的）
+//  race用来处理多个请求，采用最快的（谁先完成用谁的）
 Promise.race = function(promiseRace){
   return new Promise((resolve, reject) => {
     if(promiseRace.length === 0){
