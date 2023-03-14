@@ -16,7 +16,7 @@ for(let [key,value] of entries){
   console.log(value) // 1 2 3
 }
 ```
-## 对象能够使用 for...of 循环遍历，可以通过在对象上增加 Symbol.iterator 属性来实现
+## Symbol.iterator
 ```js
 const obj={
   a:1,
