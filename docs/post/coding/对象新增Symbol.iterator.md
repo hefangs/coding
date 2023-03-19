@@ -1,7 +1,7 @@
 
 # 让一个对象能够使用 for...of 循环遍历
 ## Object.values()
-```js
+```javascript
 const obj = {a:1,b:2,c:3}
 const values= Object.values(obj)
 for(let value of values){
@@ -9,7 +9,7 @@ for(let value of values){
 }
 ```
 ## Object.entries()
-```js
+```javascript
 const obj = {a:1,b:2,c:3}
 const entries = Object.entries(obj)
 for(let [key,value] of entries){
@@ -17,7 +17,7 @@ for(let [key,value] of entries){
 }
 ```
 ## Symbol.iterator
-```js
+```javascript
 const obj={
   a:1,
   b:2,
@@ -43,5 +43,12 @@ const obj={
 }
 for(let value of obj){
   console.log(value) // 1 2 3
+}
+```
+## 例子
+```javascript
+[a,b] ={a:1,b:2}
+Object.prototype[Symbol.iterator] = function(){
+ return Object.values(this)[Symbol.iterator]()
 }
 ```
