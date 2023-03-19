@@ -45,7 +45,7 @@ for(let value of obj){
   console.log(value) // 1 2 3
 }
 ```
-## 例子
+## Example
 ```javascript
 [a,b] ={a:1,b:2}
 Object.prototype[Symbol.iterator] = function(){
