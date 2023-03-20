@@ -20,6 +20,7 @@ import{_ as s,c as n,o as a,a as l}from"./app.3ca1a598.js";const C=JSON.parse('{
 <span class="line"><span style="color:#F07178;">  </span><span style="color:#89DDFF;">}</span></span>
 <span class="line"><span style="color:#F07178;">  </span><span style="color:#89DDFF;font-style:italic;">catch</span><span style="color:#F07178;">(</span><span style="color:#A6ACCD;">e</span><span style="color:#F07178;">)</span><span style="color:#89DDFF;">{</span></span>
 <span class="line"><span style="color:#F07178;">    </span><span style="color:#82AAFF;">reject</span><span style="color:#F07178;">(</span><span style="color:#A6ACCD;">e</span><span style="color:#F07178;">) </span></span>
+<span class="line"><span style="color:#F07178;">    </span><span style="color:#82AAFF;">reject</span><span style="color:#F07178;">(</span><span style="color:#A6ACCD;">e</span><span style="color:#F07178;">) </span></span>
 <span class="line"><span style="color:#F07178;">  </span><span style="color:#89DDFF;">}</span></span>
 <span class="line"><span style="color:#89DDFF;">}</span></span>
 <span class="line"></span></code></pre></div><h2 id="then\u65B9\u6CD5" tabindex="-1">then\u65B9\u6CD5 <a class="header-anchor" href="#then\u65B9\u6CD5" aria-hidden="true">#</a></h2><div class="language-js"><span class="copy"></span><pre><code><span class="line"><span style="color:#676E95;font-style:italic;">// then \u7B2C\u4E00\u79CD\uFF1A\u53EA\u8003\u8651\u4E86\u540C\u6B65\u4EFB\u52A1</span></span>
