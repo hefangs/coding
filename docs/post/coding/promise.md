@@ -34,7 +34,7 @@ function Promise(executor){
     executor(resolve,reject)
   }
   catch(e){
-    reject(e)
+    reject(e) 
   }
 }
 ```
