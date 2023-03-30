@@ -1,6 +1,6 @@
 
 # 获取对象的key
-## for in获取对象上的key  
+## for...in遍历
 ```javascript
 const obj = {a:1,b:2,c:3}
 for(let key in obj) {

@@ -64,11 +64,11 @@ function sidebarpost() {
         { text: 'lazyLoad', link: '/post/coding/lazyLoad' },
         { text: 'sort', link: '/post/coding/sort' },
         {
-          text: 'Symbol.iterator',
+          text: 'symbol.iterator',
           link: '/post/coding/对象新增Symbol.iterator'
         },
         {
-          text: '对象的key',
+          text: 'object.key',
           link: '/post/coding/对象的key'
         }
       ]
