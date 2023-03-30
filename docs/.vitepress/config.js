@@ -66,6 +66,10 @@ function sidebarpost() {
         {
           text: 'Symbol.iterator',
           link: '/post/coding/对象新增Symbol.iterator'
+        },
+        {
+          text: '对象的key',
+          link: '/post/coding/对象的key'
         }
       ]
     },
