@@ -30,7 +30,7 @@
 ## 4. computed 和 watch 的区别
 
 1. `computed`能做到的`watch`的都能做到,反过来 `watch`能做到的`computed`不一样能做到
-2. `computed`： 是计算属性，依赖其它属性值，并且 `computed` 的值有缓存，只有它依赖的属性值发生改变，下一次获取 `computed` 的值时才会重新计算 `computed` 的值
+2. `computed`： 是计算属性，依赖其它属性值，并且 `computed` 的值有缓存，只有它依赖的属性值发生改变，下一次获取 `computed` 的值时才会重新计算
 3. `watch`： 更多的是「观察」的作用，类似于某些数据的监听回调 ，每当监听的数据变化时都会执行回调进行后续操作
 
 

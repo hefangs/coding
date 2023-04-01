@@ -30,7 +30,7 @@
 ```js
 function repeat(arr) {
   let res =  arr.filter((item,index,array) =>{
-    return array.indexOf(item) === index && array.lastIndexOf(item) !==index
+    return  array.lastIndexOf(item) !==index
   })
   return res
 }
