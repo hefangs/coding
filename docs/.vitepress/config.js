@@ -65,11 +65,11 @@ function sidebarpost() {
         { text: 'sort', link: '/post/coding/sort' },
         {
           text: 'symbol.iterator',
-          link: '/post/coding/对象新增Symbol.iterator'
+          link: '/post/coding/symbol.iterator'
         },
         {
           text: 'object.key',
-          link: '/post/coding/对象的key'
+          link: '/post/coding/object.key'
         }
       ]
     },
