@@ -29,5 +29,21 @@ function lazyLoad() {
 - `IntersectionObserver` 接口（从属于 `Intersection Observer API`）提供了一种异步观察目标元素与其祖先元素或顶级文档视口（`viewport`）交叉状态的方法
 - 其祖先元素或视口被称为根（`root`）
 ```javascript
-IntersectionObserver
+const observer = new IntersectionObserver(entries => {
+  entries.forEach(item => {
+    // 如果 intersectionRatio 为 0，则目标在视野外
+    if (item.intersectionRatio <= 0) return
+    const { target } = item
+    // 将元素的 data-src 属性设
+    target.src = target.dataset.src
+    // 停止观察该元素
+    image.onload = () =>{
+      observer.unobserve(target)
+    }
+  })
+})
+// 监听页面中所有 img 标签  
+document.querySelectorAll('img').forEach(img => {  
+  observer.observe(img)  
+})  
 ```
