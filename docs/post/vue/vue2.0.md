@@ -72,7 +72,16 @@
     ```
 
 ## 7. vue-router 路由模式有几种？ 
-1. hash模式:hash就是URL#后的那一部分内容，每次都不会
+1. `hash`模式:
+   - `hash` 就是`URL`#后的那一部分内容，后面 `hash` 值的变化，不会导致浏览器向服务器发出请求，浏览器不发出请求，就不会刷新页面
+   - 通过监听 `hashChange` 事件来监测 `hash` 值的改变，然后根据 `hash` 变化来实现更新页面部分内容的操作
+2. `history` 模式:
+   - 通过 `pushState` 和 `replaceState`，这两个 `API` 可以在改变 `URL`，但是不会发送请求
+   - 这样就可以监听 `url` 变化来实现更新页面部分内容的操作
+3. 两种模式的区别:
+   - 首先是在 `URL` `的展示上，hash` 模式有“#`”，history` 模式没有
+   - 刷新页面时，`hash` 模式可以正常加载到 `hash` 值对应的页面，而 `history` 没有处理的话，会返回 404，一般需要后端将所有页面都配置重定向到首页路由
+   - 在兼容性上，`hash` 可以支持低版本浏览器和 `IE`
 ## 8. Vue 中的 key 有什么作用？
 1. `key` 是为 `Vue` 中 `vnode` 的唯一标记，通过这个 `key`，我们的 `diff` 操作可以更准确、更快速
 2. 相关代码如下：
@@ -124,7 +133,7 @@ let map = makeIndexByKey(oldCh);
    - `Proxy` 可以直接监听对象而非属性
    - `Proxy` 可以直接监听数组的变化；
    - `Proxy` 有多达 13 种拦截方法,不限于 `apply`、`ownKeys`、`deleteProperty`、`has` 等等是 `Object.defineProperty` 不具备的
-   - `Proxy` 返回的是一个新对象,我们可以只操作新的对象达到目的,而 `Object.defineProperty` 只能遍历对象属性直接修改；
+   - `Proxy` 返回的是一个新对象,我们可以只操作新的对象达到目的,而 `Object.defineProperty` 是劫持对象属性的 `getter` 和 `setter` 方法，不支持数组，更准确的说是不支持数组的各种 `API` (所以 Vue 重写了数组方法）
    - `Proxy` 作为新标准将受到浏览器厂商重点持续的性能优化，也就是传说中的新标准的性能红利；
 2.  `Object.defineProperty` 的优势如下:
     - 兼容性好，支持 `IE9`，而 `Proxy` 的存在浏览器兼容性问题,而且无法用 `polyfill` 磨平
@@ -243,5 +252,159 @@ methodsToPatch.forEach((method) => {
         return new Observe(value)
       }
     }
-
     ```
+## 13.  nextTick 的作用是什么？他的实现原理是什么？
+1. 作用:
+   - `vue` 更新 `DOM` 是异步更新的，数据变化，`DOM` 的更新不会马上完成，`nextTick` 的回调是在下次 `DOM` 更新循环结束之后执行的延迟回调
+2. 实现原理:
+   - `nextTick` 主要使用了宏任务和微任务。根据执行环境分别尝试采用
+      - `Promise` 可以将函数延迟到当前函数调用栈最末端
+      - `MutationObserver` 是 `H5` 新加的一个功能，其功能是监听 `DOM` 节点的变动，在所有` DOM` 变动完成后，执行回调函数
+      - `setImmediate` 用于中断长时间运行的操作，并在浏览器完成其他操作（如事件和显示更新）后立即运行回调函数
+      - 如果以上都不行则采用 `setTimeout` 把函数延迟到 `DOM` 更新之后再使用，原因是宏任务消耗大于微任务，优先使用微任务，最后使用消耗最大的宏任务
+```javascript
+import { noop } from 'shared/util'
+import { handleError } from './error'
+import { isIE, isIOS, isNative } from './env'
+//  上面三行与核心代码关系不大，了解即可
+//  noop 表示一个无操作空函数，用作函数默认值，防止传入 undefined 导致报错
+//  handleError 错误处理函数
+//  isIE, isIOS, isNative 环境判断函数，
+//  isNative 判断某个属性或方法是否原生支持，如果不支持或通过第三方实现支持都会返回 false
+export let isUsingMicroTask = false     // 标记 nextTick 最终是否以微任务执行
+const callbacks = []     // 存放调用 nextTick 时传入的回调函数
+let pending = false     // 标记是否已经向任务队列中添加了一个任务，如果已经添加了就不能再添加了
+    // 当向任务队列中添加了任务时，将 pending 置为 true，当任务被执行时将 pending 置为 false
+    // 声明 nextTick 函数，接收一个回调函数和一个执行上下文作为参数
+    // 回调的 this 自动绑定到调用它的实例上
+export function nextTick(cb?: Function, ctx?: Object) {
+    let _resolve
+    // 将传入的回调函数存放到数组中，后面会遍历执行其中的回调
+    callbacks.push(() => {
+        if (cb) {   // 对传入的回调进行 try catch 错误捕获
+            try {
+                cb.call(ctx)
+            } catch (e) {    // 进行统一的错误处理
+                handleError(e, ctx, 'nextTick')
+            }
+        } else if (_resolve) {
+            _resolve(ctx)
+        }
+    })
+    // 如果当前没有在 pending 的回调，
+    // 就执行 timeFunc 函数选择当前环境优先支持的异步方法
+    if (!pending) {
+        pending = true
+        timerFunc()
+    }   
+    // 如果没有传入回调，并且当前环境支持 promise，就返回一个 promise
+    // 在返回的这个 promise.then 中 DOM 已经更新好了，
+    if (!cb && typeof Promise !== 'undefined') {
+        return new Promise(resolve => {
+            _resolve = resolve
+        })
+    }
+}
+// 判断当前环境优先支持的异步方法，优先选择微任务
+// 优先级：Promise---> MutationObserver---> setImmediate---> setTimeout
+// setTimeout 可能产生一个 4ms 的延迟，而 setImmediate 会在主线程执行完后立刻执行
+// setImmediate 在 IE10 和 node 中支持
+// 当在同一轮事件循环中多次调用 nextTick 时 ,timerFunc 只会执行一次
+let timerFunc   
+// 判断当前环境是否原生支持 promise
+if (typeof Promise !== 'undefined' && isNative(Promise)) {  // 支持 promise
+    const p = Promise.resolve()
+    timerFunc = () => {
+       // 用 promise.then 把 flushCallbacks 函数包裹成一个异步微任务
+        p.then(flushCallbacks)
+        if (isIOS) setTimeout(noop)
+        // 这里的 setTimeout 是用来强制刷新微任务队列的
+        // 因为在 ios 下 promise.then 后面没有宏任务的话，微任务队列不会刷新
+    }
+    // 标记当前 nextTick 使用的微任务
+    isUsingMicroTask = true
+    // 如果不支持 promise，就判断是否支持 MutationObserver
+    // 不是IE环境，并且原生支持 MutationObserver，那也是一个微任务
+} else if (!isIE && typeof MutationObserver !== 'undefined' && (
+    isNative(MutationObserver) ||
+    MutationObserver.toString() === '[object MutationObserverConstructor]'
+)) {
+    let counter = 1
+    // new 一个 MutationObserver 类
+    const observer = new MutationObserver(flushCallbacks) 
+    // 创建一个文本节点
+    const textNode = document.createTextNode(String(counter))   
+    // 监听这个文本节点，当数据发生变化就执行 flushCallbacks 
+    observer.observe(textNode, { characterData: true })
+    timerFunc = () => {
+        counter = (counter + 1) % 2
+        textNode.data = String(counter)  // 数据更新
+    }
+    isUsingMicroTask = true    // 标记当前 nextTick 使用的微任务
+} else if (typeof setImmediate !== 'undefined' && isNative(setImmediate)) {
+    timerFunc = () => { setImmediate(flushCallbacks)  }
+} else {
+    // 以上三种都不支持就选择 setTimeout
+    timerFunc = () => { setTimeout(flushCallbacks, 0) }
+}
+// 如果多次调用 nextTick，会依次执行上面的方法，将 nextTick 的回调放在 callbacks 数组中
+// 最后通过 flushCallbacks 函数遍历 callbacks 数组的拷贝并执行其中的回调
+function flushCallbacks() {
+    pending = false    
+    const copies = callbacks.slice(0)    // 拷贝一份 callbacks
+    callbacks.length = 0    // 清空 callbacks
+    for (let i = 0; i < copies.length; i++) {    // 遍历执行传入的回调
+        copies[i]()
+    }
+}
+// 为什么要拷贝一份 callbacks
+// 用 callbacks.slice(0) 将 callbacks 拷贝出来一份，
+// 是因为考虑到在 nextTick 回调中可能还会调用 nextTick 的情况,
+// 如果在 nextTick 回调中又调用了一次 nextTick，则又会向 callbacks 中添加回调，
+// 而 nextTick 回调中的 nextTick 应该放在下一轮执行，
+// 否则就可能出现一直循环的情况，
+// 所以需要将 callbacks 复制一份出来然后清空，再遍历备份列表执行回调
+```
+## 14.  Vue.set和this.$set 
+1. 对象和数组在某些情况下无法触发响应式数据更新
+  - 对象属性的新增和删除
+  - 通过修改数组下标来改变数组某一项
+2. `Vue.se`t和 `vm.$set` 是要将传入的对象的属性变成响应式的
+```javascript
+function set(target, key, val) {
+    if (isUndef(target) || isPrimitive(target)) {
+      warn(
+        'Cannot set reactive property on undefined, null, or primitive value: ' +
+          target
+      );
+    }
+    // 判断target是否是一个数组，并且key值是否是合法key
+    if (Array.isArray(target) && isValidArrayIndex(key)) {
+      // 为了防止某些情况下会报错，比如: 设置的key值，大于数组的长度
+      target.length = Math.max(target.length, key);
+      // 将key位置的值替换为val
+      target.splice(key, 1, val);
+      return val;
+    }
+    if (key in target && !(key in Object.prototype)) {
+      target[key] = val;
+      return val;
+    }
+    var ob = target.__ob__;
+    if (target._isVue || (ob && ob.vmCount)) {
+      warn(
+        'Avoid adding reactive properties to a Vue instance or its root $data ' +
+          'at runtime - declare it upfront in the data option.'
+      );
+      return val;
+    }
+    if (!ob) {
+      target[key] = val;
+      return val;
+    }
+    defineReactive$$1(ob.value, key, val);
+    // 让dep通知所有watcher重新渲染组件
+    ob.dep.notify();
+    return val;
+ }
+```
