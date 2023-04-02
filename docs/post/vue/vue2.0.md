@@ -1,10 +1,10 @@
 
 # Vue2.0相关
 ## 1. 为什么 data 是一个函数
-    1. 组件中的 `data` 写成一个函数，数据以函数返回值形式定义，
-    2. 这样每复用一次组件，就会返回一份新的 `data`，
-    3. 类似于给每个组件实例创建一个私有的数据空间，让各个组件实例维护各自的数据。
-    4. 而单纯的写成对象形式，就使得所有组件实例共用了一份 `data`，就会造成一个变了全都会变的结果
+  1. 组件中的 `data` 写成一个函数，数据以函数返回值形式定义，
+  2. 这样每复用一次组件，就会返回一份新的 `data`，
+  3. 类似于给每个组件实例创建一个私有的数据空间，让各个组件实例维护各自的数据。
+  4. 而单纯的写成对象形式，就使得所有组件实例共用了一份 `data`，就会造成一个变了全都会变的结果
 
 ## 2. Vue 组件通讯有哪几种方式
   1. `props`:父组件向子组件传递数据是通过 `prop`传递的
@@ -58,30 +58,37 @@
     }
    ```
 ##  6. v-model 的原理？
-```js
-<input type="text" v-model="message">
-<input type="text" :value="message" @input="message = $event.target.value">
-```
-1. 表单元素上使用`v-model`指令时，会自动绑定一个value属性和一个`input`事件，
-2. 当表单元素的值改变时，会触发这个`input`事件并将新的值赋给`value`属性
+1. `v-model` 本质就是 :v`value` + `input` 方法的语法糖
+2. 可以通过 `model` 属性的 `prop` 和 `event` 属性来进行自定义
+3. 原生的 `v-model`，会根据标签的不同生成不同的事件和属性
+4. `text` 和 `textarea` 元素使用 `value` 属性和 `input` 事件
+5. `checkbox` 和 `radio` 使用 `checked` 属性和 `change` 事件
+6. `select` 字段将 `value` 作为 `prop` 并将 `change` 作为事件
+    ```js
+    // 表单元素上使用`v-model`指令时，会自动绑定一个value属性和一个`input`事件
+    // 当表单元素的值改变时，会触发这个`input`事件并将新的值赋给`value`属性
+    <input type="text" v-model="message">
+    <input type="text" :value="message" @input="message = $event.target.value">
+    ```
 
 ## 7. vue-router 路由模式有几种？ 
+1. hash模式:hash就是URL#后的那一部分内容，每次都不会
 ## 8. Vue 中的 key 有什么作用？
 1. `key` 是为 `Vue` 中 `vnode` 的唯一标记，通过这个 `key`，我们的 `diff` 操作可以更准确、更快速
 2. 相关代码如下：
 ```js
 // 判断两个vnode的标签和key是否相同 如果相同 就可以认为是同一节点就地复用
 function isSameVnode(oldVnode, newVnode) {
-  return oldVnode.tag === newVnode.tag && oldVnode.key === newVnode.key;
+  return oldVnode.tag === newVnode.tag && oldVnode.key === newVnode.key
 }s
 // 根据key来创建老的儿子的index映射表  
 // 类似 {'a':0,'b':1} 代表key为'a'的节点在第一个位置 key为'b'的节点在第二个位置
 function makeIndexByKey(children) {
   let map = {};
   children.forEach((item, index) => {
-    map[item.key] = index;
-  });
-  return map;
+    map[item.key] = index
+  })
+  return map
 }
 // 生成的映射表
 let map = makeIndexByKey(oldCh);
@@ -121,7 +128,57 @@ let map = makeIndexByKey(oldCh);
    - `Proxy` 作为新标准将受到浏览器厂商重点持续的性能优化，也就是传说中的新标准的性能红利；
 2.  `Object.defineProperty` 的优势如下:
     - 兼容性好，支持 `IE9`，而 `Proxy` 的存在浏览器兼容性问题,而且无法用 `polyfill` 磨平
-## 11. Vue2.0 响应式数据的原理
+## 11. Vue2.0 如何检测数组变化
+1. 数组考虑性能原因没有用 `defineProperty` 对数组的每一项进行拦截，
+2. 而是选择对 7 种数组（`push`,`shift`,`pop`,`splice`,`unshift`,`sort`,`reverse`）方法进行重写(AOP 切片思想)
+3. 所以在 `Vue` 中修改数组的索引和长度是无法监控到的。需要通过以上 7 种变异方法修改数组才会触发数组对应的 `watcher` 进行更新
+4. 相关代码如下：
+```js
+// src/observe/array.js
+// 先保留数组原型
+const arrayProto = Array.prototype
+// 然后将arrayMethods继承自数组原型
+// 这里是面向切片编程思想（AOP）--不破坏封装的前提下，动态的扩展功能
+export const arrayMethods = Object.create(arrayProto)
+let methodsToPatch = [
+  "push",
+  "pop",
+  "shift",
+  "unshift",
+  "splice",
+  "reverse",
+  "sort",
+];
+methodsToPatch.forEach((method) => {
+  arrayMethods[method] = function (...args) {
+    //   这里保留原型方法的执行结果
+    const result = arrayProto[method].apply(this, args)
+    // 这句话是关键
+    // this代表的就是数据本身 比如数据是{a:[1,2,3]} 那么我们使用a.push(4)  
+    //this就是a  ob就是a.__ob__ 这个属性就是上段代码增加的 
+    //代表的是该数据已经被响应式观察过了指向Observer实例
+    const ob = this.__ob__
+    // 这里的标志就是代表数组有新增操作
+    let inserted
+    switch (method) {
+      case "push":
+      case "unshift":
+        inserted = args
+        break;
+      case "splice":
+        inserted = args.slice(2)
+      default:
+        break;
+    }
+    // 如果有新增的元素 inserted是一个数组 
+    // 调用Observer实例的observeArray对数组每一项进行观测
+    if (inserted) ob.observeArray(inserted)
+    // 之后咱们还可以在这里检测到数组改变了之后从而触发视图更新的操作
+    return result
+  }
+})
+```
+## 12. Vue2.0 响应式数据的原理
 1. Vue2.0中响应式数据的原理就是使用 Object.defineProperty()把 data 对象中的所有属性转为 getter/setter，
 2. 建立依赖关系，当属性的值发生变化时，setter 方法会通知依赖追踪器，
 3. 然后通知所有的依赖更新。Vue接下来会重新渲染模板，展示更新后的数据。
@@ -188,53 +245,3 @@ let map = makeIndexByKey(oldCh);
     }
 
     ```
-## 12. Vue2.0 如何检测数组变化
-1. 数组考虑性能原因没有用 `defineProperty` 对数组的每一项进行拦截，
-2. 而是选择对 7 种数组（`push`,`shift`,`pop`,`splice`,`unshift`,`sort`,`reverse`）方法进行重写(AOP 切片思想)
-3. 所以在 `Vue` 中修改数组的索引和长度是无法监控到的。需要通过以上 7 种变异方法修改数组才会触发数组对应的 `watcher` 进行更新
-4. 相关代码如下：
-```js
-// src/observe/array.js
-// 先保留数组原型
-const arrayProto = Array.prototype
-// 然后将arrayMethods继承自数组原型
-// 这里是面向切片编程思想（AOP）--不破坏封装的前提下，动态的扩展功能
-export const arrayMethods = Object.create(arrayProto)
-let methodsToPatch = [
-  "push",
-  "pop",
-  "shift",
-  "unshift",
-  "splice",
-  "reverse",
-  "sort",
-];
-methodsToPatch.forEach((method) => {
-  arrayMethods[method] = function (...args) {
-    //   这里保留原型方法的执行结果
-    const result = arrayProto[method].apply(this, args)
-    // 这句话是关键
-    // this代表的就是数据本身 比如数据是{a:[1,2,3]} 那么我们使用a.push(4)  
-    //this就是a  ob就是a.__ob__ 这个属性就是上段代码增加的 
-    //代表的是该数据已经被响应式观察过了指向Observer实例
-    const ob = this.__ob__
-    // 这里的标志就是代表数组有新增操作
-    let inserted
-    switch (method) {
-      case "push":
-      case "unshift":
-        inserted = args
-        break;
-      case "splice":
-        inserted = args.slice(2)
-      default:
-        break;
-    }
-    // 如果有新增的元素 inserted是一个数组 
-    // 调用Observer实例的observeArray对数组每一项进行观测
-    if (inserted) ob.observeArray(inserted)
-    // 之后咱们还可以在这里检测到数组改变了之后从而触发视图更新的操作
-    return result
-  }
-})
-```
