@@ -428,7 +428,7 @@ function set(target, key, val) {
     - `self`：只当事件是从事件绑定的元素本身触发时才触发回调
     - `once`：只能触发一次，第二次就不会触发
     - `capture`：向下捕获方式触发（完整的事件机制是：捕获阶段--目标阶段--冒泡阶段）
-    - passive：滚动事件延迟
+    - passive： 滚动事件延迟
 3. `v-model`修饰符：
     - `lazy` ——监听 `change` 事件而不是 `input`
     - `number` ——将输入的合法符串转为数字

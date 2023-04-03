@@ -62,15 +62,7 @@ function sidebarpost() {
         { text: 'extends', link: '/post/coding/extends' },
         { text: 'draggingDiv', link: '/post/coding/draggingDiv' },
         { text: 'lazyLoad', link: '/post/coding/lazyLoad' },
-        { text: 'sort', link: '/post/coding/sort' },
-        {
-          text: 'symbol.iterator',
-          link: '/post/coding/symbol.iterator'
-        },
-        {
-          text: 'object.key',
-          link: '/post/coding/object.key'
-        }
+        { text: 'sort', link: '/post/coding/sort' }
       ]
     },
     {
