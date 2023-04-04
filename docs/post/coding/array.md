@@ -1,6 +1,6 @@
 
 
-# 去重
+# Array
 
 
 
@@ -72,4 +72,17 @@ function Flat(arr = []){
 }
 const arr = [0, 1, [2, 3], [4, 5, [6, 7]], [8, [9, 10, [11, 12]]]]
 Flat(arr) // [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]  
+```
+## 5.类数组转换为数组
+```javascript
+  let arrayLike = {
+    length: 3,
+    0: 'a',
+    1: 'b',
+    2: 'c',
+    3: 'd',
+    4: 'e',
+}
+  let arr1 = Array.from(arrayLike) // ['a', 'b', 'c']
+  let arr2 = Array.prototype.slice.call(arrayLike) // ['a', 'b', 'c']
 ```
