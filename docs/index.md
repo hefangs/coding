@@ -10,7 +10,7 @@ hero:
   actions:
     - theme: brand
       text: 快速开始
-      link: /post/at/start
+      link: /post/note/start
 head:
   - - meta
     - name: keywords
