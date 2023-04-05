@@ -25,13 +25,14 @@ export default {
     // lastUpdatedText: '最近更新时间',
     // docFooter: { prev: '上一篇', next: '下一篇' },
     nav: [
-      { text: 'Coding', link: '/post/note/coding' },
-      { text: 'JS', link: '/post/note/javascript' },
-      { text: 'Vue2', link: '/post/note/vue2.0' },
-      { text: 'Vue3', link: '/post/note/vue3.0' },
-      { text: 'React', link: '/post/note/react' },
-      { text: 'Webpack', link: '/post/note/react' },
-      { text: 'TypeScript', link: '/post/note/typescript' }
+      // { text: 'Coding', link: '/post/note/coding' },
+      // { text: 'JS', link: '/post/note/javascript' },
+      // { text: 'Vue2', link: '/post/note/vue2.0' },
+      // { text: 'Vue3', link: '/post/note/vue3.0' },
+      // { text: 'React', link: '/post/note/react' },
+      // { text: 'Webpack', link: '/post/note/react' },
+      // { text: 'TypeScript', link: '/post/note/typescript' },
+      // { text: 'Node', link: '/post/note/node' }
     ],
     footer: {
       message: 'Copyright © 2023 Fang He',
@@ -58,14 +59,15 @@ function sideBar() {
       items: [
         { text: 'Start', link: '/post/note/start' },
         { text: 'Coding', link: '/post/note/coding' },
-        { text: 'Html & Css', link: '/post/note/html&css' },
+        { text: 'Html & Css', link: '/post/note/html-css.md' },
         { text: 'JavaScript', link: '/post/note/javascript' },
         { text: 'Vue2.0', link: '/post/note/vue2.0' },
         { text: 'Vue3.0', link: '/post/note/vue3.0' },
         { text: 'React', link: '/post/note/react' },
         { text: 'Webpack', link: '/post/note/webpack' },
         { text: 'TypeScript', link: '/post/note/typescript' },
-        { text: 'Git', link: '/post/note/git' }
+        { text: 'Git', link: '/post/note/git' },
+        { text: 'Node', link: '/post/note/node' }
       ]
     }
   ]

@@ -1,4 +1,109 @@
-## 1. BFC
+## 1. HTML语义化
+  - 正确的标签做正确的事情
+  - 适合搜索引擎的爬虫爬取有效信息，
+  - 有利于 SEO
+  - 支持读屏软件
+  - 增强了可读性，结构更加清晰，便于团队的开发与维护
+  ```html
+  <!-- 头部 -->
+  <header></header>
+  <!-- 导航栏 -->
+  <nav></nav>
+  <!-- 区块 有语义的 div -->
+  <section></section>
+  <!-- 主要区域 -->
+  <main></main>
+  <!-- 主要内容 -->
+  <article></article>
+  <!-- 侧边栏 -->
+  <aside></aside>
+  <!-- 底部 -->
+  <footer></footer>
+  ```
+
+## 2. HTML5新特性
+  - 多媒体，用于媒介回放的 `video` 和 `audio` 元素。
+  - 图像效果，用于绘画的 `canvas` 元素，`svg` 元素等。
+  - 离线&存储，对本地离线存储能够更好地支持，比如 `localStorage`,`Cookies` 等。
+  - 性能与集成特性，`HTML5` 会通过 `XML HttpRequest2`等技术，帮助您的 `Web` 应用和网站在多样化的环境中更快速地工作
+
+## 3. 行内元素 块级元素 空(void)元素
+  - 行内元素：`span` `img` `input` `select` `strong`
+  - 块级元素：`div` `ul` `ol` `li` `dl` `dt` `dd` `h1` `h2` `h3` `h4` `h5` `h6` `p`
+  - 空(void)元素：`br` `hr` `img` `input` `link` `meta`
+
+## 4. link 和@import 的区别
+  -  `link` 引用 `CSS` 时，在页面载入时同时加载；`@import` 需要页面网页完 全载入以后加载
+  - ` link` 是 `XHTML` 标签，无兼容问题；`@import` 是在 CSS2.1 提出的，低版本的浏览器不支持
+  -  `link` 支持使用 `Javascript` 控制 `DOM` 去改变样式；而 `@import` 不支持
+
+## 5. CSS3 中有哪些新特性
+  - `border-radius` 圆角属性 border-radius: 10px;
+  - `text-shadow` 文字阴影 text-shadow: 1px 1px 2px black;
+  - `gradient` 线性渐变 background: linear-gradient(blue, pink);
+  - `transform` 位移，旋转，缩放 transform: translate(50px 50px);
+  - `transition` 过渡 transition: all .3s ease;
+  - `animation` 动画 animation: 3s ease-in 1s infinite reverse both running slidein;
+## 5. CSS 选择器及优先级
+  - 选择器
+    :::tip
+    - id 选择器(#myid)
+    - 类选择器(.myclass)
+    - 属性选择器(a[rel="external"])
+    - 伪类选择器(a:hover, li:nth-child)
+    - 标签选择器(div, h1,p)
+    - 相邻选择器（h1 + p）
+    - 子选择器(ul > li)
+    - 后代选择器(li a)
+    - 通配符选择器(\*)
+    :::
+  - 优先级
+    :::tip
+    - !important
+    - 内联样式（1000）
+    - ID 选择器（0100）
+    - 类选择器/属性选择器/伪类选择器（0010）
+    - 元素选择器/伪元素选择器（0001）
+    - 关系选择器/通配符选择器（0000）
+    :::
+## 6.  CSS 布局单位
+:::tip
+  - px: 像素单位
+  - rpx: 小程序布局单位
+  - %: 相对于父元素的百分比单位
+  - em: 相对单位 1em 等同于父元素的文字大小
+  - rem: 相对单位 1rem 等同于 html 根元素的文字大小
+  - vh: 相对单位 1vh 等同于屏幕高度的 1%
+  - vw: 相对单位 1vw 等同于屏幕快读的 1%
+  - vmin: 选取 vh 和 vw 的最小值为基准
+  - vmax: 选取 vh 和 vw 的最大值为基准
+:::
+
+
+## 7. script 标签中属性 async 和 defer 的区别
+  ```html
+  <script src='xxx'></script>
+  <script src='xxx' async></script>
+  <script src='xxx' defer></script>
+  ```
+  - `script` 会阻碍 `HTML` 解析，只有下载好并执行完脚本才会继续解析 `HTML`
+  - `async script`：解析 `HTML` 的过程中会进行脚本的异步下载，下载成功后立马执行，因此有可能会阻断 `HTML` 的解析。多个脚本的执行顺序无法保证
+  - `defer script`：也是异步下载脚步，加载完成后，如果此时 `HTML` 还没有解析完，浏览器不会暂停解析去执行 `JS` 代码，而是等待 `HTML` 解析完毕再执行 `JS` 代码
+  :::tip
+  | script 标签  |   JS 执行顺序    |      是否阻塞解析 HTML |
+  | ------------ | :--------------: | ---------------------: |
+  | script       | 在 HTML 中的顺序 |                   阻塞 |
+  | script async | 网络请求返回顺序 | 可能阻塞，也可能不阻塞 |
+  | script defer | 在 HTML 中的顺序 |                 不阻塞 |
+
+  :::
+  ::: details
+  ![图片描述](/script.png)
+  :::
+## 7. 盒模型
+  - `IE` 盒模型： `width` + `height` + `padding` + `border`
+  - `W3C` 标准盒模型： `width` + `height，不包含` `border` 和 `padding`
+## 8. BFC
 - 定义:
    - 块级格式化上下文
    - 是一个独立的渲染区域，让处于`BFC`内部的元素与外部的元素相互隔离，使内外元素的定位不会相互影响
@@ -18,7 +123,7 @@
    - 计算 `BFC` 的高度时，浮动子元素也参与计算
 
 
-## 2. 两栏布局
+## 9. 两栏布局
 - 利用浮动，左边元素宽度固定，设置向左浮动。将右边元素的 `margin-left` 设为固定宽度 。注意，因为右边元素的 `width` 默认为 `auto`，所以会自动撑满父元素
   ```css
   .outer {
@@ -111,7 +216,7 @@
   }
 ```
 
-## 3. 三栏布局
+## 10. 三栏布局
 - 圣杯布局
 ```html
 <div id="container" class="clearfix">
@@ -189,7 +294,7 @@
 - 两侧使用`margin`负值，以便和中间内容横向重叠
 - 防止中间内容被两侧覆盖，圣杯布局用`padding`，双飞翼布局用`margin`
 
-## 4. 水平垂直居中
+## 11. 水平垂直居中
 - 利用绝对定位，设置`left`: 50%和`top`:50%,现将子元素左上角移到父元素中心位置，然后再通过`translate`来调整子元素的中心点到父元素的中心。(该方法可以不定宽高)
 ```css
 .father {

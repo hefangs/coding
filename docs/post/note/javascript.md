@@ -216,7 +216,7 @@
     - 为什么需要缓存？网络请求相比于`CPU`的计算和页面渲染是非常非常慢的
     - 哪些资源可以被缓存？静态资源，比如 `js`,`css`,`img`
   - ### **强制缓存**
-    ![图片描述](/cache1.awebp)
+    ![图片描述](/cache1.png)
     - **Cache-Control：**
     - 在 `Response Headers` 中控制强制缓存的逻辑，例如:`Cache-Control`: `max-age`=3153600（单位是秒）
     - **Cache-Control** 有哪些值:
@@ -227,15 +227,15 @@
     - 服务端缓存策略
     - 服务端判断客户端资源，是否和服务端资源一样
     - 一致则返回304，否则返回200和最新的资源
-    ![图片描述](/cache2.awebp)
+    ![图片描述](/cache2.png)
     - **资源标识**
       - 在 `Response` `Headers`中，有两种:`Last-Modified`和 `Etag`
         - `Last-Modified`：资源的最后修改时间
-          - ![图片描述](/last-Modified.awebp)
+          - ![图片描述](/last-Modified.png)
           - 服务端拿到 `if-Modified-Since` 之后拿这个时间去和服务端资源最后修改时间做比较
           - 如果一致则返回 304，不一致（也就是资源已经更新了）就返回200和新的资源及新的`Last-Modified`
         - `Etag`：资源的唯一标识（一个字符串，类似于人类的指纹）
-          - ![图片描述](/etag.awebp)
+          - ![图片描述](/etag.png)
           - 其实`Etag`和`Last-Modified`一样的
           - 只不过 `Etag` 是服务端对资源按照一定方式（比如 `contenthash`）计算出来的唯一标识
           - 就像人类指纹一样，传给客户端之后，客户端再传过来时候，服务端会将其与现在的资源计算出来的唯一标识做比较
@@ -245,4 +245,6 @@
     - `Last-Modified`只能精确到秒级
     - 如果资源被重复生成，而内容不变，则`Etag`更精确
   - **总结**
-    - ![图片描述](/cache3.awebp)
+    - ![图片描述](/cache3.png)
+
+
