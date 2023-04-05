@@ -1,4 +1,7 @@
 export default {
+  markdown: {
+    lineNumbers: true
+  },
   lang: 'zh-CN',
   title: 'he',
   base: '/',
