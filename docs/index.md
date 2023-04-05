@@ -1,12 +1,15 @@
 ---
 layout: home
-
+layoutClass: 'layout'
 h1: he
 
 hero:
   name: Coding
   text: 小何的笔记文档
   tagline: 记录一些笔记
+  image:
+    src: /logo.jpg
+    alt: VitePress
   actions:
     - theme: brand
       text: 快速开始
@@ -38,3 +41,11 @@ features:
     title: 全面覆盖
     details: 文档涵盖前后端多种领域知识点, 跨界知识点
 ---
+
+
+<style>
+
+  .image-src {
+    border-radius:10%;
+  }
+  </style>
