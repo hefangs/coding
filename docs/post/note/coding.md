@@ -87,16 +87,16 @@ Flat(arr) // [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
 :::warning 类数组转换为数组
 :::
 ```javascript
-  let arrayLike = {
-    length: 3,
-    0: 'a',
-    1: 'b',
-    2: 'c',
-    3: 'd',
-    4: 'e',
+let arrayLike = {
+  length: 3,
+  0: 'a',
+  1: 'b',
+  2: 'c',
+  3: 'd',
+  4: 'e',
 }
-  let arr1 = Array.from(arrayLike) // ['a', 'b', 'c']
-  let arr2 = Array.prototype.slice.call(arrayLike) // ['a', 'b', 'c']
+let arr1 = Array.from(arrayLike) // ['a', 'b', 'c']
+let arr2 = Array.prototype.slice.call(arrayLike) // ['a', 'b', 'c']
 ```
 
 
@@ -122,10 +122,10 @@ function clone(obj) {
 :::tip Object.assign()
 Object.assign方法可以把任意多个的源对象自身的可枚举属性拷贝给目标对象，然后返回目标对象
 :::
-  ```js
-  let obj1 = {person:{name:"Tom",age:20},job:"teacher"}
-  let obj2 = Object.assign({},obj1)
-  ```
+```js
+let obj1 = {person:{name:"Tom",age:20},job:"teacher"}
+let obj2 = Object.assign({},obj1)
+```
 
 :::tip 函数库lodash的_.clone方法
 :::
@@ -189,16 +189,16 @@ function deepClone(obj){
   - 这种方法虽然可以实现数组或对象深拷贝,但不能处理正则和函数
   - 如果使用这种方法正则变为空对象，函数变为null
 :::
-  ```js
-  let data1 = [1,{name: "John", age: 20},/\d$/,function(){}]
-  let data2 = JSON.parse(JSON.stringify(data1))
-  console.log(data2)
-  // 0: 1
-  // 1: {name: 'John', age: 20}
-  // 2: {} // 正则变为空对象
-  // 3: null  // 函数变为null
-  // length: 4
-  ```
+```js
+let data1 = [1,{name: "John", age: 20},/\d$/,function(){}]
+let data2 = JSON.parse(JSON.stringify(data1))
+console.log(data2)
+// 0: 1
+// 1: {name: 'John', age: 20}
+// 2: {} // 正则变为空对象
+// 3: null  // 函数变为null
+// length: 4
+```
   
 :::tip 函数库lodash的_.cloneDeep方法
 :::
