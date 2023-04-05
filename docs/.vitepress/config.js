@@ -10,24 +10,36 @@ export default {
       'link',
       {
         rel: 'icon',
-        href: 'http://mms0.baidu.com/it/u=1906135646,1953718901&fm=253&app=138&f=PNG&fmt=auto&q=75?w=357&h=316'
+        // href: 'http://mms0.baidu.com/it/u=1906135646,1953718901&fm=253&app=138&f=PNG&fmt=auto&q=75?w=357&h=316'
+        href: '/one-price.png'
       }
     ]
   ],
   themeConfig: {
     siteTitle: 'he',
-    logo: 'http://mms0.baidu.com/it/u=1906135646,1953718901&fm=253&app=138&f=PNG&fmt=auto&q=75?w=357&h=316',
+    logo: '/one-price.png',
     sidebar: {
-      '/post/': sidebarpost()
+      '/post/': sideBar()
     },
     socialLinks: [{ icon: 'github', link: 'https://github.com/hefangs' }],
+    // lastUpdatedText: '最近更新时间',
+    // docFooter: { prev: '上一篇', next: '下一篇' },
+    nav: [
+      { text: 'Coding', link: '/post/note/coding' },
+      { text: 'JS', link: '/post/note/javascript' },
+      { text: 'Vue2', link: '/post/note/vue2.0' },
+      { text: 'Vue3', link: '/post/note/vue3.0' },
+      { text: 'React', link: '/post/note/react' },
+      { text: 'Webpack', link: '/post/note/react' },
+      { text: 'TypeScript', link: '/post/note/typescript' }
+    ],
     footer: {
-      message: 'Copyright © 2022 Fang He',
-      copyright: ' 版权所有 浙ICP备2022001576号'
+      message: 'Copyright © 2023 Fang He',
+      copyright: '版权所有 浙ICP备2022001576号'
     },
     // editLink: {
-    //   pattern: "https://github.com/hefangs",
-    //   text: "Edit this page on GitHub"
+    //   pattern: 'https://github.com/hefangs',
+    //   text: 'Edit this page on GitHub'
     // },
     algolia: {
       appId: '8J64VVRP8K',
@@ -37,53 +49,24 @@ export default {
   }
 }
 
-function sidebarpost() {
+function sideBar() {
   const menus = [
     {
-      text: 'At',
+      text: 'Note',
       collapsible: true,
-      items: [{ text: 'start', link: '/post/at/start' }]
-    },
-    {
-      text: 'Coding',
-      collapsible: true,
+      // collapsed: true,
       items: [
-        { text: 'debounce', link: '/post/coding/debounce' },
-        { text: 'throttle', link: '/post/coding/throttle' },
-        { text: 'promise', link: '/post/coding/promise' },
-        { text: 'new', link: '/post/coding/new' },
-        { text: 'array', link: '/post/coding/array' },
-        { text: 'instanceof', link: '/post/coding/instanceof' },
-        { text: 'clone-deepClone', link: '/post/coding/clone-deepClone' },
-        {
-          text: 'call-apply-bind',
-          link: '/post/coding/call-apply-bind.md'
-        },
-        { text: 'extends', link: '/post/coding/extends' },
-        { text: 'draggingDiv', link: '/post/coding/draggingDiv' },
-        { text: 'lazyLoad', link: '/post/coding/lazyLoad' },
-        { text: 'sort', link: '/post/coding/sort' }
+        { text: 'Start', link: '/post/note/start' },
+        { text: 'Coding', link: '/post/note/coding' },
+        { text: 'Html & Css', link: '/post/note/html&css' },
+        { text: 'JavaScript', link: '/post/note/javascript' },
+        { text: 'Vue2.0', link: '/post/note/vue2.0' },
+        { text: 'Vue3.0', link: '/post/note/vue3.0' },
+        { text: 'React', link: '/post/note/react' },
+        { text: 'Webpack', link: '/post/note/webpack' },
+        { text: 'TypeScript', link: '/post/note/typescript' },
+        { text: 'Git', link: '/post/note/git' }
       ]
-    },
-    {
-      text: 'Vue',
-      collapsible: true,
-      items: [
-        { text: 'vue2.0', link: '/post/vue/vue2.0' },
-        { text: 'vue3.0', link: '/post/vue/vue3.0' }
-      ]
-    },
-    {
-      text: 'Interview',
-      collapsible: true,
-      items: [
-        { text: 'updated-20221212', link: '/post/interview/updated-20221212' }
-      ]
-    },
-    {
-      text: 'Tools',
-      collapsible: true,
-      items: [{ text: 'Git', link: '/post/tools/git' }]
     }
   ]
   return menus
