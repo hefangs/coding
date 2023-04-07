@@ -61,7 +61,7 @@
     }
    ```
 :::
-##  6. v-model 的原理？
+##  6. v-model 的原理
 :::warning
 1. `v-model` 本质就是 ：`value` + `input` 方法的语法糖
 2. 可以通过 `model` 属性的 `prop` 和 `event` 属性来进行自定义
@@ -76,7 +76,7 @@
   <input type="text" ：value="message" @input="message = $event.target.value">
   ```
 :::
-## 7. vue-router 路由模式有几种？ 
+## 7. vue-router 路由模式有几种
 :::tip  `hash`模式：
 - `hash` 就是`URL`#后的那一部分内容，后面 `hash` 值的变化，不会导致浏览器向服务器发出请求，浏览器不发出请求，就不会刷新页面
 - 通过监听 `hashChange` 事件来监测 `hash` 值的改变，然后根据 `hash` 变化来实现更新页面部分内容的操作
@@ -91,10 +91,15 @@
  - 刷新页面时，`hash` 模式可以正常加载到 `hash` 值对应的页面，而 `history` 没有处理的话，会返回 404，一般需要后端将所有页面都配置重定向到首页路由
  - 在兼容性上，`hash` 可以支持低版本浏览器和 `IE`
 :::
-## 8. Vue 中的 key 有什么作用？
-:::tip
-1. `key` 是为 `Vue` 中 `vnode` 的唯一标记，通过这个 `key`，我们的 `diff` 操作可以更准确、更快速
-2. 相关代码如下：
+## 8. Vue 中的 key 有什么作用
+:::tip 作用
+1. `key` 是为 `Vue` 中 `vnode` 的唯一标记
+2. Vue 判断两个节点是否相同时，主要是判断两者的key和元素类型tag
+3. 因此，如果不设置key，它的值就是 undefined
+4. 则可能永远认为这是两个相同的节点，只能去做更新操作，将造成大量的 DOM 更新操作
+5. 通过这个 `key`，我们的 `diff` 操作可以更准确、更快速
+6. 相关代码如下：
+:::
 ```js
 // 判断两个vnode的标签和key是否相同 如果相同 就可以认为是同一节点就地复用
 function isSameVnode(oldVnode, newVnode) {
@@ -112,8 +117,8 @@ function makeIndexByKey(children) {
 // 生成的映射表
 let map = makeIndexByKey(oldCh);
 ```
-:::
-## 9. 你有对 Vue 项目进行哪些优化？
+
+## 9. 你有对 Vue 项目进行哪些优化
 :::danger  1. 代码层面的优化：
 1. `v-if` 和 `v-show` 区分使用场景
 2. `computed `和 `watch`  区分使用场景
@@ -272,7 +277,7 @@ methodsToPatch.forEach((method) => {
   }
   ```
 :::
-## 13. nextTick 的作用是什么？它的实现原理是什么？
+## 13. nextTick 的作用是什么？它的实现原理是什么
 :::warning 作用
    - `vue` 更新 `DOM` 是异步更新的，数据变化，`DOM` 的更新不会马上完成，`nextTick` 的回调是在下次 `DOM` 更新循环结束之后执行的延迟回调
 :::
@@ -464,4 +469,25 @@ function set(target, key, val) {
   - `lazy` ——监听 `change` 事件而不是 `input`
   - `number` ——将输入的合法符串转为数字
   - `trim` ——移除输入内容两端空格
+:::
+
+## 16. keep-alive 是什么
+:::tip 
+- 作用：实现组件缓存，保持组件的状态，避免反复渲染导致的性能问题
+- 工作原理：
+  - `Vue.js` 内部将 DOM 节点，抽象成了一个个的 `VNode` 节点
+  - `keep-alive`组件的缓存也是基于 `VNode` 节点的
+  - 它将满足条件的组件在 `cache` 对象中缓存起来
+  - 重新渲染的时候再将 `VNode` 节点从 `cache` 对象中取出并渲染
+- 可以设置以下属性：
+  - `include`：字符串或正则，只有名称匹配的组件会被缓存
+  - `exclude`：字符串或正则，任何名称匹配的组件都不会被缓存
+  - `max`：数字，最多可以缓存多少组件实例
+- 匹配规则：
+  - 首先检查组件的`name`选项，如果`name`选项不可用
+  - 则匹配它的局部注册名称（父组件 `components` 选项的键值
+  - 匿名组件不能被匹配
+- 生命周期钩子：`activated`、`deactivated`
+- 首次进入组件时：`beforeCreate` --> `created` --> `beforeMount` --> `mounted` --> `activated` --> `beforeUpdate` --> `updated` --> `deactivated`
+- 再次进入组件时：`activated` --> `beforeUpdate` --> `updated` --> `deactivated`
 :::
