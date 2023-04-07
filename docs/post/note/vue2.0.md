@@ -491,3 +491,196 @@ function set(target, key, val) {
 - 首次进入组件时：`beforeCreate` --> `created` --> `beforeMount` --> `mounted` --> `activated` --> `beforeUpdate` --> `updated` --> `deactivated`
 - 再次进入组件时：`activated` --> `beforeUpdate` --> `updated` --> `deactivated`
 :::
+
+## 17. 说说你对slot的理解？slot使用场景有哪些？
+:::tip 使用场景
+  - 通过插槽可以让用户可以拓展组件，去更好地复用组件和对其做定制化处理
+  - 如果父组件在使用到一个复用组件的时候，获取这个组件在不同的地方有少量的更改，如果去重写组件是一件不明智的事情
+  - 通过`slot`插槽向组件内部指定位置传递内容，完成这个复用组件在不同场景的应用
+  - 比如布局组件、表格列、下拉选、弹框显示内容等
+:::
+:::warning 分类
+  - 默认插槽
+  - 具名插槽
+  - 作用域插槽
+:::
+:::tip 默认插槽
+```javascript
+  // 父组件
+  <Child>
+    <div>父组件给子组件准备的插槽内容</div>  
+  </Child>
+```
+
+```javascript
+  // 子组件Child.vue
+  <template>
+    <slot>
+      <p>子组件默认内容，如果父组件不传，就展示默认内容</p>
+    </slot>
+  </template>
+```
+:::
+
+:::tip 具名插槽
+- 子组件用`name`属性来表示插槽的名字，不传为默认插槽
+- 父组件中在使用时在默认插槽的基础上加上`slot`属性，值为子组件插槽`name`属性值
+```javascript
+// 父组件
+<Child>
+  <template v-slot:default>具名插槽</template>
+  <!-- 具名插槽⽤插槽名做参数 -->
+  <template v-slot:content>内容...</template>
+</Child>
+```
+```javascript
+// 子组件Child.vue
+<template>
+  <slot>插槽后备的内容</slot>
+  <slot name="content">插槽后备的内容</slot>
+</template>
+```
+:::
+:::tip 作用域插槽
+- 子组件在作用域上绑定属性来将子组件的信息传给父组件使用，这些属性会被挂在父组件`v-slot`接受的对象上
+- 父组件中在使用时通过`v-slot`:（简写：#）获取子组件的信息，在内容中使用
+
+```javascript
+// 父组件
+// 把v-slot的值指定为作⽤域上下⽂对象
+<Child> 
+  <template v-slot:default="slotProps">
+    来⾃⼦组件数据：{{slotProps.testProps}}
+  </template>
+  <template #default="slotProps">
+    来⾃⼦组件数据：{{slotProps.testProps}}
+  </template>
+</Child>
+```
+```javascript
+// 子组件Child.vue
+<template> 
+  <slot name="footer" testProps="子组件的值">
+    <h3>没传footer插槽</h3>
+    </slot>
+</template>
+```
+:::
+
+:::danger 总结
+  - `v-slot`属性只能在`template`上使用，但在只有默认插槽时可以在组件标签上使用
+  - 默认插槽名为`default`，可以省略`default`直接写`v-slot`
+  - 缩写为`#`时不能不写参数，写成`#default`
+  - 可以通过解构获取`v-slot={user}`，还可以重命名`v-slot="{user: newName}"`和定义默认值`v-slot="{user = '默认值'}`"
+:::
+
+
+## 18. 虚拟DOM
+:::tip Virtual DOM
+  - 实际上它只是一层对真实`DOM`的抽象，以`JavaScript`对象 `(VNode`节点) 作为基础的树，用对象的属性来描述节点，最终可以通过一系列操作使这棵树映射到真实环境上
+  - 在`Javascript`对象中，虚拟`DOM`表现为一个`Object`对象。并且最少包含标签名 (`tag`)、属性 (`attrs`) 和子元素对象 (`children`) 三个属性，不同框架对这三个属性的名命可能会有差别
+  - 创建虚拟`DOM`就是为了更好将虚拟的节点渲染到页面视图中，所以虚拟`DOM`对象的节点与真实`DOM`的属性一一照应
+```html
+<div id="name">
+  <p class="p1">a</p>
+  <p class="p2">b</p>
+  <p class="p3">c</p>
+</div>
+```
+```javascript
+let oldVDOM = { // 旧虚拟DOM
+  tagName: 'div', // 标签名
+  props: { // 标签属性
+    id: 'name'
+  },
+  children: [ // 标签子节点
+    {
+      tagName: 'p', 
+      props: { class: 'p1' },
+      children: ['a']
+    },
+    {
+      tagName: 'p', 
+      props: { class: 'p2' },
+      children: ['b']
+    },
+    {
+      tagName: 'p',
+      props: { class: 'p3' },
+      children: ['c']
+    }
+  ]
+}
+```
+:::
+:::warning h函数
+```javascript
+  /**
+ * @description:把传入的参数作为对象返出去
+ * @param {*} sel
+ * @param {*} data
+ * @param {*} children
+ * @param {*} text
+ * @param {*} elm
+ * @return {*} sel, data, children, text, elm
+ */
+function vNode(sel, data, children, text, elm) {
+  return {
+    sel,
+    data,
+    children,
+    text,
+    elm
+  }
+}
+/**
+ * @description: 这里要求参数必须是3个参数
+ * 调用的时候必须是下面3种情况:(暂时只考虑这3种情况)
+ * 1.h(div,{},'文字')
+ * 2.h(div,{},[])
+ * 3.h(div,{},h())
+ * @param {*} sel
+ * @param {*} b
+ * @param {*} c
+ * @return {*} vNode
+ */
+function h(sel, b, c) {
+  if (arguments.length !== 3) throw new Error('Error')
+  // 情况1:
+  if (typeof c === 'string' || typeof c === 'number') {
+    return vNode(sel, data, undefined, c, undefined)
+  }
+  // 情况2:
+  else if (isArray(c)) {
+    let children = []
+    for (let i = 0; index < c.length; i++) {
+      if (!(typeof c === 'object' && c[i].hasOwnProperty('sel')))
+        throw new Error('Error')
+      children.push(c[i])
+    }
+    return vNode(sel, data, children, undefined, undefined)
+  }
+  // 情况3:
+  else if (typeof c === 'object' && c.hasOwnProperty('sel')) {
+    let children = [c]
+    return vNode(sel, data, children, undefined, undefined)
+  } else {
+    throw new Error('Error')
+  }
+}
+```
+:::
+
+
+## 19. diff算法
+
+:::warning diff
+  - `diff`算法是一种通过同层的树节点进行比较的高效算法
+  - 其有两个特点：
+    - 比较只会在同层级进行, 不会跨层级比较
+    - 在`diff`比较的过程中，循环从两边向中间比较
+  - `diff`算法在很多场景下都有应用，在`vue`中，作用于虚拟`DOM`渲染成真实`DOM`的新旧`VNode`节点比较
+:::
+:::warning 原理分析
+  - 当数据发生改变时，`set`方法会调用`Dep.notify`通知所有订阅者`Watcher`，订阅者就会调用`patch`给真实的`DOM`打补丁，更新相应的视图
+:::
