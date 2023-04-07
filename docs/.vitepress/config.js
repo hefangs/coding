@@ -66,6 +66,7 @@ function sideBar() {
         { text: 'JavaScript', link: '/post/note/javascript' },
         { text: 'Vue2.0', link: '/post/note/vue2.0' },
         { text: 'Vue3.0', link: '/post/note/vue3.0' },
+        { text: 'Http', link: '/post/note/http' },
         { text: 'React', link: '/post/note/react' },
         { text: 'Webpack', link: '/post/note/webpack' },
         { text: 'TypeScript', link: '/post/note/typescript' },

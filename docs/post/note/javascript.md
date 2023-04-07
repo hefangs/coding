@@ -283,10 +283,10 @@
   - `Last-Modified`只能精确到秒级
   - 如果资源被重复生成，而内容不变，则`Etag`更精确
   :::
-  :::warning 总结
-  :::details
-  - ![图片描述](/cache3.png)
+  :::danger 总结
+  ![图片描述](/cache3.png)
   :::
-  :::
+
+
 
 
