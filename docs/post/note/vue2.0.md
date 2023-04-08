@@ -681,6 +681,634 @@ function h(sel, b, c) {
     - 在`diff`比较的过程中，循环从两边向中间比较
   - `diff`算法在很多场景下都有应用，在`vue`中，作用于虚拟`DOM`渲染成真实`DOM`的新旧`VNode`节点比较
 :::
-:::warning 原理分析
+:::danger 原理分析
   - 当数据发生改变时，`set`方法会调用`Dep.notify`通知所有订阅者`Watcher`，订阅者就会调用`patch`给真实的`DOM`打补丁，更新相应的视图
+  ![pic](/diff1.png)
+:::
+:::danger patch方法
+  - 对比当前同层的虚拟节点是否为同一种类型的标签
+    - 是：继续执行`patchVnode`方法进行深层比对
+    - 否：没必要比对了，直接整个节点替换成新虚拟节点
+```javascript
+function patch(oldVnode, newVnode) {
+  // 比较是否为一个类型的节点
+  if (sameVnode(oldVnode, newVnode)) {
+    // 是：继续进行深层比较
+    patchVnode(oldVnode, newVnode)
+  } else {
+    // 否
+    const oldEl = oldVnode.el // 旧虚拟节点的真实DOM节点
+    const parentEle = api.parentNode(oldEl) // 获取父节点
+    createEle(newVnode) // 创建新虚拟节点对应的真实DOM节点
+    if (parentEle !== null) {
+      api.insertBefore(parentEle, vnode.el, api.nextSibling(oEl)) // 将新元素添加进父元素
+      api.removeChild(parentEle, oldVnode.el)  // 移除以前的旧元素节点
+      // 设置null，释放内存
+      oldVnode = null
+    }
+  }
+  return newVnode
+}
+```
+:::
+
+
+:::danger sameVnode方法
+  - `sameVnode`方法判断是否为同一类型节点
+```javascript
+function sameVnode(oldVnode, newVnode) {
+  return (
+    oldVnode.key === newVnode.key && // key值是否一样
+    oldVnode.tagName === newVnode.tagName && // 标签名是否一样
+    oldVnode.isComment === newVnode.isComment && // 是否都为注释节点
+    isDef(oldVnode.data) === isDef(newVnode.data) && // 是否都定义了data
+    sameInputType(oldVnode, newVnode) // 当标签为input时，type必须是否相同
+  )
+}
+```
+:::
+
+:::danger patchVnode方法
+  - 找到对应的真实`DOM`，称为`el`
+  - 判断`newVnode`和`oldVnode`是否指向同一个对象，如果是，那么直接`return`
+  - 如果他们都有文本节点并且不相等，那么将`el`的文本节点设置为`newVnode`的文本节点
+  - 如果`oldVnode`有子节点而`newVnode`没有，则删除`el`的子节点
+  - 如果`oldVnode`没有子节点而`newVnode`有，则将`newVnode`的子节点真实化之后添加到`el`
+  - 如果两者都有子节点，则执行`updateChildren`函数比较子节点
+```javascript
+function patchVnode(oldVnode, newVnode) {
+  const el = newVnode.el = oldVnode.el // 获取真实DOM对象
+  // 获取新旧虚拟节点的子节点数组
+  const oldCh = oldVnode.children, newCh = newVnode.children
+  // 如果新旧虚拟节点是同一个对象，则终止
+  if (oldVnode === newVnode) return
+  // 如果新旧虚拟节点是文本节点，且文本不一样
+  if (oldVnode.text !== null && newVnode.text !== null && oldVnode.text !== newVnode.text) {
+    // 则直接将真实DOM中文本更新为新虚拟节点的文本
+    api.setTextContent(el, newVnode.text)
+  } else {
+    // 否则
+    if (oldCh && newCh && oldCh !== newCh) {
+      // 新旧虚拟节点都有子节点，且子节点不一样
+      // 对比子节点，并更新
+      updateChildren(el, oldCh, newCh)
+    } else if (newCh) {
+      // 新虚拟节点有子节点，旧虚拟节点没有
+      // 创建新虚拟节点的子节点，并更新到真实DOM上去
+      createEle(newVnode)
+    } else if (oldCh) {
+      // 旧虚拟节点有子节点，新虚拟节点没有
+      //直接删除真实DOM里对应的子节点
+      api.removeChild(el)
+    }
+  }
+}
+```
+:::
+
+:::danger updateChildren方法
+```javascript
+function updateChildren(parentElm, oldCh, newCh) {
+  let oldStartIdx = 0, newStartIdx = 0
+  let oldEndIdx = oldCh.length - 1
+  let oldStartVnode = oldCh[0]
+  let oldEndVnode = oldCh[oldEndIdx]
+  let newEndIdx = newCh.length - 1
+  let newStartVnode = newCh[0]
+  let newEndVnode = newCh[newEndIdx]
+  let oldKeyToIdx
+  let idxInOld
+  let elmToMove
+  let before
+  while (oldStartIdx <= oldEndIdx && newStartIdx <= newEndIdx) {
+    if (oldStartVnode == null) {
+      oldStartVnode = oldCh[++oldStartIdx]
+    } else if (oldEndVnode == null) {
+      oldEndVnode = oldCh[--oldEndIdx]
+    } else if (newStartVnode == null) {
+      newStartVnode = newCh[++newStartIdx]
+    } else if (newEndVnode == null) {
+      newEndVnode = newCh[--newEndIdx]
+    } else if (sameVnode(oldStartVnode, newStartVnode)) {
+      patchVnode(oldStartVnode, newStartVnode)
+      oldStartVnode = oldCh[++oldStartIdx]
+      newStartVnode = newCh[++newStartIdx]
+    } else if (sameVnode(oldEndVnode, newEndVnode)) {
+      patchVnode(oldEndVnode, newEndVnode)
+      oldEndVnode = oldCh[--oldEndIdx]
+      newEndVnode = newCh[--newEndIdx]
+    } else if (sameVnode(oldStartVnode, newEndVnode)) {
+      patchVnode(oldStartVnode, newEndVnode)
+      api.insertBefore(parentElm, oldStartVnode.el, api.nextSibling(oldEndVnode.el))
+      oldStartVnode = oldCh[++oldStartIdx]
+      newEndVnode = newCh[--newEndIdx]
+    } else if (sameVnode(oldEndVnode, newStartVnode)) {
+      patchVnode(oldEndVnode, newStartVnode)
+      api.insertBefore(parentElm, oldEndVnode.el, oldStartVnode.el)
+      oldEndVnode = oldCh[--oldEndIdx]
+      newStartVnode = newCh[++newStartIdx]
+    } else {
+      // 使用key时的比较
+      if (oldKeyToIdx === undefined) {
+        oldKeyToIdx = createKeyToOldIdx(oldCh, oldStartIdx, oldEndIdx) // 有key生成index表
+      }
+      idxInOld = oldKeyToIdx[newStartVnode.key]
+      if (!idxInOld) {
+        api.insertBefore(parentElm, createEle(newStartVnode).el, oldStartVnode.el)
+        newStartVnode = newCh[++newStartIdx]
+      }
+      else {
+        elmToMove = oldCh[idxInOld]
+        if (elmToMove.sel !== newStartVnode.sel) {
+          api.insertBefore(parentElm, createEle(newStartVnode).el, oldStartVnode.el)
+        } else {
+          patchVnode(elmToMove, newStartVnode)
+          oldCh[idxInOld] = null
+          api.insertBefore(parentElm, elmToMove.el, oldStartVnode.el)
+        }
+        newStartVnode = newCh[++newStartIdx]
+      }
+    }
+  }
+  if (oldStartIdx > oldEndIdx) {
+    before = newCh[newEndIdx + 1] == null ? null : newCh[newEndIdx + 1].el
+    addVnodes(parentElm, before, newCh, newStartIdx, newEndIdx)
+  } else if (newStartIdx > newEndIdx) {
+    removeVnodes(parentElm, oldCh, oldStartIdx, oldEndIdx)
+  }
+}
+```
+:::
+
+## 20. vue要做权限管理该怎么做？
+:::tip 权限
+  - 权限是对特定资源的访问许可，所谓权限控制，也就是确保用户只能访问到被分配的资源
+  - 而前端权限归根结底是请求的发起权，请求的发起可能有下面两种形式触发
+    - 页面加载触发
+    - 页面上的按钮点击触发
+:::
+::: tip 前端权限控制：
+  - 接口权限
+  - 按钮权限
+  - 菜单权限
+  - 路由权限
+:::
+::: tip 接口权限
+  - 接口权限目前一般采用`jwt`的形式来验证，没有通过的话一般返回`401`
+  - 跳转到登录页面重新进行登录,登录完拿到`token`，将`token`存起来
+  - 通过`axios`请求拦截器进行拦截，每次请求的时候头部携带`token`
+```javascript
+axios.interceptors.request.use(config => {
+  config.headers['token'] = cookie.get('token')
+  return config
+})
+axios.interceptors.response.use(res=>{},{response}=>{
+  //token过期或者错误
+  if (response.data.code === 40099 || response.data.code === 40098) { 
+    router.push('/login')
+  }
+})
+```
+:::
+
+
+:::tip 按钮权限
+  - 方案1
+    - 按钮权限用`v-if`判断
+    - 但是如果页面过多，每个页面页面都要获取用户权限`role`和路由表里的`meta.btnPermissions`，然后再做判断
+  - 方案2
+    - 通过自定义指令进行按钮权限的判断
+      ```javascript
+      // 配置路由
+      {
+        path: '/permission',
+        component: Layout,
+        name: '权限测试',
+        meta: {
+          btnPermissions: ['admin', 'supper', 'normal']
+        },
+        //页面需要的权限
+        children: [{
+          path: 'supper',
+          component: _import('system/supper'),
+          name: '权限测试页',
+          meta: {
+            btnPermissions: ['admin', 'supper']
+          } //页面需要的权限
+        },
+        {
+          path: 'normal',
+          component: _import('system/normal'),
+          name: '权限测试页',
+          meta: {
+            btnPermissions: ['admin']
+          } //页面需要的权限
+        }]
+      }
+      ```
+      ```javascript
+      // 自定义权限鉴定指令
+      import Vue from 'vue'
+      /**权限指令**/
+      const has = Vue.directive('has', {
+        bind: function (el, binding, vnode) {
+          // 获取页面按钮权限
+          let btnPermissionsArr = [];
+          if(binding.value){
+            // 如果指令传值，获取指令参数，根据指令参数和当前登录人按钮权限做比较
+            btnPermissionsArr = Array.of(binding.value);
+          }else{
+            // 否则获取路由中的参数，根据路由的btnPermissionsArr和当前登录人按钮权限做比较
+            btnPermissionsArr = vnode.context.$route.meta.btnPermissions
+          }
+          if (!Vue.prototype.$_has(btnPermissionsArr)) {
+            el.parentNode.removeChild(el)
+          }
+        }
+      })
+      // 权限检查方法
+      Vue.prototype.$_has = function (value) {
+        let isExist = false
+        // 获取用户按钮权限
+        let btnPermissionsStr = sessionStorage.getItem("btnPermissions")
+        if (btnPermissionsStr == undefined || btnPermissionsStr == null) {
+          return false
+        }
+        if (value.indexOf(btnPermissionsStr) > -1) {
+          isExist = true
+        }
+        return isExist
+      }
+      export {has}
+      ```
+      ```javascript
+      // 在使用的按钮中只需要引用v-has指令
+      <el-button @click='editClick' type="primary" v-has>编辑</el-button>
+      ```
+:::
+
+:::tip 菜单权限
+  - 方案1
+    - 菜单与路由分离，菜单由后端返回
+    - 每次路由跳转的时候都要判断权限，这里的判断也很简单，因为菜单的`name`与路由的`name`是一一对应的，而后端返回的菜单就已经是经过权限过滤的
+    - 如果根据路由`name`找不到对应的菜单，就表示用户有没权限访问
+    - 如果路由很多，可以在应用初始化的时候，只挂载不需要权限控制的路由。取得后端返回的菜单后，根据菜单与路由的对应关系，筛选出可访问的路由，通过`addRoutes`动态挂载
+    - 这种方式的缺点：
+      - 菜单需要与路由做一一对应，前端添加了新功能，需要通过菜单管理功能添加新的菜单，如果菜单配置的不对会导致应用不能正常使用
+      - 全局路由守卫里，每次路由跳转都要做判断
+    ```javascript
+    // 定义路由信息
+    {
+      name: "login",
+      path: "/login",
+      component: () => import("@/pages/Login.vue")
+    } 
+    ```
+    ```javascript
+    // 全局路由守卫
+    function hasPermission(router, accessMenu) {
+      if (whiteList.indexOf(router.path) !== -1) {
+        return true
+      }
+      let menu = Util.getMenuByName(router.name, accessMenu);
+      if (menu.name) {
+        return true
+      }
+      return false
+    }
+    Router.beforeEach(async (to, from, next) => {
+      if (getToken()) {
+        let userInfo = store.state.user.userInfo;
+        if (!userInfo.name) {
+          try {
+            await store.dispatch("GetUserInfo")
+            await store.dispatch('updateAccessMenu')
+            if (to.path === '/login') {
+              next({ name: 'home_index' })
+            } else {
+              //Util.toDefaultPage([...routers], to.name, router, next);
+              next({ ...to, replace: true })//菜单权限更新完成,重新进一次当前路由
+            }
+          }  
+          catch (e) {
+            if (whiteList.indexOf(to.path) !== -1) { // 在免登录白名单，直接进入
+              next()
+            } else {
+              next('/login')
+            }
+          }
+        } else {
+          if (to.path === '/login') {
+            next({ name: 'home_index' })
+          } else {
+            if (hasPermission(to, store.getters.accessMenu)) {
+              Util.toDefaultPage(store.getters.accessMenu,to, routes, next);
+            } else {
+              next({ path: '/403',replace:true })
+            }
+          }
+        }
+      } else {
+        if (whiteList.indexOf(to.path) !== -1) { // 在免登录白名单，直接进入
+          next()
+        } else {
+          next('/login')
+        }
+      }
+      let menu = Util.getMenuByName(to.name, store.getters.accessMenu);
+      Util.title(menu.title);
+    })
+    Router.afterEach((to) => {
+      window.scrollTo(0, 0);
+    })
+    ```
+  - 方案2
+    - 菜单和路由都由后端返回
+    - 在将后端返回路由通过addRoutes动态挂载之间，需要将数据处理一下，将component字段换为真正的组件
+    - 如果有嵌套路由，后端功能设计的时候，要注意添加相应的字段，前端拿到数据也要做相应的处理
+    - 这种方法也会存在缺点：
+      - 全局路由守卫里，每次路由跳转都要做判断
+      - 前后端的配合要求更高
+    ```javascript
+    // 路由组件
+    const Home = () => import("../pages/Home.vue");
+    const UserInfo = () => import("../pages/UserInfo.vue");
+    export default {
+      home: Home,
+      userInfo: UserInfo
+    }
+    ```
+    ```javascript
+    // 后端路由组件返回以下格式
+    [
+      {
+        name: "home",
+        path: "/",
+        component: "Home"
+      },
+      {
+        name: "about",
+        path: "/about",
+        component: "About"
+      }
+    ]
+    ```
+:::
+
+:::tip 路由权限
+  - 方案1
+    - 初始化即挂载全部路由，并且在路由上标记相应的权限信息，每次路由跳转前做校验
+    - 这种方式存在以下四种缺点：
+      - 加载所有的路由，如果路由很多，而用户并不是所有的路由都有权限访问，对性能会有影响
+      - 全局路由守卫里，每次路由跳转都要做权限判断
+      - 菜单信息写死在前端，要改个显示文字或权限信息，需要重新编译
+      - 菜单跟路由耦合在一起，定义路由的时候还有添加菜单显示标题，图标之类的信息，而且路由不一定作为菜单显示，还要多加字段进行标识
+      ```javascript
+      const routerMap = [
+        {
+          path: '/permission',
+          component: Layout,
+          redirect: '/permission/index',
+          alwaysShow: true, // will always show the root menu
+          meta: {
+            title: 'permission',
+            icon: 'lock',
+            roles: ['admin', 'editor'] // you can set roles in root nav
+          },
+          children: [{
+            path: 'page',
+            component: () => import('@/views/permission/page'),
+            name: 'pagePermission',
+            meta: {
+              title: 'pagePermission',
+              roles: ['admin'] // or you can only set roles in sub nav
+            }
+          }, {
+            path: 'directive',
+            component: () => import('@/views/permission/directive'),
+            name: 'directivePermission',
+            meta: {
+              title: 'directivePermission'
+              // if do not set roles, means: this page does not require permission
+            }
+          }]
+        }]
+      ```
+  -  方案2
+     -  初始化的时候先挂载不需要权限控制的路由，比如登录页，`404`等错误页
+     -  如果用户通过`URL`进行强制访问，则会直接进入`404`，相当于从源头上做了控制
+     -  登录后，获取用户的权限信息，然后筛选有权限访问的路由，在全局路由守卫里进行调用`addRoutes`添加路由
+     -  按需挂载，路由就需要知道用户的路由权限，也就是在用户登录进来的时候就要知道当前用户拥有哪些路由权限
+     -  这种方式也存在了以下的缺点：
+        -  全局路由守卫里，每次路由跳转都要做判断
+        -  菜单信息写死在前端，要改个显示文字或权限信息，需要重新编译
+        -  菜单跟路由耦合在一起，定义路由的时候还有添加菜单显示标题，图标之类的信息，而且路由不一定作为菜单显示，还要多加字段进行标识
+        ```javascript
+        import router from './router'
+        import store from './store'
+        import { Message } from 'element-ui'
+        import NProgress from 'nprogress' 
+        import 'nprogress/nprogress.css'
+        import { getToken } from '@/utils/auth' 
+        NProgress.configure({ showSpinner: false }) // NProgress Configuration
+        // permission judge function
+        function hasPermission(roles, permissionRoles) {
+          if (roles.indexOf('admin') >= 0) return true // admin permission passed directly
+          if (!permissionRoles) return true
+          return roles.some(role => permissionRoles.indexOf(role) >= 0)
+        }
+        const whiteList = ['/login', '/authredirect']// no redirect whitelist
+        router.beforeEach((to, from, next) => {
+          NProgress.start() // start progress bar
+          if (getToken()) { // determine if there has token
+            /* has token*/
+            if (to.path === '/login') {
+              next({ path: '/' })
+              NProgress.done() // if current page is dashboard will not trigger	afterEach hook, so manually handle it
+            } else {
+              if (store.getters.roles.length === 0) { // 判断当前用户是否已拉取完user_info信息
+                store.dispatch('GetUserInfo').then(res => { // 拉取user_info
+                  const roles = res.data.roles // note: roles must be a array! such as: ['editor','develop']
+                  store.dispatch('GenerateRoutes', { roles }).then(() => { // 根据roles权限生成可访问的路由表
+                    router.addRoutes(store.getters.addRouters) // 动态添加可访问路由表
+                    next({ ...to, replace: true }) // hack方法 确保addRoutes已完成 ,set the replace: true so the navigation will not leave a history record
+                  })
+                }).catch((err) => {
+                  store.dispatch('FedLogOut').then(() => {
+                    Message.error(err || 'Verification failed, please login again')
+                    next({ path: '/' })
+                  })
+                })
+              } else {
+                // 没有动态改变权限的需求可直接next() 删除下方权限判断 ↓
+                if (hasPermission(store.getters.roles, to.meta.roles)) {
+                  next()//
+                } else {
+                  next({ path: '/401', replace: true, query: { noGoBack: true }})
+                }
+              }
+            }
+          } else {
+            /* has no token*/
+            if (whiteList.indexOf(to.path) !== -1) { // 在免登录白名单，直接进入
+              next()
+            } else {
+              next('/login') // 否则全部重定向到登录页
+              NProgress.done() // if current page is login will not trigger afterEach hook, so manually handle it
+            }
+          }
+        })
+        router.afterEach(() => {
+          NProgress.done() // finish progress bar
+        })
+        ```
+:::
+
+
+## 21. Vue项目中你是如何解决跨域的呢？
+:::tip 跨域
+  - 跨域本质是浏览器基于同源策略的一种安全手段
+  - 同源策略（`Sameoriginpolicy`），是一种约定，它是浏览器最核心也最基本的安全功能
+    - 所谓同源（即指在同一个域）具有以下三个相同点
+      - 协议相同（`protocol`）
+      - 主机相同（`host`）
+      - 端口相同（`port`）
+  - 反之非同源请求，也就是协议、端口、主机其中一项不相同的时候，这时候就会产生跨域
+:::
+
+:::warning 如何解决
+  - 解决跨域的方法有很多，下面列举了三种：
+    - `JSONP`
+    - `CORS`
+    - `Proxy`
+  - 在vue项目中，我们主要针对`CORS`或`Proxy`这两种方案进行展开
+:::
+
+:::danger CORS
+  - `CORS` （`Cross-Origin Resource Sharing`，跨域资源共享）是一个系统，它由一系列传输的`HTTP`头组成，这些`HTTP`头决定浏览器是否阻止前端`JavaScript`代码获取跨域请求的响应
+  - `CORS`实现起来非常方便，只需要增加一些`HTTP`头，让服务器能声明允许的访问来源，只要后端实现了`CORS`就实现了跨域
+  - `Access-Control-Allow-Origin`设置为`*`其实意义不大，可以说是形同虚设，实际应用中，上线前我们会将`Access-Control-Allow-Origin`值设为我们目标`host`
+  ![pic](/cors.png "notice")
+:::
+
+:::danger Proxy
+  - 代理（`Proxy`）也称网络代理，是一种特殊的网络服务，允许一个（一般为客户端）通过这个服务与另一个网络终端（一般为服务器）进行非直接的连接
+  - 一些网关、路由器等网络设备具备网络代理功能。一般认为代理服务有利于保障网络终端的隐私或安全，防止攻击
+  - 方案1
+    - 如果是通过`vue-cli`脚手架工具搭建项目，我们可以通过`webpack`为我们起一个本地服务器作为请求的代理对象
+    - 通过该服务器转发请求至目标服务器，得到结果再转发给前端，但是最终发布上线时如果`web`应用和接口服务器不在一起仍会跨域
+    ```javascript
+      // vue.config.js
+      module.exports = {
+        devServer: {
+          host: '127.0.0.1',
+          port: 8080,
+          open: true,// vue项目启动时自动打开浏览器
+          proxy: {
+            // '/api'是代理标识，用于告诉node，url前面是/api的就是使用代理的
+            '/api': { 
+            //目标地址，一般是指后台服务器地址
+            target: "http://xxx.xxx.xx.xx:8080", 
+            //是否跨域
+            changeOrigin: true, 
+            // pathRewrite 的作用是把实际Request Url中的'/api'用""代替
+            pathRewrite: { 
+              '^/api': "" 
+            }
+          }
+        }
+      }
+    }
+    ```
+    ```javascript
+    // 通过axios发送请求中，配置请求的根路径
+      axios.defaults.baseURL = '/api'
+    ```
+  - 方案2
+    - 通过服务端实现代理请求转发
+    ```javascript
+    // 以express框架为例
+      var express = require('express')
+      const proxy = require('http-proxy-middleware')
+      const app = express()
+      app.use(express.static(__dirname + '/'))
+      app.use('/api', proxy({ 
+        target: 'http://localhost:4000', 
+        changeOrigin: false
+      }))
+      module.exports = app
+    ```
+  - 方案3
+    - 通过配置`nginx`实现代理
+    ```javascript
+      server {
+      listen    80
+      # server_name www.josephxia.com
+      location / {
+          root  /var/www/html
+          index  index.html index.htm
+          try_files $uri $uri/ /index.html
+      }
+      location /api {
+        proxy_pass  http://127.0.0.1:3000
+        proxy_redirect   off
+        proxy_set_header  Host       $host
+        proxy_set_header  X-Real-IP     $remote_addr
+        proxy_set_header  X-Forwarded-For  $proxy_add_x_forwarded_for
+      }
+    }
+    ```
+:::
+
+## 22. vue项目本地开发完成后部署到服务器后报404是什么原因？
+
+:::tip 404
+  - `Vue`项目在本地时运行正常，但部署到服务器中，刷新页面，出现了`404`错误
+  - `HTTP 404`错误意味着链接指向的资源不存在
+:::
+:::tip history模式404问题
+  - `Vue`是属于单页应用（`single-page application`）
+  - 而`SPA`是一种网络应用程序或网站的模型，所有用户交互是通过动态重写当前页面，前面我们也看到了，不管我们应用有多少页面，构建物都只会产出一个`index.html`
+  - `Nginx`配置：
+    ```javascript
+    server {
+      listen  80;
+      server_name  www.xxx.com
+      location / {
+        index  /data/dist/index.html
+      }
+    }
+    ```
+  - 可以根据`Nginx`配置得出，当我们在地址栏输入`www.xxx.com`时，这时会打开我们`dist`目录下的`index.html`文件，然后我们在跳转路由进入到 `www.xxx.com/login`
+  - 当我们在`xxx.com/login`页执行刷新操作，`Nginx location` 是没有相关配置的，所以就会出现`404`的情况
+:::
+:::tip 解决history模式404问题
+  - 产生问题的本质是因为我们的路由是通过`JS`来执行视图切换的
+  - 当我们进入到子路由时刷新页面，`web`容器没有相对应的页面此时会出现`404`
+  - 所以我们只需要配置将任意页面都重定向到`index.html`，把路由交由前端处理
+  - 对`Nginx`配置文件`.conf`修改，添加`try_files $uri $uri/ /index.html`
+    ```javascript
+    server {
+      listen  80
+      server_name  www.xxx.com
+      location / {
+        index  /data/dist/index.html
+        try_files $uri $uri/ /index.html
+      }
+    }
+    ```
+  - 修改完需要更新配置文件
+    ```javascript
+    nginx -s reload
+    ```
+  - 服务器就不再返回`404`错误页面，因为对于所有路径都会返回`index.html`文件
+  - `Vue`应用里面覆盖所有的路由情况，然后在给出一个`404`页面
+    ```javascript
+    const router = new VueRouter({
+      mode: 'history',
+      routes: [
+        { path: '*', component: NotFoundComponent }
+      ]
+    })
+    ```
 :::
