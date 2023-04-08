@@ -287,6 +287,235 @@
   ![图片描述](/cache3.png)
   :::
 
+## 8.  数组的方法
+:::tip Array.prototype.push()
+  - `push()`方法将一个或多个元素添加到数组的末尾，`并返回该数组的新长度`
+  ```javascript
+  const colors = ['red', 'green'];
+  const length = colors.push('blue');
+  console.log(colors) // ['red', 'green', 'blue']
+  console.log(length) //  3
+  ```
+:::
+:::tip Array.prototype.pop()
+  - `pop()`方法从数组中删除最后一个元素，并返回该元素的值。`此方法会更改数组的长度`
+  ```javascript
+  const colors = ['red', 'green','blue']
+  const item = colors.pop()
+  console.log(item) //  'blue'
+  console.log(colors) // ['red', 'green']
+  ```
+:::
+:::tip Array.prototype.unshift()
+  - `unshift()`方法将一个或多个元素添加到数组的开头，`并返回该数组的新长度`
+  ```javascript
+  const colors = ['red', 'green','blue']
+  const item = colors.shift()
+  console.log(item) //  'red'
+  console.log(colors) // ['green', 'blue']
+  ```
+:::
+:::tip Array.prototype.shift()
+  - `shift()`方法从数组中删除第一个元素，`并返回该元素的值。此方法更改数组的长度`
+  ```javascript
+  const colors = ['red','green','blue']
+  const item = colors.shift()
+  console.log(item) //  red
+  console.log(colors) // ['red', 'green', 'blue']
+  ```
+:::
+:::warning Array.prototype.splice()
+  - `splice()`方法通过删除或替换现有元素或者原地添加新的元素来修改数组，并以数组形式返回被修改的内容
+  - 此方法会`改变原数组`
+  ```javascript{1-4,19}
+  splice(start)
+  splice(start, deleteCount)
+  splice(start, deleteCount, item1)
+  splice(start, deleteCount, item1, item2, itemN)
+   // 删除
+  const colors = ['red','green','blue']
+  const colors2 = colors.splice(0,1)
+  console.log(colors)  // ['green', 'blue']
+  console.log(colors2) // ['red']
+   // 替换现有元素
+  const colors = ['red','green','blue']
+  const colors2 = colors.splice(0,1,'yellow')
+  console.log(colors)  // ['yellow', 'green', 'blue']
+  console.log(colors2) // ['red']
+   // 原地添加新的元素
+  const colors = ['red','green','blue']
+  const colors2 = colors.splice(0,0,'yellow')
+  console.log(colors) // ['yellow', 'red', 'green', 'blue']
+  console.log(colors2) // [] // 如果没有删除元素，则返回空数组
+:::
+:::warning Array.prototype.slice()
+  - `slice()`方法`返回一个新的数组对象`
+  - 这一对象是一个由`begin`和`end`决定的原数组的浅拷贝包括`begin`，不包括`end`原始数组不会被改变
+  ```javascript
+  slice()
+  slice(start)
+  slice(start, end)
+  const colors = ['red','green','blue']
+  const colors2 = colors.slice()
+  const colors3 = colors.slice(1,5)
+  console.log(colors) //   ['red', 'green', 'blue']
+  console.log(colors2) //  ['red', 'green', 'blue']
+  console.log(colors3) //  ['green', 'blue']
+  ```
+:::
+:::tip Array.prototype.concat()
+  - `concat()`方法用于合并两个或多个数组，此方法不会更改现有数组，而是`返回一个新数组`
+  ```javascript
+  const colors = ['red','green','blue']
+  const colors2 = ['yellow']
+  const colors3 = colors.concat(colors2)
+  console.log(colors) //   ['red', 'green', 'blue']
+  console.log(colors2) //  ['yellow']
+  console.log(colors3) //  ['red', 'green', 'blue', 'yellow']
+  ```
+:::
+:::tip Array.prototype.reverse()
+  - `reverse()`方法将数组中元素的位置颠倒，并返回该数组。数组的第一个元素会变成最后一个，数组的最后一个元素变成第一个
+  - 该方法`会改变原数组`
+  ```javascript
+  const colors = ['red','green','blue']
+  const colors2 = colors.reverse()
+  console.log(colors) //   ['blue', 'green', 'red']
+  console.log(colors2) //  ['blue', 'green', 'red']
+  ```
+:::
+:::tip Array.prototype.sort()
+  - `sort()`方法用[原地算法](https://zh.wikipedia.org/wiki/%E5%8E%9F%E5%9C%B0%E7%AE%97%E6%B3%95 "Markdown")，原地算法对数组的元素进行排序，`并返回数组`
+  - 默认排序顺序是在将元素转换为字符串，然后比较它们的`UTF-16`代码单元值序列时构建的
+  - 由于它取决于具体实现，因此无法保证排序的时间和空间复杂性
+  ```javascript
+  sort()
+  // 用来指定按某种顺序进行排列的函数。
+  // 如果省略，元素按照转换为的字符串的各个字符的 Unicode 位点进行排序
+  sort(compareFn)
+  compareFn(a,b)
+  const colors = ['red','green','blue']
+  const colors2 = colors.sort()
+  console.log(colors) //   ['blue', 'green', 'red']
+  console.log(colors2) //  ['blue', 'green', 'red']
+  ```
+:::
+
+:::tip
+  - `join()`方法将一个数组（或一个类数组对象）的所有元素连接成一个字符串并返回这个字符串，用逗号或指定的分隔符字符串分隔
+  - 如果数组只有一个元素，那么将返回该元素而不使用分隔符
+  ```javascript
+  const colors = ['red','green','blue']
+  const colors2 = colors.join()
+  const colors3 = colors.join("")
+  console.log(colors) // ['red', 'green', 'blue']
+  console.log(colors2) // 'red,green,blue'
+  console.log(colors3) // 'redgreenblue'
+  ```
+:::
+
+:::warning Array.prototype.filter()
+  - `filter()`方法创建给定数组一部分的浅拷贝，其包含通过所提供函数实现的测试的所有元素
+  ```javascript
+  filter(callbackFn)
+  filter(callbackFn, thisArg)
+  callbackFn(element,index,array)
+  const colors = ['red','green','blue']
+  const colors2 = colors.filter((item)=>item.length >= 4)
+  console.log(colors)  //   ['red', 'green', 'blue']]
+  console.log(colors2) //  ['green', 'blue']
+  ```
+:::
+:::warning Array.prototype.forEach()
+  - `forEach()`方法对数组的每个元素执行一次给定的函数，
+  - `forEach对原数组进行修改`，返回值为`undefined`
+  ```javascript
+  forEach(callbackFn)
+  forEach(callbackFn, thisArg)
+  callbackFn(element,index,array)
+  const colors = ['red','green','blue']
+  const colors2 = colors.forEach((item,index)=>colors[index] = item +'!'  )
+  console.log(colors)  // ['red!', 'green!', 'blue!']
+  console.log(colors2) // undefined
+  ```
+:::
+:::warning Array.prototype.map()
+  - `map()`方法创建一个新数组，这个新数组由原数组中的每个元素都调用一次提供的函数后的返回值组成
+  - `返回一个新的数组`
+  ```javascript
+  map(callbackFn)
+  map(callbackFn, thisArg)
+  callbackFn(currentValue,index,array)
+  const colors = ['red','green','blue']
+  const colors2 = colors.map((item)=> item +'!'  )
+  console.log(colors)  // ['red', 'green', 'blue']
+  console.log(colors2) // ['red!', 'green!', 'blue!']
+  ```
+:::
+
+:::warning Array.prototype.reduce()
+  - `reduce()`方法对数组中的每个元素按序执行一个由您提供的`reducer`函数
+  - 每一次运行`reducer`会将先前元素的计算结果作为参数传入，最后将其结果汇总为单个返回值
+  ```javascript
+  reduce(callbackFn)
+  reduce(callbackFn, initialValue)
+  callbackFn(previousValue,currentValue,index,array)
+  const arr = [1,2,3]
+  const arr2 = arr.reduce((pre,cur)=> pre + cur )
+  console.log(arr) // [1, 2, 3] 
+  console.log(arr2) // 6
+  ```
+:::
+:::tip Array.prototype.some()
+  - `reduce()`方法测试数组中是不是至少有`1`个元素通过了被提供的函数测试
+  - 它返回的是一个`Boolean`类型的值
+  - **如果用一个空数组进行测试，在任何情况下它返回的都是`False`**
+  ```javascript
+  reduce(callbackFn)
+  reduce(callbackFn, thisArg)
+  callbackFn(element,index,array)
+  const arr = [1,2,3,4,5]
+  const arr2 = arr.some((item)=> item % 2===0 )
+  console.log(arr) // [1, 2, 3, 4, 5] 
+  console.log(arr2) // true
+  ```
+:::
+:::tip Array.prototype.every()
+  - `every()`方法测试一个数组内的所有元素是否都能通过指定函数的测试
+  - 它返回的是一个`Boolean`类型的值
+  ```javascript
+  reduce(callbackFn)
+  reduce(callbackFn, thisArg)
+  callbackFn(element,index,array)
+  const arr = [1,2,3,4,5]
+  const arr2 = arr.every((item)=> item % 2===0 )
+  console.log(arr) // [1, 2, 3, 4, 5] 
+  console.log(arr2) // false
+  ```
+:::
 
 
+:::tip Array.prototype.indexOf()
+  - `indexOf()`方法返回在数组中可以找到给定元素的第一个索引
+  - 如果不存在，则返回`-1`
+  ```javascript
+  const colors = ['red','green','blue','red']
+  console.log(colors.indexOf('red')) // 0
+  console.log(colors.indexOf('red',1)) // 3
+  console.log(colors.indexOf('yellow')) // -1
+  ```
+:::
+:::tip Array.prototype.lastIndexOf()
+  - `lastIndexOf()`方法返回指定元素（也即有效的`JavaScript`值或变量）在数组中的最后一个的索引
+  - 如果不存在则返回 -1。从数组的后面向前查找，从fromIndex处开始
+  ```javascript
+  const colors = ['red','green','blue','red']
+  console.log(colors.lastIndexOf('red')) // 3
+  console.log(colors.indexOf('green')) // 1
+  ```
+:::
 
+:::tip Array.prototype.includes()
+  - `includes()`方法用来判断一个数组是否包含一个指定的值
+  - 如果包含则返回`true`，否则返回`false`
+:::
