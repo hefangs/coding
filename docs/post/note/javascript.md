@@ -518,4 +518,64 @@
 :::tip Array.prototype.includes()
   - `includes()`方法用来判断一个数组是否包含一个指定的值
   - 如果包含则返回`true`，否则返回`false`
+  ```javascript
+  const colors = ['red','green','blue']
+  console.log(colors.includes('red')) // true
+  console.log(colors.includes('yellow')) // false
+  console.log(colors.includes()) // false
+  ```
+:::
+
+:::tip Array.prototype.find()
+  - `find()`方法返回数组中满足提供的测试函数的第一个元素的值，否则返回 `undefined`
+  ```javascript
+  const arr = [1,2,3,4,5]
+  console.log(arr.find((item)=> item > 3)) // 4
+  console.log(arr.find((item)=> item > 5)) // undefined
+  ```
+:::
+
+:::tip Array.prototype.fill()
+  - `fill()`方法用一个固定值填充一个数组中从起始索引（默认为 0）到终止索引（默认为`array.length`）内的全部元素
+  - 它返回修改后的数组
+  ```javascript
+  fill(value)
+  fill(value, start)
+  fill(value, start, end)
+  const arr = [1,2,3,4,5]
+  const arr1 = arr.fill(6)
+  const arr2 = arr.fill(7, 1)
+  const arr3 = arr.fill(8, 1, 3)
+  console.log(arr1) //  [6, 6, 6, 6, 6]
+  console.log(arr2) //  [6, 7, 7, 7, 7]
+  console.log(arr3) //  [6, 8, 8, 7, 7]
+  ```
+:::
+
+:::tip Array.prototype.flat()
+  - `flat()`方法创建一个新的数组，并根据指定深度递归地将所有子数组元素拼接到新的数组中
+  ```javascript
+  const arr1 = [0, 1, 2, [3, 4], 5]
+  console.log(arr1.flat()) // [0, 1, 2, 3, 4, 5]
+  ```
+:::
+
+:::tip Array.from()
+  - `Array.from()`静态方法从可迭代或类数组对象创建一个新的浅拷贝的数组实例
+  ```javascript
+  const arrayLike = document.querySelectorAll('div')
+  const arr = Array.from(arrayLike)
+  console.log(Array.isArray(arr))  // true
+  ```
+:::
+
+:::tip Array.of()
+  - `Array.of()`方法通过可变数量的参数创建一个新的 Array 实例，而不考虑参数的数量或类型
+  - `Array.of()`和 `Array()`构造函数之间的区别在于对单个参数的处理
+  ```javascript
+  Array.of(7)// [7]
+  Array(7) // [empty × 7]
+  Array.of(1, 2, 3); // [1, 2, 3]
+  Array(1, 2, 3);    // [1, 2, 3]
+  ```
 :::
