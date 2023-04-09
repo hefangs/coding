@@ -614,3 +614,148 @@
   ```
 :::
 :::tip Object.entries()
+  - `Object.entries()`方法返回一个给定对象自身可枚举属性的键值对数组
+  ```javascript
+  const obj1 = {a:1,b:2}
+  const entries = Object.entries(obj1)
+  console.log(entries) // [ ['a', 1], ['b', 2]] 
+  ```
+:::
+:::warning Object.hasOwn()
+  - 如果指定的对象自身有指定的属性，则静态方法`Object.hasOwn()`返回`true`
+  - 如果属性是继承的或者不存在，该方法返回`false`
+  - *备注：`Object.hasOwn()`旨在取代`Object.hasOwnProperty()`*
+  ```javascript
+  hasOwn(instance, prop)
+  const obj1 = {a:1,b:2}
+  console.log(Object.hasOwn(obj1,'a')) // true
+  console.log(Object.hasOwn(obj1,'toString')) // false
+  console.log(Object.hasOwn(obj1,'c')) // false
+  ```
+:::
+
+:::tip Object.is()
+  - `Object.is()`方法判断两个值是否为同一个值
+  - `Object.is()`方法判断两个值是否为同一个值，如果满足以下任意条件则两个值相等：
+    - 都是`undefined`
+    - 都是`null`
+    - 都是`true`或都是`false`
+    - 都是相同长度、相同字符、按相同顺序排列的字符串
+    - 都是相同对象（意味着都是同一个对象的值引用）
+    - 都是数字且
+      - 都是`+0`
+      - 都是`-0`
+      - 都是`NaN`
+      - 都是同一个值，非零且都不是`NaN`
+  ```javascript
+  Object.is(1, 1)                  // true
+  Object.is('abc', 'abc')          // true
+  Object.is('abc', 'edf')          // false
+  Object.is(null, null)            // true
+  Object.is(undefined, undefined)  // true
+  Object.is(window, window)        // true
+  Object.is([], [])                // false
+  const foo = { a: 1 }        
+  const bar = { a: 1 }
+  Object.is(foo, foo)              // true
+  Object.is(foo, bar)              // false
+  Object.is(0, -0)                 // false
+  Object.is(+0, -0)                // false
+  Object.is(-0, -0)                // true
+  Object.is(0n, -0n)               // true
+  Object.is(NaN, 0/0)              // true
+  Object.is(NaN, Number.NaN)       // true
+  ```
+:::
+
+## 10. 谈谈 JavaScript 中的类型转换机制
+:::tip 概述
+  - `JS`中有六种简单数据类型：`undefined`，`null`，`boolean`，`string`，`number`，`symbol`，`object`
+  - 但是我们在声明的时候只有一种数据类型，只有到运行期间才会确定当前类型
+    ```javascript
+    let x = y ? 1 : 2
+    ```
+  - 上面代码中，x的值在编译阶段是无法获取的，只有等到程序运行时才能知道
+  - 虽然变量的数据类型是不确定的，但是各种运算符对数据类型是有要求的，如果运算子的类型与预期不符合，就会触发类型转换机制
+  - 常见的类型转换有：
+    - 强制转换（显示转换）
+    - 自动转换（隐式转换）
+:::
+
+:::warning 显示转换
+  - 常见的方法有：
+    - `Number()`
+    - `parseInt()`
+    - `String()`
+    - `Boolean()`
+:::
+:::warning Number()
+  - 将任意类型的值转化为数值
+    | 原始值    |             转换结果             |
+    | --------- | :------------------------------: |
+    | undefined |               NaN                |
+    | null      |                0                 |
+    | true      |                1                 |
+    | false     |                0                 |
+    | string    |     根据语法和转换规则来转换     |
+    | symbol    |   Throw a TypeError exception    |
+    | object    | 先调用toPrimitive,再调用toNumber |
+  ```javascript
+  // test
+  Number(123) // 123
+  Number('123') // 123
+  Number('123abc') // NaN
+  Number('') // 0
+  Number(true) // 1
+  Number(false) // 0
+  Number(undefined) // NaN
+  Number(null) // 0
+  Number({}) // NaN
+  Number([1,2,3]) // NaN
+  Number([1,2,3]) // NaN
+  Number([1]) // 1
+  ```
+  - `Number`转换的时候是很严格的，只要有一个字符无法转成数值，整个字符串就会被转为`NaN`
+:::
+
+:::tip parseInt()
+  - `parseInt`函数逐个解析字符，遇到不能转换的字符就停下来
+  ```javascript
+  parseInt('123abc123') // 123
+  ```
+:::
+:::warning Sting()
+  - 可以将任意类型的值转化成字符串
+    | 原始值    |             转换结果             |
+    | --------- | :------------------------------: |
+    | undefined |           'undefined'            |
+    | null      |              'null'              |
+    | boolean   |         'true'、'false'          |
+    | number    |              string              |
+    | string    |              string              |
+    | symbol    |              string              |
+    | object    | 先调用toPrimitive,再调用toNumber |
+  ```javascript{8-9}
+  // test 
+  String(undefined) // 'undefined'
+  String(null) // 'null'
+  String(true) // 'true'
+  String(false) // 'false'
+  String(1) // '1'
+  String('abc') // 'abc'
+  String(Symbol('abc')) // 'Symbol(abc)'
+  String({}) // '[object Object]'
+  ```
+:::
+
+:::tip Boolean()
+  - 可以将任意类型的值转为布尔值
+    | 数据类型  | 转换为true的值 | 转换为false的值 |
+    | --------- | :------------: | :-------------: |
+    | boolean   |      true      |      false      |
+    | string    |    centered    |       $12       |
+    | number    |    are neat    |       $1        |
+    | object    |    are neat    |       $1        |
+    | undefined |    are neat    |       $1        |
+
+:::
