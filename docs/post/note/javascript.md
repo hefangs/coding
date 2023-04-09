@@ -689,18 +689,17 @@
     - `String()`
     - `Boolean()`
 :::
-:::warning Number()
+:::danger Number()
   - 将任意类型的值转化为数值
     | 原始值    |             转换结果             |
     | --------- | :------------------------------: |
-    | undefined |               NaN                |
-    | null      |                0                 |
-    | true      |                1                 |
-    | false     |                0                 |
-    | string    |     根据语法和转换规则来转换     |
-    | symbol    |   Throw a TypeError exception    |
-    | object    | 先调用toPrimitive,再调用toNumber |
-  ```javascript
+    | Undefined |               NaN                |
+    | Null      |                0                 |
+    | Boolean   |              1 、0               |
+    | String    |     根据语法和转换规则来转换     |
+    | Symbol    |   Throw a TypeError exception    |
+    | Object    | 先调用toPrimitive,再调用toNumber |
+  ```javascript{10,13}
   // test
   Number(123) // 123
   Number('123') // 123
@@ -712,29 +711,29 @@
   Number(null) // 0
   Number({}) // NaN
   Number([1,2,3]) // NaN
-  Number([1,2,3]) // NaN
   Number([1]) // 1
+  Number([]) // 0
   ```
   - `Number`转换的时候是很严格的，只要有一个字符无法转成数值，整个字符串就会被转为`NaN`
 :::
 
-:::tip parseInt()
+:::danger parseInt()
   - `parseInt`函数逐个解析字符，遇到不能转换的字符就停下来
   ```javascript
   parseInt('123abc123') // 123
   ```
 :::
-:::warning Sting()
+:::danger Sting()
   - 可以将任意类型的值转化成字符串
     | 原始值    |             转换结果             |
     | --------- | :------------------------------: |
-    | undefined |           'undefined'            |
-    | null      |              'null'              |
-    | boolean   |         'true'、'false'          |
-    | number    |              string              |
-    | string    |              string              |
-    | symbol    |              string              |
-    | object    | 先调用toPrimitive,再调用toNumber |
+    | Undefined |           'undefined'            |
+    | Null      |              'null'              |
+    | Boolean   |         'true'、'false'          |
+    | Number    |              string              |
+    | String    |              string              |
+    | Symbol    |              string              |
+    | Object    | 先调用toPrimitive,再调用toNumber |
   ```javascript{8-9}
   // test 
   String(undefined) // 'undefined'
@@ -748,14 +747,75 @@
   ```
 :::
 
-:::tip Boolean()
+:::danger Boolean()
   - 可以将任意类型的值转为布尔值
-    | 数据类型  | 转换为true的值 | 转换为false的值 |
-    | --------- | :------------: | :-------------: |
-    | boolean   |      true      |      false      |
-    | string    |    centered    |       $12       |
-    | number    |    are neat    |       $1        |
-    | object    |    are neat    |       $1        |
-    | undefined |    are neat    |       $1        |
+    | 数据类型  |     转换为true的值     | 转换为false的值 |
+    | --------- | :--------------------: | :-------------: |
+    | Boolean   |          true          |      false      |
+    | String    |       非空字符串       |       ""        |
+    | Number    | 非零数值（包括无穷值） |     0、NaN      |
+    | Object    |        任意对象        |      null       |
+    | Undefined |      N/A(不存在)       |    undefined    |
+    | Null      |      N/A(不存在)       |      null       |
+  ```javascript
+  // test
+  Boolean(undefined) // false
+  Boolean(null) // false
+  Boolean(0) // false
+  Boolean(NaN) // false
+  Boolean('') // false
+  Boolean({}) // true
+  Boolean([]) // true
+  Boolean(new Boolean(false)) // true
+  ```
+:::
 
+:::warning 隐式转换
+  - 两种情况发生隐式转换的场景：
+    - 比较运算（`==`、`!=`、`>`、`<`）、`if`、`while`需要布尔值地方
+    - 算术运算（`+`、`-`、`*`、`/`、`%`）
+    - 除了上面的场景，还要求运算符两边的操作数不是同一类型
+:::
+  :::danger 自动转换为布尔值
+  - 在需要布尔值的地方，就会将非布尔值的参数自动转为布尔值，系统内部会调用`Boolean`函数
+    - 可以得出个小结：
+      - `undefined`
+      - `null`
+      - `false`
+      - `+0`
+      - `-0`
+      - `NaN`
+      - `""`
+    - 除了上面几种会被转化成`false`，其他都换被转化成`true`
+:::
+  :::danger 自动转换成字符串
+  - 先将复合类型的值转为原始类型的值，再将原始类型的值转为字符串
+  - 常发生在+运算中，一旦存在字符串，则会进行字符串拼接操作
+  ```javascript
+  '1' + 1 // '11'
+  '1' + true // "1true"
+  '1' + false // "1false"
+  '1' + {} // "1[object Object]"
+  '1' + [] // "1"
+  '1' + function (){} // "1function (){}"
+  '1' + undefined // "1undefined"
+  '1' + null // "1null"
+  ```
+:::
+
+  :::danger 自动转换成数值
+  - 除了+有可能把运算子转为字符串，其他运算符都会把运算子自动转成数值
+  ```javascript{11}
+  '1' - '2' // -1
+  '1' * '2' // 2
+  true - 1  // 0
+  false - 1 // -1
+  '1' - 1   // 0
+  '1' * []    // 0
+  false / '1' // 0
+  'abc' - 1   // NaN
+  null + 1 // 1
+  undefined + 1 // NaN
+  // null转为数值后值为0 ,undefined转为数值后值为NaN
+  ```
 :::
