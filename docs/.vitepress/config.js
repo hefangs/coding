@@ -1,6 +1,6 @@
 export default {
   markdown: {
-    lineNumbers: true
+    // lineNumbers: true
   },
   lang: 'zh-CN',
   title: 'he',
