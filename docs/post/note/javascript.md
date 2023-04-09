@@ -507,7 +507,7 @@
 :::
 :::tip Array.prototype.lastIndexOf()
   - `lastIndexOf()`方法返回指定元素（也即有效的`JavaScript`值或变量）在数组中的最后一个的索引
-  - 如果不存在则返回 -1。从数组的后面向前查找，从fromIndex处开始
+  - 如果不存在则返回 -1。从数组的后面向前查找，从`fromIndex`处开始
   ```javascript
   const colors = ['red','green','blue','red']
   console.log(colors.lastIndexOf('red')) // 3
@@ -536,7 +536,7 @@
 :::
 
 :::tip Array.prototype.fill()
-  - `fill()`方法用一个固定值填充一个数组中从起始索引（默认为 0）到终止索引（默认为`array.length`）内的全部元素
+  - `fill()`方法用一个固定值填充一个数组中从起始索引（默认为`0`）到终止索引（默认为`array.length`）内的全部元素
   - 它返回修改后的数组
   ```javascript
   fill(value)
@@ -563,14 +563,13 @@
 :::tip Array.from()
   - `Array.from()`静态方法从可迭代或类数组对象创建一个新的浅拷贝的数组实例
   ```javascript
-  const arrayLike = document.querySelectorAll('div')
+  const arrayLike = {length:5}
   const arr = Array.from(arrayLike)
   console.log(Array.isArray(arr))  // true
   ```
 :::
-
 :::tip Array.of()
-  - `Array.of()`方法通过可变数量的参数创建一个新的 Array 实例，而不考虑参数的数量或类型
+  - `Array.of()`方法通过可变数量的参数创建一个新的`Array`实例，而不考虑参数的数量或类型
   - `Array.of()`和 `Array()`构造函数之间的区别在于对单个参数的处理
   ```javascript
   Array.of(7)// [7]
@@ -579,3 +578,39 @@
   Array(1, 2, 3);    // [1, 2, 3]
   ```
 :::
+
+## 9. 对象的方法
+
+:::tip Object.assign()
+  - `Object.assign()`方法将所有可枚举（`Object.propertyIsEnumerable()` 返回`true`）的自有（`Object.hasOwnProperty()`返回`true`）属性从一个或多个源对象复制到目标对象
+  - 返回修改后的对象
+  ```javascript
+  Object.assign(target, ...sources)
+  const obj1 = {a:1,b:2}
+  const obj2 = {b:3,c:4}
+  const obj3 = Object.assign(obj1,obj2)
+  console.log(obj1) // { a: 1, b: 3, c: 4 }
+  console.log(obj2) // { b: 3, c: 4 }
+  console.log(obj3) // { a: 1, b: 3, c: 4 }
+  console.log(obj1 === obj3) // true
+  ```
+:::
+:::tip Object.create()
+  - `Object.create()`方法用于创建一个新对象，使用现有的对象来作为新创建对象的原型（`prototype`）
+  - 一个新对象，带着指定的原型对象及其属性
+  ```javascript
+  Object.create(proto)
+  Object.create(proto, propertiesObject)
+  const person = {
+    isHuman: false,
+    printIntroduction() {
+      console.log(`My name is ${this.name}. Am I human? ${this.isHuman}`)
+      }
+  }
+  const p = Object.create(person)
+  p.name = 'Joy'
+  p.isHuman = true
+  p.printIntroduction() // "My name is Joy. Am I human? true"
+  ```
+:::
+:::tip Object.entries()
