@@ -921,3 +921,50 @@ console.log(message1) //  message1 is not defined
   // null转为数值后值为0 ,undefined转为数值后值为NaN
   ```
 :::
+
+
+## 11. this
+
+:::danger this
+  - `this`关键字是函数运行时自动生成的一个内部对象，只能在函数内部使用，总指向调用它的对象
+  ```javascript
+  function baz() {
+    // 当前调用栈是：baz
+    // 因此，当前调用位置是全局作用域
+    console.log( "baz" );
+    bar(); // <-- bar的调用位置
+  }
+  function bar() {
+    // 当前调用栈是：baz --> bar
+    // 因此，当前调用位置在baz中
+    console.log( "bar" );
+    foo(); // <-- foo的调用位置
+  }
+  function foo() {
+    // 当前调用栈是：baz --> bar --> foo
+    // 因此，当前调用位置在bar中
+    console.log( "foo" );
+  }
+  baz(); // <-- baz的调用位置
+  ```
+  - 同时，`this`在函数执行过程中，`this`一旦被确定了，就不可以再更改
+  ```javascript
+  var a = 10
+  var obj = {
+    a: 20
+  }
+  function fn() {
+    this = obj // 修改this，运行后会报错
+    console.log(this.a)
+  }
+  fn()
+  ```
+:::
+
+:::warning 绑定规则
+  - 根据不同的使用场合，`this`有不同的值，主要分为下面几种情况：
+    - 默认绑定
+    - 隐式绑定
+    - `new`绑定
+    - 显示绑定
+:::
