@@ -79,20 +79,122 @@
   p1.__proto__ === Person.prototype  //true
   Person.prototype.__proto__ === Object.prototype  //true
   Object.prototype.__proto__ === null  //true
+  Person.__proto__ === Function.prototype //true
+  Object.__proto__ === Function.prototype //true
   ```
 
 
 ## 3. 作用域与作用域链
-:::tip 
-- **作用域**：规定了如何查找变量，也就是确定当前执行代码对变量的访问权限。换句话说，作用域决定了代码区块中变量和其他资源的可见性。（全局作用域、函数作用域、块级作用域）
-- **作用域链**：从当前作用域开始一层层往上找某个变量，如果找到全局作用域还没找到，就放弃寻找 。这种层级关系就是作用域链
-::: 
+:::danger 作用域与作用域链
+- 作用域：
+  - 规定了如何查找变量，也就是确定当前执行代码对变量的访问权限
+  - 作用域决定了代码区块中变量和其他资源的可见性（`全局作用域`、`函数作用域`、`块级作用域`）
+- 作用域链：
+  - 当在`Javascript`中使用一个变量的时候，首先`Javascript`引擎会尝试在当前作用域下去寻找该变量
+  - 如果没找到，再到它的上层作用域寻找，以此类推直到找到该变量或是已经到了全局作用域
+  - 如果在全局作用域里仍然找不到该变量，它就会在全局范围内隐式声明该变量(非严格模式下)或是直接报错
+```javascript
+// 作用域
+function showMessage(){
+  let message = 'hello'
+}
+console.log(message) // message is not defined
+// 函数showMessage内部创建一个message变量，当我们在全局访问这个变量的时候，系统会报错
+// 这就说明我们在全局是无法获取到（闭包除外）函数内部的变量
+```
+```javascript
+// 作用域链
+var sex = '男'
+function person() {
+  var name = '张三'
+  function student() {
+    var age = 18
+    console.log(name) // 张三
+    console.log(sex) // 男 
+  }
+  student()
+    console.log(age); // Uncaught ReferenceError: age is not defined
+}
+person()
+// student函数内部属于最内层作用域，找不到name，向上一层作用域person函数内部找，找到了输出“张三”
+// student内部输出sex时找不到，向上一层作用域person函数找，还找不到继续向上一层找，即全局作用域，找到了输出“男”
+// 在person函数内部输出age时找不到，向上一层作用域找，即全局作用域，还是找不到则报错
+
+```
+:::
+:::warning 全局作用域
+  - 任何不在函数中或是大括号中声明的变量，都是在全局作用域下
+  - 全局作用域下声明的变量可以在程序的任意位置访问
+```javascript
+var message = 'Hello World!'
+function showMessage() {
+  console.log(message);
+}
+showMessage() // Hello World!
+```
+:::
+:::warning 函数作用域
+  - 函数作用域也叫局部作用域，如果一个变量是在函数内部声明的它就在一个函数作用域下面
+  - 这些变量只能在函数内部访问，不能在函数以外去访问
+```javascript
+function showMessage() {
+  var message = 'Hello World!'
+  console.log(message)
+}
+showMessage() // Hello World!
+console.log(message) // message is not defined
+```
+:::
+:::warning 块级作用域
+  - 在大括号中使用`let`和`const`声明的变量存在于块级作用域中
+  - 在大括号之外不能访问这些变量
+```javascript
+{
+  let message1 = 'Hello World1!'
+  var message2 = 'Hello World2!'
+}
+console.log(message2) //  Hello World2!
+console.log(message1) //  message1 is not defined
+```
+:::
+:::danger 词法作用域
+  - 词法作用域，又叫静态作用域，变量被创建时就确定好了，而非执行阶段确定的
+  - 也就是说我们写好代码时它的作用域就确定了，`JavaScript`遵循的就是词法作用域
+  ```javascript
+  var a = 1
+  function foo(){
+      console.log(a)
+  }
+  function bar(){
+      var a = 2
+      foo()
+  }
+  bar() // 1
+  ```
+:::
 
 ## 4. 闭包
 :::tip
 - 在`JavaScript`中，每当创建一个函数，闭包就会在函数创建的同时被创建出来。可以在一个内层函数中访问到其外层函数的作用域
-- 闭包是指那些能够访问自由变量的函数。自由变量是指在函数中使用的，但既不是函数参数也不是函数的局部变量的变量。闭包=函数 +函数能够访问的自由变量
-::: 
+- 闭包是指那些能够访问自由变量的函数。自由变量是指在函数中使用的，但既不是函数参数也不是函数的局部变量的变量。闭包=函数+函数能够访问的自由变量
+```javascript
+  // showName() 没有自己的局部变量。然而，由于闭包的特性，它可以访问到外部函数的变量
+  function init(){
+    let name = 'Tom'
+    function showName(){
+      alert(name) // Tom
+    }
+    showName()
+  }
+  init()
+```
+:::
+:::tip 使用场景
+  - 任何闭包的使用场景都离不开这两点：
+    - 创建私有变量
+    - 延长变量的生命周期
+:::
+
 
 ##  5. 事件循环
 :::tip Even Loop
