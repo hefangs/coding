@@ -968,3 +968,126 @@ console.log(message1) //  message1 is not defined
     - `new`绑定
     - 显示绑定
 :::
+
+:::danger 默认绑定
+  - 全局环境中定义`person`函数，内部使用`this`关键字
+  ```javascript
+  var name = 'Tom'
+  function person() {
+      console.log(this.name)
+  }
+  person() // Tom
+  ```
+  - 上述代码输出`Tom`，原因是调用函数的对象在浏览器中位`window`，因此`this`指向`window`
+  - 注意:
+    - 严格模式下，不能将全局对象用于默认绑定，`this`会绑定到`undefined`
+    - 只有函数运行在非严格模式下，默认绑定才能绑定到全局对象
+:::
+:::danger 隐式绑定
+  - 函数还可以作为某个对象的方法调用，这时`this`就指这个上级对象
+  ```javascript
+  function showName2() {
+    console.log(this.name)
+  }
+  var obj = {}
+  obj.name = 'Tom'
+  obj.showName1 = showName2
+  obj.showName1() // Tom
+  ```
+  -  下面的代码`this`的上一级对象为`foo`，`foo`内部并没有`name`变量的定义，所以输出`undefined`
+  ```javascript
+  var obj = {
+    name:"Tom",
+    foo:{
+      fn:function(){
+        console.log(this.name)  // undefined
+      }
+    }
+  }
+  obj.foo.fn()
+  ```
+  - 下面的代码`this`指向的是`window`
+  - `this`永远指向的是最后调用它的对象，虽然`fn`是对象`foo`的方法，但是`fn`赋值给`bar`时候并没有执行，所以最终指向`window`
+  ```javascript
+  var obj = {
+    age:20,
+    foo:{
+      age:21,
+      fn:function(){
+          console.log(this.age) // undefined
+          console.log(this)     // window
+        }
+      }
+    }
+  var bar = obj.foo.fn
+  bar()
+  ```
+:::
+
+:::danger new绑定
+  - 通过构建函数`new`关键字生成一个实例对象，此时`this`指向这个实例对象
+    - `new`过程遇到`return`一个对象，此时`this`指向为返回的对象(`return {}`)
+    - 如果返回一个简单类型的时候，则`this`指向实例对象(`return 1`)
+    - 如果返回是`null`虽然也是对象，但是此时`new`仍然指向实例对象(`return null`)
+  ```javascript
+  function foo() {
+  　this.name = 'Tom';
+    }
+  var p = new foo();
+  p.name // Tom
+  ```
+:::
+
+:::danger 显示修改
+  - `apply()`、`call()`、`bind()`是函数的一个方法，作用是改变函数的调用对象
+  - 它的第一个参数就表示改变后的调用这个函数的对象。因此这时`this`指的就是这第一个参数
+  ```javascript
+  var name = '张三'
+  function showName() {
+  　console.log(this.name)
+  }
+  var obj = {}
+  obj.name = '李四'
+  obj.fn = showName
+  obj.fn.call(obj) // 李四
+  obj.fn.call(window) // 张三
+  ```
+:::
+
+:::danger 箭头函数
+  - 箭头函数不能作为构建函数
+  ```javascript
+  const obj = {
+    sayThis: () => {
+      console.log(this)
+    }
+  }
+  obj.sayThis() // window 
+  // 因为 JavaScript 没有块作用域，
+  // 所以在定义 sayThis 的时候，里面的 this 就绑到 window 上去了
+  const globalSay = obj.sayThis;
+  globalSay()  // window 浏览器中的global对象
+  ```
+  - 虽然箭头函数的`this`能够在编译的时候就确定了`this`的指向，但也需要注意一些潜在的坑
+  ```javascript
+  // 绑定事件监听
+  const button = document.getElementById('id')
+  button.addEventListener('click', ()=> {
+      console.log(this === window) // true
+      this.innerHTML = 'clicked button'
+      // 我们其实是想要this为点击的button，但此时this指向了window
+  })
+  ```
+  - 包括在原型上添加方法时候，此时`this`指向`window`
+  ```javascript
+  function Animals(name){
+    this.name = name
+    Animals.prototype.sayName = () => {
+      console.log(this === window) //true
+      console.log(this.name)  // Jerry
+    }
+  }
+  const dog = new Animals('Jerry')
+  dog.sayName() 
+  ```
+:::
