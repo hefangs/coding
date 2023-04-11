@@ -1091,3 +1091,27 @@ console.log(message1) //  message1 is not defined
   dog.sayName() 
   ```
 :::
+
+
+## 12. DOM常见的操作有哪些
+:::tip DOM
+  - 文档对象模型(`DOM`)是`HTML`和`XML`文档的编程接口
+  - 它提供了对文档的结构化的表述，并定义了一种方式可以使从程序中对该结构进行访问，从而改变文档的结构样式和内容
+  - 任何`HTML`或`XML`文档都可以用`DOM`表示为一个由节点构成的层级结构
+:::
+:::warning 操作
+  - `DOM`常见的操作主要分为：
+    - 创建节点
+    - 查询节点
+    - 更新节点
+    - 添加节点
+    - 删除节点
+:::
+
+:::danger createElement
+  - 创建新元素，接受一个参数，即要创建元素的标签名
+  ```javascript
+  // 创建一个文本节点
+  const divEle = document.createElement("div")
+  ```
+:::
