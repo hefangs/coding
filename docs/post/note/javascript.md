@@ -1108,10 +1108,100 @@ console.log(message1) //  message1 is not defined
     - 删除节点
 :::
 
-:::danger createElement
+:::danger 创建节点
   - 创建新元素，接受一个参数，即要创建元素的标签名
   ```javascript
-  // 创建一个文本节点
+  // createElement
   const divEle = document.createElement("div")
+  // createTextNode
+  const textEle = document.createTextNode("content")
+  // createAttribute
+  const dataAttribute = document.createAttribute('custom')
+  ```
+:::
+
+:::danger 获取节点
+  - 创建新元素，接受一个参数，即要创建元素的标签名
+  ```javascript
+  document.getElementById('id属性值')  // 返回拥有指定id的对象的引用
+  document.getElementsByClassName('class属性值')  // 返回拥有指定class的对象集合
+  document.getElementsByTagName('标签名')  // 返回拥有指定标签名的对象集合
+  document.getElementsByName('name属性值')  // 返回拥有指定名称的对象结合
+  document.documentElement  // 获取页面中的HTML标签
+  document.body // 获取页面中的BODY标签
+  document.all[''] //   获取页面中的所有元素节点的对象集合型
+  // document/element.querySelector('CSS选择器')   //  仅返回第一个匹配的元素
+  // document/element.querySelectorAll('CSS选择器')  //   返回所有匹配的元素
+  ```
+:::
+
+:::danger 更新节点
+  - innerHTML：不但可以修改一个`DOM`节点的文本内容，还可以直接通过HTML片段修改`DOM`节点内部的子树
+  ```javascript
+  // 获取<p id="p">...</p >
+  var p = document.getElementById('p');
+  // 设置文本为abc:
+  p.innerHTML = 'ABC'; // <p id="p">ABC</p >
+  // 设置HTML:
+  p.innerHTML = 'ABC <span style="color:red">RED</span> XYZ'
+  // <p>...</p >的内部结构已修改
+  ```
+  - innerText、textContent：自动对字符串进行`HTML`编码，保证无法设置任何`HTML`标签
+    - 两者的区别在于读取属性时，`innerText`不返回隐藏元素的文本，而`textContent`返回所有文本
+  ```javascript
+  // 获取<p id="p-id">...</p >
+  var p = document.getElementById('p-id');
+  // 设置文本:
+  p.innerText = '<script>alert("Hi")</script>';
+  // HTML被自动编码，无法设置一个<script>节点:
+  // <p id="p-id">&lt;script&gt;alert("Hi")&lt;/script&gt;</p >
+  ```
+:::
+:::danger 添加节点
+  - appendChild：把一个子节点添加到父节点的最后一个子节点
+  ```javascript
+  // HTML结构 
+  <p id="js">JavaScript</p >
+  <div id="list">
+    <p id="java">Java</p >
+    <p id="python">Python</p >
+    <p id="go">Go</p >
+  </div>
+  // js
+  const php = document.getElementById('php')
+  php.innerHTML = "Php"
+  const list = document.getElementById('list')
+  list.appendChild(php)
+  ```
+  - 动态添加
+  ```javascript
+  const list = document.getElementById('list')
+  const newNode = document.createElement('n')
+  newNode.id = 'newNode'
+  newNode.innerText = 'NewNode'
+  list.appendChild(newNode)
+  ```
+:::
+
+:::danger setAttribute
+  - setAttribute：在指定元素中添加一个属性节点，如果元素中已有该属性改变属性值
+  ```javascript
+  const div = document.getElementById('id')
+  div.setAttribute('class', 'white')//第一个参数属性名，第二个参数属性值
+  ```
+:::
+
+:::danger 删除节点
+  - 删除一个节点，首先要获得该节点本身以及它的父节点
+  - 调用父节点的`removeChild`把自己删掉
+  - 删除后的节点虽然不在文档树中了，但其实它还在内存中，可以随时再次被添加到别的位置
+  ```javascript
+  // 拿到待删除节点:
+  const remove = document.getElementById('remove')
+  // 拿到父节点:
+  const parent = remove.parentElement
+  // 删除:
+  const removed = parent.removeChild(remove)
+  removed === remove // true
   ```
 :::
