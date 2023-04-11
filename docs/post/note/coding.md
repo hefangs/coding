@@ -237,7 +237,7 @@ function debounce(fn,delay){
 let onInput = debounce(e=>{
   console.log(e.target.value)
 },1000)
-document.querySelector('input').addEventListener('input',onInput)
+document.getElementByTagName('input').addEventListener('input',onInput)
 ```
 
 
@@ -452,7 +452,7 @@ function myNew(context){
 - 到达可视区域后把`data-src`值赋给`src`
 :::
 ```js
-let imgList = document.querySelectorAll("img")
+ let imgList = document.getElementByTagName("img")
 function lazyLoad() {
   // 获取屏幕可视窗口高度
   let clientHeight = document.documentElement.clientHeight
@@ -488,7 +488,7 @@ const observer = new IntersectionObserver(entries => {
   })
 })
 // 监听页面中所有 img 标签  
-document.querySelectorAll('img').forEach(img => {  
+document.getElementByTagName('img').forEach(img => {  
   observer.observe(img)  
 })  
 ```
