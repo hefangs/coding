@@ -5,7 +5,7 @@
 
 
 :::tip 去重
-:::
+
 ```javascript
 // filter去重
 function unique(arr){
@@ -25,9 +25,9 @@ function Uniq(arr = []) {
 let arr = [1,2,3,1,2,4]
 Uniq(arr) // [1, 2, 3, 4] 
 ```
-
-:::tip set去重
 :::
+:::tip set去重
+
 
 ```javascript
 let unique = arr => Array.from(new Set(arr))
@@ -39,10 +39,10 @@ let unique = arr => [...new Set(arr)]
 let arr = [1,2,3,1,2,4]
 unique(arr) // [1, 2, 3, 4]
 ```
-
+:::
 
 :::tip 找到数组中重复的元素
-:::
+
 
 ```javascript
 function repeat(arr) {
@@ -55,10 +55,10 @@ function repeat(arr) {
 let arr = [1,2,3,1,2,4]
 repeat(arr) //[1,2]
 ```
-
+:::
 
 :::tip 数组扁平
-:::
+
 ```javascript
 function flatten(arr) {
   return [].concat(...arr.map(item =>{
@@ -82,10 +82,10 @@ function Flat(arr = []){
 const arr = [0, 1, [2, 3], [4, 5, [6, 7]], [8, [9, 10, [11, 12]]]]
 Flat(arr) // [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]  
 ```
-
+:::
 
 :::warning 类数组转换为数组
-:::
+
 ```javascript
 let arrayLike = {
   length: 3,
@@ -98,7 +98,7 @@ let arrayLike = {
 let arr1 = Array.from(arrayLike) // ['a', 'b', 'c']
 let arr2 = Array.prototype.slice.call(arrayLike) // ['a', 'b', 'c']
 ```
-
+:::
 
 
 
@@ -107,7 +107,6 @@ let arr2 = Array.prototype.slice.call(arrayLike) // ['a', 'b', 'c']
 :::tip clone
 - 如果属性是基本类型，拷贝的就是基本类型的值
 - 如果属性是引用类型，拷贝的就是内存地址，所以如果其中一个对象改变了这个地址，就会影响到另一个对象
-:::  
 ```js
 function clone(obj) {
   let target
@@ -117,57 +116,62 @@ function clone(obj) {
   return target
 }
 ```
-
+:::
 
 :::tip Object.assign()
 Object.assign方法可以把任意多个的源对象自身的可枚举属性拷贝给目标对象，然后返回目标对象
-:::
+
 ```js
 let obj1 = {person:{name:"Tom",age:20},job:"teacher"}
 let obj2 = Object.assign({},obj1)
 ```
+:::
 
 :::tip 函数库lodash的_.clone方法
-:::
+
 
 ```js
 let _ = require("lodash")
 let obj1 = {person:{name:"Tom",age:20},job:"teacher"}
 let obj2 = _.clone(obj1) 
 ```
-#### 
-:::tip 展开运算符 ...
 :::
+
+
+:::tip 展开运算符 ...
+
 
 
 ```javascript
 let obj1 = {person:{name:"Tom",age:20},job:"teacher"}
 let obj2 = {... obj1}
 ```
+:::
 
 :::tip Array.prototype.concat()
-:::
+
 
 ```js
 let arr1 = [1,2,3]
 let arr2 = [4,5,6]
 let arr3 = arr1.concat(arr2)
 ```
-
-:::tip Array.prototype.slice()
 :::
+:::tip Array.prototype.slice()
+
 
 ```js
 let arr1 = [1,2,3]
 let arr2 = arr1.slice()
 
 ```
+:::
 
 ## 3. 深拷贝
 :::tip deepClone
 - 深拷贝是将一个对象从内存中完整的拷贝一份出来
 - 从堆内存中开辟一个新的区域存放新对象,且修改新对象不会影响原对象
-:::
+
 ```js
 function deepClone(obj){
   let target
@@ -184,11 +188,11 @@ function deepClone(obj){
   }
 }
 ```
-
+:::
 :::warning JSON.parse(JSON.stringify())
   - 这种方法虽然可以实现数组或对象深拷贝,但不能处理正则和函数
   - 如果使用这种方法正则变为空对象，函数变为null
-:::
+
 ```js
 let data1 = [1,{name: "John", age: 20},/\d$/,function(){}]
 let data2 = JSON.parse(JSON.stringify(data1))
@@ -199,30 +203,33 @@ console.log(data2)
 // 3: null  // 函数变为null
 // length: 4
 ```
+:::
   
 :::tip 函数库lodash的_.cloneDeep方法
-:::
+
 ```js
 let _ = require("lodash")
 let obj1 = {person:{name:"Tom",age:20},job:"teacher"}
 let obj2 = _.cloneDeep(obj1) 
 ```
-:::tip jQuery.extend()方法
 :::
+
+:::tip jQuery.extend()方法
+
 ```js
 var $ = require('jquery')
 var obj1 = {person:{name:"Tom",age:20},job:"teacher"}
 var obj2 = $.extend(true, {}, obj1)
 ```
-
+:::
 
 
 
 ## 4. 防抖
 
-:::tip
+:::tip 防抖
 防抖（`debounce`）：在事件被触发`n`秒后再执行回调，如果再这n秒内事件又被触发，则重新计算，最终只执行一次
-:::
+
 
 ```js
 function debounce(fn,delay){
@@ -239,7 +246,7 @@ let onInput = debounce(e=>{
 },1000)
 document.getElementByTagName('input').addEventListener('input',onInput)
 ```
-
+:::
 
 
 
@@ -247,9 +254,9 @@ document.getElementByTagName('input').addEventListener('input',onInput)
 
  ## 5. 节流
 
-:::tip
+:::tip 节流
 节流（`throttle`）：在规定的时间间隔内不会触发，只有大于时间间隔才会触发，把频繁触发变为少量触发
-:::
+
 ```js
 function throttle(fn, delay) {
   let timer
@@ -272,7 +279,7 @@ let mouseMove = throttle(e => {
 }, 1000)
 document.querySelector("#div").addEventListener("mousemove", mouseMove)
 ```
-
+:::
 
 
 
@@ -285,7 +292,7 @@ document.querySelector("#div").addEventListener("mousemove", mouseMove)
     - 继承了父类的模板，又继承了父类的原型对象
     - 如果要给子类的原型上新增属性和方法，就必须放在`Student.prototype = new Person()`这样的语句后面
     - 创建子类时，无法向父类构造函数传参
-:::  
+  
 ```js
 function Person(name,age) { 
     this.name = name
@@ -305,6 +312,7 @@ Student.prototype.run = function() {
 var s1 = new Student('男')
 s1.run() // 学生信息: 张三-20-男
 ```
+:::
 
 :::tip 构造函数继承
   - 在子类构造函数内部使用`call`或`apply`来调用父类构造函数
@@ -312,7 +320,7 @@ s1.run() // 学生信息: 张三-20-男
     - 创建子类实例时，可以向父类传递参数
     - 构造继承只能继承父类的实例属性和方法，不能继承父类原型的属性和方法
     - 无法实现函数复用，每个子类都有父类实例函数的副本，影响性能
-:::
+
 ```js
 function Person (name,age) {
   this.name = name
@@ -331,7 +339,7 @@ Student.prototype.run = function () {
 var s1 = new Student('男')
 s1.run() // 学生信息: 张三-20-男
 ```
-
+:::
 
 :::tip 组合继承
 - 原型链继承+构造继承
@@ -340,7 +348,7 @@ s1.run() // 学生信息: 张三-20-男
   - 可传参，可复用
   - 使用组合继承时，父类构造函数会被调用两次
   - 并且生成了两个实例，子类实例中的属性和方法会覆盖子类原型(父类实例)上的属性和方法，所以增加了不必要的内存
-:::
+
 ```js
 function Person (name, age) {
   this.name = name
@@ -360,13 +368,14 @@ Student.prototype.run = function(){
 }
 var s1 = new Student('男')
 s1.run()   // 学生信息: 张三-20-男
-
 ```
+:::
+
 :::tip 寄生式继承
 - 寄生组合继承算是`ES6`之前一种比较完美的继承方式
   - 只调用了一次父类构造函数，只创建了一份父类属性
   - 子类可以用到父类原型链上的属性和方法
-:::
+
 ```js
 function Person (name,age) {
   this.name = name
@@ -388,11 +397,11 @@ Student.prototype.run = function(){
 var s1 = new Student('男')
 s1.run()  // 学生信息: 张三-20-男
 ```
-
+:::
 
 :::tip ES6继承
 - 主要是依赖`extends`关键字来实现继承，且继承的效果类似于寄生组合继承**
-:::
+
 ```js
 class Person {
   constructor (name,age) {
@@ -415,20 +424,20 @@ class Student extends Person {
 var s1 = new Student('张三',20,'男')
 s1.run()  //   学生信息: 张三-20-男
 ```
-
+:::
 
 
 
 ## 7. new
 
-:::tip
+:::tip new
 - 创建一个空对象,作为即将要返回的那个对象实例
 - 将这个对象的`__proto__`指向构造函数的`prototype`
 - 执行构造函数并将this绑定到新创建的对象上
 - 判断构造函数的返回值类型，
 - 如果是引用类型，就返回这个引用类型的对象，
 - 否则就返回创建的那个对象 
-:::
+
 ```js
 function myNew(context){
   let obj  = new Object()
@@ -437,7 +446,7 @@ function myNew(context){
   return typeof res === "object" ? res : obj
 }
 ```
-
+:::
 
 
 
@@ -445,14 +454,14 @@ function myNew(context){
 
 
 ## 8. 懒加载 
-:::tip
+:::tip 懒加载
 
 - 把图片真正的URL放在另一个属性`data-src`中
 - 然后遍历所有的图片是否到达可视区域
 - 到达可视区域后把`data-src`值赋给`src`
-:::
+
 ```js
- let imgList = document.getElementByTagName("img")
+ let imgList = document.querySelectorAll("img")
 function lazyLoad() {
   // 获取屏幕可视窗口高度
   let clientHeight = document.documentElement.clientHeight
@@ -467,11 +476,10 @@ function lazyLoad() {
   }
 }
 ```
-:::tip 通过IntersectionObserver实现
-
-- `IntersectionObserver` 接口（从属于 `Intersection Observer API`）提供了一种异步观察目标元素与其祖先元素或顶级文档视口（`viewport`）交叉状态的方法
-- 其祖先元素或视口被称为根（`root`）
 :::
+:::tip 通过IntersectionObserver实现
+  - `IntersectionObserver` 接口（从属于 `Intersection Observer API`）提供了一种异步观察目标元素与其祖先元素或顶级文档视口（`viewport`）交叉状态的方法
+  - 其祖先元素或视口被称为根（`root`）
 
 ```javascript
 const observer = new IntersectionObserver(entries => {
@@ -488,17 +496,18 @@ const observer = new IntersectionObserver(entries => {
   })
 })
 // 监听页面中所有 img 标签  
-document.getElementByTagName('img').forEach(img => {  
+document.querySelectorAll('img').forEach(img => {  
   observer.observe(img)  
 })  
 ```
+:::
 
 
  ## 9. instanceof
 
-:::tip
+:::tip instanceof
 - `instanceof`运算符用于检测构造函数的`prototype`属性是否出现在某个实例对象的原型链上
-:::
+
 ```js
 function myInstanceOf(a,b) = {
   if(typeof a !== 'object' || a === "null") return false
@@ -514,7 +523,7 @@ function myInstanceOf(a,b) = {
   }
 }
 ```
-
+:::
 
 
 
@@ -523,11 +532,11 @@ function myInstanceOf(a,b) = {
 ## 10. call,apply,bind
 
 
-:::tip call
+:::danger call
 - 可以改变函数指向
 - 第一个参数是要改变指向的对象
 - 之后的参数形式是 `arg1`, `arg2`... 的形式
-:::  
+  
 ```js
 Function.prototype.myCall = function (context,...args){
   // 为null和undefined的this值会自动指向全局对象
@@ -546,7 +555,6 @@ Function.prototype.myCall = function (context,...args){
   return result
 }
 ```
-
 ```js
 let year = 2021
 obj = {
@@ -558,15 +566,15 @@ const getDate = function (month,day) {
 console.log(getDate.call(obj,7,9)) // 2022-7-9
 console.log(getDate.myCall(obj,7,9)) // 2022-7-9
 ```
+:::
 
 
-:::tip apply
-
+:::danger apply
 
 - 可以改变函数指向
 - 第一个参数与`call`相同,为函数内部`this`指向
 - 函数的参数，则以数组的形式传递，作为`apply`第二参数
-:::
+
 
 ```js
 Function.prototype.myApply = function (context,args){
@@ -582,7 +590,6 @@ Function.prototype.myApply = function (context,args){
   return result
 }
 ```
-
 ```js
 let year = 2021
 obj = {
@@ -594,13 +601,14 @@ const getDate = function (month,day) {
 console.log(getDate.apply(obj, [7,9]))    // 2022-7-9
 console.log(getDate.myApply(obj, [7,9]))  // 2022-7-9
 ```
+:::
 
-:::tip bind
+:::danger bind
 - 第一个参数为要绑定的`this`对象
 - 可以传递多个参数，参数规则类似`call`，
 - 后面的参数传递给要执行函数作为参数
 - `bind`返回的是一个函数，所以需要在后面加上()去执行返回的函数，此()里面也可以加参数
-:::  
+ 
 
 ```js
 Function.prototype.myBind = function (context,...args1) {
@@ -630,7 +638,7 @@ const getDate = function (month,day) {
 console.log(getDate.bind(obj)(7,9)) // 2022-7-9
 console.log(getDate.myBind(obj)(7,9)) // 2022-7-9
 ```
-
+::: 
 
 
 
@@ -639,7 +647,7 @@ console.log(getDate.myBind(obj)(7,9)) // 2022-7-9
 
  ## 11. promise
 
-:::warning
+:::warning  promise
 
 - `Promise`存在三个状态（`state`）`pending`、`fulfilled`、`rejected`,
 - `pending`为初始态，并可以转化为`fulfilled`和`rejected`,
@@ -649,7 +657,7 @@ console.log(getDate.myBind(obj)(7,9)) // 2022-7-9
 :::
 
 :::tip promise
-:::
+
 ```js
 // promise
 function Promise(executor){
@@ -676,8 +684,10 @@ function Promise(executor){
   }
 }
 ```
-:::tip promise.then
 :::
+
+:::tip promise.then
+
 ```js
 // then 第一种：只考虑了同步任务
 class Promise{
@@ -740,8 +750,10 @@ class Promise{
   }
 }
 ```
-:::tip promise.resolve
 :::
+
+:::tip promise.resolve
+
 
 ```js
 // resolve方法用来生成一个直接处于FULFILLED状态的Promise
@@ -761,8 +773,10 @@ Promise.resolve = function(value){
   })
 }
 ```
-:::tip promise.reject
 :::
+
+:::tip promise.reject
+
 ```js
 // reject方法用来生成一个直接处于REJECTED状态的Promise
 Promise.reject = function(reason){
@@ -771,16 +785,19 @@ Promise.reject = function(reason){
   })
 }
 ```
-:::tip promise.catch
 :::
+:::tip promise.catch
+
 ```js
 // catch方法用来捕获promise的异常，就相当于一个没有成功的then
 Promise.prototype.catch = function(onRejected){
   return this.then(null,onRejected)
 }
 ```
-:::tip promise.all
 :::
+
+:::tip promise.all
+
 ```js
 // all方法多个异步并发获取最终的结果
 // 如果有一个失败则失败,全部成功则成功
@@ -807,8 +824,10 @@ Promise.all = function(promiseAll){
   })
 }
 ```
-:::tip promise.finally
 :::
+
+:::tip promise.finally
+
 ```js
 // 不管是resolve还是reject都会调用finally方法
 Promise.prototype.finally = function(callback){
@@ -822,8 +841,10 @@ Promise.prototype.finally = function(callback){
   }
 }
 ```
-:::tip promise.race
 :::
+
+:::tip promise.race
+
 ```js
 //  race用来处理多个请求，采用最快的（谁先完成用谁的）
 Promise.race = function(promiseRace){
@@ -842,8 +863,10 @@ Promise.race = function(promiseRace){
   })
 }
 ```
-:::tip promiseLike
 :::
+
+:::tip promiseLike
+
 ```javascript
  /**
   * @description: 判断一个值是否是Promise Like
@@ -857,7 +880,7 @@ Promise.race = function(promiseRace){
   )
 }
 ```
-
+:::
 
 
 
@@ -866,7 +889,7 @@ Promise.race = function(promiseRace){
 
 
 :::tip js实现一个可以拖拽的div
-:::
+
 ```js
 document.body.style.margin = 0
 document.body.style.padding = 0
@@ -911,7 +934,7 @@ document.addEventListener("mouseup", e => {
   dragging = false
 })
 ```
-
+:::
 
 
 
@@ -919,7 +942,7 @@ document.addEventListener("mouseup", e => {
 ## 13. 排序
 
 :::tip 冒泡排序
-:::
+
 ```js
 function bubbleSort(arr) {
   for (let i = 0; i < arr.length - 1; i++) {
@@ -934,9 +957,10 @@ function bubbleSort(arr) {
 let arr = [5,3,7,9,6,1,8,4,2]
 bubbleSort(arr)  // [1, 2, 3, 4, 5, 6, 7, 8, 9]
 ```
+:::
 
 :::tip 选择排序
-:::
+
 
 ```js
 function selectSort(arr){
@@ -955,10 +979,10 @@ function selectSort(arr){
 let arr = [5,3,7,9,6,1,8,4,2]
 selectSort(arr)  //[1, 2, 3, 4, 5, 6, 7, 8, 9]
 ```
-
+:::
 
 :::tip 快速排序
-:::
+
 
 ```js
 function quickSort(arr) {
@@ -978,11 +1002,13 @@ function quickSort(arr) {
 let arr = [5,3,7,9,6,1,8,4,2]
 quickSort(arr) //[1, 2, 3, 4, 5, 6, 7, 8, 9]
 ```
+:::
+
 
 ## 14. Symbol.iterator
 
 :::tip Object.values
-:::
+
 
 ```javascript
 const obj = {a:1,b:2,c:3}
@@ -991,10 +1017,10 @@ for(let value of values){
   console.log(value) // 1 2 3
 }
 ```
-
+:::
 
 :::tip Object.entries
-:::
+
 
 ```javascript
 const obj = {a:1,b:2,c:3}
@@ -1003,8 +1029,10 @@ for(let [key,value] of entries){
   console.log(value) // 1 2 3
 }
 ```
-:::danger Symbol.iterator
 :::
+
+:::danger Symbol.iterator
+
 
 ```javascript
 const obj={
@@ -1034,9 +1062,10 @@ for(let value of obj){
   console.log(value) // 1 2 3
 }
 ```
+:::
 
 :::warning Example
-:::
+
  
 ```javascript
 // 使左右俩边相等
@@ -1045,36 +1074,40 @@ Object.prototype[Symbol.iterator] = function(){
  return Object.values(this)[Symbol.iterator]()
 }
 ```
+:::
 
 ## 15. 获取对象的`key`
 
 :::tip for...in 遍历
-:::
+
 ```javascript
 const obj = {a:1,b:2,c:3}
 for(let key in obj) {
   console.log(key) // a b c
 }
 ```
-:::tip Object.keys
 :::
+
+:::tip Object.keys
+
 ```javascript
 const obj = {a:1,b:2,c:3}
 const keys = Object.keys(obj)
 console.log(keys) // ['a', 'b', 'c']
 ```
+:::
 
 :::tip Object.getOwnPropertyNames
-:::
+
 
 ```javascript
 const obj = {a:1,b:2,c:3}
 const keys = Object.getOwnPropertyNames(obj)
 console.log(keys)  // ['a', 'b', 'c']
 ```
+:::
 
 :::tip Object.getOwnPropertySymbols
-:::
 
 ```javascript
 let d:symbol= Symbol(1)
@@ -1082,9 +1115,10 @@ const obj = {a:1,b:2,c:3,[d]:1}
 const keys = Object.getOwnPropertySymbols(obj)
 console.log(keys)  //  [Symbol(1)] 
 ```
+:::
 
 :::tip Reflect.ownKeys
-:::
+
 
 ```javascript
 let d:symbol= Symbol(1)
@@ -1092,16 +1126,16 @@ const obj = {a:1,b:2,c:3,[d]:1}
 const keys = Reflect.ownKeys(obj)
 console.log(keys)  //  ["a", "b", "c", Symbol(1)] 
 ```
+:::
 
-
-## 16. forEach，map，filter，reduce
+## 16. forEach,map,filter,reduce
 
 :::tip `forEach`
 1. 针对每一个元素执行提供的函数
 2. `forEach`方法不会返回执行结果，而是`undefined`
 3. `forEach`对原数组进行修改
 4. 不能中止或跳出 `forEach` 循环(`return false`或者 `break`)
-:::
+
 ```javascript
 let arr = [1, 2, 3, 4, 5]
 arr.forEach((item, index) => {
@@ -1109,10 +1143,12 @@ arr.forEach((item, index) => {
 })
 console.log(arr) // [2, 4, 6, 8, 10]
 ```
+:::
+
 :::tip `map`
 1. 创建一个新的数组，其中每一个元素由调用数组中的每一个元素执行提供的函数得来
 2. `map`方法会得到一个新的数组并返回
-:::
+
 ```javascript
 let arr = [1, 2, 3, 4, 5]
 let doubled = arr.map(item => {
@@ -1121,10 +1157,12 @@ let doubled = arr.map(item => {
 console.log(arr)     // [1, 2, 3, 4, 5]
 console.log(doubled) // [2, 4, 6, 8, 10]
 ```
+:::
+
 :::tip `filter`
 1. `filter` 方法创建一个新数组，其包含通过所提供函数实现的测试的所有元素
 2. `filter` 不会改变原数组，它返回过滤后的新数组
-:::
+
 ```javascript
 let arr = [1, 2, 3, 4, 5]
 let filter = arr.filter(item => {
@@ -1133,6 +1171,7 @@ let filter = arr.filter(item => {
 console.log(arr)     // [1, 2, 3, 4, 5]
 console.log(filter)  // [3, 4, 5]
 ```
+:::
 
 :::tip `reduce`
 1. 对数组中的每个元素执行一个自定义的累计器，将其结果汇总为单个返回值
@@ -1146,87 +1185,81 @@ console.log(filter)  // [3, 4, 5]
    - `initValue`：初始值(可选)
       - 如果调用 `reduce`() 时提供了 `initialValue` ，`previousValue` 取值则为 `initialValue`，`currentValue` 则取数组中的第一个值
       - 如果没有提供 `initialValue`，那么 `previousValue` 取数组中的第一个值，`currentValue` 取数组中的第二个值
-:::
 
-:::tip 3. 累加累乘：
-:::
-  ```javascript
-  const arr = [1, 2, 3, 4, 5]
-  const a = arr.reduce((pre, cur) => pre + cur) // 15
-  // 等同于
-  const b = arr.reduce((pre, cur) => pre + cur, 0) // 15
-  ```
-  ```javascript
-  const Accumulation = (...args) =>{
-    return args.reduce((pre,cur) => pre + cur,0)
-  }
-  Accumulation(1, 2, 3, 4, 5) // 15
-  ```
-  ```javascript
-  const Multiplication = (...args) =>{
-    return args.reduce((pre,cur) => pre * cur,1)
-  }
-  Accumulation(1, 2, 3, 4, 5) // 120
-  ```
-:::tip 4. 权重求和：
-:::
-  ```javascript
-  const scores = [
-    { score: 90, subject: "Chinese", weight: 0.5 },
-    { score: 95, subject: "Math", weight: 0.3 },
-    { score: 85, subject: "English", weight: 0.2 }
-  ]
-  const res = scores.reduce((pre, cur) => pre + cur.score * cur.weight, 0) // 90.5
-  ```
-:::tip 5. 代替reverse：
-:::
-   ```javascript
-    const reverse = (arr = []) =>{
-      return arr.reduceRight((pre,cur) => (pre.push(cur),pre),[])
-    }
-    reverse([1, 2, 3, 4, 5]) // [5, 4, 3, 2, 1]
-   ```
-:::tip 6. 代替 map 和 filter：
-:::
-   ```javascript
+
+ 3. 累加累乘：
+    ```javascript
     const arr = [1, 2, 3, 4, 5]
-    // 代替map：[2, 4, 6, 8, 10]
-    const a = arr.map(item => item * 2)
-    const b = arr.reduce((pre, cur) => [...pre, cur * 2], [])
-    // 代替filter：[4, 5]
-    const c = arr.filter(item => item > 3)
-    const d = arr.reduce((pre, cur) => cur > 3 ? [...pre, cur] : pre, [])
-    // 代替map和filter：[4, 6, 8 ,10]
-    const e = arr.map(item => item * 2).filter(item => item > 2)
-    const f = arr.reduce((pre, cur) => cur * 2 > 2 ? [...pre, cur * 2] : t, [])
-   ```
-:::tip 7. 数组最大最小值：
-:::
-  ```javascript
-  // 最大值
-  function Max(arr = []){
-    return arr.reduce((pre, cur) => pre > cur ? pre : cur)
-  }
-  // 最小值
-  function Min(arr = []){
-    return arr.reduce((pre, cur) => pre < cur ? pre : cur)
-  }
-  let arr = [1, 2, 3, 4, 5, 6, 7, 8, 9]
-  Max(arr) // 9
-  Min(arr) // 1
-  ```
-:::tip 8. 字符串反转：
-:::
-  ```javascript
-  // reduceRight
-    function ReverseStr(str){
-    return str.split("").reduceRight((pre, cur) => pre + cur)
-    } 
-    ReverseStr("Rng牛逼") // '逼牛gnR'
-    function ReverseStr2(str){
-      return str.split("").reverse().join("")
+    const a = arr.reduce((pre, cur) => pre + cur) // 15
+    // 等同于
+    const b = arr.reduce((pre, cur) => pre + cur, 0) // 15
+    ```
+    ```javascript
+    const Accumulation = (...args) =>{
+      return args.reduce((pre,cur) => pre + cur,0)
     }
-    ReverseStr2("Rng牛逼") // '逼牛gnR'
-  ```
+    Accumulation(1, 2, 3, 4, 5) // 15
+    ```
+    ```javascript
+    const Multiplication = (...args) =>{
+      return args.reduce((pre,cur) => pre * cur,1)
+    }
+    Accumulation(1, 2, 3, 4, 5) // 120
+    ```
+ 4. 权重求和：
+    ```javascript
+    const scores = [
+      { score: 90, subject: "Chinese", weight: 0.5 },
+      { score: 95, subject: "Math", weight: 0.3 },
+      { score: 85, subject: "English", weight: 0.2 }
+    ]
+    const res = scores.reduce((pre, cur) => pre + cur.score * cur.weight, 0) // 90.5
+    ```
+ 5. 代替reverse：
+    ```javascript
+      const reverse = (arr = []) =>{
+        return arr.reduceRight((pre,cur) => (pre.push(cur),pre),[])
+      }
+      reverse([1, 2, 3, 4, 5]) // [5, 4, 3, 2, 1]
+    ```
+ 6. 代替 map 和 filter：
+    ```javascript
+      const arr = [1, 2, 3, 4, 5]
+      // 代替map：[2, 4, 6, 8, 10]
+      const a = arr.map(item => item * 2)
+      const b = arr.reduce((pre, cur) => [...pre, cur * 2], [])
+      // 代替filter：[4, 5]
+      const c = arr.filter(item => item > 3)
+      const d = arr.reduce((pre, cur) => cur > 3 ? [...pre, cur] : pre, [])
+      // 代替map和filter：[4, 6, 8 ,10]
+      const e = arr.map(item => item * 2).filter(item => item > 2)
+      const f = arr.reduce((pre, cur) => cur * 2 > 2 ? [...pre, cur * 2] : t, [])
+    ```
+ 7. 数组最大最小值：
+    ```javascript
+    // 最大值
+    function Max(arr = []){
+      return arr.reduce((pre, cur) => pre > cur ? pre : cur)
+    }
+    // 最小值
+    function Min(arr = []){
+      return arr.reduce((pre, cur) => pre < cur ? pre : cur)
+    }
+    let arr = [1, 2, 3, 4, 5, 6, 7, 8, 9]
+    Max(arr) // 9
+    Min(arr) // 1
+    ```
+ 8. 字符串反转：
+    ```javascript
+    // reduceRight
+      function ReverseStr(str){
+      return str.split("").reduceRight((pre, cur) => pre + cur)
+      } 
+      ReverseStr("Rng牛逼") // '逼牛gnR'
+      function ReverseStr2(str){
+        return str.split("").reverse().join("")
+      }
+      ReverseStr2("Rng牛逼") // '逼牛gnR'
+    ```
 
 ## 17. 发布订阅
