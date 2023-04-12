@@ -1130,8 +1130,8 @@ console.log(message1) //  message1 is not defined
   document.documentElement  // 获取页面中的HTML标签
   document.body // 获取页面中的BODY标签
   document.all[''] //   获取页面中的所有元素节点的对象集合型
-  // document/element.querySelector('CSS选择器')   //  仅返回第一个匹配的元素
-  // document/element.querySelectorAll('CSS选择器')  //   返回所有匹配的元素
+  document/element.querySelector('CSS选择器')   //  仅返回第一个匹配的元素
+  document/element.querySelectorAll('CSS选择器')  //   返回所有匹配的元素
   ```
 :::
 
