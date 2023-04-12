@@ -1205,3 +1205,187 @@ console.log(message1) //  message1 is not defined
   removed === remove // true
   ```
 :::
+
+## 13.  BOM常见的操作有哪些
+:::tip BOM
+  - `BOM` (`Browser Object Model`)浏览器对象模型，提供了独立于内容与浏览器窗口进行交互的对象
+  - 其作用就是跟浏览器做一些交互效果,比如如何进行页面的后退，前进，刷新，浏览器的窗口发生变化，滚动条的滚动
+  - 以及获取客户的一些信息如：浏览器品牌版本，屏幕分辨率
+:::
+:::tip window
+  - `BOM`的核心对象是`window`，它表示浏览器的一个实例在浏览器中
+  - `window`对象有双重角色，即是浏览器窗口的一个接口，又是全局对象
+  - 因此所有在全局作用域中声明的变量、函数都会变成`window`对象的属性和方法
+  ```javascript
+  var name = 'Tom'
+  function showName(){
+    console.log(this.name)
+  }
+  console.log(window.name) // Tom
+  showName() // Tom
+  window.showName() // Tom
+  ```
+  - 关于窗口控制方法如下：
+    - `moveBy(x,y)`：从当前位置水平移动窗体`x`个像素，垂直移动窗体`y`个像素，`x`为负数，将向左移动窗体，`y`为负数，将向上移动窗体
+    - `moveTo(x,y)`：移动窗体左上角到相对于屏幕左上角的(`x`,`y`)点
+    - `resizeBy(w,h)`：相对窗体当前的大小，宽度调整`w`个像素，高度调整`h`个像素。如果参数为负值，将缩小窗体，反之扩大窗体
+    - `resizeTo(w,h)`：把窗体宽度调整为`w`个像素，高度调整为`h`个像素
+    - `scrollTo(x,y)`：如果有滚动条，将横向滚动条移动到相对于窗体宽度为`x`个像素的位置，将纵向滚动条移动到相对于窗体高度为`y`个像素的位置
+    - `scrollBy(x,y)`： 如果有滚动条，将横向滚动条向左移动`x`个像素，将纵向滚动条向下移动`y`个像素
+:::
+
+:::tip location
+  | 属性名   |                说明                 |
+  | -------- | :---------------------------------: |
+  | hash     |  url中#后面的字符，没有则返回空串   |
+  | host     |         服务器名称和端口号          |
+  | hostname |          域名，不带端口号           |
+  | href     |               完整url               |
+  | pathname |        服务器下面的文件路径         |
+  | port     |       url的端口号，没有则为空       |
+  | protocol |             使用的协议              |
+  | search   | url的查询字符串，通常为？后面的内容 |
+  -  除了`hash`之外，只要修改`location`的一个属性，就会导致页面重新加载新`URL`
+  -  `location.reload()`，此方法可以重新刷新当前页面。这个方法会根据最有效的方式刷新页面
+  -  如果页面自上一次请求以来没有改变过，页面就会从浏览器缓存中重新加载
+  -  如果要强制从服务器中重新加载，传递一个参数`true`即可
+:::
+
+:::tip navigator
+  - `navigator`对象主要用来获取浏览器的属性，区分浏览器类型。属性较多，且兼容性比较复杂
+  - 下表列出了`navigator`对象接口定义的属性和方法：
+  ![pic](/bom1.png "notice")
+  ![pic](/bom2.png "notice")
+:::
+
+:::tip screen
+  - 保存的纯粹是客户端能力信息，也就是浏览器窗口外面的客户端显示器的信息，比如像素宽度和像素高度
+  ![pic](/bom3.png "notice")
+:::
+:::tip history
+  - `history`对象主要用来操作浏览器`URL`的历史记录，可以通过参数向前，向后，或者向指定`URL`跳转
+  - 常用的属性如下：
+    - `history.go()`：接收一个整数数字或者字符串参数，向最近的一个记录中包含指定字符串的页面跳转
+    - `history.forward()`：向前跳转一个页面
+    - `history.back()`：向后跳转一个页面
+    - `history.length()`：获取历史记录数
+:::
+
+
+## 14.  Javascript本地存储的方式有哪些
+:::warning JavaScript本地缓存：
+  - `Cookie`
+  - `sessionStorage`
+  - `localStorage`
+  - `indexedDB`
+:::
+
+:::warning Cookie
+  - `Cookie`，类型为「小型文本文件」，指某些网站为了辨别用户身份而储存在用户本地终端上的数据。是为了解决`HTTP`无状态导致的问题
+  - 作为一段一般不超过`4KB`的小型文本数据，它由一个名称（`Name`）、一个值（`Value`）和其它几个用于控制`Cookie`有效期、安全性、使用范围的可选属性组成
+  - 但是`Cookie`在每次请求中都会被发送，如果不使用`HTTPS`并对其加密，其保存的信息很容易被窃取，导致安全风险。举个例子，在一些使用 `Cookie`保持登录态的网站上，如果 `Cookie`被窃取，他人很容易利用你的`Cookie`来假扮成你登录网站
+  - 关于`Cookie`常用的属性如下：
+    - `Expires`用于设置`Cookie`的过期时间
+    ```javascript
+    Expires=Wed, 12 Apr 2023 07:28:00 GMT
+    ```
+    - `Max-Age`用于设置在`Cookie`失效之前需要经过的秒数（优先级比`Expires`高）
+    ```javascript
+    Max-Age=604800
+    ```
+    - `Domain`指定了`Cookie`可以送达的主机名
+    - `Path`指定了一个 URL路径，这个路径必须出现在要请求的资源的路径中才可以发送`Cookie`首部
+    ```javascript
+    Path=/docs   # /docs/Web/ 下的资源会带 Cookie 首部
+    ```
+    - 标记为`Secure`的`Cookie`只应通过被`HTTPS`协议加密过的请求发送给服务端
+  - 通过上述，我们可以看到`Cookie`又开始的作用并不是为了缓存而设计出来，只是借用了`Cookie`的特性实现缓存
+  - 关于`Cookie`的使用如下：
+    ```javascript
+    document.cookie = 'key=value'
+    ```
+    - 关于`Cookie`的修改，首先要确定`domain`和`path`属性都是相同的才可以，其中有一个不同得时候都会创建出一个新的`Cookie`
+    ```javascript
+    Set-cookie:name=aa; domain=aa.net; path=/  # 服务端设置
+    document.cookie =name=bb; domain=aa.net; path=/  # 客户端设置
+    ```
+    - 最后`Cookie`的删除，最常用的方法就是给`Cookie`设置一个过期的事件，这样`Cookie`过期后会被浏览器删除
+:::
+
+:::warning localStorage
+  - `HTML5`新方法，`IE8`及以上浏览器都兼容
+  - `localStorage`的特点：
+    - 生命周期：持久化的本地存储，除非主动删除数据，否则数据是永远不会过期的
+    - 存储的信息在同一域中是共享的
+    - 当本页操作（新增、修改、删除）了`localStorage`的时候，本页面不会触发`storage`事件,但是别的页面会触发`storage`事件
+    - 大小：`5M`（跟浏览器厂商有关系）
+    - `localStorage`本质上是对字符串的读取，如果存储内容多的话会消耗内存空间，会导致页面变卡
+    - 受同源策略的限制
+  - `localStorage`的使用：
+    - 设置
+    ```javascript
+    localStorage.setItem('username','hef')
+    ```
+    - 获取
+    ```javascript
+    localStorage.getItem('username')
+    ```
+    - 获取键名
+    ```javascript
+    localStorage.key(0) 
+    ```
+    - 删除
+    ```javascript
+    localStorage.removeItem('username')
+    ```
+    - 一次性清除所有存储
+    ```javascript
+    localStorage.clear()
+    ```
+  - localStorage 也不是完美的，它有两个缺点：
+    - 无法像`Cookie`一样设置过期时间
+    - 只能存入字符串，无法直接存对象
+    ```javascript
+    localStorage.setItem('key', {name: 'value'})
+    console.log(localStorage.getItem('key')) // '[object, Object]'
+    ```
+:::
+
+:::warning sessionStorage
+  - `sessionStorage`和`localStorage`使用方法基本一致
+  - 唯一不同的是生命周期，一旦页面（会话）关闭，`sessionStorage` 将会删除数据
+:::
+
+:::tip indexedDB
+  - `indexedDB`是一种低级`API`，用于客户端存储大量结构化数据(包括, 文件/` blobs`)。该`API`使用索引来实现对该数据的高性能搜索
+  - 虽然`Web Storage`对于存储较少量的数据很有用，但对于存储更大量的结构化数据来说，这种方法不太有用。`IndexedDB`提供了一个解决方案
+  - 优点：
+    - 储存量理论上没有上限
+    - 所有操作都是异步的，相比`LocalStorage`同步操作性能更高，尤其是数据量较大时
+    - 原生支持储存`JS`的对象
+    - 是个正经的数据库，意味着数据库能干的事它都能干
+  - 缺点：
+    - 操作非常繁琐
+    - 本身有一定门槛
+  - 基本使用步骤：
+    - 打开数据库并且开始一个事务
+    - 创建一个`object store`
+    - 构建一个请求来执行一些数据库操作，像增加或提取数据等
+    - 通过监听正确类型的`DOM`事件以等待操作完成
+    - 操作结果上进行一些操作（可以在`request`对象中找到）
+:::
+
+:::danger 区别
+  - 关于`Cookie`、`sessionStorage`、`localStorage`三者的区别主要如下：
+  - 存储大小：`cookie`数据大小不能超过4k，`sessionStorage`和`localStorage`虽然也有存储大小的限制，但比`Cookie`大得多，可以达到`5M`或更大
+  - 有效时间：`localStorage`存储持久数据，浏览器关闭后数据不丢失除非主动删除数据；`sessionStorage`数据在当前浏览器窗口关闭后自动删除；`Cookie`设置的`Cookie`过期时间之前一直有效，即使窗口或浏览器关闭
+  - 数据与服务器之间的交互方式，`Cookie`的数据会自动的传递到服务器，服务器端也可以写`Cookie`到客户端；`sessionStorage`和`localStorage`不会自动把数据发给服务器，仅在本地保存
+:::
+
+:::warning 应用场景
+  - 针对不对场景的使用选择：
+    - 标记用户与跟踪用户行为的情况，推荐使用`Cookie`
+    - 适合长期保存在本地的数据（令牌），推荐使用`localStorage`
+    - 敏感账号一次性登录，推荐使用`sessionStorage`
+    - 存储大量数据的情况、在线文档（富文本编辑器）保存编辑历史的情况，推荐使用`indexedDB`
+:::

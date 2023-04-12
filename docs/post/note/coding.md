@@ -1261,5 +1261,5 @@ console.log(filter)  // [3, 4, 5]
       }
       ReverseStr2("Rng牛逼") // '逼牛gnR'
     ```
-
+:::
 ## 17. 发布订阅

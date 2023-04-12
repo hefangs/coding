@@ -1,12 +1,13 @@
 export default {
   markdown: {
-    // lineNumbers: true
+    lineNumbers: true
   },
   lang: 'zh-CN',
   title: 'he',
   base: '/',
   description: '一个笔记本子而已',
-  lastUpdated: true,
+  // cleanUrls: 'with-subfolders', //  // 从 URL 中删除随尾.html
+  lastUpdated: true, // 以git提交的时间为更新时间
   ignoreDeadLinks: true,
   head: [
     [
@@ -19,6 +20,12 @@ export default {
     ]
   ],
   themeConfig: {
+    lastUpdatedText: '最近更新时间',
+    docFooter: { prev: '上一篇', next: '下一篇' },
+    // editLink: {
+    //   pattern: 'https://github.com/vuejs/vitepress/edit/main/docs/:path',
+    //   text: 'Edit this page on GitHub'
+    // },
     siteTitle: 'he',
     logo: '/one-price.png',
     sidebar: {
@@ -28,7 +35,7 @@ export default {
     // lastUpdatedText: '最近更新时间',
     // docFooter: { prev: '上一篇', next: '下一篇' },
     nav: [
-      // { text: 'Coding', link: '/post/note/coding' },
+      // { text: 'Coding', link: '/post/note/coding', activeMatch: '/post' }
       // { text: 'JS', link: '/post/note/javascript' },
       // { text: 'Vue2', link: '/post/note/vue2.0' },
       // { text: 'Vue3', link: '/post/note/vue3.0' },
