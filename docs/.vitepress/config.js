@@ -77,7 +77,7 @@ function sideBar() {
         { text: 'React', link: '/post/note/react' },
         { text: 'Webpack', link: '/post/note/webpack' },
         { text: 'TypeScript', link: '/post/note/typescript' },
-        { text: 'Git', link: '/post/note/git' },
+        { text: 'Tools', link: '/post/note/tools' },
         { text: 'Node', link: '/post/note/node' }
       ]
     }
