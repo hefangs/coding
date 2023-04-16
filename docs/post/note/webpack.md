@@ -349,3 +349,138 @@
   - `NoEmitOnErrorsPlugin`：在输出阶段时，遇到编译错误跳过
   - `NormalModuleReplacementPlugin`：替换与正则表达式匹配的资源
 :::
+
+## 5.  编写Loader，Plugin的思路？
+
+:::tip 区别
+  - `loader`是文件加载器，能够加载资源文件，并对这些文件进行一些处理，诸如编译、压缩等，最终一起打包到指定的文件中
+  - `plugin`赋予了`Webpack`各种灵活的功能，例如打包优化、资源管理、环境变量注入等，目的是解决`loader`无法实现的其他事
+  - 从整个运行时机上来看，如下图所示：
+  ![pic](/loader1.png "notice")
+  - 可以看到，两者在运行时机上的区别：
+    - `loader`运行在打包文件之前
+    - `plugins`在整个编译周期都起作用
+  - 在`Webpack`运行的生命周期中会广播出许多事件，`Plugin`可以监听这些事件，在合适的时机通过`Webpack`提供的`API`改变输出结果
+  - 对于`loader`，实质是一个转换器，将A文件进行编译形成B文件，操作的是文件，比如将`A.scss`或`A.less`转变为`B.css`，单纯的文件转换过程
+:::
+
+:::danger 编写loader
+  - 在编写`loader`前，我们首先需要了解`loader`的本质
+  - 其本质为函数，函数中的`this`作为上下文会被`Webpack`填充，因此我们不能将`loader`设为一个箭头函数
+  - 函数接受一个参数，为`Webpack`传递给`loader`的文件源内容
+  - 函数中`this`是由`Webpack`提供的对象，能够获取当前`loader`所需要的各种信息
+  - 函数中有异步操作或同步操作，异步操作通过`this.callback`返回，返回值要求为`string`或者`Buffer`
+  - 代码如下所示：
+    ```javascript
+    // 导出一个函数，source为webpack传递给loader的文件源内容
+      module.exports = function(source) {
+        const content = doSomeThing2JsString(source)
+        // 如果 loader 配置了 options 对象，那么this.query将指向 options
+        const options = this.query
+        // 可以用作解析其他模块路径的上下文
+        console.log('this.context')
+        /*
+        * this.callback 参数：
+        * error：Error | null，当 loader 出错时向外抛出一个 error
+        * content：String | Buffer，经过 loader 编译后需要导出的内容
+        * sourceMap：为方便调试生成的编译后内容的 source map
+        * ast：本次编译生成的 AST 静态语法树，之后执行的loader可以直接使用这个 AST，进而省去重复生成AST的过程
+        */
+        this.callback(null, content) // 异步
+        return content // 同步
+      }
+    ```
+    - 一般在编写`loader`的过程中，保持功能单一，避免做多种功能
+    - 如`less`文件转换成`css`文件也不是一步到位，而是`less-loader`、`css-loader`、`style-loader`几个`loader`的链式调用才能完成转换
+:::
+
+
+::: tip 编写plugin
+  - 由于`Webpack`基于发布订阅模式，在运行的生命周期中会广播出许多事件，插件通过监听这些事件，就可以在特定的阶段执行自己的插件任务
+  - `Webpack`编译会创建两个核心对象：
+    - `compiler`：包含了`Webpack`环境的所有的配置信息，包括`options`，`loader`和`plugin`和`Webpack`整个生命周期相关的钩子
+    - `compilation`：作为`plugin`内置事件回调函数的参数，包含了当前的模块资源、编译生成资源、变化的文件以及被跟踪依赖的状态信息。当检测到一个文件变化，一次新的 `Compilation`将被创建
+  - 如果自己要实现`plugin`，也需要遵循一定的规范：
+    - 插件必须是一个函数或者是一个包含`apply`方法的对象，这样才能访问`compiler`实例
+    - 传给每个插件的`compiler`和`compilation`对象都是同一个引用，因此不建议修改
+    - 异步的事件需要在插件处理完任务时调用回调函数通知`Webpack`进入下一个流程，不然会卡住
+  - 实现`plugin`的模板如下：
+    ```javascript
+      class MyPlugin {
+        // Webpack 会调用 MyPlugin 实例的 apply 方法给插件实例传入 compiler 对象
+      apply (compiler) {
+        // 找到合适的事件钩子，实现自己的插件功能
+        compiler.hooks.emit.tap('MyPlugin', compilation => {
+          // compilation: 当前打包构建流程的上下文
+          console.log(compilation)
+          // do something...
+        })
+      }
+    }
+    ```
+  - 在`emit`事件发生时，代表源文件的转换和组装已经完成，可以读取到最终将输出的资源、代码块、模块及其依赖，并且可以修改输出资源的内容
+:::
+
+## 6. 说说webpack的热更新是如何做到的？原理是什么？
+
+:::tip 是什么
+  - `HMR`全称 `Hot Module Replacement`，可以理解为模块热替换，指在应用程序运行过程中，替换、添加、删除模块，而无需重新刷新整个应用
+  - 例如，我们在应用运行过程中修改了某个模块，通过自动刷新会导致整个应用的整体刷新，那页面中的状态信息都会丢失
+  - 如果使用的是`HMR`，就可以实现只将修改的模块实时替换至应用中，不必完全刷新整个应用
+  - 在`Webpack`中配置开启热模块也非常的简单，如下代码：
+    ```javascript
+    const webpack = require('webpack')
+    module.exports = {
+      // ...
+      devServer: {
+        // 开启 HMR 特性
+        hot: true
+        // hotOnly: true
+      }
+    }
+    ```
+  - 通过上述这种配置，如果我们修改并保存`css`文件，确实能够以不刷新的形式更新到页面中
+  - 但是，当我们修改并保存`js`文件之后，页面依旧自动刷新了，这里并没有触发热模块
+  - 所以，`HMR`并不像`Webpack`的其他特性一样可以开箱即用，需要有一些额外的操作
+  - 我们需要去指定哪些模块发生更新时进行HRM，如下代码
+    ```javascript
+    if(module.hot){
+      module.hot.accept('./index.js',()=>{
+        console.log("index.js更新了")
+      })
+    }
+    ```
+:::
+
+:::tip 实现原理
+  - 首先来看看一张图，如下：
+  ![pic](/hrm1.png "notice")
+    - `Webpack Compile`：将`JS`源代码编译成`bundle.js`
+    - `HMR Server`：用来将热更新的文件输出给`HMR Runtime`
+    - `Bundle Server`：静态资源文件服务器，提供文件访问路径
+    - `HMR Runtime`：`socket`服务器，会被注入到浏览器，更新文件的变化
+    - `bundle.js`：构建输出的文件
+    - 在`HMR Runtime`和`HMR Server`之间建立`websocket`，即图上4号线，用于实时更新文件变化
+  - 上面图中，可以分成两个阶段：
+    - 启动阶段为上图`1 - 2 - A - B`
+      - 在编写未经过`Webpack`打包的源代码后，`Webpack Compile`将源代码和`HMR Runtime`一起编译成`bundle`文件，传输给`Bundle Server`静态资源服务器
+    - 更新阶段为上图`1 - 2 - 3 - 4`
+      - 当某一个文件或者模块发生变化时，`Webpack`监听到文件变化对文件重新编译打包，编译生成唯一的`hash`值，这个`hash`值用来作为下一次热更新的标识
+      - 根据变化的内容生成两个补丁文件：`manifest`（包含了`hash`和`chunkId`，用来说明变化的内容）和`chunk.js` 模块
+      - 由于`socket`服务器在`HMR Runtime`和`HMR Server`之间建立`websocket`链接，当文件发生改动的时候，服务端会向浏览器推送一条消息，消息包含文件改动后生成的`hash`值，如下图的h属性，作为下一次热更细的标识
+      ![pic](/hrm2.png "notice")
+      - 在浏览器接受到这条消息之前，浏览器已经在上一次`socket`消息中已经记住了此时的`hash`标识，这时候我们会创建一个`ajax`去服务端请求获取到变化内容的`manifest`文件
+      - `manifest`文件包含重新`build`生成的`hash`值，以及变化的模块，对应上图的c属性
+      - 浏览器根据`manifest`文件获取模块变化的内容，从而触发`render`流程，实现局部模块更新
+      ![pic](/hrm3.png "notice")
+:::
+
+:::warning 总结
+  - 关于`Webpack`热模块更新的总结如下：
+    - 通过`webpack-dev-server`创建两个服务器：提供静态资源的服务（`express`）和`Socket`服务
+    - `express server`负责直接提供静态资源的服务（打包后的资源直接被浏览器请求和解析）
+    - `socket server`是一个`websocket`的长连接，双方可以通信
+    - 当`socket server`监听到对应的模块发生变化时，会生成两个文件.json（`manifest`文件）和.js文件（`update chunk`）
+    - 通过长连接，`socket server`可以直接将这两个文件主动发送给客户端（浏览器）
+    - 浏览器拿到两个新的文件后，通过`HMR runtime`机制，加载这两个文件，并且针对修改的模块进行更新
+:::
