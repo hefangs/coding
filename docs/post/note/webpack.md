@@ -208,3 +208,144 @@
   ![pic](/webpack6.png "notice")
 :::
 ## 3.  说说webpack中常见的Loader？
+
+:::tip Loader是什么
+  - `loader`用于对模块的"源代码"进行转换，在`import`或"加载"模块时预处理文件
+  - `Webpack`做的事情，仅仅是分析出各种模块的依赖关系，然后形成资源列表，最终打包生成到指定的文件中
+  - 在`Webpack`内部中，任何文件都是模块，不仅仅只是`JS`文件
+  - 默认情况下，在遇到`import`或者`require`加载模块的时候，`Webpack`只支持对`JS`和`Json`文件打包
+  - 像`css`、`sass`、`png`等这些类型的文件的时候，`Webpack`则无能为力，这时候就需要配置对应的`loader`进行文件内容的解析
+  - 当`Webpack`碰到不识别的模块的时候，`Webpack`会在配置的中查找该文件解析规则
+  - 关于配置`loader`的方式有三种：
+    - 配置方式（推荐）：在 `webpack.config.js`文件中指定`loader`
+    - 内联方式：在每个`import`语句中显式指定`loader`
+    - `CLI`方式：在`shell`命令中指定它们
+:::
+
+:::tip  配置方式
+  - 关于`loader`的配置，我们是写在`module.rules`属性中，属性介绍如下：
+    - `rules`是一个数组的形式，因此我们可以配置很多个`loader`
+    - 每一个`loader`对应一个对象的形式，对象属性`test`为匹配的规则，一般情况为正则表达式
+    - 属性`use`针对匹配到文件类型，调用对应的`loader`进行处理
+  - 代码编写，如下形式：
+    ```javascript
+      module.exports = {
+        module: {
+          rules: [
+            {
+              test: /\.css$/,
+              use: [
+                { loader: 'style-loader' },
+                {
+                  loader: 'css-loader',
+                  options: {
+                    modules: true
+                  }
+                },
+                { loader: 'sass-loader' }
+              ]
+            }
+          ]
+        }
+      }
+    ```
+:::
+
+:::tip 特性
+  - 从上述代码可以看到，在处理`css`模块的时候，`use`属性中配置了三个`loader`分别处理`css`文件
+  - 因为`loader`支持链式调用，链中的每个`loader`会处理之前已处理过的资源，最终变为`JS`代码。顺序为相反的顺序执行，即上述执行方式为`sass-loader`、`css-loader`、`style-loader`
+  - 除此之外，`loader`的特性还有如下：
+    - `loader`可以是同步的，也可以是异步的
+    - `loader`运行在`Node.js`中，并且能够执行任何操作
+    - 除了常见的通过`package.json`的`main`来将一个`npm`模块导出为`loader`，还可以在`module.rules`中使用`loader`字段直接引用一个模块
+    - 插件(`plugin`)可以为`loader`带来更多特性
+    - `loader`能够产生额外的任意文件
+  - 可以通过`loader`的预处理函数，为`JavaScript`生态系统提供更多能力。用户现在可以更加灵活地引入细粒度逻辑，例如：压缩、打包、语言翻译和更多其他特性
+:::
+
+:::warning 常见的Loader
+ - 在页面开发过程中，我们经常性加载除了`JS`文件以外的内容，这时候我们就需要配置响应的`loader`进行加载
+ - 常见的`loader`如下：
+   - `style-loader`: 将css添加到DOM的内联样式标签style里
+   - `css-loader` :允许将css文件通过require的方式引入，并返回css代码
+   - `less-loader`: 处理less
+   - `sass-loader`: 处理sass
+   - `postcss-loader`: 用postcss来处理CSS
+   - `autoprefixer-loader`: 处理CSS3属性前缀，已被弃用，建议直接使用postcss
+   - `file-loader`: 分发文件到output目录并返回相对路径
+   - `url-loader`: 和file-loader类似，但是当文件小于设定的limit时可以返回一个Data Url
+   - `html-minify-loader`: 压缩HTML
+   - `babel-loader` :用babel来转换ES6文件到ES5
+:::
+
+## 4. 说说webpack中常见的Plugin？
+:::tip Plugin是什么
+  - `Plugin`是一种计算机应用程序，它和主应用程序互相交互，以提供特定的功能
+  - 是一种遵循一定规范的应用程序接口编写出来的程序，只能运行在程序规定的系统下，因为其需要调用原纯净系统提供的函数库或者数据
+  - `Webpack`中的`plugin`也是如此，`plugin`赋予其各种灵活的功能，例如打包优化、资源管理、环境变量注入等，它们会运行在`webpack`的不同阶段（钩子/生命周期），贯穿了`Webpack`整个编译周期
+  - 目的在于解决`loader`无法实现的其他事
+:::
+:::tip 配置方式
+  - 一般情况，通过配置文件导出对象中`plugins`属性传入`new`实例对象。如下所示：
+    ```javascript
+    const HtmlWebpackPlugin = require('html-webpack-plugin') // 通过 npm 安装
+    const webpack = require('webpack'); // 访问内置的插件
+    module.exports = {
+      ...
+      plugins: [
+        new webpack.ProgressPlugin(),
+        new HtmlWebpackPlugin({ template: './src/index.html' })
+      ]
+    }
+    ```
+:::
+:::tip 特性
+  - 其本质是一个具有`apply`方法`Javascript`对象
+  - `apply`方法会被`Webpack compiler`调用，并且在整个编译生命周期都可以访问`compiler`对象
+    ```javascript
+      const pluginName = 'ConsoleLogOnBuildWebpackPlugin'
+      class ConsoleLogOnBuildWebpackPlugin {
+        apply(compiler) {
+          compiler.hooks.run.tap(pluginName, (compilation) => {
+            console.log('webpack 构建过程开始！')
+          });
+        }
+      }
+      module.exports = ConsoleLogOnBuildWebpackPlugin
+    ```
+  - `compiler hook`的`tap`方法的第一个参数，应是驼峰式命名的插件名称
+  - 关于整个编译生命周期钩子，有如下：
+    - `entry-option` ：初始化option
+    - `run`
+    - `compile`： 真正开始的编译，在创建compilation对象之前
+    - `compilation` ：生成好了compilation对象
+    - `make` 从`entry`开始递归分析依赖，准备对每个模块进行build
+    - `after-compile`：编译build过程结束
+    - `emit` ：在将内存中assets内容写到磁盘文件夹之前
+    - `after-emit` ：在将内存中assets内容写到磁盘文件夹之后
+    - `done`： 完成所有的编译过程
+    - `failed`： 编译失败的时候
+:::
+
+:::warning  常见的Plugin
+  - `AggressiveSplittingPlugin`：将原来的chunk 分成更小的 chunk
+  - `BabelMinifyWebpackPlugin`：使用 babel-minify进行压缩
+  - `BannerPlugin`：在每个生成的 chunk 顶部添加 banner
+  - `CommonsChunkPlugin`：提取 chunks 之间共享的通用模块
+  - `CompressionWebpackPlugin`：预先准备的资源压缩版本，使用 Content-Encoding提供访问服务
+  - `ContextReplacementPlugin`：重写 require 表达式的推断上下文
+  - `CopyWebpackPlugin`：将单个文件或整个目录复制到构建目录
+  - `DefinePlugin`：允许在编译时(compile time)配置的全局常量
+  - `DllPlugin`：为了极大减少构建时间，进行分离打包
+  - `EnvironmentPlugin`：DefinePlugin 中 process.env 键的简写方式
+  - `ExtractTextWebpackPlugin`：从 bundle 中提取文本 (CSS) 到单独的文件
+  - `HotModuleReplacementPlugin`：启用模块热替换(Enable Hot Module Replacement-HMR)
+  - `HtmlWebpackPlugin`：简单创建 HTML 文件，用于服务器访问
+  - `I18nWebpackPlugin`：为 bundle 增加国际化支持
+  - `IgnorePlugin`：从 bundle 中排除某些模块
+  - `LimitChunkCountPlugin`：设置 chunk 的最小/最大限制，以微调和控制 chunk
+  - `LoaderOptionsPlugin`：用于从 webpack 1 迁移到 webpack 2
+  - `MinChunkSizePlugin`：确保 chunk 大小超过指定限制
+  - `NoEmitOnErrorsPlugin`：在输出阶段时，遇到编译错误跳过
+  - `NormalModuleReplacementPlugin`：替换与正则表达式匹配的资源
+:::
