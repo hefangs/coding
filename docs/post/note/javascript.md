@@ -344,41 +344,40 @@ console.log(message1) //  message1 is not defined
  - 哪些资源可以被缓存？静态资源，比如 `js`,`css`,`img`
 :::
 
-:::tip  强制缓存
-  :::details
-  ![图片描述](/cache1.png)
-  :::
-  :::tip Cache-Control
+:::warning Cache-Control
   - 在 `Response Headers` 中控制强制缓存的逻辑，例如:`Cache-Control`: `max-age`=3153600（单位是秒）
   - **Cache-Control** 有哪些值:
     - **max-age**：缓存最大过期时间
     - **no-cache**：可以在客户端存储资源，每次都必须去服务端做新鲜度校验，来决定从服务端获取新的资源（200）还是使用客户端缓存（304)
     - **no-store**：永远都不要在客户端存储资源，永远都去原始服务器去获取资源
+
+    ![图片描述](/cache1.png)
+
 :::
 
-:::tip 协商缓存
+:::warning 协商缓存
   - 服务端缓存策略
   - 服务端判断客户端资源，是否和服务端资源一样
   - 一致则返回304，否则返回200和最新的资源
-  :::details
+
   ![图片描述](/cache2.png)
-  :::
-  :::tip  资源标识
-  - 在 `Response` `Headers`中，有两种:`Last-Modified`和 `Etag`
-    - `Last-Modified`：资源的最后修改时间
-      :::details
-      - ![图片描述](/last-Modified.png)
-      :::
-      - 服务端拿到 `if-Modified-Since` 之后拿这个时间去和服务端资源最后修改时间做比较
-      - 如果一致则返回 304，不一致（也就是资源已经更新了）就返回200和新的资源及新的`Last-Modified`
-    - `Etag`：资源的唯一标识（一个字符串，类似于人类的指纹）
-      :::details
-      - ![图片描述](/etag.png)
-      :::
-      - 其实`Etag`和`Last-Modified`一样的
-      - 只不过 `Etag` 是服务端对资源按照一定方式（比如 `contenthash`）计算出来的唯一标识
-      - 就像人类指纹一样，传给客户端之后，客户端再传过来时候，服务端会将其与现在的资源计算出来的唯一标识做比较
-      - 一致则返回304，不一致就返回200和新的资源及新的`Etag`
+:::
+
+:::warning  资源标识
+- 在 `Response` `Headers`中，有两种:`Last-Modified`和 `Etag`
+  - `Last-Modified`：资源的最后修改时间
+    - 服务端拿到 `if-Modified-Since` 之后拿这个时间去和服务端资源最后修改时间做比较
+    - 如果一致则返回`304`，不一致（也就是资源已经更新了）就返回200和新的资源及新的`Last-Modified`
+   
+     ![图片描述](/last-Modified.png)
+   
+  - `Etag`：资源的唯一标识（一个字符串，类似于人类的指纹）
+    - 其实`Etag`和`Last-Modified`一样的
+    - 只不过 `Etag` 是服务端对资源按照一定方式（比如 `contenthash`）计算出来的唯一标识
+    - 就像人类指纹一样，传给客户端之后，客户端再传过来时候，服务端会将其与现在的资源计算出来的唯一标识做比较
+    - 一致则返回304，不一致就返回`200`和新的资源及新的`Etag`
+
+     ![图片描述](/etag.png)
   :::
   :::warning 比较
   - 优先使用`Etag`
