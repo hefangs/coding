@@ -1,31 +1,13 @@
 ## 1. HTML语义化
-:::tip
+:::tip HTML语义化
   - 正确的标签做正确的事情
   - 适合搜索引擎的爬虫爬取有效信息，
   - 有利于 SEO
   - 支持读屏软件
   - 增强了可读性，结构更加清晰，便于团队的开发与维护
   :::
-  ::: details
-  ```html
-  <!-- 头部 -->
-  <header></header>
-  <!-- 导航栏 -->
-  <nav></nav>
-  <!-- 区块 有语义的 div -->
-  <section></section>
-  <!-- 主要区域 -->
-  <main></main>
-  <!-- 主要内容 -->
-  <article></article>
-  <!-- 侧边栏 -->
-  <aside></aside>
-  <!-- 底部 -->
-  <footer></footer>
-  ```
-  :::
 ## 2. HTML5新特性
-:::tip
+:::tip HTML5新特性
   - 多媒体，用于媒介回放的 `video` 和 `audio` 元素。
   - 图像效果，用于绘画的 `canvas` 元素，`svg` 元素等。
   - 离线&存储，对本地离线存储能够更好地支持，比如 `localStorage`,`Cookies` 等。

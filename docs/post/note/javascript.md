@@ -770,7 +770,7 @@ console.log(message1) //  message1 is not defined
   ```
 :::
 
-## 10. 谈谈 JavaScript 中的类型转换机制
+## 10. JS 中的类型转换机制
 :::tip 概述
   - `JS`中有六种简单数据类型：`undefined`，`null`，`boolean`，`string`，`number`，`symbol`，`object`
   - 但是我们在声明的时候只有一种数据类型，只有到运行期间才会确定当前类型
@@ -922,8 +922,101 @@ console.log(message1) //  message1 is not defined
   ```
 :::
 
+## 11. == 和 ===
+:::tip 等于操作符
+  - 等于操作符用两个等于号（`==`）表示，如果操作数相等，则会返回`true`
+  - 等于操作符（`==`）在比较中会先进行类型转换，再确定操作数是否相等
+  - 遵循以下规则：
+    - 如果任一操作数是布尔值，则将其转换为数值再比较是否相等
+      ```javascript
+        let result = (true == 1) // true
+      ```
+    - 如果一个操作数是字符串，另一个操作数是数值，则尝试将字符串转换为数值，再比较是否相等
+      ```javascript
+        let result = ("55" == 55) // true
+      ```
+    - 如果一个操作数是对象，另一个操作数不是，则调用对象的`valueOf()`方法取得其原始值，再根据前面的规则进行比较
+      ```javascript
+        let obj = {valueOf:function(){return 1}}
+        let result = (obj == 1)  // true
+      ```
+    - 如果两个操作数都是对象，则比较它们是不是同一个对象，如果两个操作数都指向同一个对象，则相等操作符返回true
+      ```javascript
+        let obj1 = {name:"xxx"}
+        let obj2 = {name:"xxx"}
+        let result = (obj1 == obj2 ) // false
+      ```
+    - `null`和`undefined`相等
+      ```javascript
+        let result = (null == undefined )  // true
+      ```
+    - 如果有任一操作数是`NaN`，则相等操作符返回`false`
+      ```javascript
+        let result = (NaN == NaN )  // false
+      ```
+  - 小结：
+    - 两个都为简单类型，字符串和布尔值都会转换成数值，再比较
+    - 简单类型与引用类型比较，对象转化成其原始类型的值，再比较
+    - 两个都为引用类型，则比较它们是否指向同一个对象
+    - `null`和`undefined`相等
+    - 存在`NaN`则返回`false`
+:::
 
-## 11. this
+:::tip 全等操作符
+  - 全等操作符由 3 个等于号（`===`）表示，只有两个操作数在不转换的前提下相等才返回`true`。即类型相同，值也需相同
+    ```javascript
+    let result1 = ("55" === 55) // false，不相等，因为数据类型不同
+    let result2 = (55 === 55) // true，相等，因为数据类型相同值也相同  
+    ```
+  - `undefined`和`null`与自身严格相等
+    ```javascript
+    let result1 = (null === null)  //true
+    let result2 = (undefined === undefined)  //true
+    ```
+:::
+
+:::tip 区别
+  - 相等操作符（`==`）会做类型转换，再进行值的比较
+  - 全等运算符不会做类型转换
+    ```javascript
+    let result1 = ("55" === 55) // false，不相等，因为数据类型不同
+    let result2 = (55 === 55) // true，相等，因为数据类型相同值也相同
+    ```
+  - `null`和`undefined`比较，相等操作符（`==`）为`true`，全等为`false`
+    ```javascript
+    let result1 = (null == undefined ) // true
+    let result2 = (null === undefined) // false
+    ```
+:::
+
+:::warning 总结
+  - 相等运算符隐藏的类型转换，会带来一些违反直觉的结果
+    ```javascript
+    '' == '0' // false
+    0 == '' // true
+    0 == '0' // true
+    false == 'false' // false
+    false == '0' // true
+    false == undefined // false
+    false == null // false
+    null == undefined // true
+    '\t\r\n' == 0 // true
+    ```
+  - 但在比较`null`的情况的时候，我们一般使用相等操作符`==`
+    ```javascript
+    const obj = {}
+    if(obj.x == null){
+      console.log("1")  //执行
+    }
+    // 或者
+    if(obj.x === null || obj.x === undefined) {
+      // ...
+    }
+    ```
+  - 使用相等操作符（`==`）的写法明显更加简洁了，所以除了在比较对象属性为`null`或者`undefined`的情况下，我们可以使用相等操作符（`==`），其他情况建议一律使用全等操作符（`===`）
+:::
+
+## 12. this
 
 :::danger this
   - `this`关键字是函数运行时自动生成的一个内部对象，只能在函数内部使用，总指向调用它的对象
@@ -1093,7 +1186,7 @@ console.log(message1) //  message1 is not defined
 :::
 
 
-## 12. DOM常见的操作有哪些
+## 13. DOM 常见的操作有哪些
 :::tip DOM
   - 文档对象模型(`DOM`)是`HTML`和`XML`文档的编程接口
   - 它提供了对文档的结构化的表述，并定义了一种方式可以使从程序中对该结构进行访问，从而改变文档的结构样式和内容
@@ -1206,7 +1299,7 @@ console.log(message1) //  message1 is not defined
   ```
 :::
 
-## 13.  BOM常见的操作有哪些
+## 14.  BOM 常见的操作有哪些
 :::tip BOM
   - `BOM` (`Browser Object Model`)浏览器对象模型，提供了独立于内容与浏览器窗口进行交互的对象
   - 其作用就是跟浏览器做一些交互效果,比如如何进行页面的后退，前进，刷新，浏览器的窗口发生变化，滚动条的滚动
@@ -1272,7 +1365,7 @@ console.log(message1) //  message1 is not defined
 :::
 
 
-## 14.  Javascript本地存储的方式有哪些
+## 15.  JS 本地存储的方式有哪些
 :::warning JavaScript本地缓存：
   - `Cookie`
   - `sessionStorage`
@@ -1388,4 +1481,183 @@ console.log(message1) //  message1 is not defined
     - 适合长期保存在本地的数据（令牌），推荐使用`localStorage`
     - 敏感账号一次性登录，推荐使用`sessionStorage`
     - 存储大量数据的情况、在线文档（富文本编辑器）保存编辑历史的情况，推荐使用`indexedDB`
+:::
+
+## 16. JS 中的事件模型
+
+:::tip 事件与事件流
+  - `Javascript`中的事件，可以理解就是在`HTML`文档或者浏览器中发生的一种交互操作，使得网页具备互动性，常见的有加载事件、鼠标事件、自定义事件等
+  - 由于`DOM`是一个树结构，如果在父子节点绑定事件时候，当触发子节点的时候，就存在一个顺序问题，这就涉及到了事件流的概念
+  - 事件流都会经历三个阶段：
+    - 事件捕获阶段(`capture phase`)
+    - 处于目标阶段(`target phase`)
+    - 事件冒泡阶段(`bubbling phase`)
+    ![pic](/event1.png "notice")
+  - 事件冒泡是一种从下往上的传播方式，由最具体的元素（触发节点）然后逐渐向上传播到最不具体的那个节点，也就是`DOM`中最高层的父节点
+    ```javascript
+    <!DOCTYPE html>
+    <html lang="en">
+      <head>
+        <meta charset="UTF-8">
+        <title>Event Bubbling</title>
+      </head>
+      <body>
+        <button id="clickMe">Click Me</button>
+      </body>
+    </html>
+    ```
+  - 然后，我们给`button`和它的父元素，加入点击事件
+    ```javascript
+    let button = document.getElementById('clickMe')
+    button.onclick = function() {
+      console.log('1.Button')
+    }
+    document.body.onclick = function() {
+      console.log('2.body')
+    }
+    document.onclick = function() {
+      console.log('3.document')
+    }
+    window.onclick = function() {
+      console.log('4.window')
+    }
+    ```
+  - 点击按钮，输出如下：
+    ```javascript
+    1.button
+    2.body
+    3.document
+    4.window
+    ```
+  - 点击事件首先在`button`元素上发生，然后逐级向上传播
+  - 事件捕获与事件冒泡相反，事件最开始由不太具体的节点最早接受事件, 而最具体的节点（触发节点）最后接受事件
+:::
+
+:::tip 事件模型
+  - 事件模型可以分为三种：
+    - 原始事件模型（DOM0级）
+    - 标准事件模型（DOM2级）
+    - IE事件模型（基本不用）
+:::
+
+:::tip 原始事件模型（DOM0级）
+  - 事件绑定监听函数比较简单, 有两种方式：
+    - `HTML`代码中直接绑定
+      ```javascript
+      <input type="button" onclick="fn()">
+      ```
+    - 通过`JS`代码绑定
+      ```javascript
+      let btn = document.getElementById('.btn');
+      btn.onclick = fn
+      ```
+  - 特性：
+    - 绑定速度快
+      - `DOM0`级事件具有很好的跨浏览器优势，会以最快的速度绑定，但由于绑定速度太快，可能页面还未完全加载出来，以至于事件可能无法正常运行
+        - 只支持冒泡，不支持捕获
+        - 同一个类型的事件只能绑定一次
+        ```javascript
+        <input type="button" id="btn" onclick="fn1()">
+        var btn = document.getElementById('.btn')
+        btn.onclick = fn2
+        ```
+        - 如上，当希望为同一个元素绑定多个同类型事件的时候（上面的这个`btn`元素绑定`2`个点击事件），是不被允许的，后绑定的事件会覆盖之前的事件，删除 `DOM0`级事件处理程序只要将对应事件属性置为`null`即可
+        ```javascript
+        btn.onclick = null
+        ```
+:::
+
+:::tip 标准事件模型
+  - 在该事件模型中，一次事件共有三个过程：
+    - 事件捕获阶段：事件从`document`一直向下传播到目标元素, 依次检查经过的节点是否绑定了事件监听函数，如果有则执行
+    - 事件处理阶段：事件到达目标元素, 触发目标元素的监听函数
+    - 事件冒泡阶段：事件从目标元素冒泡到`document`, 依次检查经过的节点是否绑定了事件监听函数，如果有则执行
+  - 事件绑定监听函数的方式如下：
+    ```javascript
+    addEventListener(eventType, handler, useCapture)
+    ```
+  - 事件移除监听函数的方式如下：
+    ```javascript
+    addEventListener(eventType, handler, useCapture)
+    ```
+  - 参数如下：
+    - `eventType`指定事件类型(不要加`on`)
+    - `handler`是事件处理函数
+    - `useCapture`是一个`boolean`用于指定是否在捕获阶段进行处理，一般设置为`false`与`IE`浏览器保持一致
+    - 举个例子：
+      ```javascript
+      var btn = document.getElementById('.btn')
+      btn.addEventListener(‘click’, showMessage, false)
+      btn.removeEventListener(‘click’, showMessage, false)
+      ```
+  - 特性：
+    - 可以在一个`DOM`元素上绑定多个事件处理器，各自并不会冲突
+      ```javascript
+      btn.addEventListener(‘click’, showMessage1, false)
+      btn.addEventListener(‘click’, showMessage2, false)
+      btn.addEventListener(‘click’, showMessage3, false)
+      ```
+    - 执行时机：
+      - 当第三个参数(`useCapture`)设置为`true`就在捕获过程中执行，反之在冒泡过程中执行处理函数
+      - 下面举个例子：
+        ```javascript
+        <div id='div'>
+          <p id='p'>
+            <span id='span'>Click Me!</span>
+          </p >
+        </div>
+        ```
+      - 设置点击事件
+        ```javascript{5-6}
+        var div = document.getElementById('div')
+        var p = document.getElementById('p')
+        function onClickFn (event) {
+          var tagName = event.currentTarget.tagName
+          var phase = event.eventPhase
+          console.log(tagName, phase)
+        }
+        div.addEventListener('click', onClickFn, false)
+        p.addEventListener('click', onClickFn, false)
+        ```
+      - 上述使用了`eventPhase`，返回一个代表当前执行阶段的整数值：
+        - `1`为捕获阶段
+        - `2`为事件对象触发阶段
+        - `3`为冒泡阶段
+      - 点击Click Me!，输出如下：
+        ```javascript
+        P 3
+        DIV 3
+        ```
+      - 可以看到，`p`和`div`都是在冒泡阶段响应了事件，由于冒泡的特性，裹在里层的`p`率先做出响应
+      - 如果把第三个参数都改为`true`
+        ```javascript
+        div.addEventListener('click', onClickFn, true)
+        p.addEventListener('click', onClickFn, true)
+        ```
+      - 输出如下：
+        ```javascript
+        DIV 1
+        P 1
+        ```
+      - 两者都是在捕获阶段响应事件，所以`div`比`p`标签先做出响应
+:::
+
+:::tip IE事件模型
+  - IE事件模型共有两个过程：
+    - 事件处理阶段：事件到达目标元素, 触发目标元素的监听函数
+    - 事件冒泡阶段：事件从目标元素冒泡到`document`，依次检查经过的节点是否绑定了事件监听函数，如果有则执行
+  - 事件绑定监听函数的方式如下：
+    ```javascript
+    attachEvent(eventType, handler)
+    ```
+  - 事件移除监听函数的方式如下：
+    ```javascript
+    detachEvent(eventType, handler)
+    ```
+  - 举个例子：
+    ```javascript
+    var btn = document.getElementById('.btn')
+    btn.attachEvent(‘onclick’, showMessage)
+    btn.detachEvent(‘onclick’, showMessage)
+    ```
 :::
