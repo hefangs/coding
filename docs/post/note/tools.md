@@ -72,7 +72,7 @@
 :::tip 总结
   ![pic](/git1.png "notice")
 :::
-## 2. n
+## 2. N
 :::tip n
   - `npm install -g n`全局安装 n
   - `n`查看已安装node列表并切换
