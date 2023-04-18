@@ -897,3 +897,37 @@
   | transform（变形）  | 用于元素进行旋转、缩放、移动或倾斜，和设置样式的动画并没有什么关系，就相当于color一样用来设置元素的“外表” |
   | animation（动画    | 用于设置动画属性，他是一个简写的属性，包含6个属性                                                         |
 :::
+
+
+
+## 17. 重排与重绘
+
+:::tip 
+  - 具体的浏览器解析渲染机制如下所示：
+    1. `HTML`被`HTML`解析器解析成`DOM`树
+    2. `CSS`被`CSS`解析器解析成`CSSOM`树
+    3. 结合`DOM`树和`CSSOM`树，生成一棵渲染树(`Render Tree`)
+    4. 生成布局（`flow`），即将所有渲染树的所有节点进行平面合成
+    5. 将布局绘制（`paint`）在屏幕上
+  - 第四步和第五步是最耗时的部分，这两步合起来，就是我们通常所说的渲染（如下图）
+  ![pic](/reflow1.png "notice")
+  - 当元素的样式发生变化时，浏览器需要触发更新，重新绘制元素
+  - 这个过程中，有两种类型的操作，即重排与重绘
+    - 重排(`reflow`)：当元素的尺寸、结构或触发某些属性时，浏览器会重新渲染页面，称为重排。此时，浏览器需要重新经过计算，计算后还需要重新页面布局，因此是较重的操作
+    - 会触发回流的操作：
+      - 页面初次渲染
+      - 浏览器窗口大小改变
+      - 元素尺寸、位置、内容发生改变
+      - 元素字体大小变化
+      - 添加或者删除可见的`dom`元素
+      - 激活`CSS`伪类（例如：`:hover`）
+      - 查询某些属性或调用某些方法：
+      	- clientWidth、clientHeight、clientTop、clientLeft
+      	- offsetWidth、offsetHeight、offsetTop、offsetLeft
+      	- scrollWidth、scrollHeight、scrollTop、scrollLeft
+      	- getComputedStyle()
+      	- getBoundingClientRect()
+      	- scrollTo()
+  
+    - 重绘(`repaint`)：当元素样式的改变不影响布局时，浏览器将使用重绘对元素进行更新，此时由于只需要`UI`层面的重新像素绘制，因此损耗较少
+  - `回流必定触发重绘，重绘不一定触发回流。重绘的开销较小，回流的代价较高`
