@@ -14,19 +14,19 @@
   - 性能与集成特性，`HTML5` 会通过 `XML HttpRequest2`等技术，帮助您的 `Web` 应用和网站在多样化的环境中更快速地工作
 :::
 ## 3. 行内元素 块级元素 空(void)元素
-:::tip
+:::tip 行内元素 块级元素 空(void)元素
   - 行内元素：`span` `img` `input` `select` `strong`
   - 块级元素：`div` `ul` `ol` `li` `dl` `dt` `dd` `h1` `h2` `h3` `h4` `h5` `h6` `p`
   - 空(void)元素：`br` `hr` `img` `input` `link` `meta`
 :::
 ## 4. link 和@import 的区别
-:::tip
+:::tip 区别
   -  `link` 引用 `CSS` 时，在页面载入时同时加载；`@import` 需要页面网页完 全载入以后加载
   - ` link` 是 `XHTML` 标签，无兼容问题；`@import` 是在 CSS2.1 提出的，低版本的浏览器不支持
   -  `link` 支持使用 `Javascript` 控制 `DOM` 去改变样式；而 `@import` 不支持
 :::
 ## 5. CSS3 中有哪些新特性
-:::tip
+:::tip 新特性
   - `border-radius` 圆角属性 border-radius: 10px;
   - `text-shadow` 文字阴影 text-shadow: 1px 1px 2px black;
   - `gradient` 线性渐变 background: linear-gradient(blue, pink);
@@ -34,7 +34,7 @@
   - `transition` 过渡 transition: all .3s ease;
   - `animation` 动画 animation: 3s ease-in 1s infinite reverse both running slidein;
 :::
-## 5. CSS 选择器及优先级
+## 6. CSS 选择器及优先级
   :::tip 选择器
   - id 选择器(#myid)
   - 类选择器(.myclass)
@@ -54,53 +54,53 @@
   - 元素选择器/伪元素选择器（0001）
   - 关系选择器/通配符选择器（0000）
   :::
-## 6.  CSS 布局单位
-:::tip
-  - px: 像素单位
-  - rpx: 小程序布局单位
-  - %: 相对于父元素的百分比单位
-  - em: 相对单位 1em 等同于父元素的文字大小
-  - rem: 相对单位 1rem 等同于 html 根元素的文字大小
-  - vh: 相对单位 1vh 等同于屏幕高度的 1%
-  - vw: 相对单位 1vw 等同于屏幕快读的 1%
-  - vmin: 选取 vh 和 vw 的最小值为基准
-  - vmax: 选取 vh 和 vw 的最大值为基准
+## 7.  CSS 布局单位
+:::tip CSS 布局单位
+  - `px`: 像素单位
+  - `rpx`: 小程序布局单位
+  - `%`: 相对于父元素的百分比单位
+  - `em`: 相对单位 1em 等同于父元素的文字大小
+  - `rem`: 相对单位 1rem 等同于 html 根元素的文字大小
+  - `vh`: 相对单位 1vh 等同于屏幕高度的 1%
+  - `vw`: 相对单位 1vw 等同于屏幕快读的 1%
+  - `vmin`: 选取 vh 和 vw 的最小值为基准
+  - `vmax`: 选取 vh 和 vw 的最大值为基准
 :::
 
 
-## 7. script 标签中属性 async 和 defer 的区别
+## 8. script 标签中属性 async 和 defer 的区别
   ```html
   <script src='xxx'></script>
   <script src='xxx' async></script>
   <script src='xxx' defer></script>
   ```
-  ::: tip
+  ::: warning 区别
   - `script` 会阻碍 `HTML` 解析，只有下载好并执行完脚本才会继续解析 `HTML`
   - `async script`：解析 `HTML` 的过程中会进行脚本的异步下载，下载成功后立马执行，因此有可能会阻断 `HTML` 的解析。多个脚本的执行顺序无法保证
   - `defer script`：也是异步下载脚步，加载完成后，如果此时 `HTML` 还没有解析完，浏览器不会暂停解析去执行 `JS` 代码，而是等待 `HTML` 解析完毕再执行 `JS` 代码
   :::
-  :::tip
+  :::danger 继续比较
   | script 标签  |   JS 执行顺序    |      是否阻塞解析 HTML |
   | ------------ | :--------------: | ---------------------: |
   | script       | 在 HTML 中的顺序 |                   阻塞 |
   | script async | 网络请求返回顺序 | 可能阻塞，也可能不阻塞 |
   | script defer | 在 HTML 中的顺序 |                 不阻塞 |
 
-  :::
-  ::: details
+  
+
   ![图片描述](/script.png)
   :::
-## 7. 盒模型
-  :::tip
+## 9. 盒模型
+  :::tip 定义
   - `IE` 盒模型： `width` + `height` + `padding` + `border`
   - `W3C` 标准盒模型： `width` + `height，不包含` `border` 和 `padding`
   :::
-## 8. BFC
+## 10. BFC
 :::tip 定义:
    - 块级格式化上下文
    - 是一个独立的渲染区域，让处于`BFC`内部的元素与外部的元素相互隔离，使内外元素的定位不会相互影响
 :::
-:::tip 触发条件：
+:::warning 触发条件：
    - 根元素
    - `position`: `absolute`/`fixed`
    - `display`: `inline-block` /`table`
@@ -108,7 +108,7 @@
    - `overflow` !== `visible`
 :::
 
- :::tip  规则：
+ :::warning  规则：
    - 属于同一个`BFC`的两个相邻`Box`垂直排列
    - 属于同一个`BFC`的两个相邻`Box`的`margin`会发生重叠
    - `BFC`中子元素的左边 `margin`，与包含块 (`BFC`) `border` `box`的左边相接触
@@ -117,10 +117,9 @@
   :::
 
 
-## 9. 两栏布局
-:::tip
+## 11. 两栏布局
+:::tip 两栏布局
 - 利用浮动，左边元素宽度固定，设置向左浮动。将右边元素的 `margin-left` 设为固定宽度 。注意，因为右边元素的 `width` 默认为 `auto`，所以会自动撑满父元素
-:::
   ```css
   .outer {
     height: 100px
@@ -138,9 +137,7 @@
     background: lightseagreen
   }
   ```
-:::tip
 - 同样利用浮动，左边元素宽度固定，设置向左浮动。右侧元素设置`overflow`:`hidden` 这样右边就触发了`BFC` ，`BFC`的区域不会与浮动元素发生重叠，所以两侧就不会发生重叠
-:::
   ```css
   .outer {
     height: 100px
@@ -157,9 +154,7 @@
     background: lightseagreen
   }
   ```
-:::tip
 - 利用`flex`布局，左边元素固定宽度，右边的元素设置`flex`: 1
-:::
   ```css
   .outer {
     height: 100px
@@ -176,9 +171,7 @@
     background: lightseagreen
   }
   ```
-:::tip
 - 利用绝对定位，父级元素设为相对定位。左边元素`absolute`定位，宽度固定。右边元素的`margin-left`的值设为左边元素的宽度值
-:::
   ```css
   .outer {
     position: relative
@@ -196,34 +189,31 @@
     background: lightseagreen
   }
   ```
-:::tip
 - 利用绝对定位，父级元素设为相对定位。左边元素宽度固定，右边元素`absolute`定位，`left`为宽度大小，其余方向定位为0
+  ```css
+    .outer {
+      position: relative
+      height: 100px
+    }
+    .left {
+      width: 200px
+      height: 100%
+      background: lightcoral
+    }
+    .right {
+      position: absolute
+      left: 200px
+      top: 0
+      right: 0
+      bottom: 0
+      height: 100%
+      background: lightseagreen
+    }
+    ```
 :::
-```css
-  .outer {
-    position: relative
-    height: 100px
-  }
-  .left {
-    width: 200px
-    height: 100%
-    background: lightcoral
-  }
-  .right {
-    position: absolute
-    left: 200px
-    top: 0
-    right: 0
-    bottom: 0
-    height: 100%
-    background: lightseagreen
-  }
-```
+## 12. 三栏布局
+:::tip 圣杯布局
 
-## 10. 三栏布局
-:::tip
-- 圣杯布局
-:::
 ```html
 <div id="container" class="clearfix">
   <div class="center">我是中间</div>
@@ -262,9 +252,9 @@
   clear: both
 }
 ```
-:::tip
-- 双飞翼布局
 :::
+:::tip 双飞翼布局
+
 ```html
 <div id="main" class="float">
   <div id="main-wrap">main</div>
@@ -297,13 +287,13 @@
   margin-left: -190px
 }
 ```
-:::warning
-**总结：**
+:::
+:::warning 总结：
 - 使用`float`布局
 - 两侧使用`margin`负值，以便和中间内容横向重叠
 - 防止中间内容被两侧覆盖，圣杯布局用`padding`，双飞翼布局用`margin`
 :::
-## 11. 水平垂直居中
+## 13. 水平垂直居中
 :::tip 绝对定位
 - 设置`left`: 50%和`top`:50%,现将子元素左上角移到父元素中心位置，然后再通过`translate`来调整子元素的中心点到父元素的中心。(该方法可以不定宽高)
   ```css
@@ -393,7 +383,7 @@
 }
 ```
 :::
-## 12. 清除浮动
+## 14. 清除浮动
 :::tip 定义
  - 非IE浏览器下，容器不设高度且子元素浮动时，容器高度不能被内容撑开
  - 内容会溢出到容器外面而影响布局。这种现象被称为浮动（溢出）
@@ -429,7 +419,7 @@
    }
    ```
 :::
-## 13. 伪元素和伪类的区别
+## 15. 伪元素和伪类的区别
 :::tip 伪元素
   - 在内容元素的前后插入额外的元素或样式，但是这些元素实际上并不在文档中生成
   - 它们只在外部显示可见，但不会在文档的源代码中找到它们，因此，称为“伪”元素
@@ -452,7 +442,7 @@
 
 
 
-## 14. Flex
+## 16. Flex
 :::tip flex
   - `Flexible Box`简称`flex`，意为”弹性布局”，可以简便、完整、响应式地实现各种页面布局
   - 采用`Flex`布局的元素，称为`flex`容器`container`
@@ -592,7 +582,7 @@
         ![pic](/flex8.png "notice")
 :::
 
-## 15. Grid
+## 17. Grid
 
 :::tip Grid
   - `Grid`布局即网格布局，是一个二维的布局方式，由纵横相交的两组网格线形成的框架性布局结构，能够同时处理行与列
@@ -802,7 +792,7 @@
 :::
 
 
-## 16. CSS3动画有哪些？
+## 18. CSS3动画有哪些？
 
 :::warning transition(实现渐变动画)
   - `transition`的属性如下：
@@ -913,7 +903,7 @@
 
 
 
-## 17. 重排与重绘
+## 19. 重排与重绘
 
 :::tip 
   - 具体的浏览器解析渲染机制如下所示：
@@ -945,7 +935,7 @@
     - 重绘(`repaint`)：当元素样式的改变不影响布局时，浏览器将使用重绘对元素进行更新，此时由于只需要`UI`层面的重新像素绘制，因此损耗较少
   - `回流必定触发重绘，重绘不一定触发回流。重绘的开销较小，回流的代价较高`
 :::
-## 18. 什么是响应式设计？
+## 20. 什么是响应式设计？
 
 :::tip  响应式
   - 响应式网站设计（`Responsive Web design`）是一种网络页面设计布局，页面的设计与开发应当根据用户行为以及设备环境(系统平台、屏幕尺寸、屏幕定向等)进行相应的响应和调整
@@ -1049,7 +1039,7 @@
     - 一定程度上改变了网站原有的布局结构，会出现用户混淆的情况
 :::
 
-## 19. CSS提高性能的方法有哪些？
+## 21. CSS提高性能的方法有哪些？
 :::warning 实现方式
   - 实现方式有很多种，主要有如下：
     - 内联首屏关键`CSS`
@@ -1108,7 +1098,7 @@
 :::
 
 
-## 20. CSS 画图形
+## 22. CSS 画图形
 
 :::tip 三角形
   ```html
@@ -1419,4 +1409,22 @@
     border-radius: 50%;
   }
   ```
+:::
+
+## 23. CSS隐藏盒子的方式？
+:::tip 多种方式
+  - `display: none`;：渲染树不会包含该渲染对象，因此该元素不会在页面中占据位置，也不会响应绑定的监听事件
+  - `visibility: hidden;`：元素在页面中仍占据空间，但是不会响应绑定的监听事件
+  - `opacity: 0;`：将元素的透明度设置为 0，以此来实现元素的隐藏。元素在页面中仍然占据空间，并且能够响应元素绑定的监听事件
+  - `height: 0; width: 0`：将元素的高度和宽度设置为零，可以将其隐藏。这种方法只适用于元素的大小已经被固定的情况
+  - `position: absolute; left: -9999px;`：将元素定位到屏幕左上角之外，使其不可见
+  - `transform: scale(0);`：对元素进行缩放
+  - `transform: translate(-1000px,-1000px);`：对元素进行缩放
+  - `clip-path: circle(0);`：该属性指定元素应该被剪切的区域。使用这种方法可以将元素的内容隐藏，但它仍然占用空间
+:::
+:::danger `display: none`与`visibility: hidden`的区别
+   - `display: none`的元素不占据任何空间，`visibility: hidden`的元素空间保留；
+   - `display: none`会影响`css3`的`transition`过渡效果，`visibility: hidden`不会
+   - `display: none`隐藏产生重排和重绘，`visibility: hidden`只会触发重绘
+   - `display: none`的节点和子孙节点元素全都不可见，`visibility: hidden`的节点的子孙节点元素可以设置`visibility: visible`显示；`visibility: hidden`属性值具有继承性，所以 子孙元素默认继承了`hidden`而隐藏，但是当子孙元素重置为`visibility: visible`就不会被隐藏
 :::
