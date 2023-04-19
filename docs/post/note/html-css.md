@@ -304,68 +304,80 @@
 - 防止中间内容被两侧覆盖，圣杯布局用`padding`，双飞翼布局用`margin`
 :::
 ## 11. 水平垂直居中
-:::tip
-- 利用绝对定位，设置`left`: 50%和`top`:50%,现将子元素左上角移到父元素中心位置，然后再通过`translate`来调整子元素的中心点到父元素的中心。(该方法可以不定宽高)
+:::tip 绝对定位
+- 设置`left`: 50%和`top`:50%,现将子元素左上角移到父元素中心位置，然后再通过`translate`来调整子元素的中心点到父元素的中心。(该方法可以不定宽高)
+  ```css
+  .father {
+    position: relative
+  }   
+  .son {
+    position: absolute
+    left: 50%
+    top: 50%
+    transform: translate(-50%, -50%)
+  }
+  ```
 :::
-```css
-.father {
-  position: relative
-}   
-.son {
-  position: absolute
-  left: 50%
-  top: 50%
-  transform: translate(-50%, -50%)
-}
-```
-:::tip
-- 利用绝对定位，子元素所有方向都为0，将`margin`设置为`auto`，由于宽高固定，对应方向实现平分。(该方法必须定宽高)
+
+:::tip 绝对定位
+- 子元素所有方向都为0，将`margin`设置为`auto`，由于宽高固定，对应方向实现平分(该方法必须定宽高)
+  ```css
+  .father {
+    position: relative
+  }
+  .son {
+    position: absolute
+    top: 0
+    left: 0
+    right: 0
+    bottom: 0
+    margin: auto
+    height: 100px
+    width: 100px
+  }
+  ```
+- 设置`left`:50%和`top`:50%现将子元素左上角移到父元素中心位置，然后再通过`margin-left`和`margin-top`以子元素自己的一半宽高进行负值赋值。(该方法必须定宽高)
+  ```css
+  .father {
+    position: relative
+  }
+  .son {
+    position: absolute
+    left: 50%
+    top: 50%
+    width: 200px
+    height: 200px
+    margin-left: -100px
+    margin-top: -100px
+  }
+  ```
 :::
-```css
-.father {
-  position: relative
-}
-.son {
-  position: absolute
-  top: 0
-  left: 0
-  right: 0
-  bottom: 0
-  margin: auto
-  height: 100px
-  width: 100px
-}
-```
-:::tip
-- 利用绝对定位，设置`left`:50%和`top`:50%现将子元素左上角移到父元素中心位置，然后再通过`margin-left`和`margin-top`以子元素自己的一半宽高进行负值赋值。(该方法必须定宽高)
-:::
-```css
-.father {
-  position: relative
-}
-.son {
-  position: absolute
-  left: 50%
-  top: 50%
-  width: 200px
-  height: 200px
-  margin-left: -100px
-  margin-top: -100px
-}
-```
-:::tip
+
+:::tip flex
 - 利用`flex`，最经典最方便的一种了，不用解释，定不定宽高无所谓的
+  ```css
+  .father {
+    display: flex
+    justify-content: center
+    align-items: center
+  }
+  ``` 
+- 也是`flex`，需要定义`min-height`
+  ```css{3,10}
+  .father{
+    display:flex;
+    min-height:100vh;
+  }
+  .son {
+    width: 200px;
+    height: 200px;
+    border:1px red solid;
+    background-color:red;
+    margin:auto;
+  }
+  ```
 :::
-```css
-.father {
-  display: flex
-  justify-content: center
-  align-items: center
-}
-``` 
-:::tip
-- 利用`grid`(该方法必须定宽高)
-:::
+:::tip 利用`grid`(该方法必须定宽高)
 ```css
 .father {
   width: 200px;
@@ -379,7 +391,8 @@
   background: yellow;
   margin: auto;
 }
-  ```
+```
+:::
 ## 12. 清除浮动
 :::tip 定义
  - 非IE浏览器下，容器不设高度且子元素浮动时，容器高度不能被内容撑开
@@ -1092,4 +1105,47 @@
 
 :::tip 总结
   - `css`实现性能的方式可以从选择器嵌套、属性特性、减少`http`这三面考虑，同时还要注意`css`代码的加载顺序
+:::
+
+
+## 20. CSS 画图形
+
+:::tip 三角形
+  ```html
+  <div class="box"></div>
+  ```
+  ```css
+  .box {
+    width: 0px;
+    height: 0px;
+    border-style:solid;
+    border-width: 100px ;
+    border-color: green red yellow blue;
+    border-color:transparent transparent green 
+  }
+  ```
+:::
+:::tip 空心三角形
+  ```html
+  <div class="box"></div>
+  ```
+  ```css
+  .box {
+    width: 0px;
+    height: 0px;
+    border-style:solid;
+    border-width: 50px;
+    border-color:transparent transparent red transparent;
+    position: relative;
+  }
+  .box:after{
+    content: '';
+    border-style:solid;
+    border-width:40px;
+    border-color: transparent transparent #eee transparent;
+    position: absolute;
+    top: -34px;
+    left: -40px;
+  } 
+  ```
 :::
