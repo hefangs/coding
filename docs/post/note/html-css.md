@@ -1148,4 +1148,275 @@
     left: -40px;
   } 
   ```
+  :::
+:::tip 麻将
+- 一饼
+  ```html
+  <div class="main">
+    <div></div>
+  </div>
+  ```
+  ```css
+  .main {
+    width: 100px;
+    height: 200px;
+    border: 1px solid #ccc;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  .main div {
+    width: 50px;
+    height: 50px;
+    background-color: aquamarine;
+    border-radius: 50%;
+  }
+  ```
+- 二饼
+  ```html
+  <div class="main">
+    <div></div>
+    <div></div>
+  </div>
+  ```
+  ```css{8}
+  .main {
+    width: 100px;
+    height: 200px;
+    border: 1px solid #ccc;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    flex-direction: column;
+  }
+  .main div {
+    width: 50px;
+    height: 50px;
+    background-color: aquamarine;
+    border-radius: 50%;
+  }
+  ```
+- 三饼
+  ```html
+  <div class="main">
+    <div></div>
+    <div></div>
+    <div></div>
+  </div>
+  ```
+  ```css{17,20}
+  .main {
+    width: 100px;
+    height: 200px;
+    border: 1px solid #ccc;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    flex-direction: column;
+  }
+  .main div {
+    width: 50px;
+    height: 50px;
+    background-color: aquamarine;
+    border-radius: 50%;
+  }
+  .main div:nth-child(1) {
+    align-self: flex-start;
+  }
+  .main div:nth-child(3) {
+    align-self: flex-end;
+  }
+- 四饼
+  ```html
+  <div class="main">
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+  </div>
+  ```
+  ```css{6}
+  .main {
+    width: 100px;
+    height: 200px;
+    border: 1px solid #ccc;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+  }
+  .main div {
+    width: 50px;
+    height: 50px;
+    background-color: aquamarine;
+    border-radius: 50%;
+  }
+  ```
+- 五饼
+  ```html
+  <div class="main">
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+  </div>
+  ```
+  ```css{17}
+  .main {
+    width: 100px;
+    height: 200px;
+    border: 1px solid #ccc;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-around;
+  }
+  .main div {
+    width: 50px;
+    height: 50px;
+    background-color: aquamarine;
+    border-radius: 50%;
+  }
+  .main div:nth-child(3) {
+    margin-left: 25px;
+  }
+  ```
+- 六饼
+  ```html
+  <div class="main">
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+  </div>
+  ```
+  ```css{6}
+  .main {
+    width: 100px;
+    height: 200px;
+    border: 1px solid #ccc;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-around;
+  }
+  .main div {
+    width: 50px;
+    height: 50px;
+    background-color: aquamarine;
+    border-radius: 50%;
+  }
+  ```
+- 七饼
+  ```html
+  <div class="main">
+    <div></div>
+    <div></div>
+    <div></div>
+  </div>
+  <div class="footer">
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+  </div>
+  ```
+  ```css{6,12-13,25,28}
+  .main {
+    border: 1px solid #ccc;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-direction: column;
+    border-bottom:none;
+  }
+  .footer {
+    border: 1px solid #ccc;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    align-items: center;
+    border-top:none
+  }
+  .main div,.footer div  {
+    width: 40px;
+    height: 40px;
+    background-color: aquamarine;
+    border-radius: 50%;
+  }
+
+  .main div:nth-child(1) {
+    align-self: flex-start;
+  }
+  .main div:nth-child(3) {
+    align-self: flex-end;
+  }
+  body{
+    width: 100px;
+    height: 200px;
+  }
+  ```
+- 八饼
+  ```html
+  <div class="main">
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+  </div>
+  ```
+  ```css{8,11-12}
+  .main {
+  width: 100px;
+  height: 200px;
+  border: 1px solid #ccc;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap:wrap;
+  }
+  .main div  {
+    width: 50px;
+    height: 50px;
+    background-color: aquamarine;
+    border-radius: 50%;
+  }
+  ```
+- 九饼
+  ```html
+  <div class="main">
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+    <div></div>
+  </div>
+  ```
+  ```css{6,11-12}
+  .main {
+  width: 100px;
+  height: 200px;
+  border: 1px solid #ccc;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  flex-wrap:wrap;
+  }
+  .main div  {
+    width: 30px;
+    height: 30px;
+    background-color: aquamarine;
+    border-radius: 50%;
+  }
+  ```
 :::
