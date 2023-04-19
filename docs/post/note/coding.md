@@ -942,13 +942,16 @@ document.addEventListener("mouseup", e => {
 ## 13. 排序
 
 :::tip 冒泡排序
-
+ - 比较相邻的元素，如果第一个比第二个大，就交换它们两个
+ - 对每一对相邻元素作同样的工作，从开始第一对到结尾的最后一对，这样在最后的元素应该会是最大的数
+ - 针对所有的元素重复以上的步骤，除了最后一个
+ - 重复上述步骤，直到没有任何一堆数字需要比较
 ```js
 function bubbleSort(arr) {
   for (let i = 0; i < arr.length - 1; i++) {
     for (let j = 0; j < arr.length - 1 - i; j++) {
       if (arr[j] > arr[j + 1]) {
-          [arr[j], arr[j + 1]] = [arr[j + 1], arr[j]]
+        [arr[j], arr[j + 1]] = [arr[j + 1], arr[j]]
       }
     }
   }
@@ -957,11 +960,14 @@ function bubbleSort(arr) {
 let arr = [5,3,7,9,6,1,8,4,2]
 bubbleSort(arr)  // [1, 2, 3, 4, 5, 6, 7, 8, 9]
 ```
+:::details bubbleSort 动图演示
+![pic](/sort1.gif)
 :::
 
 :::tip 选择排序
-
-
+  - 在未排序序列中找到最小（大）元素，存放到排序序列的起始位置
+  - 从剩余未排序元素中继续寻找最小（大）元素，然后放到已排序序列的末尾
+  - 重复第二步，直到所有元素均排序完毕
 ```js
 function selectSort(arr){
   let minIndex
@@ -979,11 +985,14 @@ function selectSort(arr){
 let arr = [5,3,7,9,6,1,8,4,2]
 selectSort(arr)  //[1, 2, 3, 4, 5, 6, 7, 8, 9]
 ```
+:::details selectSort 动图演示
+ ![pic](/sort2.gif)
 :::
 
 :::tip 快速排序
-
-
+  - 从数列中挑出一个元素，称为"基准"（`pivot`）
+  - 重新排序数列，所有比基准值小的元素摆放在基准前面，所有比基准值大的元素摆在基准后面（相同的数可以到任何一边）。在这个分区结束之后，该基准就处于数列的中间位置。这个称为分区（`partition`）操作
+  - 递归地（`recursively`）把小于基准值元素的子数列和大于基准值元素的子数列排序
 ```js
 function quickSort(arr) {
   let target = arr[0]
@@ -1002,6 +1011,33 @@ function quickSort(arr) {
 let arr = [5,3,7,9,6,1,8,4,2]
 quickSort(arr) //[1, 2, 3, 4, 5, 6, 7, 8, 9]
 ```
+:::details quickSort 动图演示
+![pic](/sort3.gif)
+:::
+:::tip 插入排序
+  - 把待排序的数组分成已排序和未排序两部分，初始的时候把第一个元素认为是已排好序的
+  - 从第二个元素开始，在已排好序的子数组中寻找到该元素合适的位置并插入该位置（如果待插入的元素与有序序列中的某个元素相等，则将待插入元素插入到相等元素的后面）
+  - 重复上述过程直到最后一个元素被插入有序子数组中
+```js
+function insertionSort(arr) {
+  var len = arr.length
+  var preIndex, current
+  for (var i = 1; i < len; i++) {
+    preIndex = i - 1
+    current = arr[i]
+    while(preIndex >= 0 && arr[preIndex] > current) {
+        arr[preIndex+1] = arr[preIndex];
+        preIndex--
+    }
+    arr[preIndex+1] = current
+  }
+  return arr
+}
+let arr = [5,3,7,9,6,1,8,4,2]
+insertionSort(arr) //[1, 2, 3, 4, 5, 6, 7, 8, 9]
+```
+:::details insertionSort 动图演示
+![pic](/sort4.gif)
 :::
 
 
