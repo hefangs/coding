@@ -496,3 +496,202 @@
     ```
   - `Proxy`不兼容`IE`，也没有`polyfill`, `defineProperty`能支持到`IE9`
 :::
+
+
+## 4.  watch与watchEffect
+
+:::tip 不同形式的“数据源”
+  - `Vue3`中`watchEffect`的作用和`Vue2`中的`watch`作用是一样的，他们都是用来监听响应式状态发生变化的，当响应式状态发生变化时，都会触发一个回调函数
+    - 侦听数据源类型： 
+      - 它可以是一个ref(包括计算属性)
+      - 一个响应式对象
+      - 一个getter函数
+      - 或多个数据源组成的数组
+:::
+
+
+:::tip 监听ref代理的单个数据
+```javascript{2}
+let num1 = ref(1)
+watch(num1, (newValue, oldValue) => {
+  console.log(newValue, oldValue)
+})
+let update = () =>{
+  num1.value += 1
+}
+```
+:::
+:::tip 监听ref代理的多个数据
+```javascript{3}
+let num1 = ref(1)
+let num2 = ref(2)
+watch([num1,num2], (newValue, oldValue) => {
+  console.log(newValue, oldValue)
+})
+let update =()=>{
+  num1.value += 1
+  num2.value += 2
+}
+```
+:::
+
+:::warning 用ref监听对象(需要手动增加deep:true)
+```javascript{8,10}
+let person = ref({
+  name: 'John',
+  age: 18
+  foo:{
+    bar:'running'
+  }
+})
+watch(person, (newValue, oldValue) => {
+  console.log(newValue, oldValue)
+},{deep:true})
+let update = () =>{
+  person.value.name += '!'
+  person.value.age += 1
+  person.value.foo.bar += '~'
+}
+```
+:::
+
+:::tip 用reactive监听一个对象
+```javascript{8}
+let person = reactive({
+  name: 'John',
+  age: 18,
+  foo:{
+    bar:'running'
+  }
+})
+watch(person, (newValue, oldValue) => {
+  console.log(newValue, oldValue)
+})
+let update = () =>{
+  person.name += '!'
+  person.age += 1
+  person.foo.bar += '~'
+}
+```
+:::
+:::tip 用reactive监听对象上的一个属性
+```javascript{8}
+let person = reactive({
+  name: 'John',
+  age: 18,
+  foo:{
+    bar:'running'
+  }
+})
+watch(()=> person.name, (newValue, oldValue) => {
+  console.log(newValue, oldValue)
+})
+let update = () =>{
+  person.name += '!'
+  person.age += 1
+  person.foo.bar += '~'
+}
+```
+:::
+:::tip 用reactive监听对象上的多个属性
+```javascript{8}
+let person = reactive({
+  name: 'John',
+  age: 18,
+  foo:{
+    bar:'running'
+  }
+})
+watch([()=> person.name,()=> person.foo.bar], (newValue, oldValue) => {
+  console.log(newValue, oldValue)
+})
+let update = () =>{
+  person.name += '!'
+  person.age += 1
+  person.foo.bar += '~'
+}
+```
+:::
+
+
+:::tip watchEffect
+- 使用`watchEffect`方法，它立即执行传入的一个函数，同时响应式追踪其依赖，并在其依赖变更时重新运行该函数
+  ```javascript{11-12}
+  let num1 = ref(1)
+  let num2 = ref(2)
+  let person = reactive({
+    name: 'John',
+    age: 18,
+    foo:{
+      bar:'running'
+    }
+  })
+  watchEffect(() => {
+    console.log(num1.value, num2.value)
+    console.log(person.name, person.age,person.foo.bar)
+  })
+  let update = () =>{
+    num1.value += 1
+    num2.value += 2
+    person.name += '!'
+    person.age += 1
+    person.foo.bar += '~'
+  }
+  ```
+- 清除副作用
+  - 副作用就是执行某种操作，如对外部可变数据或变量的修改，外部接口的调用等
+  - `watchEffect`的回调函数就是一个副作用函数，因为我们使用`watchEffect`就是侦听到依赖的变化后执行某些操作
+  - 当执行副作用函数时，它势必会对系统带来一些影响
+  - 如在副作用函数里执行了一个定时器`setInterval`，因此我们必须处理副作用
+  - Vue3的`watchEffect`侦听副作用传入的函数可以接收一个`onInvalidate`函数作为入参
+  - 用来注册清理失效时的回调。当以下情况发生时，这个失效回调会被触发：
+    - 副作用即将重新执行时（即依赖的值改变）
+    - 侦听器被停止 (通过显示调用返回值停止侦听，或组件被卸载时隐式调用了停止侦听)
+    ```javascript
+    // 定时器注册和销毁
+    watchEffect((onInvalidate) => {
+      const timer = setInterval(()=> {
+        // ...
+      }, 1000)
+      onInvalidate(() => clearInterval(timer))
+    })
+    const handleClick = () => {
+    // ...
+    }
+    // dom的监听和取消监听
+    onMounted(()=>{
+      watchEffect((onInvalidate) => {
+        document.querySelector('.btn').addEventListener('click', handleClick, false)
+        onInvalidate(() => document.querySelector('.btn').removeEventListener('click', handleClick))
+      })
+    })
+    // 利用watchEffect作一个防抖节流（如取消请求）
+    const id = ref(13)
+    watchEffect(onInvalidate => {
+      // 异步请求
+      const token = performAsyncOperation(id.value)
+      // 如果id频繁改变，会触发失效函数，取消之前的接口请求
+      onInvalidate(() => {
+        // id has changed or watcher is stopped.
+        // invalidate previously pending async operation
+        token.cancel()
+      })
+    })
+    ```
+:::
+:::tip 停止监听器
+```javascript
+const unWatch1 = watch(person,() => {})
+const unWatch2 = watchEffect(() => {})
+unWatch1()
+unWatch2()
+```
+:::
+
+:::warning 总结
+  - `watch`是惰性执行的，而`watchEffect`不是
+  - 不考虑`watch`第三个配置参数的情况下，`watch`在组件第一次执行的时候是不会执行的
+  - 只有在之后依赖项变化的时候再执行，而`watchEffect`是在程序执行到此处的时候就会立即执行，而后再响应其依赖变化执行
+  - `watch`需要传递监听的对象，`watchEffect`不需要
+
+:::
