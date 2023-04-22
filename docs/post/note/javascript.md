@@ -4,73 +4,73 @@
 - 其中`Symbol`和`BigInt`是`ES6`新增的数据类型:
    - `Symbol` 代表独一无二的值，最多的用法是用来定义对象的唯一属性名
    - `BigInt` 可以表示任意大小的整数
-:::      
-  ```javascript
-  let a = 100;
-  let b = a;
-  a = 200;
-  console.log(b); // 100
-  ```
-  ```javascript
-  let a = { age: 20 };
-  let b = a;
-  b.age = 30;
-  console.log(a.age); // 30
-  ```
+    
+```javascript
+let a = 100;
+let b = a;
+a = 200;
+console.log(b); // 100
+```
+```javascript
+let a = { age: 20 };
+let b = a;
+b.age = 30;
+console.log(a.age); // 30
+```
+:::  
 :::tip 数据类型的判断：
-  1. `typeof`：能判断所有值类型，函数。不可对`null`、对象、数组进行精确判断，因为都返回`object`
-:::
-  ```javascript
-  console.log(typeof undefined); // undefined
-  console.log(typeof 2); // number
-  console.log(typeof true); // boolean
-  console.log(typeof "str"); // string
-  console.log(typeof Symbol("foo")); // symbol
-  console.log(typeof 2172141653n); // bigint
-  console.log(typeof function () {}); // function
-  // 不能判别
-  console.log(typeof []); // object
-  console.log(typeof {}); // object
-  console.log(typeof null); // object
-  ```
-  :::tip 2. `instanceof`：能判断对象类型，不能判断基本数据类型，其内部运行机制是判断在其原型链中能否找到该类型的原型
-   
-  :::
-  ```javascript
-  class People {}
-  class Student extends People {}
-  const s = new Student();
-  console.log(s instanceof People); // true
-  console.log(s instanceof Student); // true
-  ```
-  :::tip 3. `Object.prototype.toString.call`()：所有原始数据类型都是能判断的，还有`Error`对象`Date`对象等
-  
-  :::
-  ```javascript
-  Object.prototype.toString.call(2); // "[object Number]"
-  Object.prototype.toString.call(""); // "[object String]"
-  Object.prototype.toString.call(true); // "[object Boolean]"
-  Object.prototype.toString.call(undefined); // "[object Undefined]"
-  Object.prototype.toString.call(null); // "[object Null]"
-  Object.prototype.toString.call(Math); // "[object Math]"
-  Object.prototype.toString.call({}); // "[object Object]"
-  Object.prototype.toString.call([]); // "[object Array]"
-  Object.prototype.toString.call(function () {}); // "[object Function]"
-  ```
-  :::warning 4 如何判断变量是否为数组
-  :::
-  ```javascript
-  Array.isArray(arr); // true
-  arr.__proto__ === Array.prototype; // true
-  arr instanceof Array; // true
-  Object.prototype.toString.call(arr); // "[object Array]"
-  ```
+ 1. `typeof`：能判断所有值类型，函数。不可对`null`、对象、数组进行精确判断，因为都返回`object`
+    ```javascript
+    console.log(typeof undefined); // undefined
+    console.log(typeof 2); // number
+    console.log(typeof true); // boolean
+    console.log(typeof "str"); // string
+    console.log(typeof Symbol("foo")); // symbol
+    console.log(typeof 2172141653n); // bigint
+    console.log(typeof function () {}); // function
+    // 不能判别
+    console.log(typeof []); // object
+    console.log(typeof {}); // object
+    console.log(typeof null); // object
+    ```
+ 
 
+   2. `instanceof`：能判断对象类型，不能判断基本数据类型，其内部运行机制是判断在其原型链中能否找到该类型的原型
+      ```javascript
+      class People {}
+      class Student extends People {}
+      const s = new Student();
+      console.log(s instanceof People); // true
+      console.log(s instanceof Student); // true
+      ```
+  
+   3. `Object.prototype.toString.call`()：所有原始数据类型都是能判断的，还有`Error`对象`Date`对象等
+
+      ```javascript
+      Object.prototype.toString.call(2); // "[object Number]"
+      Object.prototype.toString.call(""); // "[object String]"
+      Object.prototype.toString.call(true); // "[object Boolean]"
+      Object.prototype.toString.call(undefined); // "[object Undefined]"
+      Object.prototype.toString.call(null); // "[object Null]"
+      Object.prototype.toString.call(Math); // "[object Math]"
+      Object.prototype.toString.call({}); // "[object Object]"
+      Object.prototype.toString.call([]); // "[object Array]"
+      Object.prototype.toString.call(function () {}); // "[object Function]"
+      ```
+   4. 如何判断变量是否为数组
+
+      ```javascript
+      Array.isArray(arr); // true
+      arr.__proto__ === Array.prototype; // true
+      arr instanceof Array; // true
+      Object.prototype.toString.call(arr); // "[object Array]"
+      ```
+  :::
 ## 2. 原型和原型链
-:::tip 
+:::tip 原型和原型链
 - **原型**：每个对象拥有一个原型对象，通过 `__proto__ `指针指向上一个原型 ，并从中继承方法和属性，同时原型对象也可能拥有原型，这样一层一层，最终指向`null`，这就是原型链
 - **原型链**：由相互关联的原型组成的链状结构就是原型链
-:::
+
   ```javascript
   function Person(name){
     this.name = name
@@ -82,7 +82,7 @@
   Person.__proto__ === Function.prototype //true
   Object.__proto__ === Function.prototype //true
   ```
-
+:::
 
 ## 3. 作用域与作用域链
 :::danger 作用域与作用域链
