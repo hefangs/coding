@@ -500,6 +500,41 @@ document.querySelectorAll('img').forEach(img => {
   observer.observe(img)  
 })  
 ```
+- Vue实现图片懒加载
+```vue 
+<script setup lang="ts">
+import { ref, reactive, Directive } from 'vue'
+// https://cn.vitejs.dev/guide/features.html 
+// Vite 支持使用特殊的 import.meta.glob 函数从文件系统导入多个模块
+const images: Record<string, { default: string }> = import.meta.glob(
+  '../assets/images/*.*',
+  { eager: true }
+)
+const arr = Object.values(images).map((v) => v.default)
+const vLazy: Directive<HTMLImageElement, string> = async (el, banding) => {
+  const url = await import('../assets/1.png')
+  // console.log(arr)
+  el.src = url.default
+  const observe = new IntersectionObserver((entries) => {
+    entries.forEach((item) => {
+      console.log(item)
+      if (item.intersectionRatio > 0) {
+        setTimeout(() => {
+          el.src = banding.value
+          observe.unobserve(el)
+        }, 3000)
+      }
+    })
+  })
+  observe.observe(el)
+}
+</script>
+<template>
+  <div>
+    <img v-for="item in arr" v-lazy="item" width="360" height="500" />
+  </div>
+</template>
+```
 :::
 
 
