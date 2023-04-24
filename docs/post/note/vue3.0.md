@@ -697,3 +697,28 @@ unWatch2()
 :::
 
 ## 5. 自定义指令 (Custom Directives)
+
+- 自定义指令+后台返回数据-鉴权
+```vue{5-7,11}
+<script setup lang="ts">
+import { ref, reactive, Directive } from 'vue'
+localStorage.setItem('userId', 'userId001')
+const permission = [
+  // 'userId001:product:create',
+  'userId001:product:edit',
+  'userId001:product:delete'
+]
+const userId = localStorage.getItem('userId') as string
+const vHasShow: Directive<HTMLElement, string> = (el, binding) => {
+  if (!permission.includes(userId + ':' + binding.value)) {
+    el.style.display = 'none'
+  }
+}
+</script>
+<template>
+  <button v-has-show="'product:create'">创建</button>
+  <button v-has-show="'product:edit'">修改</button>
+  <button v-has-show="'product:delete'">删除</button>
+</template>
+<style scoped>
+```
