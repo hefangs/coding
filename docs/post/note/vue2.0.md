@@ -289,20 +289,22 @@ methodsToPatch.forEach((method) => {
       - 如果以上都不行则采用 `setTimeout` 把函数延迟到 `DOM` 更新之后再使用，原因是宏任务消耗大于微任务，优先使用微任务，最后使用消耗最大的宏任务
 :::
 ```javascript
-import { noop } from 'shared/util'
-import { handleError } from './error'
-import { isIE, isIOS, isNative } from './env'
-//  上面三行与核心代码关系不大，了解即可
 //  noop 表示一个无操作空函数，用作函数默认值，防止传入 undefined 导致报错
 //  handleError 错误处理函数
 //  isIE, isIOS, isNative 环境判断函数，
 //  isNative 判断某个属性或方法是否原生支持，如果不支持或通过第三方实现支持都会返回 false
-export let isUsingMicroTask = false     // 标记 nextTick 最终是否以微任务执行
-const callbacks = []     // 存放调用 nextTick 时传入的回调函数
-let pending = false     // 标记是否已经向任务队列中添加了一个任务，如果已经添加了就不能再添加了
-    // 当向任务队列中添加了任务时，将 pending 置为 true，当任务被执行时将 pending 置为 false
-    // 声明 nextTick 函数，接收一个回调函数和一个执行上下文作为参数
-    // 回调的 this 自动绑定到调用它的实例上
+import { noop } from 'shared/util'
+import { handleError } from './error'
+import { isIE, isIOS, isNative } from './env'
+// 标记 nextTick 最终是否以微任务执行
+export let isUsingMicroTask = false     
+// 存放调用 nextTick 时传入的回调函数
+const callbacks = []     
+// 标记是否已经向任务队列中添加了一个任务，如果已经添加了就不能再添加了
+// 当向任务队列中添加了任务时，将 pending 置为 true，当任务被执行时将 pending 置为 false
+let pending = false     
+// 声明 nextTick 函数，接收一个回调函数和一个执行上下文作为参数
+// 回调的 this 自动绑定到调用它的实例上
 export function nextTick(cb?： Function, ctx?： Object) {
     let _resolve
     // 将传入的回调函数存放到数组中，后面会遍历执行其中的回调
@@ -331,7 +333,7 @@ export function nextTick(cb?： Function, ctx?： Object) {
         })
     }
 }
-// 判断当前环境优先支持的异步方法，优先选择微任务
+ // 判断当前环境优先支持的异步方法，优先选择微任务
 // 优先级：Promise---> MutationObserver---> setImmediate---> setTimeout
 // setTimeout 可能产生一个 4ms 的延迟，而 setImmediate 会在主线程执行完后立刻执行
 // setImmediate 在 IE10 和 node 中支持
@@ -343,9 +345,9 @@ if (typeof Promise !== 'undefined' && isNative(Promise)) {  // 支持 promise
     timerFunc = () => {
        // 用 promise.then 把 flushCallbacks 函数包裹成一个异步微任务
         p.then(flushCallbacks)
-        if (isIOS) setTimeout(noop)
         // 这里的 setTimeout 是用来强制刷新微任务队列的
         // 因为在 ios 下 promise.then 后面没有宏任务的话，微任务队列不会刷新
+        if (isIOS) setTimeout(noop)
     }
     // 标记当前 nextTick 使用的微任务
     isUsingMicroTask = true
