@@ -1715,23 +1715,19 @@ console.log(message1) //  message1 is not defined
       <li>item4</li>
     </ul>
     // 使用事件委托
-    const oBtn = document.getElementById("btn")
-    const oUl = document.getElementById("ul")
+    const btn = document.getElementById("btn")
+    const ul = document.getElementById("ul")
     const num = 4
     //事件委托，添加的子元素也有事件
-    oUl.onclick = function (ev) {
-      ev = ev || window.event
-      const target = ev.target || ev.srcElement;
-      if (target.nodeName.toLowerCase() == 'li') {
-        console.log('the content is: ', target.innerHTML)
-      }
+    ul.onclick = (e) => {
+      console.log(e.target.innerHTML)
     }
     //添加新节点
-    oBtn.onclick = function () {
+    btn.onclick = () => {
       num++
-      const oLi = document.createElement('li')
-      oLi.innerHTML = `item ${num}`
-      oUl.appendChild(oLi)
+      const newLi = document.createElement('li')
+      newLi.innerHTML = `item${num}`
+      ul.appendChild(newLi)
     }
     ```
   - 可以看到，使用事件委托，在动态绑定事件的情况下是可以减少很多重复工作的
