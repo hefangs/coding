@@ -1743,3 +1743,62 @@ console.log(message1) //  message1 is not defined
     - `mousemove`、`mouseout`这样的事件，虽然有事件冒泡，但是只能不断通过位置去计算定位，对性能消耗高，因此也是不适合于事件委托的
   - 如果把所有事件都用事件代理，可能会出现事件误判，即本不该被触发的事件被绑定上了事件
 :::
+
+## 18. 跨域
+
+::: tip 同源策略
+  - 跨域本质是浏览器基于同源策略的一种安全手段
+  - 同源策略（`Sameoriginpolicy`）是一种约定，它是浏览器最核心也最基本的安全功能
+  - 所谓同源（即指在同一个域）具有以下三个相同点：
+    - 协议相同（`protocol`）
+    - 主机相同（`host`）
+    - 端口相同（`port`）
+  - 反之非同源请求，也就是协议、端口、主机其中一项不相同的时候，这时候就会产生跨域
+:::
+::: tip JSONP
+  - 利用`script`标签没有跨域限制的漏洞，网页可以得到从其他来源动态产生的`JSON`数据。`JSONP`请求一定需要对方的服务器做支持才可以
+  - JSONP的实现流程：
+    - 声明一个回调函数，其函数名(如show)当做参数值，要传递给跨域请求数据的服务器，函数形参为要获取目标数据(服务器返回的`data`)
+    - 创建一个`script`标签，把那个跨域的API数据接口地址，赋值给`script`的`src`,还要在这个地址中向服务器传递该函数名（可以通过问号传参:`?cb=cb`）
+    - 服务器接收到请求后，需要进行特殊的处理：把传递进来的函数名和它需要给你的数据拼接成一个字符串,例如：传递进去的函数名是show，它准备好的数据是`cb('hello')`
+    - 最后服务器把准备的数据通过`HTTP`协议返回给客户端，客户端再调用执行之前声明的回调函数`cb()`，对返回的数据进行操作
+    ```html
+    <button onclick="jsonpData();">跨域请求</button>
+    ```
+    ```javascript
+    function jsonpData() {
+      let script = document.createElement('script')
+      script.src =
+        'http://www.jxntv.cn/data/jmd-jxtv2.html?callback=list'
+      document.body.appendChild(script)
+    }
+    function list(res) {
+      console.log(res.data[0].list)
+      document.body.removeChild(script)
+    }
+    ```
+  - JSONP的优缺点：
+    - 它不像`XMLHttpRequest`对象实现的`Ajax`请求那样受到同源策略的限制
+    - 它的兼容性更好，在更加古老的浏览器中都可以运行，不需要`XMLHttpRequest`或`ActiveX`的支持；并且在请求完毕后可以通过调用`callback`的方式回传结果
+    - 支持`GET`请求而不支持`POST`等其它类型的`HTTP`请求；它只支持跨域`HTTP`请求这种情况，不能解决不同域的两个页面之间如何进行`JavaScript`调用的问题
+:::
+
+:::tip CORS
+  - `CORS`（Cross-Origin Resource Sharing，跨域资源共享）是一个系统，它由一系列传输的`HTTP`头组成，
+  - 这些HTTP头决定浏览器是否阻止前端`JavaScript`代码获取跨域请求的响应
+  - `CORS`实现起来非常方便，只需要增加一些 HTTP 头，让服务器能声明允许的访问来源，只要后端实现了`CORS`，就实现了跨域
+  - 以`koa`框架举例，添加中间件，直接设置`Access-Control-Allow-Origin`响应头
+    ```javascript
+    app.use(async (ctx, next)=> {
+    ctx.set('Access-Control-Allow-Origin', '*');
+    ctx.set('Access-Control-Allow-Headers', 'Content-Type, Content-Length, Authorization, Accept, X-Requested-With , yourHeaderFeild');
+    ctx.set('Access-Control-Allow-Methods', 'PUT, POST, GET, DELETE, OPTIONS');
+    if (ctx.method == 'OPTIONS') {
+      ctx.body = 200; 
+    } else {
+      await next();
+      }
+    })
+    ```
+  - PS:`Access-Control-Allow-Origin`设置为`*`其实意义不大，可以说是形同虚设在实际应用中，上线前我们会将`Access-Control-Allow-Origin`值设为我们目标`host`
+:::
