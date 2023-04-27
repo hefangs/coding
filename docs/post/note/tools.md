@@ -77,6 +77,7 @@
   - `npm install -g n`全局安装 n
   - `n`查看已安装node列表并切换
   - `n ls`查看已安装node列表
+  - `n lsr`Displaying 20 matches (use --all to see all)
   - `sudo n stable`安装稳定版本
   - `sudo n latest`安装最新版本
   - `sudo n 8.4.0`安装指定版本
