@@ -66,14 +66,14 @@
   - `git stash list`查看所有储藏中的工作
   - `git stash apply <储藏的名称>`取出储藏中对应的工作状态进行恢复，不会删除储藏
   - `git stash clear`清空所有储藏中的工作
-  - `git stash drop <储藏的名称>`删除对应的某个储藏
+  - `git stash drop <储藏的名称>`删除对应的某个储
 :::
 
 :::tip 总结
   ![pic](/git1.png "notice")
 :::
 ## 2. N
-:::tip n
+:::warning n
   - `npm install -g n`全局安装 n
   - `n`查看已安装node列表并切换
   - `n ls`查看已安装node列表
