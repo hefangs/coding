@@ -50,6 +50,7 @@
  - `git push [remote] --all`推送所有分支到远程仓库
 :::
 
+
 :::tip 撤销
   - `git checkout [file]`恢复暂存区的指定文件到工作区
   - `git checkout [commit] [file]`恢复某个commit的指定文件到暂存区和工作区
@@ -67,6 +68,13 @@
   - `git stash apply <储藏的名称>`取出储藏中对应的工作状态进行恢复，不会删除储藏
   - `git stash clear`清空所有储藏中的工作
   - `git stash drop <储藏的名称>`删除对应的某个储
+:::
+:::warning token过期重新设置
+  - [创建一个令牌](https://github.com/settings/tokens), `Create personal access token`
+  - 然后重置`Git`凭据: `git config --global --unset credential.helper`
+  - 克隆或拉取您的存储库： `git push`
+  - 然后输入令牌作为密码
+  - 保存你的令牌：`git config --global credential.helper cache`
 :::
 
 :::tip 总结
