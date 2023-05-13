@@ -84,3 +84,22 @@
   - `sudo n rm 8.4.0`删除某个版本
   - `n use 8.4.0 index.js`以指定的版本来执行脚本
 :::
+
+## 3. Homebrew
+:::tip brew
+- `brew -v` 查询HomeBrew版本
+- `brew -h` 查看帮助信息
+- `brew update` 更新Homebrew
+- `brew install <pkg_name>` 安装软件
+- `brew uninstall <pkg_name>` 卸载软件
+- `brew search <pkg_name>` 查询任意包
+- `brew info <pkg_name>` 查看任意包内容信息
+- `brew list` 列出已安装的软件列表
+- `brew list git` 列出已安装软件git的文件目录
+- `brew upgrade` 更新所有
+- `brew upgrade <pkg_name>` 更新指定包
+- `brew cleanup` 清理所有包的旧版本
+- `brew cleanup <pkg_name>` 清理指定包的旧版本
+- `brew outdated` 查询可更新的包
+- `brew update && brew upgrade && brew cleanup` 更新软件版本-清理旧版本或已删除的软件
+:::
