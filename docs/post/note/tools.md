@@ -70,7 +70,7 @@
   - `git stash drop <储藏的名称>`删除对应的某个储
 :::
 :::warning token过期重新设置
-  - [创建一个令牌](https://github.com/settings/tokens), `Create personal access token`
+  - [创建一个令牌](https://github.com/settings/tokens): `Create personal access token`
   - 然后重置`Git`凭据: `git config --global --unset credential.helper`
   - 克隆或拉取您的存储库： `git push`
   - 然后输入令牌作为密码
