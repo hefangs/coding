@@ -87,7 +87,7 @@
 
 ## 3. Homebrew
 :::tip brew
-- `brew -v` 查询Homebrew版本
+- `brew -v` 查询版本
 - `brew -h` 查看帮助信息
 - `brew update` 更新Homebrew
 - `brew install <pkg_name>` 安装软件
