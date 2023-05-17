@@ -74,7 +74,7 @@
   - 然后重置`Git`凭据: `git config --global --unset credential.helper`
   - 克隆或拉取您的存储库： `git push`
   - 然后输入令牌作为密码
-  - 保存你的令牌：`git config --global credential.helper cache`
+  - 保存你的令牌：`git config --global credential.helper store`
 :::
 
 :::tip 总结
