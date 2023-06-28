@@ -83,7 +83,7 @@
 ## 2. N
 :::warning n
   - `npm install -g n`全局安装 n
-  - `n`查看已安装node列表并切换
+  - `sudo n`查看已安装node列表并切换
   - `n ls`查看已安装node列表
   - `n lsr`Displaying 20 matches (use --all to see all)
   - `sudo n stable`安装稳定版本
@@ -92,6 +92,7 @@
   - `sudo n rm 8.4.0`删除某个版本
   - `n prune`清除 n 工具的缓存
   - `n use 8.4.0 index.js`以指定的版本来执行脚本
+  - `sudo NODE_MIRROR=http://npm.taobao.org/mirrors/node`更新阿里镜像解决超时问题
 :::
 
 ## 3. Homebrew
