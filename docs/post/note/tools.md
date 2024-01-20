@@ -113,3 +113,10 @@
 - `brew outdated` 查询可更新的包
 - `brew update && brew upgrade && brew cleanup` 更新软件版本-清理旧版本或已删除的软件
 :::
+
+## 4. Vitepress
+:::tip vitepress更新
+- 直接`npm install vitepress`升级到最新版本
+- 需要在`main`分支上提交`vitepress`更新后的代码
+- `gh-page`分支无需变动和之前一样提交
+:::
