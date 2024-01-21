@@ -11,18 +11,18 @@
   - 提高自身可维护性
   - 开放更多底层功能
 :::
-:::tip 更小
+:::warning 更小
   - `Vue3`移除一些不常用的`API`
   - 引入`tree-shaking`，可以将无用模块“剪辑”，仅打包需要的，使打包的整体体积变小了
 :::
-:::tip 更快
+:::warning 更快
   - 主要体现在编译方面：
     - `diff`算法优化
     - 静态提升
     - 事件监听缓存
     - `SSR`优化
 :::
-:::tip 更友好
+:::warning 更友好
   - `vue3`在兼顾`vue2`的`options API`的同时还推出了`composition API`，大大增加了代码的逻辑组织和代码复用能力
   - 这里代码简单演示下：
     - 存在一个获取鼠标位置的函数
@@ -688,7 +688,7 @@ unWatch2()
 ```
 :::
 
-:::warning 总结
+:::danger 总结
   - `watch`是惰性执行的，而`watchEffect`不是
   - 不考虑`watch`第三个配置参数的情况下，`watch`在组件第一次执行的时候是不会执行的
   - 只有在之后依赖项变化的时候再执行，而`watchEffect`是在程序执行到此处的时候就会立即执行，而后再响应其依赖变化执行
@@ -699,26 +699,40 @@ unWatch2()
 ## 5. 自定义指令 (Custom Directives)
 
 - 自定义指令+后台返回数据-鉴权
-```vue{5-7,11}
-<script setup lang="ts">
-import { ref, reactive, Directive } from 'vue'
-localStorage.setItem('userId', 'userId001')
-const permission = [
-  // 'userId001:product:create',
-  'userId001:product:edit',
-  'userId001:product:delete'
-]
-const userId = localStorage.getItem('userId') as string
-const vHasShow: Directive<HTMLElement, string> = (el, binding) => {
-  if (!permission.includes(userId + ':' + binding.value)) {
-    el.style.display = 'none'
+  ```vue{5-7,11}
+  <script setup lang="ts">
+  import { ref, reactive, Directive } from 'vue'
+  localStorage.setItem('userId', 'userId001')
+  const permission = [
+    // 'userId001:product:create',
+    'userId001:product:edit',
+    'userId001:product:delete'
+  ]
+  const userId = localStorage.getItem('userId') as string
+  const vHasShow: Directive<HTMLElement, string> = (el, binding) => {
+    if (!permission.includes(userId + ':' + binding.value)) {
+      el.style.display = 'none'
+    }
   }
-}
-</script>
-<template>
-  <button v-has-show="'product:create'">创建</button>
-  <button v-has-show="'product:edit'">修改</button>
-  <button v-has-show="'product:delete'">删除</button>
-</template>
-<style scoped>
-```
+  </script>
+  <template>
+    <button v-has-show="'product:create'">创建</button>
+    <button v-has-show="'product:edit'">修改</button>
+    <button v-has-show="'product:delete'">删除</button>
+  </template>
+  <style scoped>
+  ```
+
+
+## 6. ref 和 reactive
+:::warning 总结
+- ref:`基本类型数据` 和`对象类型数据`
+- reactive:`对象类型数据`
+- 区别：
+  - `ref`定义的变量必须使用`.value`
+  - `reactive`重写分配一个新对象，会失去响应式（可以使用`Object.assign(obj,obj1)`）
+- 使用规则：
+  - 若需要一个基本类型的响应式数据，必须使用`ref`
+  - 若需要一个响应式对象，层级不深，`ref`和`reactive`都可以
+  - 若需要一个响应式对象，且层级较深，推荐使用`reactive`
+:::
