@@ -764,17 +764,74 @@ unWatch2()
 - 实例：
   ```vue{7,9-10}
   <template>
-  <div>姓名:{{ name }}</div>
-  <div>年龄:{{ age }}</div>
-  <div>年龄:{{ age1 }}</div>
+    <div>姓名:{{ name }}</div>
+    <div>年龄:{{ age }}</div>
+    <div>年龄:{{ age1 }}</div>
   </template>
+
   <script setup lang="ts">
-  import { toRefs, toRef, reactive } from 'vue'
-  let person1 = reactive({ name: 'John', age: 18 })
-  let age1 = toRef(person1, 'age') //单个数据操作
-  let {name,age} = toRefs(person1)   //批量操作
+    import { toRefs, toRef, reactive } from 'vue'
+    let person1 = reactive({ name: 'John', age: 18 })
+    let age1 = toRef(person1, 'age') //单个数据操作
+    let {name,age} = toRefs(person1)   //批量操作
   </script>
 
   ```
 :::
 
+## 8. computed(计算属性)
+- 通过计算属性的`fullName`是一个只读属性
+  ```vue{4,11-16}
+  <template>
+    姓：<input type="text" v-model="firstName" /> <br />
+    名：<input type="text" v-model="lastName" /><br />
+    <div>fullName:{{ fullName }}</div>
+  </template>
+
+  <script setup lang="ts">
+    import { ref, computed } from 'vue'
+    let firstName = ref('zhang')
+    let lastName = ref('san')
+    let fullName = computed(() => {
+      return (
+        firstName.value.slice(0, 1).toUpperCase() +
+        firstName.value.slice(1) +
+        '-' +
+        lastName.value
+      )
+    })
+  </script>
+  ```
+- 通过计算属性的`fullName`是一个可读可写属性
+  ```vue{13-18,21-24,27-28}
+  <template>
+    姓：<input type="text" v-model="firstName" /> <br />
+    名：<input type="text" v-model="lastName" /><br />
+    <div>fullName:{{ fullName }}</div>
+    <button @click="changeFullName">更新fullName</button>
+  </template>
+  <script setup lang="ts">
+    import { ref, computed } from 'vue'
+    let firstName = ref('zhang')
+    let lastName = ref('san')
+    let fullName = computed({
+      get() {
+        return (
+          firstName.value.slice(0, 1).toUpperCase() +
+          firstName.value.slice(1) +
+          '-' +
+          lastName.value
+        )
+      },
+      set(val) {
+        let [str1, str2] = val.split('-')
+        firstName.value = str1
+        lastName.value = str2
+      }
+    })
+    let changeFullName = () => {
+      fullName.value = 'li-si'
+    }
+  </script>
+
+  ```
