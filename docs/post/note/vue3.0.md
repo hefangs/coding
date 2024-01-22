@@ -725,7 +725,8 @@ unWatch2()
 
 
 ## 6. ref 和 reactive
-:::warning 总结
+
+:::info 总结
 - ref:`基本类型数据` 和`对象类型数据`
 - reactive:`对象类型数据`
 - 区别：
@@ -735,4 +736,45 @@ unWatch2()
   - 若需要一个基本类型的响应式数据，必须使用`ref`
   - 若需要一个响应式对象，层级不深，`ref`和`reactive`都可以
   - 若需要一个响应式对象，且层级较深，推荐使用`reactive`
+- 实例：
+  ```vue{6}
+  <script setup lang="ts">
+   import { ref, reactive } from 'vue'
+    let name = ref('张三')
+    let person1 = reactive({ name: 'John', age: 18 })
+    let updatePerson1 = () => {
+      Object.assign(person1, { name: 'Joy', age: 19 })}
+  </script>
+  <template>
+    <div>姓名:{{ name }}</div>
+    <div>姓名:{{ person1.name }}</div>
+    <div>年龄:{{ person1.age }}</div>
+    <button @click="updatePerson1">修改person1</button>
+  </template>
+
+  ```
 :::
+
+
+## 7. toRef 和 toRefs
+
+:::warning 总结
+- 将一个响应式对象里的每个属性，转换为`ref`对象
+- `toRef`和`toRefs`功能一致，但是`toRefs`可以批量操作
+- 实例：
+  ```vue{7,9-10}
+  <template>
+  <div>姓名:{{ name }}</div>
+  <div>年龄:{{ age }}</div>
+  <div>年龄:{{ age1 }}</div>
+  </template>
+  <script setup lang="ts">
+  import { toRefs, toRef, reactive } from 'vue'
+  let person1 = reactive({ name: 'John', age: 18 })
+  let age1 = toRef(person1, 'age') //单个数据操作
+  let {name,age} = toRefs(person1)   //批量操作
+  </script>
+
+  ```
+:::
+
