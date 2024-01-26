@@ -835,3 +835,191 @@ unWatch2()
   </script>
 
   ```
+  
+  ## 9. Router
+  :::tip 实例：
+  ```typescript
+  // main.ts
+  import { createRouter, createWebHistory } from 'vue-router'
+  const router = createRouter({
+    history: createWebHistory(),
+    routes: [
+      {
+        name: 'zhuye',
+        path: '/home',
+        component: () => import('@/components/Home.vue')
+      },
+      {
+        name: 'xinwen',
+        path: '/news',
+        component: () => import('@/components/News.vue'),
+        children: [
+          {
+            name: 'xiangqing',
+            path: 'details',
+            component: () => import('@/components/Details.vue')
+          }
+        ]
+      },
+      {
+        name: 'guanyu',
+        path: '/about',
+        component: () => import('@/components/About.vue')
+      }
+    ]
+  })
+  export default router
+  ```
+  ```javascript
+  // App.vue
+  <RouterLink to="home" active-class="active">主页</RouterLink>
+  <RouterLink to="news" active-class="active">新闻</RouterLink>
+  <RouterLink to="about " active-class="active">关于</RouterLink>
+  ```
+:::
+:::warning query传参
+- `query`的第一种写法:`直接通过模版字符串拼接`
+  ```javascript{4}
+  <div>
+    <ul>
+      <li v-for="item in newsList" :key="item.id">
+        <RouterLink :to="`/news/details?id=${item.id}&title=${item.title}&content=${item.content}`">{{ item.title }}
+        </RouterLink>
+      </li>
+    </ul>
+    <div>
+      <RouterView></RouterView>
+    </div>
+  </div>
+  ```
+- `query`的第二种写法（对象写法：`path+query`）
+  ```javascript{7-11}
+  // News.vue
+  <div>
+    <ul>
+      <li v-for="item in newsList" :key="item.id">
+        <RouterLink
+          :to="{
+            path: 'xiangqing',
+            query: {
+              id: item.id,
+              title: item.title,
+              content: item.content
+            }
+          }"
+          >{{ item.title }}
+        </RouterLink>
+      </li>
+    </ul>
+    <div>
+      <RouterView></RouterView>
+    </div>
+  </div>
+  ```
+- `query`的第二种写法（对象写法：`name+query`）
+  ```javascript{7-11}
+  // News.vue
+  <div>
+    <ul>
+      <li v-for="item in newsList" :key="item.id">
+        <RouterLink
+          :to="{
+            name: 'xiangqing',
+            query: {
+              id: item.id,
+              title: item.title,
+              content: item.content
+            }
+          }"
+          >{{ item.title }}
+        </RouterLink>
+      </li>
+    </ul>
+    <div>
+      <RouterView></RouterView>
+    </div>
+  </div>
+  ```
+- Detail页面接收`query`参数和使用
+  ```typescript
+  // Detail.vue
+  <script setup lang="ts">
+  import { useRoute } from 'vue-router'
+  import { toRefs } from 'vue'
+  let route = useRoute()
+  let { query } = toRefs(route)
+  </script>
+  <template>
+    <ul>
+      <li>id:{{ query.id }}</li>
+      <li>title:{{ query.title }}</li>
+      <li>content:{{ query.content }}</li>
+    </ul>
+  </template>
+  ```
+:::
+
+:::danger param传参
+- `params`的第一种写法:`直接通过模版字符串拼接`
+  ```javascript{2}
+  <RouterLink
+    :to="`/news/details/${item.id}/${item.title}/${item.content}`"
+    >{{ item.title }}
+  </RouterLink>
+  ```
+- `params`的第二种写法:（对象写法：`name+params`）
+  ```typescript{3-7}
+  <RouterLink
+    :to="{
+      name: 'xiangqing',
+      params: {
+        id: item.id,
+        title: item.title,
+        content: item.content
+      }
+    }"
+    >{{ item.title }}
+  </RouterLink>
+  ```
+- **`需要给参数设置占位符`**(*例如第12行*)
+  ```javascript{12}
+  import { createRouter, createWebHistory } from 'vue-router'
+  const router = createRouter({
+    history: createWebHistory(),
+    routes: [
+      {
+        name: 'xinwen',
+        path: '/news',
+        component: () => import('@/components/News.vue'),
+        children: [
+          {
+            name: 'xiangqing',
+            path: 'details/:id/:title/:content',
+            component: () => import('@/components/Details.vue')
+          }
+        ]
+      }
+    ]
+  })
+  export default router
+
+
+  ```
+- Detail页面接收`params`参数和使用
+  ```typescript
+  <script setup lang="ts">
+  import { useRoute } from 'vue-router'
+  import { toRefs } from 'vue'
+  let route = useRoute()
+  console.log(route)
+  let { params } = toRefs(route)
+  </script>
+  <template>
+    <ul>
+      <li>id:{{ params.id }}</li>
+      <li>title:{{ params.title }}</li>
+      <li>content:{{ params.content }}</li>
+    </ul>
+  </template>
+  ```
+:::
