@@ -1,5 +1,4 @@
 
-
 # Vue3.0相关
 ## 1. Vue3.0做了哪些优化?
 
@@ -1021,5 +1020,82 @@ unWatch2()
       <li>content:{{ params.content }}</li>
     </ul>
   </template>
+  ```
+:::
+
+:::danger 路由的props配置
+- 将路由参数作为props传给组件
+```javascript
+<ul>
+  <li>{{id}}<li>
+  <li>{{title}}<li>
+  <li>{{content}}<li>
+<ul>
+```
+```typescript{2}
+<script lang="ts" setup>
+  defineProps(["id","title","content"])
+</scrip>
+```
+  - 布尔写法
+  ```javascript{11}
+  routes: [
+      {
+        name: 'xinwen',
+        path: '/news',
+        component: () => import('@/components/News.vue'),
+        children: [
+          {
+            name: 'xiangqing',
+            path: 'details/:id/:title/:content',
+            component: () => import('@/components/Details.vue'),
+            props: true   // 只能传params参数
+          }
+        ]
+      }
+    ]
+  ```
+  - 函数写法
+  ```javascript{11-13}
+    routes: [
+        {
+          name: 'xinwen',
+          path: '/news',
+          component: () => import('@/components/News.vue'),
+          children: [
+            {
+              name: 'xiangqing',
+              path: 'details/:id/:title/:content',
+              component: () => import('@/components/Details.vue'),
+              props(route){
+                // 函数写法，可以传query参数也可以传params参数
+                return route.query //return route.query
+              }
+            }
+          ]
+        }
+      ]
+  ```
+  - 对象写法
+  ```javascript{11-14}
+    routes: [
+        {
+          name: 'xinwen',
+          path: '/news',
+          component: () => import('@/components/News.vue'),
+          children: [
+            {
+              name: 'xiangqing',
+              path: 'details/:id/:title/:content',
+              component: () => import('@/components/Details.vue'),
+              props:{ // 可以自己决定将什么作为props传给路由组件
+                a:1,
+                b:2,
+                c:3
+              }
+            }
+          ]
+        }
+      ]
   ```
 :::
