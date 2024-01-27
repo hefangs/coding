@@ -1026,6 +1026,7 @@ unWatch2()
 :::danger 路由的props配置
 - 将路由参数作为props传给组件
 ```javascript
+// Details.vue 页面直接使用id，title，content
 <ul>
   <li>{{id}}<li>
   <li>{{title}}<li>
