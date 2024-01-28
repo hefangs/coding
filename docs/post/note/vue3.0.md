@@ -899,7 +899,7 @@ unWatch2()
       <li v-for="item in newsList" :key="item.id">
         <RouterLink
           :to="{
-            path: 'xiangqing',
+            path: '/news/details',
             query: {
               id: item.id,
               title: item.title,
