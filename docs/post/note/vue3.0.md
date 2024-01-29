@@ -1100,3 +1100,41 @@ unWatch2()
       ]
   ```
 :::
+  ## 10. 组件通信
+  1. `props`是使用频率最高的一种通信方式 父子可以相互传递
+      - 父传子：属性值非函数
+      - 子传父：属性值是函数
+      ```typescript{6-8,14}
+      // 父组件
+      <script setup lang="ts">
+        import { ref } from 'vue'
+        import Child from '@/pages/01-props/Child.vue'
+        let name = ref('张三')
+        let age1 = ref()
+        let getAge = (age: number) => {
+          age1.value = age
+      }
+      </script>
+      <template>
+        <h3>父亲姓名:{{ name }}</h3>
+        <h3 v-show="age1">通过子传父获取到的年龄:{{ age1 }}</h3>
+        <Child :name="name" :sentAge="getAge" />
+      </template>
+      ```
+      ```typescript{4,11}
+      // 子组件
+      <script setup lang="ts">
+      import { ref } from 'vue'
+      defineProps(['name', 'sentAge'])
+      let age = ref(18)
+      </script>
+      <template>
+        <div>
+          <h5>儿子年龄:{{ age }}</h5>
+          <h5>name通过父传子过来的:{{ name }}</h5>
+          <button @click="sentAge(age)">向父组件传递数据age</button>
+        </div>
+      </template>
+      ```
+    
+  
