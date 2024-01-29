@@ -1104,24 +1104,25 @@ unWatch2()
   1. `props`是使用频率最高的一种通信方式 父子可以相互传递
       - 父传子：属性值非函数
       - 子传父：属性值是函数
-      ```typescript{6-8,14}
+      ```typescript{6-8,14-15}
       // 父组件
       <script setup lang="ts">
         import { ref } from 'vue'
         import Child from '@/pages/01-props/Child.vue'
         let name = ref('张三')
-        let age1 = ref()
-        let getAge = (age: number) => {
-          age1.value = age
+        let age = ref()
+        let getAge = (value: number) => {
+          age.value = value
       }
       </script>
       <template>
+        <h1>父组件</h1>
         <h3>父亲姓名:{{ name }}</h3>
-        <h3 v-show="age1">通过子传父获取到的年龄:{{ age1 }}</h3>
+        <h3 v-show="age">通过子传父获取到的年龄:{{ age }}</h3>
         <Child :name="name" :sentAge="getAge" />
       </template>
       ```
-      ```typescript{4,11}
+      ```typescript{4,11,12}
       // 子组件
       <script setup lang="ts">
       import { ref } from 'vue'
@@ -1130,11 +1131,49 @@ unWatch2()
       </script>
       <template>
         <div>
+          <h1>子组件</h1>
           <h5>儿子年龄:{{ age }}</h5>
           <h5>name通过父传子过来的:{{ name }}</h5>
           <button @click="sentAge(age)">向父组件传递数据age</button>
         </div>
       </template>
       ```
-    
+  2. 自定义事件
+     - 父传子：属性值是函数
+     ```typescript{6-8,15}
+      // 父组件
+      <script setup lang="ts">
+      import { ref } from 'vue'
+      import Child from '@/pages/02-custom-event/Child.vue'
+      let name = ref('张三')
+      let age = ref()
+      let getAge = (value) => {
+        age.value = value
+      }
+      </script>
+      <template>
+        <h1>父组件</h1>
+        <h3>父亲姓名:{{ name }}</h3>
+        <h4 v-show="age">子传父获取到的年龄:{{ age }}</h4>
+        <Child @sent-age="getAge" />
+      </template>
+      ```
+      ```typescript{4,11}
+      // 子组件
+      <script setup lang="ts">
+      import { ref } from 'vue'
+      const emit = defineEmits(['sent-age'])
+      let age = ref(18)
+      </script>
+      <template>
+        <div>
+          <h1>子组件</h1>
+          <h5>儿子年龄:{{ age }}</h5>
+          <button @click="emit('sent-age', age)">
+            通过自定义事件向父组件传递数据age
+          </button>
+        </div>
+      </template>
+      ```
+
   
