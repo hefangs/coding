@@ -1139,7 +1139,6 @@ unWatch2()
       </template>
       ```
   2. 自定义事件
-     - 父传子：属性值是函数
      ```typescript{6-8,15}
       // 父组件
       <script setup lang="ts">
@@ -1175,5 +1174,61 @@ unWatch2()
         </div>
       </template>
       ```
+  3. mitt
+     ```typescript
+     // @/utils/emitter
+      import mitt from 'mitt'
+      export const emitter = mitt()
+
+     ```
+     ```typescript{6-12}
+     // 子组件1
+      <script setup lang="ts">
+      import { ref } from 'vue'
+      import { emitter } from '@/utils/emitter'
+      let age = ref(18)
+      let toy = ref('')
+      let sentAge = () => {
+        emitter.emit('sent-age', age.value)
+      }
+      emitter.on('sent-toy', (value: any) => {
+        console.log('子组件1收到玩具', value)
+        toy.value = value
+      })
+      </script>
+      <template>
+        <div>
+          <h1>子组件1</h1>
+          <h4>儿子的年龄:{{ age }}</h4>
+          <h4 v-show="toy">子组件2传递的玩具:{{ toy }}</h4>
+          <button @click="sentAge">把年龄传递给子组件2</button>
+        </div>
+      </template>
+     ```
+
+     ```typescript{6-12}
+     // 子组件2
+      <script setup lang="ts">
+      import { ref } from 'vue'
+      import { emitter } from '@/utils/emitter'
+      let toy = ref('奥特曼')
+      let age = ref()
+      emitter.on('sent-age', (value: any) => {
+        console.log('子组件2收到年龄', value)
+        age.value = value
+      })
+      let sentToy = () => {
+        emitter.emit('sent-toy', toy.value)
+      }
+      </script>
+      <template>
+        <div>
+          <h1>子组件2</h1>
+          <h4>儿子的玩具:{{ toy }}</h4>
+          <h4 v-show="age">子组件1传递的年龄:{{ age }}</h4>
+          <button @click="sentToy">把玩具传给子组件1</button>
+        </div>
+      </template>
+     ```
 
   
