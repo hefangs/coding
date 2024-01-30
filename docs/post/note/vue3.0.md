@@ -1230,5 +1230,46 @@ unWatch2()
         </div>
       </template>
      ```
-
+  4. v-model
+      ```typescript{13-17,22-23}
+      // 父组件
+      <script setup lang="ts">
+      import { ref } from 'vue'
+      import ModelInput from './ModelInput.vue'
+      let username = ref('张三')
+      let password = ref(123456)
+      </script>
+      <template>
+        <h1>父组件</h1>
+        <!-- v-model 用在html标签上 -->
+        <!-- v-model 本质上是语法糖 -->
+        <!-- 13行是12行底层实现原理 -->
+        姓名：
+        <input type="text" v-model="username" />
+        <input
+          type="text"
+          :value="username"
+          @input="username = (<HTMLInputElement>$event.target).value"
+        />
+        <br /><br />
+        <!-- v-model用在组件标签上  -->
+        密码：
+        <ModelInput v-model="password" />
+        <ModelInput :modelValue="password" @update:modelValue="password = $event" />
+      </template>
+      ```
+      ```typescript{3-4,7-10}
+      // 子组件
+      <script setup lang="ts">
+      defineProps(['modelValue'])
+      let emit = defineEmits(['update:modelValue'])
+      </script>
+      <template>
+        <input
+          type="text"
+          :value="modelValue"
+          @input="emit('update:modelValue', (<HTMLInputElement>$event.target).value)"
+        />
+      </template>
+      ```
   
