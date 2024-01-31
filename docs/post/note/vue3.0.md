@@ -1174,7 +1174,7 @@ unWatch2()
         </div>
       </template>
       ```
-  3. mitt
+  3. `mitt`
      ```typescript
      // @/utils/emitter
       import mitt from 'mitt'
@@ -1230,7 +1230,7 @@ unWatch2()
         </div>
       </template>
      ```
-  4. v-model
+  4. `v-model`
       ```typescript{13-17,22-23}
       // 父组件
       <script setup lang="ts">
@@ -1272,4 +1272,64 @@ unWatch2()
         />
       </template>
       ```
+  5. `$attr`
+   ```typescript{8-9,18-23}
+   // 祖组件
+   <script setup lang="ts">
+    import { ref } from 'vue'
+    import Child from './Child.vue'
+    let a = ref(1)
+    let b = ref(2)
+    let c = ref(3)
+    let updateB = (value: number) => {
+      b.value += value
+    }
+    </script>
+    <template>
+      <div>
+        <h3>父组件</h3>
+        <h4>a:{{ a }}</h4>
+        <h4>b:{{ b }}</h4>
+        <h4>c:{{ c }}</h4>
+        <Child
+          :a="a"
+          :b="b"
+          :c="c"
+          v-bind="{ x: 100, y: 200 }"
+          :updateB="updateB"
+        />
+      </div>
+    </template>
+   ```
+   ```typescript{4,9-10}
+   // 子组件
+   <script setup lang="ts">
+    import GrandChild from './GrandChild.vue'
+    defineProps(['a']) // 子组件只接收了数据a 其他数据全部在$attrs中
+    </script>
+    <template>
+      <div>
+        <h3>子组件</h3>
+        a:{{ a }} 其他：{{ $attrs }}
+        <GrandChild v-bind="$attrs" /> // 把$attrs中的数据传递给孙组件
+      </div>
+    </template>
+   ```
+   ```typescript{3,12-13}
+   // 孙组件
+    <script setup lang="ts">
+    defineProps(['b', 'c', 'x', 'y', 'updateB'])
+    </script>
+    <template>
+      <div>
+        <h3>孙组件</h3>
+        <h4>b:{{ b }}</h4>
+        <h4>c:{{ c }}</h4>
+        <h4>x:{{ x }}</h4>
+        <h4>y:{{ y }}</h4>
+        // 在孙组件中修改b的值，祖组件b的值也会跟着改变
+        <button @click="updateB(10000)">更新祖组件b的值</button>
+      </div>
+    </template>
+   ```
   
