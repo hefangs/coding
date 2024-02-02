@@ -1273,63 +1273,155 @@ unWatch2()
       </template>
       ```
   5. `$attr`
-   ```typescript{8-9,18-23}
-   // 祖组件
-   <script setup lang="ts">
-    import { ref } from 'vue'
-    import Child from './Child.vue'
-    let a = ref(1)
-    let b = ref(2)
-    let c = ref(3)
-    let updateB = (value: number) => {
-      b.value += value
+      ```typescript{8-9,18-23}
+      // 祖组件
+      <script setup lang="ts">
+        import { ref } from 'vue'
+        import Child from './Child.vue'
+        let a = ref(1)
+        let b = ref(2)
+        let c = ref(3)
+        let updateB = (value: number) => {
+          b.value += value
+        }
+        </script>
+        <template>
+          <div>
+            <h3>父组件</h3>
+            <h4>a:{{ a }}</h4>
+            <h4>b:{{ b }}</h4>
+            <h4>c:{{ c }}</h4>
+            <Child
+              :a="a"
+              :b="b"
+              :c="c"
+              v-bind="{ x: 100, y: 200 }"
+              :updateB="updateB"
+            />
+          </div>
+        </template>
+        ```
+        ```typescript{4,9-10}
+        // 子组件
+        <script setup lang="ts">
+          import GrandChild from './GrandChild.vue'
+          defineProps(['a']) // 子组件只接收了数据a 其他数据全部在$attrs中
+          </script>
+          <template>
+            <div>
+              <h3>子组件</h3>
+              a:{{ a }} 其他：{{ $attrs }}
+              <GrandChild v-bind="$attrs" /> // 把$attrs中的数据传递给孙组件
+            </div>
+          </template>
+        ```
+        ```typescript{3,12-13}
+        // 孙组件
+          <script setup lang="ts">
+          defineProps(['b', 'c', 'x', 'y', 'updateB'])
+          </script>
+          <template>
+            <div>
+              <h3>孙组件</h3>
+              <h4>b:{{ b }}</h4>
+              <h4>c:{{ c }}</h4>
+              <h4>x:{{ x }}</h4>
+              <h4>y:{{ y }}</h4>
+              // 在孙组件中修改b的值，祖组件b的值也会跟着改变
+              <button @click="updateB(10000)">更新祖组件b的值</button>
+            </div>
+          </template>
+        ```
+6. `$refs-$parent`
+   - 父组件通过`$refs`获取子组件的实例，
+   - 子组件通过`$parent`获取父组件的实例
+    ```typescript{8-24}
+    //父组件
+    <script setup lang="ts">
+    import { ref, reactive } from 'vue'
+    import Child1 from './Child1.vue'
+    import Child2 from './Child2.vue'
+    let money = ref(100)
+    let car = reactive({ name: '奔驰', price: 40 })
+    defineExpose({ money, car })
+    let c1 = ref()
+    let c2 = ref()
+    // 对c1子组件进行数据更新
+    let updateC1Data = () => {
+      c1.value.toy = '挖掘机'
+      c1.value.books += 1
+    }
+     // 对c2子组件进行数据更新
+    let updateC2Data = () => {
+      c2.value.computer = 'mac'
+      c2.value.books += 2
+    }
+    // 对于很多个子组件进行数据更新
+    let updateChild = (refs: { [key: string]: any }) => {
+      console.log(refs)
+      refs.c1.toy = '挖掘机'
+      refs.c1.books += 1
+      refs.c2.computer = 'mac'
+      refs.c2.books += 2
     }
     </script>
     <template>
-      <div>
+      <div class="fa">
         <h3>父组件</h3>
-        <h4>a:{{ a }}</h4>
-        <h4>b:{{ b }}</h4>
-        <h4>c:{{ c }}</h4>
-        <Child
-          :a="a"
-          :b="b"
-          :c="c"
-          v-bind="{ x: 100, y: 200 }"
-          :updateB="updateB"
-        />
+        <h4>money: {{ money }}万</h4>
+        <h4>car: {{ car.name }} - {{ car.price }}万</h4>
+        <button @click="updateC1Data">更新子组件1-所有数据</button><br />
+        <button @click="updateC2Data">更新子组件2-所有数据</button><br />
+        // 对于很多个子组件需要引入$refs
+        <button @click="updateChild($refs)">获取所有数据-再更新数据</button><br />
+        // 给2个子组件都打上ref标识
+        <Child1 ref="c1" />
+        <Child2 ref="c2" />
       </div>
     </template>
-   ```
-   ```typescript{4,9-10}
-   // 子组件
-   <script setup lang="ts">
-    import GrandChild from './GrandChild.vue'
-    defineProps(['a']) // 子组件只接收了数据a 其他数据全部在$attrs中
-    </script>
-    <template>
-      <div>
-        <h3>子组件</h3>
-        a:{{ a }} 其他：{{ $attrs }}
-        <GrandChild v-bind="$attrs" /> // 把$attrs中的数据传递给孙组件
-      </div>
-    </template>
-   ```
-   ```typescript{3,12-13}
-   // 孙组件
+    ```
+    ```typescript{6-8,18}
+    // Child1.vue
     <script setup lang="ts">
-    defineProps(['b', 'c', 'x', 'y', 'updateB'])
+    import { ref } from 'vue'
+    let toy = ref('奥特曼')
+    let books = ref(5)
+    defineExpose({ toy, books })
+    // 更新父组件数据
+    let updateMoney = (parent: any) => {
+      parent.money += 1
+    }
     </script>
     <template>
-      <div>
-        <h3>孙组件</h3>
-        <h4>b:{{ b }}</h4>
-        <h4>c:{{ c }}</h4>
-        <h4>x:{{ x }}</h4>
-        <h4>y:{{ y }}</h4>
-        // 在孙组件中修改b的值，祖组件b的值也会跟着改变
-        <button @click="updateB(10000)">更新祖组件b的值</button>
+      <div class="ch1">
+        <h3>子组件1</h3>
+        <h4>toy:{{ toy }}</h4>
+        <h4>books:{{ books }}本</h4>
+       // 引入$parent
+        <button @click="updateMoney($parent)">修改父组件数据money</button>
       </div>
     </template>
-   ```
-  
+    ```
+    ```typescript{6-10,19}
+    // Child2.vue
+    <script setup lang="ts">
+    import { ref } from 'vue'
+    let computer = ref('华为')
+    let books = ref(10)
+    defineExpose({ computer, books })
+    // 更新父组件数据
+    let updateCar = (parent: any) => {
+      parent.car.name = '宝马'
+      parent.car.price = 20
+    }
+    </script>
+    <template>
+      <div class="ch1">
+        <h3>子组件2</h3>
+        <h4>computer:{{ computer }}</h4>
+        <h4>books:{{ books }}本</h4>
+        // 引入$parent
+        <button @click="updateCar($parent)">修改父组件数据car</button>
+      </div>
+    </template>
+    ```
