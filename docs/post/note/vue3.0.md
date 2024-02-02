@@ -1425,3 +1425,66 @@ unWatch2()
       </div>
     </template>
     ```
+6. `provide`和`inject`
+    - 父组件中使用`provide`来提供数据
+    - 在子组件中使用`inject`来开始使用这些数据
+    ```typescript{17-23}
+    // 父组件
+    <script setup lang="ts">
+    import { ref, reactive, provide } from 'vue'
+    import Child from './Child.vue'
+    let money = ref(100)
+    let car = reactive({
+      brand: '奔驰',
+      price: 50
+    })
+    let updateMoney = (value: number) => {
+      money.value -= value
+    }
+    let updateCar = () => {
+      car.price = 20
+      car.brand = '宝马'
+    }
+    provide('money', {
+      money,
+      updateMoney
+    })
+    provide('car', {
+      car,
+      updateCar
+    })
+    </script>
+    <template>
+      <div class="fa">
+        <h3>父组件</h3>
+        <h4>money:{{ money }}</h4>
+        <h4>品牌:{{ car.brand }}</h4>
+        <h4>价格:{{ car.price }}</h4>
+        <Child />
+      </div>
+    </template>
+    ```
+    ```typescript{4-10,18,21}
+    // 子孙组件
+    <script setup lang="ts">
+    import { inject } from 'vue'
+    let { money, updateMoney } = inject('money', {
+      money: 0,
+      updateMoney: (param: number) => {}
+    })
+    let { car, updateCar } = inject('car', {
+      car: { brand: '', price: 0 },
+      updateCar: (param: number) => {}
+    })
+    </script>
+    <template>
+      <div class="gr">
+        <h3>孙组件</h3>
+        <h4>从祖组件获取到的money:{{ money }}</h4>
+        <button @click="updateMoney(1)">更新祖组件money</button>
+        <h4>从祖组件获取到车的品牌:{{ car.brand }}</h4>
+        <h4>从祖组件获取到车的价格:{{ car.price }}</h4>
+        <button @click="updateCar(1)">更新祖组件car</button>
+      </div>
+    </template>
+    ```
