@@ -1557,3 +1557,48 @@ unWatch2()
     </div>
    </template>
    ```
+  - 作用域插槽（`数据在子组件`，但根据数据生成的结构由`父组件`决定）
+   ```typescript{5,12,19}
+   // 父组件
+   <template>
+    <div class="fa">
+      <Games>
+        <template v-slot="{ games }">
+          <ul>
+            <li v-for="item in games" :key="item.id">{{ item.name }}</li>
+          </ul>
+        </template>
+      </Games>
+      <Games>
+        <template v-slot="{ games }">
+          <ol>
+            <li v-for="item in games" :key="item.id">{{ item.name }}</li>
+          </ol>
+        </template>
+      </Games>
+      <Games>
+        <template v-slot="{ games }">
+          <h3 v-for="item in games" :key="item.id">{{ item.name }}</h3>
+        </template>
+      </Games>
+    </div>
+   </template>
+   ```
+   ```typescript{14}
+   // 子组件
+    <script setup lang="ts">
+    import { reactive } from 'vue'
+    let games = reactive([
+      { id: 1, name: '超级玛丽' },
+      { id: 2, name: '冒险岛' },
+      { id: 3, name: '魔兽争霸' },
+      { id: 4, name: '穿越火线' }
+    ])
+    </script>
+    <template>
+      <div class="ch">
+        <h2>热门游戏推荐</h2>
+        <slot :games="games"></slot>
+      </div>
+    </template>
+   ```
