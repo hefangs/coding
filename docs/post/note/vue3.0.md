@@ -1558,7 +1558,7 @@ unWatch2()
    </template>
    ```
   - 作用域插槽（`数据在子组件`，但根据数据生成的结构由`父组件`决定）
-   ```typescript{5,12,19}
+   ```typescript{5,12,19-23}
    // 父组件
    <template>
     <div class="fa">
@@ -1577,7 +1577,11 @@ unWatch2()
         </template>
       </Games>
       <Games>
-        <template v-slot="{ games }">
+      // 以下3种写法都是相同的
+      // v-slot="{ games }"
+      // v-slot:default="{ games }"
+      // #default="{ games }"
+        <template v-slot:default="{ games }">
           <h3 v-for="item in games" :key="item.id">{{ item.name }}</h3>
         </template>
       </Games>
