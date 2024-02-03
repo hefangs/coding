@@ -1425,7 +1425,7 @@ unWatch2()
       </div>
     </template>
     ```
-6. `provide`和`inject`
+7. `provide`和`inject`
     - 父组件中使用`provide`来提供数据
     - 在子组件中使用`inject`来开始使用这些数据
     ```typescript{17-23}
@@ -1488,3 +1488,34 @@ unWatch2()
       </div>
     </template>
     ```
+7. `slot`-默认插槽
+   ```typescript{4-14}
+    <!--  父组件 -->
+    <template>
+      <div class="fa">
+        <Category title="热门游戏推荐">
+          <ul>
+            <li v-for="item in games" :key="item.id">{{ item.name }}</li>
+          </ul>
+        </Category>
+        <Category title="热门美食推荐">
+          <img :src="imgUrl" alt="" />
+        </Category>
+        <Category title="热门电影推荐">
+          <video :src="videoUrl" controls></video>
+        </Category>
+      </div>
+    </template>
+   ```
+   ```typescript{2,6-7}
+   // 子组件
+   <script setup lang="ts">
+    defineProps<{ title: string }>()
+    </script>
+    <template>
+      <div class="ch">
+        <h3>{{ title }}</h3>
+        <slot>默认内容</slot>
+      </div>
+    </template>
+   ```
