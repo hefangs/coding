@@ -1488,7 +1488,8 @@ unWatch2()
       </div>
     </template>
     ```
-7. `slot`-默认插槽
+7. `slot`
+  - 默认插槽
    ```typescript{4-14}
     <!--  父组件 -->
     <template>
@@ -1507,7 +1508,7 @@ unWatch2()
       </div>
     </template>
    ```
-   ```typescript{2,6-7}
+   ```typescript{3,8}
    // 子组件
    <script setup lang="ts">
     defineProps<{ title: string }>()
@@ -1518,4 +1519,41 @@ unWatch2()
         <slot>默认内容</slot>
       </div>
     </template>
+   ```
+  - 具名插槽
+   ```typescript{5,13,20}
+    // 父组件 
+    <template>
+      <div class="fa">
+        <Category>
+          <template v-slot:s1>
+            <h3>热门游戏推荐</h3>
+            <ul>
+              <li v-for="item in games" :key="item.id">{{ item.name }}</li>
+            </ul>
+          </template>
+        </Category>
+        <Category title="热门美食推荐">
+          <template v-slot:s1>
+            <h3>热门美食推荐</h3>
+            <img :src="imgUrl" alt="" />
+          </template>
+        </Category>
+        <Category title="热门电影推荐">
+        // 简写 #s1与v-slot:s1相同
+          <template #s1>
+            <h3>热门美食推荐</h3>
+            <video :src="videoUrl" controls></video>
+          </template>
+        </Category>
+      </div>
+    </template>
+   ```
+   ```typescript{4}
+   // 子组件
+   <template>
+    <div class="ch">
+      <slot name="s1">默认内容</slot>
+    </div>
+   </template>
    ```
