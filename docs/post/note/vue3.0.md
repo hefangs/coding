@@ -1488,7 +1488,7 @@ unWatch2()
       </div>
     </template>
     ```
-7. `slot`
+8. `slot`
   - 默认插槽
    ```typescript{4-14}
     <!--  父组件 -->
@@ -1632,5 +1632,66 @@ unWatch2()
 | 任意组件之间 | mitt     |
 |              | pinia    |
 
-
   :::
+
+  ## 11. toRef,toRefs,toRaw,markRaw,customRef
+
+  :::warning 总结
+  - `toRef`: 基于响应式对象上的一个属性，创建一个对应的`ref`这样创建的`ref`与其源属性保持同步：改变源属性的值将更新 `ref`的值
+  - `toRefs`: 将一个响应式对象转换为一个普通对象，这个普通对象的每个属性都是指向源对象相应属性的 ref。每个单独的 ref 都是使用`toRef()`创建的
+  - `toRaw`:根据一个`Vue`创建的代理返回其原始对象
+  - `markRaw`: 将一个对象标记为不可被转为代理。返回该对象本身
+  - `customRef`: 创建一个自定义的`ref`，并对其依赖项跟踪和更新触发进行显式控制
+  :::
+  - `toRef`
+    ```typescript{5-11,15,23-24}
+    <script setup lang="ts">
+    import { reactive } from 'vue'
+    let state = reactive({ count: 0 })
+    // 自定义一个toRef
+    let _toRef = (object:any, key:any) => {
+      return {
+        get value() {
+          return object[key]
+        },
+        set value(newValue) {
+          object[key] = newValue
+        }
+      }
+    }
+    let count = _toRef(state, 'count')
+    </script>
+    <template>
+      <h1>{{ state.count }}</h1>
+      <h2>{{ count.value }}</h2>
+      <br />
+      // 修改count.value的值会影响state.count的值
+      // 修改state.count的值也会影响count.value的值
+      <button @click="count.value++">count.value</button><br />
+      <button @click="state.count++">state.value.count</button>
+    </template>
+    <script>
+    ```
+  - `toRefs`
+    ```typescript{4-13,15}
+    <script setup lang="ts">
+    import { Ref, reactive, toRef } from 'vue'
+    let state = reactive({ name: '张三', age: 18 })
+    let _toRefs = <T extends object>(object: T): { [K in keyof T]: Ref<T[K]> } => {
+      // 创建一个对象，用于存储属性名和对应的 ref
+      let refs = {} as { [K in keyof T]: Ref<T[K]> }
+      // 遍历响应式对象的属性
+      for (let key in object) {
+        // 使用 ref 包装属性值
+        refs[key] = toRef(object, key)
+      }
+      // 返回包含所有属性的 ref 对象
+      return refs
+    }
+    let state1 = _toRefs(state)
+    </script>
+    <template>
+      <h1>{{ state }}</h1>
+      <h1>{{ state1 }}</h1>
+    </template>
+    ```
