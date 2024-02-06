@@ -1695,3 +1695,31 @@ unWatch2()
       <h1>{{ state1 }}</h1>
     </template>
     ```
+  - `toRaw`
+    ```typescript
+      function toRaw(observed) {
+      // 检查传入的参数是否是一个响应式对象
+      if (!observed || typeof observed !== 'object') {
+        return observed;
+      }
+      // 如果传入的对象具有 __v_raw 字段，说明它是一个 Vue.js 的响应式对象
+      if (observed.__v_raw) {
+        return observed.__v_raw;
+      }
+      // 如果不是 Vue.js 的响应式对象，直接返回传入的对象
+      return observed;
+    }
+    ```
+   - `markRaw`
+    ```typescript
+    function markRaw(value) {
+    // 将传入的对象标记为不可响应的
+    // 通过设置 __v_skip 字段来实现
+    Object.defineProperty(value, '__v_skip', {
+      configurable: true,
+      enumerable: false,
+      value: true
+    })
+      return value;
+    }
+    ```
