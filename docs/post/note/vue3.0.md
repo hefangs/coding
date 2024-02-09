@@ -1710,16 +1710,37 @@ unWatch2()
       return observed;
     }
     ```
-   - `markRaw`
+  - `markRaw`
     ```typescript
-    function markRaw(value) {
-    // 将传入的对象标记为不可响应的
-    // 通过设置 __v_skip 字段来实现
-    Object.defineProperty(value, '__v_skip', {
-      configurable: true,
-      enumerable: false,
-      value: true
+      function markRaw(value) {
+      // 将传入的对象标记为不可响应的
+      // 通过设置 __v_skip 字段来实现
+      Object.defineProperty(value, '__v_skip', {
+        configurable: true,
+        enumerable: false,
+        value: true
+      })
+        return value
+      }
+    ```
+    - `customRef`
+    ```typescript
+    import { customRef } from 'vue'
+    let initValue = 'hello'
+    let timer: number
+    let msg = customRef((track, trigger) => {
+      return {
+        get() {
+          track()
+          return initValue
+        },
+        set(newValue) {
+          clearTimeout(timer)
+          timer = setTimeout(() => {
+            trigger()
+            initValue = newValue
+          }, 1000)
+        }
+      }
     })
-      return value;
-    }
     ```
