@@ -1725,22 +1725,30 @@ unWatch2()
     ```
     - `customRef`
     ```typescript
+    // useMsgRef.ts  
     import { customRef } from 'vue'
-    let initValue = 'hello'
-    let timer: number
-    let msg = customRef((track, trigger) => {
-      return {
-        get() {
-          track()
-          return initValue
-        },
-        set(newValue) {
-          clearTimeout(timer)
-          timer = setTimeout(() => {
-            trigger()
-            initValue = newValue
-          }, 1000)
+    export default function (initValue: string, delay: number) {
+      let timer: number
+      let msg = customRef((track, trigger) => {
+        return {
+          get() {
+            track()
+            return initValue
+          },
+          set(newValue) {
+            clearTimeout(timer)
+            timer = setTimeout(() => {
+              initValue = newValue
+              trigger()
+            }, delay)
+          }
         }
-      }
-    })
+      })
+      return { msg }
+    }
+    // App.vue
+    import useMsgRef from './useMsgRef'
+    let {msg} = useMsgRef('hello', 500)
+    <h2>{{ msg}}<h2>
+    <input type="text" v-model="msg"/>
     ```
