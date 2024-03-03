@@ -90,7 +90,7 @@
   - `sudo n latest`安装最新版本
   - `sudo n 8.4.0`安装指定版本
   - `sudo n rm 8.4.0`删除某个版本
-  - `n prune`清除 n 工具的缓存
+  - `n prune`删除除已安装版本外的所有缓存版本
   - `n use 8.4.0 index.js`以指定的版本来执行脚本
   - `sudo NODE_MIRROR=http://npm.taobao.org/mirrors/node n stable`更新阿里镜像解决超时问题
 :::
