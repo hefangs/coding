@@ -452,7 +452,7 @@ function set(target, key, val) {
  - `v-for`：基于原始数据多次渲染元素或模板块
  - `v-show`：基于表达式值的真假性，来改变元素的可见性
  - `v-model`：在表单输入元素或组件上创建双向绑定
- - `v-slot`：用于声明具名插槽或是期望接收 `prop`s 的作用域插槽
+ - `v-slot`：用于声明具名插槽或是期望接收 `prop`的作用域插槽
  - `v-html`：更新元素的 `innerHTML`
  - `v-text`：更新元素的文本内容
  - `v-pre`：跳过该元素及其所有子元素的编译
@@ -465,7 +465,7 @@ function set(target, key, val) {
   - `self`：只当事件是从事件绑定的元素本身触发时才触发回调
   - `once`：只能触发一次，第二次就不会触发
   - `capture`：向下捕获方式触发（完整的事件机制是：捕获阶段--目标阶段--冒泡阶段）
-  - passive： 滚动事件延迟
+  - `passive`： 滚动事件延迟
 :::
 :::danger `v-model`修饰符：
   - `lazy` ——监听 `change` 事件而不是 `input`
@@ -732,7 +732,7 @@ function sameVnode(oldVnode, newVnode) {
 
 :::danger patchVnode方法
   - 找到对应的真实`DOM`，称为`el`
-  - 判断`newVnode`和`oldVnode`是否指向同一个对象，如果是，那么直接`return`
+  - 判断`newVnode`和`oldVnode`是否指向同一个对象，如果不是，那么直接`return`
   - 如果他们都有文本节点并且不相等，那么将`el`的文本节点设置为`newVnode`的文本节点
   - 如果`oldVnode`有子节点而`newVnode`没有，则删除`el`的子节点
   - 如果`oldVnode`没有子节点而`newVnode`有，则将`newVnode`的子节点真实化之后添加到`el`
