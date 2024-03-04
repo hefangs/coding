@@ -684,7 +684,7 @@ function h(sel, b, c) {
   - `diff`算法在很多场景下都有应用，在`vue`中，作用于虚拟`DOM`渲染成真实`DOM`的新旧`VNode`节点比较
 :::
 :::danger 原理分析
-  - 当数据发生改变时，`set`方法会调用`Dep.notify`通知所有订阅者`Watcher`，订阅者就会调用`patch`给真实的`DOM`打补丁，更新相应的视图
+  - 当数据发生改变时，`setter`方法会调用`Dep.notify`通知所有订阅者`Watcher`，订阅者就会调用`patch`给真实的`DOM`打补丁，更新相应的视图
   ![pic](/diff1.png)
 :::
 :::danger patch方法
