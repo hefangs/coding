@@ -732,7 +732,7 @@ function sameVnode(oldVnode, newVnode) {
 
 :::danger patchVnode方法
   - 找到对应的真实`DOM`，称为`el`
-  - 判断`newVnode`和`oldVnode`是否指向同一个对象，如果不是，那么直接`return`
+  - 判断`newVnode`和`oldVnode`是否指向同一个对象，如果不是，那么直接`return`，直接替换成新的`newVnode`
   - 如果他们都有文本节点并且不相等，那么将`el`的文本节点设置为`newVnode`的文本节点
   - 如果`oldVnode`有子节点而`newVnode`没有，则删除`el`的子节点
   - 如果`oldVnode`没有子节点而`newVnode`有，则将`newVnode`的子节点真实化之后添加到`el`
@@ -769,6 +769,13 @@ function patchVnode(oldVnode, newVnode) {
 :::
 
 :::danger updateChildren方法
+![pic](/diff2.png)
+- 使用`sameVnode`方法 (`oldChStartIdx`  `oldChEndIdx` `newChStartIdx` `newChEndIdx`)
+   1. `oldChStartIdx`和`newChStartIdx`使用`sameVnode`方法进行比较，sameVnode(oldChStartIdx, newChStartIdx)
+   2. `oldChStartIdx`和`newChEndIdx`使用`sameVnode`方法进行比较，sameVnode(oldChStartIdx, newChEndIdx)
+   3. `oldChEndIdx`和`newChStartIdx`使用`sameVnode`方法进行比较，sameVnode(oldChEndIdx, newChStartIdx)
+   4. `oldChEndIdx`和`newChEndIdx`使用`sameVnode`方法进行比较，sameVnode(oldChEndIdx, newChEndIdx)
+   5. 以上逻辑都匹配不到，再把所有旧子节点的`key`做一个映射到旧节点下标的`key`->`index`表，然后用新`vNode`的`key`去找出在旧节点中可以复用的位置。
 ```javascript
 function updateChildren(parentElm, oldCh, newCh) {
   let oldStartIdx = 0, newStartIdx = 0
