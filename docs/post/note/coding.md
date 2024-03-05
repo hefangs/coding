@@ -1083,7 +1083,7 @@ insertionSort(arr) //[1, 2, 3, 4, 5, 6, 7, 8, 9]
 
 ```javascript
 const obj = {a:1,b:2,c:3}
-const values= Object.values(obj)
+const values = Object.values(obj)
 for(let value of values){
   console.log(value) // 1 2 3
 }
@@ -1140,7 +1140,7 @@ for(let value of obj){
  
 ```javascript
 // 使左右俩边相等
-[a,b] ={a:1,b:2}
+[a,b] = {a:1,b:2}
 Object.prototype[Symbol.iterator] = function(){
  return Object.values(this)[Symbol.iterator]()
 }
