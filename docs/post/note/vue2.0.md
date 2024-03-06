@@ -1323,26 +1323,32 @@ axios.interceptors.response.use(res=>{},{response}=>{
 :::
 ## 23. vue2自定义的事件总线 Bus
 ```ts
+// 定义事件总线类所需的接口
 type busClass = {
   emit: (name: string) => void
   on: (name: string, callback: Function) => void
 }
+// 定义事件名称的类型
 type ParamsKey = string | number | symbol
+// 定义存储事件处理程序的键值对集合
 type List = {
   [key: ParamsKey]: Array<Function>
 }
+// 实现事件总线类
 class Bus implements busClass {
   list: List
   constructor() {
     this.list = {}
     // console.log(this.list)
   }
+  // 发布特定事件
   emit(name: string, ...args: any[]) {
     let eventName: Array<Function> = this.list[name]
     eventName.forEach((fn) => {
       fn.apply(this, args)
     })
   }
+  // 订阅特定事件的处理程序
   on(name: string, callback: Function) {
     let fn: Array<Function> = this.list[name] || []
     fn.push(callback)
