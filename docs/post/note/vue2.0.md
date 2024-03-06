@@ -1321,3 +1321,33 @@ axios.interceptors.response.use(res=>{},{response}=>{
     })
     ```
 :::
+## 23. vue2自定义的事件总线 Bus
+```ts
+type busClass = {
+  emit: (name: string) => void
+  on: (name: string, callback: Function) => void
+}
+type ParamsKey = string | number | symbol
+type List = {
+  [key: ParamsKey]: Array<Function>
+}
+class Bus implements busClass {
+  list: List
+  constructor() {
+    this.list = {}
+    // console.log(this.list)
+  }
+  emit(name: string, ...args: any[]) {
+    let eventName: Array<Function> = this.list[name]
+    eventName.forEach((fn) => {
+      fn.apply(this, args)
+    })
+  }
+  on(name: string, callback: Function) {
+    let fn: Array<Function> = this.list[name] || []
+    fn.push(callback)
+    this.list[name] = fn
+  }
+}
+export default new Bus()
+```
