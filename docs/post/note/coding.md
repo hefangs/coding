@@ -1332,3 +1332,43 @@ console.log(filter)  // [3, 4, 5]
     ```
 :::
 ## 17. 发布订阅
+
+## 18 代码雨
+```ts
+// 当页面加载完成时执行
+onload = () => {
+  // 获取 canvas 元素
+  let canvas = document.querySelector('canvas') as HTMLCanvasElement
+  // 获取 2D 上下文对象
+  let ctx = canvas.getContext('2d') as CanvasRenderingContext2D
+  // 设置 canvas 的宽度和高度为屏幕可用宽度和高度
+  canvas.width = screen.availWidth
+  canvas.height = screen.availHeight
+  // 定义要显示的字符数组
+  let str: string[] = 'HelloWorld0101010'.split('')
+  // 计算列数，并创建数组用于存储每列的位置
+  let arr = Array(Math.ceil(canvas.width / 10)).fill(0)
+  // 定义绘制代码雨的函数
+  let rain = () => {
+    // 绘制半透明背景，以实现模糊效果
+    ctx.fillStyle = 'rgba(0,0,0,.05)'
+    ctx.fillRect(0, 0, canvas.width, canvas.height)
+    // 设置绘制字符的颜色
+    ctx.fillStyle = '#0f0'
+    // 遍历每一列
+    arr.forEach((item, index) => {
+      // 随机选择一个字符，并在当前列的位置绘制
+      ctx.fillText(
+        str[Math.floor(Math.random() * str.length)],
+        index * 10,
+        item + 10
+      )
+      // 更新当前列的位置
+      arr[index] =
+        item > canvas.height || item > 10000 * Math.random() ? 0 : item + 10
+    })
+  }
+  // 使用 setInterval 方法每隔 40 毫秒调用一次绘制函数，以实现动画效果
+  setInterval(rain, 40)
+}
+```
