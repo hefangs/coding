@@ -461,7 +461,7 @@ function myNew(context){
 - 到达可视区域后把`data-src`值赋给`src`
 
 ```js
- let imgList = document.querySelectorAll("img")
+let imgList = document.querySelectorAll("img")
 function lazyLoad() {
   // 获取屏幕可视窗口高度
   let clientHeight = document.documentElement.clientHeight
@@ -513,16 +513,14 @@ const images: Record<string, { default: string }> = import.meta.glob(
 const arr = Object.values(images).map((v) => v.default)
 const vLazy: Directive<HTMLImageElement, string> = async (el, banding) => {
   const url = await import('../assets/1.png')
-  // console.log(arr)
   el.src = url.default
   const observe = new IntersectionObserver((entries) => {
     entries.forEach((item) => {
-      console.log(item)
       if (item.intersectionRatio > 0) {
         setTimeout(() => {
           el.src = banding.value
-          observe.unobserve(el)
-        }, 3000)
+        }, 1000)
+        observe.unobserve(el)
       }
     })
   })
