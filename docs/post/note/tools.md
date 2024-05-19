@@ -96,7 +96,7 @@
 :::
 
 ## 3. Homebrew
-:::tip brew
+:::info brew
 - `brew -v` 查询版本
 - `brew -h` 查看帮助信息
 - `brew update` 更新Homebrew
@@ -115,8 +115,101 @@
 :::
 
 ## 4. Vitepress
-:::tip vitepress更新
+:::danger vitepress更新
 - 直接`npm install vitepress`升级到最新版本
 - 需要在`main`分支上提交`vitepress`更新后的代码
 - `gh-page`分支无需变动和之前一样提交
+:::
+
+
+## 5. Selenium
+:::info 元素定位
+- `id`:ID属性，最常用的定位方法，每个元素的id应该是唯一的
+- `name`:NAME属性，NAME属性在HTML中很少使用，但Selenium仍然支持它
+- `class`:CLASS属性，CLASS属性在HTML中很少使用，但Selenium仍然支持它
+- `tag`:TAG属性，TAG属性在HTML中很少使用，但Selenium仍然支持它
+- `link`:LINK属性，LINK属性在HTML中很少使用，但Selenium仍然支持它
+- `xpath`:XPATH属性，XPATH属性在HTML中很少使用，但Selenium仍然支持它
+- `css`:CSS属性，CSS属性在HTML中很少使用，但Selenium仍然支持它
+:::
+:::info 元素操作
+- `click()`:点击元素
+- `clear()`:清除元素内容
+- `send_keys()`:模拟按键输入
+- `get_attribute()`:获取元素的属性值
+- `get_text()`:获取元素的文本内容
+- `is_displayed()`:判断元素是否可见
+- `is_enabled()`:判断元素是否可用
+- `is_selected()`:判断元素是否被选中
+- `get_location()`:获取元素的位置信息
+- `get_size()`:获取元素的尺寸信息
+- `get_cookies()`:获取所有Cookie信息
+- `get_cookie()`:获取指定Cookie信息
+- `delete_cookie()`:删除指定Cookie信息
+- `delete_all_cookies()`:删除所有Cookie信息
+- `execute_script()`:执行JavaScript脚本
+- `execute_async_script()`:执行异步JavaScript脚本
+- `get_screenshot_as_base64()`:获取当前页面的截图，并将其转换为Base64编码的字符串
+- `get_screenshot_as_file()`:获取当前页面的截图，并将其保存到指定的文件路径中
+- `refresh()`:刷新当前页面
+- `back()`:后退到上一个页面
+- `forward()`:前进到下一个页面
+- `close()`:关闭当前页面
+- `quit()`:关闭浏览器
+:::
+::: info 浏览器操作
+- `maximize_window()`:最大化浏览器窗口
+- `minimize_window()`:最小化浏览器窗口
+- `fullscreen_window()`:进入全屏模式
+- `set_window_size()`:设置浏览器窗口的大小
+- `get_window_size()`:获取浏览器窗口的大小
+- `set_window_position()`:设置浏览器窗口的位置
+- `get_window_position()`:获取浏览器窗口的位置
+- `set_window_rect()`:设置浏览器窗口的位置和大小
+- `get_window_rect()`:获取浏览器窗口的位置和大小
+:::
+::: info Select方法
+- `select_by_index()`:通过索引选择选项
+- `select_by_value()`:通过值选择选项
+- `select_by_visible_text()`:通过可见文本选择选项
+- `deselect_all()`:取消选择所有选项
+- `deselect_by_index()`:取消选择指定索引的选项
+- `deselect_by_value()`:取消选择指定值的选项
+- `deselect_by_visible_text()`:取消选择指定可见文本的选项
+:::
+::: info 等待方法
+- `implicitly_wait()`:设置全局 implicit 等待时间
+- `set_script_timeout()`:设置全局 script 等待时间
+- `set_page_load_timeout()`:设置全局 page load 等待时间
+- `set_implicit_wait()`:设置当前会话的 implicit 等待时间
+- `set_script_timeout()`:设置当前会话的 script 等待时间
+- `set_page_load_timeout()`:设置当前会话的 page load 等待时间
+:::
+::: info 异常处理
+- `ignore_exception()`:忽略指定异常
+- `ignore_exceptions()`:忽略所有异常
+:::
+::: info 文件
+- `upload_file()`:上传文件到指定元素
+- `download_file()`:下载指定文件到指定路径
+:::
+::: info 鼠标操作
+- `move_to_element()`:将鼠标移动到指定元素
+- `move_to_element_with_offset()`:将鼠标移动到指定元素并偏移指定位置
+- `click_and_hold()`:点击并保持指定元素
+- `release()`:释放指定元素
+- `double_click()`:双击指定元素
+- `context_click()`:右击指定元素
+- `drag_and_drop()`:拖拽指定元素
+- `drag_and_drop_by_offset()`:拖拽指定元素并偏移指定位置
+:::
+::: info 键盘操作
+- `press_key()`:按下指定键
+- `release_key()`:释放指定键
+- `send_keys()`:模拟按键输入
+:::
+::: info 滚动操作
+- `scroll_to_element()`:滚动到指定元素
+- `scroll_to_position()`:滚动到指定位置
+- `scroll_by_offset()`:滚动指定偏移量
 :::
