@@ -96,7 +96,7 @@
 :::
 
 ## 3. Homebrew
-:::info brew
+:::tip brew
 - `brew -v` 查询版本
 - `brew -h` 查看帮助信息
 - `brew update` 更新Homebrew
@@ -115,7 +115,7 @@
 :::
 
 ## 4. Vitepress
-:::danger vitepress更新
+:::info vitepress更新
 - 直接`npm install vitepress`升级到最新版本
 - 需要在`main`分支上提交`vitepress`更新后的代码
 - `gh-page`分支无需变动和之前一样提交
@@ -123,16 +123,37 @@
 
 
 ## 5. Selenium
-:::info 元素定位
-- `id`:ID属性，最常用的定位方法，每个元素的id应该是唯一的
-- `name`:NAME属性，NAME属性在HTML中很少使用，但Selenium仍然支持它
-- `class`:CLASS属性，CLASS属性在HTML中很少使用，但Selenium仍然支持它
-- `tag`:TAG属性，TAG属性在HTML中很少使用，但Selenium仍然支持它
-- `link`:LINK属性，LINK属性在HTML中很少使用，但Selenium仍然支持它
-- `xpath`:XPATH属性，XPATH属性在HTML中很少使用，但Selenium仍然支持它
-- `css`:CSS属性，CSS属性在HTML中很少使用，但Selenium仍然支持它
-:::
-:::info 元素操作
+::::danger 元素定位
+- id:`driver.findElement(By.id('kw'))`
+- name:`driver.findElement(By.name('wd'))`
+- class:`driver.findElement(By.className('s_ipt'))`
+- tag:`driver.findElement(By.tagName('input'))`
+- link-text:`driver.findElement(By.linkText('新闻'))`
+- partial-link-text:`driver.findElement(By.partialLinkText('新'))`
+- xpath:
+  - 绝对路径：`driver.findElement(By.xpath(/html/body/div[2]/div[1]/div[5]/div/div/form/span[1]/input))`
+  - 相对路径
+    - 相对路径+索引定位：`driver.findElement(By.xpath("//form/span[1]/input"))`
+    - 相对路径+属性定位：`driver.findElement(By.xpath("//input[@autocomplete='off]"))`
+    - 相对路径+通配符定位：
+      - `driver.findElement(By.xpath("//*[@autocomplete='off']"))`
+      - `driver.findElement(By.xpath("//*[@*='off']"))`
+    - 相对路径+部分属性值定位：
+      - `driver.findElement(By.xpath("//*[starts-with(@autocomplete,'of')]"))`
+      - `driver.findElement(By.xpath("//*[substring(@autocomplete,2)]='ff'"))`
+      - `driver.findElement(By.xpath("//*[contains(@autocomplete,'ff')]"))`
+    - 相对路径+文本定位：`driver.findElement(By.xpath("//span[text()='按图片搜索']"))`
+- css:
+  - 绝对路径：不用
+  - 通过Id和Class定位
+  - 通过属性定位
+  - 通过部分属性定位
+  - 查询子元素定位
+  - 查询兄弟节点定位
+::::
+
+
+:::warning 元素操作
 - `click()`:点击元素
 - `clear()`:清除元素内容
 - `send_keys()`:模拟按键输入
