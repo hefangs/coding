@@ -234,3 +234,23 @@
 - `scroll_to_position()`:滚动到指定位置
 - `scroll_by_offset()`:滚动指定偏移量
 :::
+
+:::info 在使用 Selenium 的 WebDriverWait 和 ExpectedConditions (EC) 时,常见的一些方法包括:
+
+visibility_of_element_located(locator): 等待元素可见。
+presence_of_element_located(locator): 等待元素存在于 DOM 中。
+presence_of_all_elements_located(locator): 等待所有元素都存在于 DOM 中。
+visibility_of_all_elements_located(locator): 等待所有元素都可见。
+text_to_be_present_in_element(locator, text): 等待元素的文本包含指定的文本。
+text_to_be_present_in_element_value(locator, text): 等待元素的 value 属性包含指定的文本。
+title_contains(title): 等待页面标题包含指定的文本。
+title_is(title): 等待页面标题等于指定的文本。
+url_contains(url): 等待当前 URL 包含指定的 URL 片段。
+url_matches(regex): 等待当前 URL 与指定的正则表达式匹配。
+url_to_be(url): 等待当前 URL 等于指定的 URL。
+alert_is_present(): 等待 alert 框出现。
+element_to_be_clickable(locator): 等待元素可点击。
+staleness_of(element): 等待指定元素从 DOM 中移除。
+element_attribute_to_be(locator, attribute, value): 等待元素的属性值等于指定的值。
+这些只是 ExpectedConditions 中的部分方法,实际上还有更多可供选择。选择合适的方法取决于您的具体测试场景和需求。
+:::
