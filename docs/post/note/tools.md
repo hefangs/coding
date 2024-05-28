@@ -119,6 +119,12 @@
 - 直接`npm install vitepress`升级到最新版本
 - 需要在`main`分支上提交`vitepress`更新后的代码
 - `gh-page`分支无需变动和之前一样提交
+- other(遇到npm install package 时，其实已经安装成功，但是进度还是显示安装中，重新设置npn源解决问题了)
+  - npm config get registry : https://registry.npmjs.org/
+  - yarn config get registry : https://registry.npmjs.org/
+  - npm config set registry https://registry.npm.taobao.org/
+  - yarn config set registry https://registry.npm.taobao.org/                           
+
 :::
 
 
