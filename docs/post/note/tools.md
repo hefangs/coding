@@ -1,3 +1,4 @@
+# Tools
 
 ## 1. Git
 :::tip git 日常基本操作
@@ -78,6 +79,7 @@
 :::
 
 :::tip 总结
+  :::details
   ![pic](/git1.png "notice")
 :::
 ## 2. N
@@ -129,7 +131,7 @@
 
 
 ## 5. pyenv
-:::danger 简单的`Python`版本管理
+:::warning 简单的`Python`版本管理
 - `brew install pyenv` 下载`pyenv`
 - `pyenv install --list` 查看所有可用的版本
 - `pyenv install 3.9.1` 安装指定的版本
@@ -140,9 +142,10 @@
 - `pyenv shell 3.8.10` 为当前会话设置版本
 - `pyenv uninstall 3.8.10`卸载指定的版本
 - `pyenv update`更新`pyenv`本身和所有插件
-- 需要添加到 `~/.zshrc`文件中
+- 需要添加到 `~/.zshrc`文件中,并且`source ~/.zshrc`
   ```shell
   export PATH="$HOME/.pyenv/bin:$PATH"
   eval "$(pyenv init --path)"
   eval "$(pyenv init -)"
   ```
+:::

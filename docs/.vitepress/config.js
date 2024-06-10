@@ -77,8 +77,10 @@ function sideBar() {
         { text: 'React', link: '/post/note/react' },
         { text: 'Webpack', link: '/post/note/webpack' },
         { text: 'TypeScript', link: '/post/note/typescript' },
-        { text: 'Tools', link: '/post/note/tools' },
-        { text: 'Node', link: '/post/note/node' }
+        { text: 'pytest', link: '/post/note/pytest' },
+        { text: 'Node', link: '/post/note/node' },
+        { text: 'selenium', link: '/post/note/selenium' },
+        { text: 'Tools', link: '/post/note/tools' }
       ]
     }
   ]
