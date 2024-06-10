@@ -81,7 +81,7 @@
   ![pic](/git1.png "notice")
 :::
 ## 2. N
-:::warning n
+:::warning 以交互方式管理`Node.js` 版本
   - `npm install -g n`全局安装 n
   - `sudo n`查看已安装node列表并切换
   - `n ls`查看已安装node列表
@@ -119,144 +119,30 @@
 - 直接`npm install vitepress`升级到最新版本
 - 需要在`main`分支上提交`vitepress`更新后的代码
 - `gh-page`分支无需变动和之前一样提交
-- other(遇到npm install package 时，其实已经安装成功，但是进度还是显示安装中，重新设置npn源解决问题了)
-  - npm config get registry : https://registry.npmjs.org/
-  - yarn config get registry : https://registry.npmjs.org/
-  - npm config set registry https://registry.npm.taobao.org/
-  - yarn config set registry https://registry.npm.taobao.org/                           
+- 遇到`npm install package`时，其实已经安装成功，但是进度还是显示安装中，重新设置npn源解决问题了
+  - `npm config get registry : https://registry.npmjs.org/`
+  - `yarn config get registry : https://registry.npmjs.org/`
+  - `npm config set registry https://registry.npm.taobao.org/`
+  - `yarn config set registry https://registry.npm.taobao.org/`                           
 
 :::
 
 
-## 5. Selenium
-::::danger 元素定位
-- id:`driver.findElement(By.id('kw'))`
-- name:`driver.findElement(By.name('wd'))`
-- class:`driver.findElement(By.className('s_ipt'))`
-- tag:`driver.findElement(By.tagName('input'))`
-- link-text:`driver.findElement(By.linkText('新闻'))`
-- partial-link-text:`driver.findElement(By.partialLinkText('新'))`
-- xpath:
-  - 绝对路径：`driver.findElement(By.xpath(/html/body/div[2]/div[1]/div[5]/div/div/form/span[1]/input))`
-  - 相对路径
-    - 相对路径+索引定位：`driver.findElement(By.xpath("//form/span[1]/input"))`
-    - 相对路径+属性定位：`driver.findElement(By.xpath("//input[@autocomplete='off]"))`
-    - 相对路径+通配符定位：
-      - `driver.findElement(By.xpath("//*[@autocomplete='off']"))`
-      - `driver.findElement(By.xpath("//*[@*='off']"))`
-    - 相对路径+部分属性值定位：
-      - `driver.findElement(By.xpath("//*[starts-with(@autocomplete,'of')]"))`
-      - `driver.findElement(By.xpath("//*[substring(@autocomplete,2)]='ff'"))`
-      - `driver.findElement(By.xpath("//*[contains(@autocomplete,'ff')]"))`
-    - 相对路径+文本定位：`driver.findElement(By.xpath("//span[text()='按图片搜索']"))`
-- css:
-  - 绝对路径：不用
-  - 通过Id和Class定位
-  - 通过属性定位
-  - 通过部分属性定位
-  - 查询子元素定位
-  - 查询兄弟节点定位
-::::
-
-
-:::warning 元素操作
-- `click()`:点击元素
-- `clear()`:清除元素内容
-- `send_keys()`:模拟按键输入
-- `get_attribute()`:获取元素的属性值
-- `get_text()`:获取元素的文本内容
-- `is_displayed()`:判断元素是否可见
-- `is_enabled()`:判断元素是否可用
-- `is_selected()`:判断元素是否被选中
-- `get_location()`:获取元素的位置信息
-- `get_size()`:获取元素的尺寸信息
-- `get_cookies()`:获取所有Cookie信息
-- `get_cookie()`:获取指定Cookie信息
-- `delete_cookie()`:删除指定Cookie信息
-- `delete_all_cookies()`:删除所有Cookie信息
-- `execute_script()`:执行JavaScript脚本
-- `execute_async_script()`:执行异步JavaScript脚本
-- `get_screenshot_as_base64()`:获取当前页面的截图，并将其转换为Base64编码的字符串
-- `get_screenshot_as_file()`:获取当前页面的截图，并将其保存到指定的文件路径中
-- `refresh()`:刷新当前页面
-- `back()`:后退到上一个页面
-- `forward()`:前进到下一个页面
-- `close()`:关闭当前页面
-- `quit()`:关闭浏览器
-:::
-::: info 浏览器操作
-- `maximize_window()`:最大化浏览器窗口
-- `minimize_window()`:最小化浏览器窗口
-- `fullscreen_window()`:进入全屏模式
-- `set_window_size()`:设置浏览器窗口的大小
-- `get_window_size()`:获取浏览器窗口的大小
-- `set_window_position()`:设置浏览器窗口的位置
-- `get_window_position()`:获取浏览器窗口的位置
-- `set_window_rect()`:设置浏览器窗口的位置和大小
-- `get_window_rect()`:获取浏览器窗口的位置和大小
-:::
-::: info Select方法
-- `select_by_index()`:通过索引选择选项
-- `select_by_value()`:通过值选择选项
-- `select_by_visible_text()`:通过可见文本选择选项
-- `deselect_all()`:取消选择所有选项
-- `deselect_by_index()`:取消选择指定索引的选项
-- `deselect_by_value()`:取消选择指定值的选项
-- `deselect_by_visible_text()`:取消选择指定可见文本的选项
-:::
-::: info 等待方法
-- `implicitly_wait()`:设置全局 implicit 等待时间
-- `set_script_timeout()`:设置全局 script 等待时间
-- `set_page_load_timeout()`:设置全局 page load 等待时间
-- `set_implicit_wait()`:设置当前会话的 implicit 等待时间
-- `set_script_timeout()`:设置当前会话的 script 等待时间
-- `set_page_load_timeout()`:设置当前会话的 page load 等待时间
-:::
-::: info 异常处理
-- `ignore_exception()`:忽略指定异常
-- `ignore_exceptions()`:忽略所有异常
-:::
-::: info 文件
-- `upload_file()`:上传文件到指定元素
-- `download_file()`:下载指定文件到指定路径
-:::
-::: info 鼠标操作
-- `move_to_element()`:将鼠标移动到指定元素
-- `move_to_element_with_offset()`:将鼠标移动到指定元素并偏移指定位置
-- `click_and_hold()`:点击并保持指定元素
-- `release()`:释放指定元素
-- `double_click()`:双击指定元素
-- `context_click()`:右击指定元素
-- `drag_and_drop()`:拖拽指定元素
-- `drag_and_drop_by_offset()`:拖拽指定元素并偏移指定位置
-:::
-::: info 键盘操作
-- `press_key()`:按下指定键
-- `release_key()`:释放指定键
-- `send_keys()`:模拟按键输入
-:::
-::: info 滚动操作
-- `scroll_to_element()`:滚动到指定元素
-- `scroll_to_position()`:滚动到指定位置
-- `scroll_by_offset()`:滚动指定偏移量
-:::
-
-:::info 在使用 Selenium 的 WebDriverWait 和 ExpectedConditions (EC) 时,常见的一些方法包括:
-
-visibility_of_element_located(locator): 等待元素可见。
-presence_of_element_located(locator): 等待元素存在于 DOM 中。
-presence_of_all_elements_located(locator): 等待所有元素都存在于 DOM 中。
-visibility_of_all_elements_located(locator): 等待所有元素都可见。
-text_to_be_present_in_element(locator, text): 等待元素的文本包含指定的文本。
-text_to_be_present_in_element_value(locator, text): 等待元素的 value 属性包含指定的文本。
-title_contains(title): 等待页面标题包含指定的文本。
-title_is(title): 等待页面标题等于指定的文本。
-url_contains(url): 等待当前 URL 包含指定的 URL 片段。
-url_matches(regex): 等待当前 URL 与指定的正则表达式匹配。
-url_to_be(url): 等待当前 URL 等于指定的 URL。
-alert_is_present(): 等待 alert 框出现。
-element_to_be_clickable(locator): 等待元素可点击。
-staleness_of(element): 等待指定元素从 DOM 中移除。
-element_attribute_to_be(locator, attribute, value): 等待元素的属性值等于指定的值。
-这些只是 ExpectedConditions 中的部分方法,实际上还有更多可供选择。选择合适的方法取决于您的具体测试场景和需求。
-:::
+## 5. pyenv
+:::danger 简单的`Python`版本管理
+- `brew install pyenv` 下载`pyenv`
+- `pyenv install --list` 查看所有可用的版本
+- `pyenv install 3.9.1` 安装指定的版本
+- `pyenv versions` 查看已安装的版本
+- `pyenv version` 查看当前版本
+- `pyenv global 3.8.10` 切换全局版本
+- `pyenv local 3.8.10` 在项目的根目录下执行：
+- `pyenv shell 3.8.10` 为当前会话设置版本
+- `pyenv uninstall 3.8.10`卸载指定的版本
+- `pyenv update`更新`pyenv`本身和所有插件
+- 需要添加到 `~/.zshrc`文件中
+  ```shell
+  export PATH="$HOME/.pyenv/bin:$PATH"
+  eval "$(pyenv init --path)"
+  eval "$(pyenv init -)"
+  ```
