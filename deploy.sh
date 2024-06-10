@@ -1,18 +1,17 @@
 #!/usr/bin/env sh
 
-# 遇到错误时停止脚本执行
+# 忽略错误
 set -e
 
-# 构建项目
+# 构建
 yarn build
-
-# 复制 CNAME 文件到构建后的目录
-cp docs/CNAME docs/.vitepress/dist/
 
 # 进入待发布的目录
 cd docs/.vitepress/dist
 
-# 初始化一个新的 Git 仓库并添加所有文件
+# 如果是发布到自定义域名
+echo 'www.hefang.site' > CNAME
+
 git init
 git add -A
 git commit -m 'deploy'
