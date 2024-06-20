@@ -94,7 +94,6 @@
   - `sudo n rm 8.4.0`删除某个版本
   - `n prune`删除除已安装版本外的所有缓存版本
   - `n use 8.4.0 index.js`以指定的版本来执行脚本
-  - `sudo NODE_MIRROR=http://npm.taobao.org/mirrors/node n stable`更新阿里镜像解决超时问题
 :::
 
 ## 3. nvm
@@ -134,7 +133,7 @@
 - 直接`npm install vitepress`升级到最新版本
 - 需要在`main`分支上提交`vitepress`更新后的代码
 - `gh-page`分支无需变动和之前一样提交
-- 遇到`npm install package`时，其实已经安装成功，但是进度还是显示安装中，重新设置npn源解决问题了
+- 遇到`npm install package`时，其实已经安装成功，但是进度还是显示安装中，可以重新设置npn源来解决问题
   - `npm config get registry : https://registry.npmjs.org/`
   - `yarn config get registry : https://registry.npmjs.org/`
   - `npm config set registry https://registry.npm.taobao.org/`
