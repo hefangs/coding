@@ -84,6 +84,21 @@
 :::
 ## 2. N
 :::warning 以交互方式管理`Node.js` 版本
+  - `brew install n`全局安装 n
+  - `sudo n`查看已安装node列表并切换
+  - `n ls`查看已安装node列表
+  - `n lsr`Displaying 20 matches (use --all to see all)
+  - `sudo n stable`安装稳定版本
+  - `sudo n latest`安装最新版本
+  - `sudo n 8.4.0`安装指定版本
+  - `sudo n rm 8.4.0`删除某个版本
+  - `n prune`删除除已安装版本外的所有缓存版本
+  - `n use 8.4.0 index.js`以指定的版本来执行脚本
+  - `sudo NODE_MIRROR=http://npm.taobao.org/mirrors/node n stable`更新阿里镜像解决超时问题
+:::
+
+## 3. nvm
+:::warning 节点版本管理器(也可以控制`Node.js` 版本)
   - `npm install -g n`全局安装 n
   - `sudo n`查看已安装node列表并切换
   - `n ls`查看已安装node列表
@@ -148,4 +163,14 @@
   eval "$(pyenv init --path)"
   eval "$(pyenv init -)"
   ```
+:::
+
+## 6. nrm
+:::danger `NPM`镜像管理
+- `nrm ls`列出所有可用的 registry
+- `nrm current`显示当前使用的 registry
+- `nrm test`测试所有 registry 的响应时间
+- `nrm use taobao`切换到指定的 registry
+- `nrm info taobao`显示指定 registry 的 URL
+
 :::
