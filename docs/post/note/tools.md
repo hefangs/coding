@@ -99,20 +99,18 @@
 
 ## 3. nvm
 :::warning 节点版本管理器(也可以控制`Node.js` 版本)
-  - `npm install -g n`全局安装 n
-  - `sudo n`查看已安装node列表并切换
-  - `n ls`查看已安装node列表
-  - `n lsr`Displaying 20 matches (use --all to see all)
-  - `sudo n stable`安装稳定版本
-  - `sudo n latest`安装最新版本
-  - `sudo n 8.4.0`安装指定版本
-  - `sudo n rm 8.4.0`删除某个版本
-  - `n prune`删除除已安装版本外的所有缓存版本
-  - `n use 8.4.0 index.js`以指定的版本来执行脚本
-  - `sudo NODE_MIRROR=http://npm.taobao.org/mirrors/node n stable`更新阿里镜像解决超时问题
+  - `nvm install 14.17.0`安装特定版本
+  - `nvm uninstall 14.17.0`卸载特定版本的
+  - `nvm install --lts`安装最新的 LTS（长期支持）版本
+  - `nvm use 14.17.0`使用特定版本
+  - `nvm use default`使用默认版本
+  - `nvm ls`列出所有已安装的 Node.js 版本
+  - `nvm current`显示当前使用的 Node.js 版本
+  - `nvm ls-remote`列出所有可安装的 Node.js 版本
+  - `nvm ls-remote --lts`显示所有可用的 LTS 版本
 :::
 
-## 3. Homebrew
+## 4. Homebrew
 :::tip brew
 - `brew -v` 查询版本
 - `brew -h` 查看帮助信息
@@ -131,7 +129,7 @@
 - `brew update && brew upgrade && brew cleanup` 更新软件版本-清理旧版本或已删除的软件
 :::
 
-## 4. Vitepress
+## 5. Vitepress
 :::info vitepress更新
 - 直接`npm install vitepress`升级到最新版本
 - 需要在`main`分支上提交`vitepress`更新后的代码
@@ -145,7 +143,7 @@
 :::
 
 
-## 5. pyenv
+## 6. pyenv
 :::warning 简单的`Python`版本管理
 - `brew install pyenv` 下载`pyenv`
 - `pyenv install --list` 查看所有可用的版本
@@ -165,7 +163,7 @@
   ```
 :::
 
-## 6. nrm
+## 7. nrm
 :::danger `NPM`镜像管理
 - `nrm ls`列出所有可用的 registry
 - `nrm current`显示当前使用的 registry
