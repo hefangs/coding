@@ -80,7 +80,8 @@ function sideBar() {
         { text: 'pytest', link: '/post/note/pytest' },
         { text: 'Node', link: '/post/note/node' },
         { text: 'selenium', link: '/post/note/selenium' },
-        { text: 'Tools', link: '/post/note/tools' }
+        { text: 'Tools', link: '/post/note/tools' },
+        { text: 'unittest', link: '/post/note/unittest' }
       ]
     }
   ]
