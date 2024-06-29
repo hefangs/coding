@@ -145,7 +145,7 @@ def test_two():
 ```
 
 ## fixture
-### `scope`:(function(default),class,module,session,package)
+#### `scope`:(function(default),class,module,session,package)
 ```py
 # Function Scope 
 import pytest
@@ -219,7 +219,7 @@ def test_session_scope_2(session_scope_fixture):
 
 ```
 
-### `params`: 用于参数化 fixture，使得每个测试函数可以使用不同的参数集
+#### `params`: 用于参数化 fixture，使得每个测试函数可以使用不同的参数集
 ```py{9}
 import pytest
 
@@ -231,7 +231,7 @@ def test_param_fixture(param_fixture):
   print(f"Running test with param {param_fixture}")
   # 在这个示例中，test_param_fixture 将运行三次，分别使用参数 1, 2, 3
 ```
-### `autouse`: 用于自动使用 fixture 而不需要在测试函数中显式地传递
+#### `autouse`: 用于自动使用 fixture 而不需要在测试函数中显式地传递
 ```py
 import pytest
 
@@ -248,7 +248,7 @@ def test_autouse_2():
   print("Running test 2 with autouse fixture")
 
 ```
-### `ids`: 用于为参数化的 fixture 提供自定义的 ID，便于在测试报告中识别
+#### `ids`: 用于为参数化的 fixture 提供自定义的 ID，便于在测试报告中识别
 ```py
 import pytest
 
@@ -261,7 +261,7 @@ def test_id_fixture(id_fixture):
   # 测试报告中将显示自定义的 ID one, two, 和 three，而不是原始参数值 1, 2, 和 3
   ```
 
-### `name`:用于重命名 fixture
+#### `name`:用于重命名 fixture
 
 ```py
 import pytest
@@ -272,5 +272,74 @@ def original_name_fixture():
 
 def test_custom_name(custom_name_fixture):
   assert custom_name_fixture == "fixture value"
+
+```
+
+## parametrize
+@pytest.mark.parametrize 装饰器允许你为测试函数提供多个参数集。它接收两个主要参数
+- 参数名的字符串，多个参数名用逗号分隔
+- 参数值的列表或列表的列表，每个列表元素是一个参数集
+```py
+import pytest
+
+@pytest.mark.parametrize("input, expected", [(1, 2),(2, 3),(3, 4),])
+def test(input, expected):
+  assert input + 1 == expected
+# 在这个示例中,test函数将运行三次，分别使用参数 (1, 2),(2, 3),(3, 4)
+```
+#### 参数组合
+```py
+# 参数组合
+import pytest
+
+@pytest.mark.parametrize("x", [1, 2])
+@pytest.mark.parametrize("y", [10, 20])
+def test(x, y):
+  print(f"Running test with x={x} and y={y}")
+# test 函数将运行四次，分别使用 (1, 10),(1, 20),(2, 10),(2, 20)
+```
+#### 自定义参数 ID
+```py
+# 自定义参数 ID
+import pytest
+
+@pytest.mark.parametrize("input, expected", [
+  (1, 2),
+  (2, 3),
+  (3, 4),
+], ids=["one_plus_one", "two_plus_one", "three_plus_one"])
+def test_increment_with_ids(input, expected):
+  assert input + 1 == expected
+#在这个示例中，测试报告中将显示自定义的ID one_plus_one,two_plus_one,three_plus_one
+```
+#### 使用生成器参数化
+```py
+# 使用生成器参数化
+import pytest
+
+def generate_params():
+  for i in range(5):
+    yield (i, i + 1)
+
+@pytest.mark.parametrize("input, expected", generate_params())
+def test_with_generator(input, expected):
+  assert input + 1 == expected
+# test_with_generator 函数将运行五次，分别使用生成器生成的参数集
+```
+#### 参数化与fixture结合
+```py
+# 参数化与fixture结合
+import pytest
+
+@pytest.fixture
+def base_value():
+  return 10
+
+@pytest.mark.parametrize("multiplier", [1, 2, 3])
+def test_with_fixture_and_param(base_value, multiplier):
+  result = base_value * multiplier
+  assert result in [10, 20, 30]
+# 在这个示例中，test_with_fixture_and_param 函数将运行三次
+# 分别使用 multiplier 的值 1,2,3，并且每次都使用 base_value fixture 的返回值 10
 
 ```
