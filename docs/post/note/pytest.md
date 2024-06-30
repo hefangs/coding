@@ -343,3 +343,86 @@ def test_with_fixture_and_param(base_value, multiplier):
 # 分别使用 multiplier 的值 1,2,3，并且每次都使用 base_value fixture 的返回值 10
 
 ```
+
+## 缓存 session 数据
+- 使用 request.config.cache 来缓存 session 数据
+
+```py
+# test_user.py
+import unittest
+import pytest
+
+
+@pytest.mark.usefixtures('session')
+class TestUser:
+	
+	def test_user_account(self, session):
+		url = 'http://localhost:3000/user/account'
+		response = session.get(url)
+	
+	def test_user_status(self, session):
+		url = 'http://localhost:3000/login/status'
+		response = session.get(url)
+	
+	def test_user_level(self, session):
+		url = 'http://localhost:3000/user/level'
+		response = session.get(url)
+
+if __name__ == '__main__':
+	unittest.main()
+
+
+```
+
+```py
+# test_playlist.py
+import pytest
+
+@pytest.mark.usefixtures('session')
+class TestPlaylist:
+  def test_playlist_catlist(self, session):
+    url = 'http://localhost:3000/playlist/catlist'
+    response = session.get(url)
+    assert response.status_code == 200
+
+  def test_playlist_hot(self, session):
+    url = 'http://localhost:3000/playlist/hot'
+    response = session.get(url)
+    assert response.status_code == 200
+```
+
+
+```py
+# conftest.py
+import pytest
+import requests
+
+def login():
+	session = requests.Session()
+	url = 'http://localhost:3000/login/cellphone'
+	params = {
+		'phone': '15000840699',
+		'password': '************'
+	}
+	response = session.get(url, params=params)
+	
+	if response.status_code == 200:
+		return session
+	else:
+		raise Exception("Login failed")
+
+@pytest.fixture(scope='session')
+def session(request):
+	# 尝试从缓存中加载session数据
+	session_data = request.config.cache.get('session', None)
+	if session_data is None:
+		# 如果缓存中没有session数据，则重新登录并缓存
+		session = login()
+		request.config.cache.set('session', session.cookies.get_dict())
+	else:
+		# 如果缓存中有session数据，则使用缓存的数据
+		session = requests.Session()
+		session.cookies.update(session_data)
+	yield session
+
+```

@@ -1,6 +1,6 @@
 # unittest
 
-## 1. testcase add to suite
+## testcase add to suite
 
 ```python
 # test_case.py
@@ -49,7 +49,7 @@ runner.run(suite)
 ```
 
 
-## 2. 命令行参数
+## 命令行参数
 
 :::tip 命令行选项
 - `-h` 或 `--help`显示帮助信息并退出。
@@ -64,7 +64,7 @@ runner.run(suite)
 - `-t` 或 `--top-level-directory`指定顶层目录，以便于测试发现。
 :::
 
-## 3. 跳过测试和预期失败
+## 跳过测试和预期失败
 ```py
 import unittest
 class MyTestCase(unittest.TestCase):
@@ -86,7 +86,7 @@ class MyTestCase(unittest.TestCase):
     self.assertEqual(1, 2)
 ```
 
-## 4. 断言
+## 断言
 | 方法                      |         检查         |
 | ------------------------- | :------------------: |
 | assertEqual(a, b)         |         a=b          |
@@ -102,7 +102,7 @@ class MyTestCase(unittest.TestCase):
 | assertIsInstance(a, b)    |   isinstance(a, b)   |
 | assertNotIsInstance(a, b) | not isinstance(a, b) |
 
-## 5. 日志配置
+## 日志配置
 ```py
 # 配置日志记录
 logging.basicConfig(
@@ -115,7 +115,7 @@ logging.basicConfig(
 ```
 
 
-## 6. 输出报告
+## 输出报告
 ```py
 import unittest
 from test_case import TestStringMethods
@@ -140,7 +140,7 @@ runner.run(suite)
 
 ```
 
-## 7 缓存 session 数据
+## 缓存 session 数据
 - 文件系统来缓存 session 数据
 - SQLite 来缓存 session 数据
 
