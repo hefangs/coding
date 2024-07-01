@@ -396,33 +396,56 @@ class TestPlaylist:
 # conftest.py
 import pytest
 import requests
+from jsonpath_ng import parse
+from requests import RequestException
 
 def login():
 	session = requests.Session()
 	url = 'http://localhost:3000/login/cellphone'
 	params = {
 		'phone': '15000840699',
-		'password': '************'
+		'password': '**********'
 	}
-	response = session.get(url, params=params)
+	try:
+		res = session.get(url, params=params)
+		res.raise_for_status()
+	except RequestException as e:
+		pytest.fail(f"请求登录接口失败: {e}")
 	
-	if response.status_code == 200:
-		return session
-	else:
-		raise Exception("Login failed")
+	jsonpath_expressions_cookie = parse('$.cookie')
+	jsonpath_expressions_token = parse('$.token')
+	match_cookie = jsonpath_expressions_cookie.find(res.json())
+	match_token = jsonpath_expressions_token.find(res.json())
+	
+	if match_cookie and match_token:
+		token = match_token[0].value
+		cookie = match_cookie[0].value
+		session.cookies.set('Set-Cookie', cookie)
+		session.headers['Authorization'] = f'Bearer {token}'
+
+	return session
 
 @pytest.fixture(scope='session')
 def session(request):
+	cache = request.config.cache
 	# 尝试从缓存中加载session数据
-	session_data = request.config.cache.get('session', None)
-	if session_data is None:
+	cached_cookies = cache.get("session_cookies", default=None)
+	cached_token = cache.get("session_token", default=None)
+	if cached_cookies is None or cached_token is None:
 		# 如果缓存中没有session数据，则重新登录并缓存
 		session = login()
-		request.config.cache.set('session', session.cookies.get_dict())
+		cookies_list = [{'name': c.name, 'value': c.value, 'domain': c.domain, 'path': c.path} for c in session.cookies]
+		token = session.headers.get('Authorization')
+		cache.set("session_cookies", cookies_list)
+		cache.set("session_token", token)
 	else:
 		# 如果缓存中有session数据，则使用缓存的数据
 		session = requests.Session()
-		session.cookies.update(session_data)
+		for cookie in cached_cookies:
+			session.cookies.set(cookie['name'], cookie['value'], domain=cookie['domain'], path=cookie['path'])
+		session.headers['Authorization'] = f'Bearer {cached_token}'
+		print('---------session.headers--------->', session.headers)
+		print('---------session.cookies--------->', session.cookies)
 	yield session
 
 ```
