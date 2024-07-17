@@ -1,5 +1,5 @@
 # SQL
-::: tip Postgres 16 + Postico
+::: tip Postgres 16 + Postico 2.1
 :::
 ## 基础部分
 ::: info CREATE TABLE
