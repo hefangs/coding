@@ -77,11 +77,13 @@ function sideBar() {
         { text: 'React', link: '/post/note/react' },
         { text: 'Webpack', link: '/post/note/webpack' },
         { text: 'TypeScript', link: '/post/note/typescript' },
-        { text: 'pytest', link: '/post/note/pytest' },
         { text: 'Node', link: '/post/note/node' },
-        { text: 'selenium', link: '/post/note/selenium' },
         { text: 'Tools', link: '/post/note/tools' },
-        { text: 'unittest', link: '/post/note/unittest' }
+        { text: 'Selenium', link: '/post/note/selenium' },
+        { text: 'Pytest', link: '/post/note/pytest' },
+        { text: 'Unittest', link: '/post/note/unittest' },
+        { text: 'Sql', link: '/post/note/sql' },
+        { text: 'Appium', link: '/post/note/appium' }
       ]
     }
   ]
