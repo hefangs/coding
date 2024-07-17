@@ -352,7 +352,6 @@ def test_with_fixture_and_param(base_value, multiplier):
 import unittest
 import pytest
 
-
 @pytest.mark.usefixtures('session')
 class TestUser:
 	
@@ -367,11 +366,6 @@ class TestUser:
 	def test_user_level(self, session):
 		url = 'http://localhost:3000/user/level'
 		response = session.get(url)
-
-if __name__ == '__main__':
-	unittest.main()
-
-
 ```
 
 ```py
