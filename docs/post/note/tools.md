@@ -119,6 +119,7 @@
 - `brew search <pkg_name>` 查询任意包
 - `brew info <pkg_name>` 查看任意包内容信息
 - `brew list` 列出已安装的软件列表
+- `brew leaves` 列出您手动使用 brew install 安装的软件包,不包括依赖项
 - `brew list git` 列出已安装软件git的文件目录
 - `brew upgrade` 更新所有
 - `brew upgrade <pkg_name>` 更新指定包
