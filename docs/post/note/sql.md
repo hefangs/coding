@@ -1,5 +1,5 @@
 # SQL
-::: tip Postgres 16 + Postico
+::: tip Postgres 16 + Postico 2.1
 :::
 ## 基础部分
 ::: info CREATE TABLE
@@ -137,12 +137,9 @@ Orders
 
 ```sql
 
--- 在 PostgreSQL 中，没有 TOP 关键字来限制查询结果行数 -> LIMIT 来实现 
-SELECT TOP 3 * FROM Users -- [!code --]
-SELECT * FROM Users LIMIT 3 -- [!code ++]
--- 在 PostgreSQL 中不能使用 PERCENT 关键字来选择前 x% 的数据 -> Users 表中选取 50% 的记录 
-SELECT TOP 50 PERCENT * FROM Users -- [!code --]
-SELECT * FROM Users ORDER BY Id LIMIT (SELECT COUNT(*) / 2 FROM Users) -- [!code ++]
+-- Top 
+SELECT TOP 3 * FROM Users
+SELECT TOP 50 PERCENT * FROM Users 
 
 -- LIKE 关键字来进行模糊匹配的查询
 SELECT * FROM Users WHERE LastName LIKE 'E%'
@@ -157,10 +154,7 @@ SELECT * FROM Users WHERE FirstName LIKE '_eorge'
 SELECT * FROM Users WHERE LastName LIKE 'C_r_er'
 
 -- [charlist] 通配符 -> 字符列中的任何单一字符
--- 在 PostgreSQL 中，不能直接使用类似 [ABC]% 的语法来作为 LIKE 操作符的模式
--- LIKE 操作符在 PostgreSQL 中主要用于基本的通配符匹配，不支持字符集合的形式作为匹配模式
-SELECT * FROM Users WHERE LastName LIKE '[ABC]%'  -- [!code --]
-SELECT * FROM Users WHERE LastName LIKE 'A%' OR LastName LIKE 'B%' OR LastName LIKE 'C%' -- [!code ++]
+SELECT * FROM Users WHERE LastName LIKE '[ABC]%'  
 
 -- IN 操作符
 SELECT * FROM Users WHERE LastName IN ('Adams','Carter')
@@ -235,6 +229,84 @@ DROP TABLE Users
 ```
 
 
+## 函数部分
+::: info CREATE TABLE
+```sql
+-- 创建 Goods 表
+CREATE TABLE Goods (
+  Id SERIAL PRIMARY KEY,
+  Name VARCHAR(255),
+  Price DECIMAL(10, 2),
+  Total INT,
+  Date DATE
+)
+
+-- 插入 6 条数据
+INSERT INTO Goods (Name, Price, Total, Date) 
+VALUES
+  ('Laptop', 999.99, 50, '2023-01-15'),
+  ('Smartphone', 699.99, 150, '2023-02-10'),
+  ('Tablet', 299.99, 100, '2023-03-05'),
+  ('Headphones', 199.99, 200, '2023-04-20'),
+  ('Smartwatch', 149.99, 300, '2023-05-25'),
+  ('Laptop', 599.99, 50, '2023-06-15')
+
+-- AVG
+SELECT AVG(Total) FROM Goods
+SELECT AVG(Total) AS AverageTotal FROM Goods
+
+SELECT Total FROM Goods
+WHERE Total>(SELECT AVG(Total) FROM Goods)
+
+-- COUNT（DISTINCT ->忽略列中的重复值，只计算唯一值的数量）
+SELECT COUNT(*) FROM Goods
+SELECT COUNT(*) AS Num FROM Goods
+SELECT COUNT(DISTINCT Total) FROM Goods
+SELECT COUNT(DISTINCT Total) AS Num FROM Goods
+
+-- FIRST
+SELECT FIRST(Total) FROM Goods
+SELECT FIRST(Total) AS FirstNum FROM Goods
+
+-- LAST
+SELECT LAST(Price) FROM Goods
+SELECT LAST(Price) AS FirstNum FROM Goods
+
+-- MAX
+SELECT MAX(Price) FROM Goods
+SELECT MAX(Price) AS LargestPrice FROM Goods
+
+-- MIN
+SELECT MIN(Price) FROM Goods
+SELECT MIN(Price) AS SmallestPrice FROM Goods
+
+-- SUM
+SELECT SUM(Total) FROM Goods
+SELECT SUM(Total) AS AllTotal FROM Goods
+
+-- GROUP BY
+SELECT Total, AVG(Price) AS AvgPrice
+FROM Goods WHERE Total > 100 GROUP BY Total
+
+SELECT Total,SUM(Price) FROM Goods GROUP BY Total
+
+-- HAVING
+SELECT Total,SUM(Price) 
+FROM Goods GROUP BY Total HAVING SUM(Price)<200
+
+SELECT Total, SUM(Price) FROM Goods
+WHERE Total = 100 OR Total = 200
+GROUP BY TotalHAVING SUM(Price) > 200
+
+-- LEN
+SELECT LEN(Total) FROM Goods
+SELECT LEN(Total) as LengthOfTotal FROM Goods
+
+-- ROUND
+SELECT ROUND(Price,0) FROM Goods
+SELECT Name,ROUND(Price,0) as UnitPrice FROM Goods
 
 
 
+
+```
