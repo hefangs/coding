@@ -277,7 +277,7 @@ style="${jmeter.home}/extras/jmeter-results-shanhe-me.xsl">
 # 执行命令
 ant 或者  ant run
 ```
-##### 2.使用 JMeter Dashboard 生成报告(增加nginx部分，可以通过网络接口来查看报告)
+##### 2.使用 JMeter Dashboard 生成报告(增加nginx部分，可以通过网络接口来查看报告 -> 局域网)
 ```bash
 # jmeter.properties
 jmeter.save.saveservice.output_format=csv
