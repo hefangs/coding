@@ -268,8 +268,8 @@
 
 ```
 ## 生成报告
+##### 1.使用 Ant 生成 XML 报告并通过 XSLT 转换成 HTML
 ```bash
-使用 Ant 生成 XML 报告并通过 XSLT 转换成 HTML
 # jmeter.properties
 jmeter.save.saveservice.output_format=xml
 # build.xml
@@ -277,12 +277,17 @@ style="${jmeter.home}/extras/jmeter-results-shanhe-me.xsl">
 # 执行命令
 ant 或者  ant run
 ```
+##### 2.使用 JMeter Dashboard 生成报告(增加nginx部分，可以通过网络接口来查看报告)
 ```bash
-# 使用 JMeter Dashboard 生成报告
 # jmeter.properties
 jmeter.save.saveservice.output_format=csv
+
 # Dashboard Report
-# 每次执行前需要删除dashboard文件夹和HTTP.jtl文件
+# cd /Users/hefang/Documents/demo/jmtAnt
+# 用于从现有结果文件生成报告
+jmeter -g HTTP.jtl -o report/dashboard/
+
+# 运行新的测试并生成报告(每次执行前需要删除 dashboard 文件夹和 HTTP.jtl 文件)
 jmeter -n -t HTTP.jmx -l HTTP.jtl -e -o report/dashboard/
 ```
 ```bash
