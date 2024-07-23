@@ -1,6 +1,6 @@
 # Jmeter
 ## 创建 Ant 构建脚本
-```xml{6-8,11-14,18-19,64}
+```xml{7-9,17-20,64-65,74}
 <!-- build.xml -->
 <?xml version="1.0" encoding="UTF-8"?>
 <project name="ant-jmeter-test" default="run" basedir=".">
@@ -12,10 +12,15 @@
     <property name="jmeter.result.html.dir" value="/Users/hefang/Documents/demo/jmtAnt/report/html" />
     
     <target name="clean-reports">
-        <delete dir="${jmeter.result.jtl.dir}" />
+        <!-- 删除整文件  -->
+        <!-- <delete dir="${jmeter.result.jtl.dir}" />
         <mkdir dir="${jmeter.result.jtl.dir}" />
         <delete dir="${jmeter.result.html.dir}" />
-        <mkdir dir="${jmeter.result.html.dir}" />
+        <mkdir dir="${jmeter.result.html.dir}" /> -->
+        <!-- 删除特定的 .jtl 文件 -->
+        <delete file="${jmeter.result.html.dir}/TestReport_latest.html" />
+        <!-- 删除特定的 .html 文件 -->
+        <delete file="${jmeter.result.jtl.dir}/TestReport_latest.jtl" />
     </target>
 
     <target name="run" depends="clean-reports,test,report">
@@ -25,8 +30,10 @@
 
     <!-- 生成的报告的前缀-->
     <property name="ReportName" value="TestReport" />
-    <property name="jmeter.result.jtlName" value="${jmeter.result.jtl.dir}/${ReportName}${time}.jtl" />
-    <property name="jmeter.result.htmlName" value="${jmeter.result.html.dir}/${ReportName}${time}.html" />
+    <!-- <property name="jmeter.result.jtlName" value="${jmeter.result.jtl.dir}/${ReportName}${time}.jtl" />
+    <property name="jmeter.result.htmlName" value="${jmeter.result.html.dir}/${ReportName}${time}.html" /> -->
+    <property name="jmeter.result.htmlName" value="${jmeter.result.html.dir}/${ReportName}_latest.html" />
+    <property name="jmeter.result.jtlName" value="${jmeter.result.jtl.dir}/${ReportName}_latest.jtl" />
     
     <!-- 输出生成的报告名称和存放路径 -->
     <echo message="${jmeter.result.jtlName}"/>
@@ -57,6 +64,8 @@
     </target>
 
     <target name="report">
+        <!-- 复制 favicon.ico 文件到目标目录 -->
+        <!-- <copy file="/Users/hefang/Documents/demo/jmtAnt/report/favicon.ico" todir="${jmeter.result.html.dir}" /> -->
         <tstamp>
             <format property="report.datestamp" pattern="yyyy-MM-dd HH:mm" />
         </tstamp>
@@ -65,7 +74,7 @@
             force="true"
             in="${jmeter.result.jtlName}"
             out="${jmeter.result.htmlName}"
-            style="${jmeter.home}/extras/jmeter-results-detail-report_21.xsl">
+            style="${jmeter.home}/extras/jmeter-results-shanhe-me.xsl">
             <!-- jmeter-results-detail-report_21.xsl这里的文件名可以换成你想要的报告效果 -->
             <!-- jmeter-results-shanhe-me.xsl这里的文件名可以换成你想要的报告效果 -->
             <!-- 显示dateReport的时间 -->
@@ -277,7 +286,7 @@ style="${jmeter.home}/extras/jmeter-results-shanhe-me.xsl">
 # 执行命令
 ant 或者  ant run
 ```
-##### 2.使用 JMeter Dashboard 生成报告(增加nginx部分，可以通过网络接口来查看报告 -> 局域网)
+##### 2.使用 JMeter Dashboard 生成报告(增加nginx部分，可以通过网络接口来查看报告)
 ```bash
 # jmeter.properties
 jmeter.save.saveservice.output_format=csv
@@ -313,17 +322,32 @@ http {
     sendfile        on;
     keepalive_timeout  65;
     
-    # HTTP
+    # HTTP01
     server {
         listen       8080;
         server_name  192.168.0.101;
-        
+
         location / {
             root /Users/hefang/Documents/demo/jmtAnt/report/dashboard;
             index index.html;
         }
         error_page   500 502 503 504  /50x.html;
         location = /50x.html {
+            root   html;
+        }
+    } 
+    # HTTP02
+    server {
+        listen       8090;
+        server_name  192.168.0.101;
+
+        location / {
+            root /Users/hefang/Documents/demo/jmtAnt/report/html;
+            index TestReport_latest.html;
+        }
+        
+        error_page   500 502 503 504  /50x.html;
+        location = /50x.html { 
             root   html;
         }
     }
@@ -339,7 +363,14 @@ brew services start nginx
 ```
 
 ```bash
-# Nginx 搭建 Web 服务器 ——> 包括本地和网络接口
+# Nginx 搭建 Web 服务器 ——> 包括本地和局域网
 http://localhost:8080
 http://192.168.0.101:8080
+
+http://localhost:8090
+http://192.168.0.101:8090
+
+# 页面输出存在缓存问题需要手动强制刷新
+Command + Shift + R
+Ctrl + F5
 ```
