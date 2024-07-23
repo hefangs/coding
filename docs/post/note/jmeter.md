@@ -374,3 +374,26 @@ http://192.168.0.101:8090
 Command + Shift + R
 Ctrl + F5
 ```
+
+## 跨线程调用cookie
+:::tip BeanShell 与 JSR223
+- 线程1 
+  - login
+    - 添加 JSON 提取器
+      - 变量名称：cookie
+      - JSON PATH expression : $.cookie
+    - 添加 BeanShell 后置处理程序（将提取到的cookie设置为全局变量）
+      - script：`${__setProperty(cookie, ${cookie},)}`
+    - 或者添加 JSR223 后置处理程序（将提取到的cookie设置为全局变量）
+      - script：
+        - // 获取提取的 Cookie 值
+        - String cookie = vars.get("cookie");
+        - // 将 Cookie 值存储到 JMeter 属性中
+        - props.put("cookie", cookie);
+
+- 线程2 
+  - status 
+    - HTTP信息头管理器
+      - Content-Type:application/json
+      - cookie:`${__P(cookie,)}`
+:::
