@@ -141,8 +141,8 @@ runner.run(suite)
 ```
 
 ## 缓存 session 数据
-- 文件系统来缓存 session 数据
-- SQLite 来缓存 session 数据
+1. 文件系统来缓存 session 数据
+2. SQLite 来缓存 session 数据
 
 #### 公共部分
 
@@ -294,7 +294,7 @@ def login():
 	url = 'http://localhost:3000/login/cellphone'
 	params = {
 		'phone': '15000840699',
-		'password': 'hf15000840699'
+		'password': '*********'
 	}
 	response = session.get(url, params=params)
 
