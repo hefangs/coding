@@ -375,7 +375,7 @@ Command + Shift + R
 Ctrl + F5
 ```
 
-## 跨线程调用cookie
+## 跨线程调用 cookie
 :::tip BeanShell 与 JSR223
 - 线程1 
   - login
@@ -396,4 +396,130 @@ Ctrl + F5
     - HTTP信息头管理器
       - Content-Type:application/json
       - cookie:`${__P(cookie,)}`
+:::
+
+## 压力测试
+:::tip 压力测试(Stress Testing)
+- Thread Group1:
+  - Number of Threads (users): 1
+  - Ramp-Up Period (in seconds): 
+  - Loop Count: 1
+  - HTTP Request(login):
+    - JSON 提取器
+    - BeanShell 后置处理程序 `${__setProperty(cookie, ${cookie},)}`
+- Thread Group2:
+  - Number of Threads (users): 4000
+  - Ramp-Up Period (in seconds): 300
+  - Loop Count: 1
+  - HTTP Request(status):
+    - Content-Type:application/json
+    - cookie:`${__P(cookie,)}`
+
+
+**线程 2 设置线程数为: 4000,ramp-up：300,循环次数：1**
+
+**Statistics**
+| Label    | #Samples | FAIL | Error % | Average | Min | Max  | Median | 90th pct | 95th pct | 99th pct | Transactions/s | Received | Sent   |
+| -------- | -------- | ---- | ------- | ------- | --- | ---- | ------ | -------- | -------- | -------- | -------------- | -------- | ------ |
+| Total    | 12001    | 0    | 0.00%   | 12.13   | 4   | 1116 | 9.00   | 17.00    | 19.00    | 29.00    | 49.76          | 36.50    | 179.30 |
+| login    | 1        | 0    | 0.00%   | 629.00  | 629 | 629  | 629.00 | 629.00   | 629.00   | 629.00   | 1.59           | 16.16    | 0.36   |
+| account  | 4000     | 0    | 0.00%   | 9.09    | 5   | 315  | 8.00   | 10.00    | 12.00    | 21.00    | 16.68          | 12.98    | 60.10  |
+| status   | 4000     | 0    | 0.00%   | 17.76   | 10  | 1116 | 16.00  | 20.00    | 23.00    | 34.00    | 16.67          | 13.12    | 60.07  |
+| subcount | 4000     | 0    | 0.00%   | 9.37    | 4   | 385  | 8.00   | 11.00    | 12.00    | 21.00    | 16.69          | 10.56    | 60.15  |
+
+**重点关注**
+- Error %：确保错误率为0，表示系统在高负载下能够正常处理请求。
+- Average、Median 和 90th pct：这些响应时间指标可以帮助您了解系统在大多数情况下的性能。
+- Max 和 99th pct：这些指标可以揭示极端情况下的性能瓶颈。
+- Transactions/s：衡量系统的吞吐量，确保系统在高并发下能够处理足够多的请求
+:::
+
+
+## 性能测试
+::: tip 性能测试(Performance Testing)
+- Thread Group1:
+  - Number of Threads (users): 1
+  - Ramp-Up Period (in seconds): 
+  - Loop Count: 1
+  - HTTP Request(login):
+    - JSON 提取器
+    - BeanShell 后置处理程序 `${__setProperty(cookie, ${cookie},)}`
+- Thread Group2:
+  - Number of Threads (users): 2000
+  - Ramp-Up Period (in seconds): 100
+  - Loop Count: 1
+  - HTTP Request(status):
+    - Content-Type:application/json
+    - cookie:`${__P(cookie,)}`
+
+- **线程 2 设置线程数为: 4000, ramp-up: 300, 循环次数: 永远**
+- **same user on each iteration  勾选 调度器-持续时间：600秒**
+
+**Statistics**
+| Label    | #Samples | FAIL   | Error % | Average | Min | Max    | Median | 90th pct | 95th pct | 99th pct | Transactions/s | Received | Sent    |
+| -------- | -------- | ------ | ------- | ------- | --- | ------ | ------ | -------- | -------- | -------- | -------------- | -------- | ------- |
+| Total    | 643898   | 495652 | 76.98%  | 936.18  | 0   | 173852 | 0.00   | 1.00     | 14.00    | 5042.00  | 1941.90        | 2927.54  | 2139.24 |
+| login    | 1        | 0      | 0.00%   | 562.00  | 562 | 562    | 562.00 | 562.00   | 562.00   | 562.00   | 1.78           | 18.09    | 0.41    |
+| account  | 214516   | 165300 | 77.06%  | 1028.11 | 0   | 173609 | 0.00   | 1.00     | 142.15   | 5078.00  | 649.50         | 986.06   | 714.55  |
+| status   | 215984   | 165898 | 76.81%  | 1080.45 | 0   | 173852 | 0.00   | 1.00     | 253.95   | 5074.00  | 653.65         | 989.33   | 729.70  |
+| subcount | 213397   | 164454 | 77.06%  | 697.75  | 0   | 173612 | 0.00   | 1.00     | 41.00    | 5070.00  | 646.38         | 963.61   | 703.39  |
+
+**Errors**
+| Type of error                                                                                     | Number of errors | % in errors | % in all samples |
+| ------------------------------------------------------------------------------------------------- | ---------------- | ----------- | ---------------- |
+| ToNon HTTP response code: java.net.SocketException/Non HTTP response message: Too many open files | 440926           | 88.96%      | 68.48%           |
+| 502/Bad Gateway                                                                                   | 48582            | 9.80%       | 7.54%            |
+| Non HTTP response code: java.net.SocketException/Non HTTP response message: Socket closed         | 6144             | 1.24%       | 0.95%            |
+
+**Top 5 Errors by sampler**
+| Sample   | #Samples | #Errors | Error                                                                                           | #Errors | Error           | #Errors | Error                                                                                     | #Errors | Error | #Errors | Error | #Errors |
+| -------- | -------- | ------- | ----------------------------------------------------------------------------------------------- | ------- | --------------- | ------- | ----------------------------------------------------------------------------------------- | ------- | ----- | ------- | ----- | ------- |
+| Total    | 643898   | 495652  | Non HTTP response code: java.net.SocketException/Non HTTP response message: Too many open files | 440926  | 502/Bad Gateway | 48582   | Non HTTP response code: java.net.SocketException/Non HTTP response message: Socket closed | 6144    |       |         |       |         |
+| account  | 214516   | 165300  | Non HTTP response code: java.net.SocketException/Non HTTP response message: Too many open files | 146975  | 502/Bad Gateway | 16276   | Non HTTP response code: java.net.SocketException/Non HTTP response message: Socket closed | 2049    |       |         |       |         |
+| status   | 215984   | 165898  | Non HTTP response code: java.net.SocketException/Non HTTP response message: Too many open files | 147017  | 502/Bad Gateway | 16825   | Non HTTP response code: java.net.SocketException/Non HTTP response message: Socket closed | 2056    |       |         |       |         |
+| subcount | 213397   | 164454  | Non HTTP response code: java.net.SocketException/Non HTTP response message: Too many open files | 146934  | 502/Bad Gateway | 15481   | Non HTTP response code: java.net.SocketException/Non HTTP response message: Socket closed | 2039    |       |         |       |         |
+
+**Tip**
+1. Non HTTP response code: java.net.SocketException/Non HTTP response message: Too many open files
+   - 因为我的 macOS 系统的文件描述符限制是 ulimit -n ：24576 ，需要增加文件描述符限制
+2. Non HTTP response code: java.net.SocketException/Non HTTP response message: Socket closed  
+   - 我猜测也是文件描述符的问题 -> 不足以处理并发连接数，可能会导致连接失败
+3. 502/Bad Gateway
+   - 目标服务器可能无法处理由 JMeter 产生的大量并发请求，从而导致 502 错误
+
+**重点关注**
+1. 错误率 (Error %) 
+   - 意义: 表示请求失败的比例。
+   - 关注点: 高错误率可能指示系统存在严重的问题，需要定位和修复故障。理想情况下，错误率应低于1-2%。
+2. 平均响应时间 (Average)
+   - 意义: 所有请求的平均处理时间。
+   - 关注点: 反映了系统的整体性能，较长的平均响应时间可能表示系统瓶颈或负载过重。
+3. 90百分位响应时间 (90th pct)
+   - 意义: 90%的请求在此时间内完成。
+   - 关注点: 更能反映大多数用户的实际体验，比平均响应时间更能显示出性能的分布情况。高于期望值可能表明系统在高负载下的表现不稳定。
+4. 最大响应时间 (Max)
+   - 意义: 所有请求中最长的响应时间。
+   - 关注点: 帮助识别性能极限或异常情况。如果最大响应时间远高于其他响应时间，可能表明系统存在性能瓶颈或异常。
+5. 吞吐量 (Transactions/s)
+   - 意义: 每秒处理的请求数。
+   - 关注点: 显示系统的处理能力，较高的吞吐量意味着系统能处理更多的请求。需要确保高吞吐量伴随合理的错误率和响应时间。
+:::
+
+
+
+::: warning 关键字段解释 
+- Label: 测试名称或请求标签。
+- #Samples: 请求样本总数。
+- FAIL: 失败的请求数量。
+- Error %: 请求错误的百分比。
+- Average: 请求的平均响应时间（毫秒）。
+- Min: 请求的最小响应时间（毫秒）。
+- Max: 请求的最大响应时间（毫秒）。
+- Median: 请求的中位数响应时间（毫秒）。
+- 90th pct: 第90百分位响应时间（90%的请求在此时间内完成）。
+- 95th pct: 第95百分位响应时间（95%的请求在此时间内完成）。
+- 99th pct: 第99百分位响应时间（99%的请求在此时间内完成）。
+- Transactions/s: 每秒完成的事务数（吞吐量）。
+- Received: 每秒接收到的数据量（KB/秒）。
+- Sent: 每秒发送的数据量（KB/秒）
 :::
