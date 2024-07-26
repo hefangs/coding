@@ -537,4 +537,136 @@ fruits = ['banana', 'orange', 'mango', 'lemon']
 fruits.clear()
 print(fruits)       # []
 ```
+
 #### Copying a List 复制列表
+```python
+# syntax
+lst = ['item1', 'item2']
+lst_copy = lst.copy()
+```
+```python
+fruits = ['banana', 'orange', 'mango', 'lemon']
+fruits_copy = fruits.copy()
+print(fruits_copy)       # ['banana', 'orange', 'mango', 'lemon']
+```
+
+#### Joining Lists 加入列表
+1. Plus Operator (+) 加号运算符 （+）
+    ```python
+    # syntax
+    list3 = list1 + list2
+    ```
+    ```python
+    positive_numbers = [1, 2, 3, 4, 5]
+    zero = [0]
+    negative_numbers = [-5,-4,-3,-2,-1]
+    integers = negative_numbers + zero + positive_numbers
+    print(integers) # [-5, -4, -3, -2, -1, 0, 1, 2, 3, 4, 5]
+    fruits = ['banana', 'orange', 'mango', 'lemon']
+    vegetables = ['Tomato', 'Potato', 'Cabbage', 'Onion', 'Carrot']
+    fruits_and_vegetables = fruits + vegetables
+    print(fruits_and_vegetables ) # ['banana', 'orange', 'mango', 'lemon', 'Tomato', 'Potato', 'Cabbage', 'Onion', 'Carrot']
+    ```
+2. 使用 extend() 方法 
+    ```python
+    # syntax
+    list1 = ['item1', 'item2']
+    list2 = ['item3', 'item4', 'item5']
+    list1.extend(list2)
+    ```
+    ```python
+    num1 = [0, 1, 2, 3]
+    num2= [4, 5, 6]
+    num1.extend(num2)
+    print('Numbers:', num1) # Numbers: [0, 1, 2, 3, 4, 5, 6]
+    negative_numbers = [-5, -4, -3, -2, -1]
+    positive_numbers = [1, 2, 3, 4, 5]
+    zero = [0]
+
+    negative_numbers.extend(zero)
+    negative_numbers.extend(positive_numbers)
+    print('Integers:', negative_numbers) # Integers: [-5, -4, -3, -2, -1, 0, 1, 2, 3, 4, 5]
+    fruits = ['banana', 'orange', 'mango', 'lemon']
+    vegetables = ['Tomato', 'Potato', 'Cabbage', 'Onion', 'Carrot']
+    fruits.extend(vegetables)
+    print('Fruits and vegetables:', fruits ) # Fruits and vegetables: ['banana', 'orange', 'mango', 'lemon', 'Tomato', 'Potato', 'Cabbage', 'Onion', 'Carrot']
+    ```
+
+#### Counting Items in a List 对列表中的项目进行计数
+```python
+# count()方法返回项目在列表中出现的次数
+# syntax
+lst = ['item1', 'item2']
+lst.count(item)
+```
+```python
+fruits = ['banana', 'orange', 'mango', 'lemon']
+print(fruits.count('orange'))   # 1
+ages = [22, 19, 24, 25, 26, 24, 25, 24]
+print(ages.count(24))           # 3
+```
+
+#### Finding Index of an Item 查找项的索引
+```python
+# index()方法返回列表中项目的索引
+# syntax
+lst = ['item1', 'item2']
+lst.index(item)
+```
+```python
+fruits = ['banana', 'orange', 'mango', 'lemon']
+print(fruits.index('orange'))   # 1
+ages = [22, 19, 24, 25, 26, 24, 25, 24]
+print(ages.index(24))           # 2, the first occurrence
+```
+
+#### Reversing a List 反转列表
+```python
+# reverse()方法颠倒列表的顺序
+# syntax
+lst = ['item1', 'item2']
+lst.reverse()
+```
+```python
+fruits = ['banana', 'orange', 'mango', 'lemon']
+fruits.reverse()
+print(fruits) # ['lemon', 'mango', 'orange', 'banana']
+ages = [22, 19, 24, 25, 26, 24, 25, 24]
+ages.reverse()
+print(ages) # [24, 25, 24, 26, 25, 24, 19, 22]
+```
+
+
+#### Sorting List Items 对列表项进行排序
+```python
+# sort()此方法修改原始列表
+# syntax
+lst = ['item1', 'item2']
+lst.sort()                # ascending
+lst.sort(reverse=True)    # descending
+
+fruits = ['banana', 'orange', 'mango', 'lemon']
+fruits.sort()
+print(fruits)             # sorted in alphabetical order, ['banana', 'lemon', 'mango', 'orange']
+fruits.sort(reverse=True)
+print(fruits) # ['orange', 'mango', 'lemon', 'banana']
+ages = [22, 19, 24, 25, 26, 24, 25, 24]
+ages.sort()
+print(ages) #  [19, 22, 24, 24, 24, 25, 25, 26]
+
+ages.sort(reverse=True)
+print(ages) #  [26, 25, 25, 24, 24, 24, 22, 19]
+```
+
+```python
+# sorted()返回有序列表而不修改原始列表 
+fruits = ['banana', 'orange', 'mango', 'lemon']
+print(sorted(fruits))   # ['banana', 'lemon', 'mango', 'orange']
+# Reverse order
+fruits = ['banana', 'orange', 'mango', 'lemon']
+fruits = sorted(fruits,reverse=True)
+print(fruits)     # ['orange', 'mango', 'lemon', 'banana']
+```
+
+
+## Tuple
