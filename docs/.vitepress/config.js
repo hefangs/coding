@@ -45,7 +45,7 @@ export default {
       // { text: 'Node', link: '/post/note/node' }
     ],
     footer: {
-      message: 'Copyright © 2023 Fang He',
+      message: 'Copyright © 2024 Fang He',
       copyright: '版权所有 浙ICP备2022001576号'
     },
     // editLink: {
@@ -78,12 +78,15 @@ function sideBar() {
         { text: 'Webpack', link: '/post/note/webpack' },
         { text: 'TypeScript', link: '/post/note/typescript' },
         { text: 'Node', link: '/post/note/node' },
+        { text: 'Python', link: '/post/note/python' },
         { text: 'Tools', link: '/post/note/tools' },
         { text: 'Selenium', link: '/post/note/selenium' },
         { text: 'Pytest', link: '/post/note/pytest' },
         { text: 'Unittest', link: '/post/note/unittest' },
         { text: 'Sql', link: '/post/note/sql' },
-        { text: 'Appium', link: '/post/note/appium' }
+        { text: 'Appium', link: '/post/note/appium' },
+        { text: 'Jmeter', link: '/post/note/jmeter' },
+        { text: 'Postman', link: '/post/note/postman' }
       ]
     }
   ]
