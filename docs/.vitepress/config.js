@@ -1,6 +1,11 @@
 export default {
   markdown: {
-    lineNumbers: true
+    // 行号
+    lineNumbers: true,
+    image: {
+      // 启用图片懒加载
+      lazyLoading: true
+    }
   },
   lang: 'zh-CN',
   title: 'he',
