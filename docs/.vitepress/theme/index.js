@@ -1,21 +1,27 @@
 // .vitepress/theme/index.js
 
 import DefaultTheme from 'vitepress/theme'
-import { onMounted } from 'vue'
+import { onMounted, watch, nextTick } from 'vue'
+import { useRoute } from 'vitepress'
 import mediumZoom from 'medium-zoom'
 
 import './index.css'
 
 export default {
   ...DefaultTheme,
+
   setup() {
+    const route = useRoute()
+    const initZoom = () => {
+      // new mediumZoom('[data-zoomable]', { background: 'var(--vp-c-bg)' }) // Should there be a new?
+      new mediumZoom('.main img', { background: 'rgba(0, 0, 0, 0.5)' })
+    }
     onMounted(() => {
-      // mediumZoom('[data-zoomable]', { background: 'var(--vp-c-bg)' })
-      // 为所有图像启用此功能而不显式添加 {data-zoomable}
-      // ![pic](path/to/file.jpg){data-zoomable}
-      // 省略了{data-zoomable}
-      // ![pic](path/to/file.jpg)
-      mediumZoom('.main img', { background: 'rgba(0, 0, 0, 0.5)' })
+      initZoom()
     })
+    watch(
+      () => route.path,
+      () => nextTick(() => initZoom())
+    )
   }
 }
