@@ -1,4 +1,5 @@
 {
+  "type": "module",
   "name": "technical-site",
   "version": "1.0.0",
   "main": "index.js",
@@ -13,6 +14,7 @@
     "vuepress-plugin-sitemap": "^2.3.1"
   },
   "dependencies": {
+    "medium-zoom": "^1.1.0",
     "vitepress": "^1.3.1"
   }
 }

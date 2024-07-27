@@ -1,0 +1,10 @@
+/* .vitepress/theme/index.css */
+
+.medium-zoom-overlay {
+  z-index: 30;
+  backdrop-filter: blur(3px);
+}
+
+.medium-zoom-image {
+  z-index: 31;
+}
