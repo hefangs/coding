@@ -12,5 +12,19 @@
   z-index: 31;
   border-radius: 10px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
-  /* opacity: 0.5; */
+}
+
+/* nprogress 样式 */
+#nprogress .bar {
+  background: #2d9;
+  height: 3px;
+}
+
+#nprogress .peg {
+  box-shadow: 0 0 10px #2d9, 0 0 5px #2d9;
+}
+
+#nprogress .spinner-icon {
+  border-top-color: #2d9;
+  border-left-color: #2d9;
 }
