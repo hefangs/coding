@@ -12,6 +12,9 @@ export default {
     onMounted(() => {
       // mediumZoom('[data-zoomable]', { background: 'var(--vp-c-bg)' })
       // 为所有图像启用此功能而不显式添加 {data-zoomable}
+      // ![pic](path/to/file.jpg){data-zoomable}
+      // 省略了{data-zoomable}
+      // ![pic](path/to/file.jpg)
       mediumZoom('.main img', { background: 'rgba(0, 0, 0, 0.5)' })
     })
   }
