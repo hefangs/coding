@@ -13,7 +13,7 @@ hero:
   actions:
     - theme: brand
       text: 快速开始
-      link: /post/note/start
+      link: /post/note/tools
 head:
   - - meta
     - name: keywords
@@ -44,6 +44,11 @@ features:
 
 
 <style>
+
+
+
+/* 对首页的logo图片进行设置blur效果 */
+
   .image-container {
     position: relative;
     display: inline-block;
@@ -67,8 +72,8 @@ features:
     border-radius: 10%;
     background-image: url('/logo.jpg'); /* 使用与图片相同的URL */
     background-size: cover;
-    filter: blur(10px);
-    transform: scale(1.5); /* 放大以创建阴影效果 */
+    filter: blur(100px);
+    transform: scale(1.2); /* 放大以创建阴影效果 */
     z-index: -1;
   }
 

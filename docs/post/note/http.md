@@ -1,5 +1,5 @@
 
-
+# HTTP
 
 ## 1. 什么是HTTP? HTTP 和 HTTPS 的区别
 :::tip HTTP
@@ -106,9 +106,9 @@
     - 网络层
     - 数据链路层
     :::
-    :::danger `TCP/IP`四层模型 
+    ##### `TCP/IP` 四层模型 
     ![pic](/iso1.png "notice")
-    :::
+    
 :::
 :::tip OSI 参考模型与TCP/IP参考模型区别
   - 相同点：
@@ -119,9 +119,9 @@
     - `TCP/IP`参考模型没有对网络接口层进行细分，只是一些概念性的描述，`OSI`参考模型对服务和协议做了明确的区分
     - `OSI`参考模型虽然网络划分为七层，但实现起来较困难。`TCP/IP`参考模型作为一种简化的分层结构是可以的
     - `TCP/IP`协议去掉表示层和会话层的原因在于会话层、表示层、应用层都是在应用程序内部实现的，最终产出的是一个应用数据包，而应用程序之间是几乎无法实现代码的抽象共享的，这也就造成`OSI`设想中的应用程序维度的分层是无法实现的
-  :::tip 三种模型对应关系
+  - 三种模型对应关系
   ![pic](/iso3.png "notice")
-  :::
+  
 :::
 
 ## 4. DNS协议 是什么？说说DNS 完整的查询过程?
@@ -133,7 +133,6 @@
 :::
 :::tip 域名
   - 域名是一个具有层次的结构，从上到下一次为根域名、顶级域名、二级域名、三级域名...
-  :::tip
   ![pic](/dns2.png)
 :::
 :::tip 查询方式
@@ -173,7 +172,6 @@
   - 构建在现有网络基础之上的智能虚拟网络，依靠部署在各地的边缘服务器，通过中心平台的负载均衡、内容分发、调度等功能模块，使用户就近获取所需内容，降低网络拥塞，提高用户访问响应速度和命中率。`CDN`的关键技术主要有内容存储和分发技术
   - 简单来讲，`CDN`就是根据用户位置分配最近的资源
   - 于是，用户在上网的时候不用直接访问源站，而是访问离他“最近的”一个`CDN`节点，术语叫边缘节点，其实就是缓存了源站内容的代理服务器
-  :::tip
   ![pic](/cdn1.png)
 :::
 :::tip 原理分析
@@ -191,7 +189,7 @@
     - 检查边缘节点的负载情况，找负载较轻的节点
     - 其他，比如节点的“健康状况”、服务能力、带宽、响应时间等
   - 结合上面的因素，得到最合适的边缘节点，然后把这个节点返回给用户，用户就能够就近访问CDN的缓存代理
-  :::tip 流程图：
+  - 流程图
   ![pic](/cdn2.png "notice")
 :::
 :::tip 缓存代理
@@ -214,13 +212,14 @@
   - `HTTP1.0`浏览器与服务器只保持短暂的连接，每次请求都需要与服务器建立一个`TCP`连接
   - 服务器完成请求处理后立即断开`TCP`连接，服务器不跟踪每个客户也不记录过去的请求
   - 简单来讲，每次与服务器交互，都需要新开一个连接
+ :::
+
 :::tip 存在问题
-  - 解析`html`文件，当发现文件中存在资源文件的时候，这时候又创建单独的链接
-  - 最终导致，一个`html`文件的访问包含了多次的请求和响应，每次请求都需要创建连接、关系连接这种形式明显造成了性能上的缺陷
-  - 如果需要建立长连接，需要设置一个非标准的`Connection`字段 `Connection: keep-alive`
-  :::tip
-  ![pic](/http2.png "notice")
-  :::
+- 解析`html`文件，当发现文件中存在资源文件的时候，这时候又创建单独的链接
+- 最终导致，一个`html`文件的访问包含了多次的请求和响应，每次请求都需要创建连接、关系连接这种形式明显造成了性能上的缺陷
+- 如果需要建立长连接，需要设置一个非标准的`Connection`字段 `Connection: keep-alive`
+![pic](/http2.png "notice")
+:::
 
 :::tip HTTP1.1
   - 在`HTTP1.1`中，默认支持长连接（`Connection: keep-alive`），即在一个`TCP`连接上可以传送多个`HTTP`请求和响应，减少了建立和关闭连接的消耗和延迟
@@ -235,8 +234,7 @@
     - `delete`
     - `options`
     - ...
-  :::tip
-  ![pic](/http3.png "notice")
+![pic](/http3.png "notice")
 :::
 
 :::tip HTTP2.0
@@ -292,12 +290,12 @@
 :::
 
 ## 7. 说一下 GET 和 POST 的区别？
-:::tip 定义
+:::info 定义
   - `GET`方法请求一个指定资源的表示形式，使用`GET`的请求应该只被用于获取数据
   - `POST`方法用于将实体提交到指定的资源，通常导致在服务器上的状态变化或副作用
   - 本质上都是`TCP`链接，并无差别，但是由于`HTTP`的规定和浏览器/服务器的限制，导致他们在应用过程中会体现出一些区别
 :::
-:::warning 区别
+:::tip 区别
   - `GET`在浏览器回退时是无害的，而`POST`会再次提交请求。
   - `GET`产生的`URL`地址可以被`Bookmark`，而`POST`不可以。
   - `GET`请求会被浏览器主动cache，而`POST`不会，除非手动设置。
@@ -314,44 +312,44 @@
   - `HTTP`头字段（`HTTP header fields`）,是指在超文本传输协议（`HTTP`）的请求和响应消息中的消息头部分
   - 它们定义了一个超文本传输协议事务中的操作参数
   - `HTTP`头部字段可以自己根据需要定义，因此可能在`Web`服务器和浏览器上发现非标准的头字段
-  ```js
-  // 下面是一个HTTP请求的请求头：
-  :authority: sponsors.vuejs.org
-  :method: GET
-  :path: /data.json
-  :scheme: https
-  accept-encoding: gzip, deflate, br
-  accept-language: zh-CN,zh;q=0.9,en;q=0.8,zh-TW;q=0.7
-  cache-control: no-cache
-  origin: https://cn.vuejs.org
-  referer: https://cn.vuejs.org/
-  user-agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/111.0.0.0 Safari/537.36
-  accept: */*
-  ```
+    ```js
+    // 下面是一个HTTP请求的请求头：
+    :authority: sponsors.vuejs.org
+    :method: GET
+    :path: /data.json
+    :scheme: https
+    accept-encoding: gzip, deflate, br
+    accept-language: zh-CN,zh;q=0.9,en;q=0.8,zh-TW;q=0.7
+    cache-control: no-cache
+    origin: https://cn.vuejs.org
+    referer: https://cn.vuejs.org/
+    user-agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/111.0.0.0 Safari/537.36
+    accept: */*
+    ```
 :::
 :::details  常见的请求字段：
-| 字段名            |                                                                                     说明                                                                                      |                                                                             示例 |
-| ----------------- | :---------------------------------------------------------------------------------------------------------------------------------------------------------------------------: | -------------------------------------------------------------------------------: |
-| Accept            |                                                                    能够接受的回应内容类型（Content-Types）                                                                    |                                                               Accept: text/plain |
-| Accept-Charset    |                                                                               能够接受的字符集                                                                                |                                                            Accept-Charset: utf-8 |
-| Accept-Encoding   |                                                                            能够接受的编码方式列表                                                                             |                                                   Accept-Encoding: gzip, deflate |
-| Accept-Language   |                                                                       能够接受的回应内容的自然语言列表                                                                        |                                                           Accept-Language: en-US |
-| Authorization     |                                                                      用于超文本传输协议的认证的认证信息                                                                       |                                Authorization: Basic QWxhZGRpbjpvcGVuIHNlc2FtZQ== |
-| Cache-Control     |                                                         用来指定在这次的请求/响应链中的所有缓存机制 都必须 遵守的指令                                                         |                                                          Cache-Control: no-cache |
-| Connection        |                                                                        该浏览器想要优先使用的连接类型                                                                         |                                       Connection: keep-alive Connection: Upgrade |
-| Cookie            |                                                      服务器通过 Set- Cookie （下文详述）发送的一个 超文本传输协议Cookie                                                       |                                                    Cookie: $Version=1; Skin=new; |
-| Content-Length    |                                                                以 八位字节数组 （8位的字节）表示的请求体的长度                                                                |                                                              Content-Length: 348 |
-| Content-Type      |                                                                              请求体的 多媒体类型                                                                              |                                  Content-Type: application/x-www-form-urlencoded |
-| Date              |                                                                            发送该消息的日期和时间                                                                             |                                              Date: Tue, 15 Nov 1994 08:12:31 GMT |
-| Expect            |                                                                      表明客户端要求服务器做出特定的行为                                                                       |                                                             Expect: 100-continue |
-| Host              |                                                       服务器的域名(用于虚拟主机 )，以及服务器所监听的传输控制协议端口号                                                       |                                 Host: en.wikipedia.org:80 Host: en.wikipedia.org |
-| If-Match          | 仅当客户端提供的实体与服务器上对应的实体相匹配时，才进行对应的操作。主要作用时，用作像 PUT 这样的方法中，仅当从用户上次更新某个资源以来，该资源未被修改的情况下，才更新该资源 |                                     If-Match: "737060cd8c284d8af7ad3082f209582d" |
-| If-Modified-Since |                                                                 允许在对应的内容未被修改的情况下返回304未修改                                                                 |                                 If-Modified-Since: Sat, 29 Oct 1994 19:43:31 GMT |
-| If-None-Match     |                                                                 允许在对应的内容未被修改的情况下返回304未修改                                                                 |                                If-None-Match: "737060cd8c284d8af7ad3082f209582d" |
-| If-Range          |                                              如果该实体未被修改过，则向我发送我所缺少的那一个或多个部分；否则，发送整个新的实体                                               |                                     If-Range: "737060cd8c284d8af7ad3082f209582d" |
-| Range             |                                                                            仅请求某个实体的一部分                                                                             |                                                             Range: bytes=500-999 |
-| User-Agent        |                                                                         浏览器的浏览器身份标识字符串                                                                          | User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:12.0) Gecko/20100101 Firefox/21.0 |
-| Origin            |                                                                      发起一个针对 跨来源资源共享 的请求                                                                       |                                                     Origin: http://www.baidu.com |
+| 字段名            | 说明                                                                                                                                                                          | 示例                                                                             |
+| ----------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------------------------------------------------- |
+| Accept            | 能够接受的回应内容类型（Content-Types）                                                                                                                                       | Accept: text/plain                                                               |
+| Accept-Charset    | 能够接受的字符集                                                                                                                                                              | Accept-Charset: utf-8                                                            |
+| Accept-Encoding   | 能够接受的编码方式列表                                                                                                                                                        | Accept-Encoding: gzip, deflate                                                   |
+| Accept-Language   | 能够接受的回应内容的自然语言列表                                                                                                                                              | Accept-Language: en-US                                                           |
+| Authorization     | 用于超文本传输协议的认证的认证信息                                                                                                                                            | Authorization: Basic QWxhZGRpbjpvcGVuIHNlc2FtZQ==                                |
+| Cache-Control     | 用来指定在这次的请求/响应链中的所有缓存机制 都必须 遵守的指令                                                                                                                 | Cache-Control: no-cache                                                          |
+| Connection        | 该浏览器想要优先使用的连接类型                                                                                                                                                | Connection: keep-alive Connection: Upgrade                                       |
+| Cookie            | 服务器通过 Set- Cookie （下文详述）发送的一个 超文本传输协议Cookie                                                                                                            | Cookie: $Version=1; Skin=new;                                                    |
+| Content-Length    | 以 八位字节数组 （8位的字节）表示的请求体的长度                                                                                                                               | Content-Length: 348                                                              |
+| Content-Type      | 请求体的 多媒体类型                                                                                                                                                           | Content-Type: application/x-www-form-urlencoded                                  |
+| Date              | 发送该消息的日期和时间                                                                                                                                                        | Date: Tue, 15 Nov 1994 08:12:31 GMT                                              |
+| Expect            | 表明客户端要求服务器做出特定的行为                                                                                                                                            | Expect: 100-continue                                                             |
+| Host              | 服务器的域名(用于虚拟主机 )，以及服务器所监听的传输控制协议端口号                                                                                                             | Host: en.wikipedia.org:80 Host: en.wikipedia.org                                 |
+| If-Match          | 仅当客户端提供的实体与服务器上对应的实体相匹配时，才进行对应的操作。主要作用时，用作像 PUT 这样的方法中，仅当从用户上次更新某个资源以来，该资源未被修改的情况下，才更新该资源 | If-Match: "737060cd8c284d8af7ad3082f209582d"                                     |
+| If-Modified-Since | 允许在对应的内容未被修改的情况下返回304未修改                                                                                                                                 | If-Modified-Since: Sat, 29 Oct 1994 19:43:31 GMT                                 |
+| If-None-Match     | 允许在对应的内容未被修改的情况下返回304未修改                                                                                                                                 | If-None-Match: "737060cd8c284d8af7ad3082f209582d"                                |
+| If-Range          | 如果该实体未被修改过，则向我发送我所缺少的那一个或多个部分；否则，发送整个新的实体                                                                                            | If-Range: "737060cd8c284d8af7ad3082f209582d"                                     |
+| Range             | 仅请求某个实体的一部分                                                                                                                                                        | Range: bytes=500-999                                                             |
+| User-Agent        | 浏览器的浏览器身份标识字符串                                                                                                                                                  | User-Agent: Mozilla/5.0 (X11; Linux x86_64; rv:12.0) Gecko/20100101 Firefox/21.0 |
+| Origin            | 发起一个针对 跨来源资源共享 的请求                                                                                                                                            | Origin: http://www.baidu.com                                                     |
 :::
 
 :::warning 协商缓存与强缓存
@@ -455,23 +453,23 @@
 :::
 
 ## 11. web常见的攻击方式有哪些
-:::warning 常见的Web攻击方式：
+:::tip 常见的Web攻击方式：
   - `XSS` (`Cross Site Scripting`) 跨站脚本攻击
   - `CSRF`（`Cross-site request forgery`）跨站请求伪造
   - `SQL`注入攻击
 :::
 
-:::warning XSS
+:::info XSS
   - `XSS`：跨站脚本攻击，允许攻击者将恶意代码植入到提供给其它用户使用的页面中
   - `XSS`涉及到三方，即攻击者、客户端与`Web`应用
   - `XSS`的攻击目标是为了盗取存储在客户端的`Cookie`或者其他网站用于识别客户端身份的敏感信息。一旦获取到合法用户的信息后，攻击者甚至可以假冒合法用户与网站进行交互
-  ```html
-  <input type="text" value=""><script>alert('XSS');</script>">
-  <button>搜索</button>
-  <div>
-    您搜索的关键词是："><script>alert('XSS');</script>
-  </div>
-  ```
+    ```html
+    <input type="text" value=""><script>alert('XSS');</script>">
+    <button>搜索</button>
+    <div>
+      您搜索的关键词是："><script>alert('XSS');</script>
+    </div>
+    ```
   - 浏览器无法分辨出 `<script>alert('XSS');</script>` 是恶意代码，
   - 因而将其执行，试想一下，如果是获取`Cookie`发送对黑客服务器呢？
   - 根据攻击的来源，`XSS`攻击可以分成：
@@ -503,7 +501,7 @@
     - `DOM`型`XSS`攻击中，取出和执行恶意代码由浏览器端完成，属于前端`JavaScript`自身的安全漏洞，而其他两种 XSS 都属于服务端的安全漏洞
 :::
 
-:::danger XSS的预防
+:::warning XSS的预防
   - `XSS`攻击的两大要素：
     - 攻击者提交而恶意代码
       - 我们在用户输入的过程中，过滤掉用户输入的恶劣代码，然后提交给后端，但是如果攻击者绕开前端请求，直接构造请求就不能预防了
@@ -511,7 +509,7 @@
       - 在使用 `.innerHTML`、`.outerHTML`、`document.write()` 时要特别小心，不要把不可信的数据作为 HTML 插到页面上，而应尽量使用 `.textContent`、`.setAttribute()` 等
 :::
 
-:::warning CSRF
+:::tip CSRF
   - `CSRF`（`Cross-site request forgery`）跨站请求伪造：攻击者诱导受害者进入第三方网站，在第三方网站中，向被攻击网站发送跨站请求
   - 利用受害者在被攻击网站已经获取的注册凭证，绕过后台的用户验证，达到冒充用户对被攻击的网站执行某项操作的目
   - 一个典型的`CSRF`攻击有着如下的流程：
@@ -523,22 +521,22 @@
     - 攻击完成，攻击者在受害者不知情的情况下，冒充受害者，让`a.com`执行了自己定义的操作
   - `CSRF`可以通过`get`请求，即通过访问`img`的页面后，浏览器自动访问目标地址，发送请求
   - 同样，也可以设置一个自动提交的表单发送`post`请求，如下：
-  ```javascript
-  <form action="http://bank.example/withdraw" method=POST>
-    <input type="hidden" name="user" value="Joy" />
-    <input type="hidden" name="amount" value="10000" />
-    <input type="hidden" name="for" value="hacker" />
-  </form>
-  <script> document.forms[0].submit(); </script>
-  ```
+    ```html
+    <form action="http://bank.example/withdraw" method=POST>
+      <input type="hidden" name="user" value="Joy" />
+      <input type="hidden" name="amount" value="10000" />
+      <input type="hidden" name="for" value="hacker" />
+    </form>
+    <script> document.forms[0].submit(); </script>
+    ```
   - 问该页面后，表单会自动提交，相当于模拟用户完成了一次`POST`操作
   - 还有一种为使用`a`标签的，需要用户点击链接才会触发，访问该页面后，表单会自动提交，相当于模拟用户完成了一次`POST`操作
-  ```javascript
-  < a href="http://test.com/csrf/withdraw.php?amount=10000&for=hacker" target="_blank">重磅消息！！</a>
-  ```
+    ```javascript
+    < a href="http://test.com/csrf/withdraw.php?amount=10000&for=hacker" target="_blank">重磅消息！！</a>
+    ```
 :::
 
-:::tip CSRF的特点
+:::info CSRF的特点
   - 攻击一般发起在第三方网站，而不是被攻击的网站。被攻击的网站无法防止攻击发生
   - 攻击利用受害者在被攻击网站的登录凭证，冒充受害者提交操作，而不是直接窃取数据
   - 整个过程攻击者并不能获取到受害者的登录凭证，仅仅是“冒用”
@@ -563,7 +561,7 @@
     ```
 :::
 
-:::tip SQL注入
+:::warning SQL注入
   - `SQL`注入攻击，是通过将恶意的`SQL`查询或添加语句插入到应用的输入参数中，再在后台`SQL`服务器上解析执行进行的攻击
   - 流程如下所示：
     - 找出`SQL`漏洞的注入点

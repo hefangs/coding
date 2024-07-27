@@ -2,9 +2,15 @@
 
 .medium-zoom-overlay {
   z-index: 30;
-  backdrop-filter: blur(3px);
+  /* background-image: url(/Users/hefang/Documents/local/coding-js/docs/public/logo.jpg);
+  background-size: cover;
+  filter: blur(200px);
+  transform: scale(2); */
 }
-
+/* 对图片进行设置 */
 .medium-zoom-image {
   z-index: 31;
+  border-radius: 10px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+  /* opacity: 0.5; */
 }

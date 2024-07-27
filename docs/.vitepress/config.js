@@ -40,14 +40,14 @@ export default {
     // lastUpdatedText: '最近更新时间',
     // docFooter: { prev: '上一篇', next: '下一篇' },
     nav: [
-      // { text: 'Coding', link: '/post/note/coding', activeMatch: '/post' }
-      // { text: 'JS', link: '/post/note/javascript' },
-      // { text: 'Vue2', link: '/post/note/vue2.0' },
+      { text: 'Home', link: '/' },
+      { text: 'Coding', link: '/post/note/coding' },
+      { text: 'JavaScript', link: '/post/note/javascript' },
       // { text: 'Vue3', link: '/post/note/vue3.0' },
       // { text: 'React', link: '/post/note/react' },
       // { text: 'Webpack', link: '/post/note/react' },
-      // { text: 'TypeScript', link: '/post/note/typescript' },
-      // { text: 'Node', link: '/post/note/node' }
+      { text: 'Python', link: '/post/note/python', activeMatch: '/post' },
+      { text: 'Tools', link: '/post/note/tools' }
     ],
     footer: {
       message: 'Copyright © 2024 Fang He',
@@ -84,14 +84,14 @@ function sideBar() {
         { text: 'TypeScript', link: '/post/note/typescript' },
         { text: 'Node', link: '/post/note/node' },
         { text: 'Python', link: '/post/note/python' },
-        { text: 'Tools', link: '/post/note/tools' },
         { text: 'Selenium', link: '/post/note/selenium' },
         { text: 'Pytest', link: '/post/note/pytest' },
         { text: 'Unittest', link: '/post/note/unittest' },
         { text: 'Sql', link: '/post/note/sql' },
         { text: 'Appium', link: '/post/note/appium' },
         { text: 'Jmeter', link: '/post/note/jmeter' },
-        { text: 'Postman', link: '/post/note/postman' }
+        { text: 'Postman', link: '/post/note/postman' },
+        { text: 'Tools', link: '/post/note/tools' }
       ]
     }
   ]

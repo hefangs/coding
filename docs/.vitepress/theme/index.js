@@ -14,7 +14,7 @@ export default {
     const route = useRoute()
     const initZoom = () => {
       // new mediumZoom('[data-zoomable]', { background: 'var(--vp-c-bg)' }) // Should there be a new?
-      new mediumZoom('.main img', { background: 'rgba(0, 0, 0, 0.5)' })
+      new mediumZoom('.main img', { background: 'rgba(0, 0, 0, 0.6)' }) // 图片后面的背景色
     }
     onMounted(() => {
       initZoom()
