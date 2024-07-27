@@ -1,5 +1,6 @@
+# HTML & CSS
 ## 1. HTML语义化
-:::tip HTML语义化
+:::info HTML语义化
   - 正确的标签做正确的事情
   - 适合搜索引擎的爬虫爬取有效信息，
   - 有利于 SEO
@@ -7,26 +8,26 @@
   - 增强了可读性，结构更加清晰，便于团队的开发与维护
   :::
 ## 2. HTML5新特性
-:::tip HTML5新特性
+:::info HTML5新特性
   - 多媒体，用于媒介回放的 `video` 和 `audio` 元素。
   - 图像效果，用于绘画的 `canvas` 元素，`svg` 元素等。
   - 离线&存储，对本地离线存储能够更好地支持，比如 `localStorage`,`Cookies` 等。
   - 性能与集成特性，`HTML5` 会通过 `XML HttpRequest2`等技术，帮助您的 `Web` 应用和网站在多样化的环境中更快速地工作
 :::
 ## 3. 行内元素 块级元素 空(void)元素
-:::tip 行内元素 块级元素 空(void)元素
+:::info 行内元素 块级元素 空(void)元素
   - 行内元素：`span` `img` `input` `select` `strong`
   - 块级元素：`div` `ul` `ol` `li` `dl` `dt` `dd` `h1` `h2` `h3` `h4` `h5` `h6` `p`
   - 空(void)元素：`br` `hr` `img` `input` `link` `meta`
 :::
 ## 4. link 和@import 的区别
-:::tip 区别
+:::info 区别
   -  `link` 引用 `CSS` 时，在页面载入时同时加载；`@import` 需要页面网页完 全载入以后加载
   - ` link` 是 `XHTML` 标签，无兼容问题；`@import` 是在 CSS2.1 提出的，低版本的浏览器不支持
   -  `link` 支持使用 `Javascript` 控制 `DOM` 去改变样式；而 `@import` 不支持
 :::
 ## 5. CSS3 中有哪些新特性
-:::tip 新特性
+:::info 新特性
   - `border-radius` 圆角属性 border-radius: 10px;
   - `text-shadow` 文字阴影 text-shadow: 1px 1px 2px black;
   - `gradient` 线性渐变 background: linear-gradient(blue, pink);
@@ -35,36 +36,36 @@
   - `animation` 动画 animation: 3s ease-in 1s infinite reverse both running slidein;
 :::
 ## 6. CSS 选择器及优先级
-  :::tip 选择器
-  - id 选择器(#myid)
-  - 类选择器(.myclass)
-  - 属性选择器(a[rel="external"])
-  - 伪类选择器(a:hover, li:nth-child)
-  - 标签选择器(div, h1,p)
-  - 相邻选择器（h1 + p）
-  - 子选择器(ul > li)
-  - 后代选择器(li a)
-  - 通配符选择器(\*)
-  :::
-  :::tip 优先级
-  - !important
-  - 内联样式（1000）
-  - ID 选择器（0100）
-  - 类选择器/属性选择器/伪类选择器（0010）
-  - 元素选择器/伪元素选择器（0001）
-  - 关系选择器/通配符选择器（0000）
-  :::
+:::info 选择器
+- id 选择器(#myid)
+- 类选择器(.myclass)
+- 属性选择器(a[rel="external"])
+- 伪类选择器(a:hover, li:nth-child)
+- 标签选择器(div, h1,p)
+- 相邻选择器（h1 + p）
+- 子选择器(ul > li)
+- 后代选择器(li a)
+- 通配符选择器(\*)
+:::
+:::info 优先级
+- !important
+- 内联样式（1000）
+- ID 选择器（0100）
+- 类选择器/属性选择器/伪类选择器（0010）
+- 元素选择器/伪元素选择器（0001）
+- 关系选择器/通配符选择器（0000）
+:::
 ## 7.  CSS 布局单位
-:::tip CSS 布局单位
-  - `px`: 像素单位
-  - `rpx`: 小程序布局单位
-  - `%`: 相对于父元素的百分比单位
-  - `em`: 相对单位 1em 等同于父元素的文字大小
-  - `rem`: 相对单位 1rem 等同于 html 根元素的文字大小
-  - `vh`: 相对单位 1vh 等同于屏幕高度的 1%
-  - `vw`: 相对单位 1vw 等同于屏幕快读的 1%
-  - `vmin`: 选取 vh 和 vw 的最小值为基准
-  - `vmax`: 选取 vh 和 vw 的最大值为基准
+:::info CSS 布局单位
+- `px`: 像素单位
+- `rpx`: 小程序布局单位
+- `%`: 相对于父元素的百分比单位
+- `em`: 相对单位 1em 等同于父元素的文字大小
+- `rem`: 相对单位 1rem 等同于 html 根元素的文字大小
+- `vh`: 相对单位 1vh 等同于屏幕高度的 1%
+- `vw`: 相对单位 1vw 等同于屏幕快读的 1%
+- `vmin`: 选取 vh 和 vw 的最小值为基准
+- `vmax`: 选取 vh 和 vw 的最大值为基准
 :::
 
 
@@ -74,33 +75,33 @@
   <script src='xxx' async></script>
   <script src='xxx' defer></script>
   ```
-  ::: warning 区别
+  ::: tip 区别
   - `script` 会阻碍 `HTML` 解析，只有下载好并执行完脚本才会继续解析 `HTML`
   - `async script`：解析 `HTML` 的过程中会进行脚本的异步下载，下载成功后立马执行，因此有可能会阻断 `HTML` 的解析。多个脚本的执行顺序无法保证
   - `defer script`：也是异步下载脚步，加载完成后，如果此时 `HTML` 还没有解析完，浏览器不会暂停解析去执行 `JS` 代码，而是等待 `HTML` 解析完毕再执行 `JS` 代码
   :::
-  :::danger 继续比较
-  | script 标签  |   JS 执行顺序    |      是否阻塞解析 HTML |
-  | ------------ | :--------------: | ---------------------: |
-  | script       | 在 HTML 中的顺序 |                   阻塞 |
+  :::info 继续比较
+  | script 标签  |   JS 执行顺序    | 是否阻塞解析 HTML      |
+  | ------------ | :--------------: | ---------------------- |
+  | script       | 在 HTML 中的顺序 | 阻塞                   |
   | script async | 网络请求返回顺序 | 可能阻塞，也可能不阻塞 |
-  | script defer | 在 HTML 中的顺序 |                 不阻塞 |
+  | script defer | 在 HTML 中的顺序 | 不阻塞                 |
 
   
 
   ![图片描述](/script.png)
   :::
 ## 9. 盒模型
-  :::tip 定义
+  :::info 定义
   - `IE` 盒模型： `width` + `height` + `padding` + `border`
   - `W3C` 标准盒模型： `width` + `height，不包含` `border` 和 `padding`
   :::
 ## 10. BFC
-:::tip 定义:
+:::info 定义:
    - 块级格式化上下文
    - 是一个独立的渲染区域，让处于`BFC`内部的元素与外部的元素相互隔离，使内外元素的定位不会相互影响
 :::
-:::warning 触发条件：
+:::tip 触发条件：
    - 根元素
    - `position`: `absolute`/`fixed`
    - `display`: `inline-block` /`table`
@@ -108,7 +109,7 @@
    - `overflow` !== `visible`
 :::
 
- :::warning  规则：
+ :::tip  规则：
    - 属于同一个`BFC`的两个相邻`Box`垂直排列
    - 属于同一个`BFC`的两个相邻`Box`的`margin`会发生重叠
    - `BFC`中子元素的左边 `margin`，与包含块 (`BFC`) `border` `box`的左边相接触
@@ -118,7 +119,7 @@
 
 
 ## 11. 两栏布局
-:::tip 两栏布局
+:::info 两栏布局
 - 利用浮动，左边元素宽度固定，设置向左浮动。将右边元素的 `margin-left` 设为固定宽度 。注意，因为右边元素的 `width` 默认为 `auto`，所以会自动撑满父元素
   ```css
   .outer {
@@ -212,7 +213,7 @@
     ```
 :::
 ## 12. 三栏布局
-:::tip 圣杯布局
+:::info 圣杯布局
 
 ```html
 <div id="container" class="clearfix">
@@ -253,7 +254,7 @@
 }
 ```
 :::
-:::tip 双飞翼布局
+:::info 双飞翼布局
 
 ```html
 <div id="main" class="float">
@@ -288,13 +289,13 @@
 }
 ```
 :::
-:::warning 总结：
+:::tip 总结：
 - 使用`float`布局
 - 两侧使用`margin`负值，以便和中间内容横向重叠
 - 防止中间内容被两侧覆盖，圣杯布局用`padding`，双飞翼布局用`margin`
 :::
 ## 13. 水平垂直居中
-:::tip 绝对定位
+:::info 绝对定位
 - 设置`left`: 50%和`top`:50%,现将子元素左上角移到父元素中心位置，然后再通过`translate`来调整子元素的中心点到父元素的中心。(该方法可以不定宽高)
   ```css
   .father {
@@ -309,7 +310,7 @@
   ```
 :::
 
-:::tip 绝对定位
+:::info 绝对定位
 - 子元素所有方向都为0，将`margin`设置为`auto`，由于宽高固定，对应方向实现平分(该方法必须定宽高)
   ```css
   .father {
@@ -343,7 +344,7 @@
   ```
 :::
 
-:::tip flex
+:::info flex
 - 利用`flex`，最经典最方便的一种了，不用解释，定不定宽高无所谓的
   ```css
   .father {
@@ -367,7 +368,7 @@
   }
   ```
 :::
-:::tip 利用`grid`(该方法必须定宽高)
+:::info 利用`grid`(该方法必须定宽高)
 ```css
 .father {
   width: 200px;
@@ -384,20 +385,20 @@
 ```
 :::
 ## 14. 清除浮动
-:::tip 定义
+:::info 定义
  - 非IE浏览器下，容器不设高度且子元素浮动时，容器高度不能被内容撑开
  - 内容会溢出到容器外面而影响布局。这种现象被称为浮动（溢出）
 :::
-:::tip 浮动的工作原理
+:::info 浮动的工作原理
  - 浮动元素脱离文档流，不占据空间（引起“高度塌陷”现象）
  - 浮动元素碰到包含它的边框或者其他浮动元素的边框停留
 :::
-:::tip 浮动元素引起的问题
+:::info 浮动元素引起的问题
  - 父元素的高度无法被撑开，影响与父元素同级的元素
  - 与浮动元素同级的非浮动元素会跟随其后
  - 若浮动的元素不是第一个元素，则该元素之前的元素也要浮动，否则会影响页面的显示结构
 :::
-:::tip 清除浮动的方式如下
+:::info 清除浮动的方式如下
  1. clear清除浮动最佳实践
    ```css
   .clearfix:after {
@@ -420,7 +421,7 @@
    ```
 :::
 ## 15. 伪元素和伪类的区别
-:::tip 伪元素
+:::info 伪元素
   - 在内容元素的前后插入额外的元素或样式，但是这些元素实际上并不在文档中生成
   - 它们只在外部显示可见，但不会在文档的源代码中找到它们，因此，称为“伪”元素
 
@@ -431,7 +432,7 @@
   p::first-letter {font-size:30px;}
   ```
 :::
-:::tip 伪类
+:::info 伪类
   - 将特殊的效果添加到特定选择器上
   - 它是已有元素上添加类别的，不会产生新的元素
   ```css
@@ -443,7 +444,7 @@
 
 
 ## 16. Flex
-:::tip flex
+:::info flex
   - `Flexible Box`简称`flex`，意为”弹性布局”，可以简便、完整、响应式地实现各种页面布局
   - 采用`Flex`布局的元素，称为`flex`容器`container`
   - 它的所有子元素自动成为容器成员，称为`flex`项目`item`
@@ -451,7 +452,7 @@
   - 容器中默认存在两条轴，主轴和交叉轴，呈90度关系。项目默认沿主轴排列，通过`flex-direction`来决定主轴的方向
   - 每根轴都有起点和终点，这对于元素的对齐非常重要
 :::
-:::tip 属性
+:::info 属性
   - 关于`flex`常用的属性，我们可以划分为`容器属性`和`容器成员属性`
     - 容器属性有：
       - `flex-direction`决定主轴的方向(即项目的排列方向)
@@ -584,7 +585,7 @@
 
 ## 17. Grid
 
-:::tip Grid
+:::info Grid
   - `Grid`布局即网格布局，是一个二维的布局方式，由纵横相交的两组网格线形成的框架性布局结构，能够同时处理行与列
   - 将一个页面划分为几个主要区域，以及定义这些区域的大小、位置、层次等关系
   - 设置`display:grid/inline-grid`的元素就是网格布局容器，这样就能出发浏览器渲染引擎的网格布局算法
@@ -603,7 +604,7 @@
     ![pic](/grid2.png "notice")
 :::
 
-:::tip 属性
+:::info 属性
   - Grid 布局属性可以分为两大类：
     - 容器属性：
       - `display`属性
@@ -794,7 +795,7 @@
 
 ## 18. CSS3动画有哪些？
 
-:::warning transition(实现渐变动画)
+:::info transition(实现渐变动画)
   - `transition`的属性如下：
     - `property`：填写需要变化的css属性
     - `duration`：完成过渡效果需要的时间单位(s或者ms)
@@ -825,7 +826,7 @@
       ```
 :::
 
-:::warning transform(转变动画)
+:::info transform(转变动画)
   - 包含四个常用的功能：
     - `translate`：位移
     - `scale`：缩放
@@ -855,7 +856,7 @@
     ```
 :::
 
-:::warning animation(自定义动画)
+:::info animation(自定义动画)
   - animation是由 8 个属性的简写，分别如下：
     | 属性                                   | 描述                                                              | 属性值                                        |
     | :------------------------------------- | :---------------------------------------------------------------- | :-------------------------------------------- |
@@ -893,19 +894,18 @@
     ```
 :::
 
-:::tip 总结
-  | 属性               | 描述                                                                                                      |
-  | :----------------- | :-------------------------------------------------------------------------------------------------------- |
+#### 总结
+  |        属性        | 描述                                                                                                      |
+  | :----------------: | :-------------------------------------------------------------------------------------------------------- |
   | transition（过度） | 用于设置元素的样式过度，和animation有着类似的效果，但细节上有很大的不同                                   |
   | transform（变形）  | 用于元素进行旋转、缩放、移动或倾斜，和设置样式的动画并没有什么关系，就相当于color一样用来设置元素的“外表” |
-  | animation（动画    | 用于设置动画属性，他是一个简写的属性，包含6个属性                                                         |
-:::
+  |  animation（动画   | 用于设置动画属性，他是一个简写的属性，包含6个属性                                                         |
 
 
 
 ## 19. 重排与重绘
 
-:::tip 
+:::info 重排与重绘
   - 具体的浏览器解析渲染机制如下所示：
     1. `HTML`被`HTML`解析器解析成`DOM`树
     2. `CSS`被`CSS`解析器解析成`CSSOM`树
@@ -937,7 +937,7 @@
 :::
 ## 20. 什么是响应式设计？
 
-:::tip  响应式
+:::info  响应式
   - 响应式网站设计（`Responsive Web design`）是一种网络页面设计布局，页面的设计与开发应当根据用户行为以及设备环境(系统平台、屏幕尺寸、屏幕定向等)进行相应的响应和调整
   - 响应式网站常见特点：
     - 同时适配PC + 平板 + 手机等
@@ -946,7 +946,7 @@
     ![pic](/viewport1.png "notice")
 :::
 
-:::warning 实现方式
+:::info 实现方式
   - 响应式设计的基本原理是通过媒体查询检测不同的设备屏幕尺寸做处理，为了处理移动端，页面头部必须有`meta`声明`viewport`
     ```javascript
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no”>
@@ -1019,12 +1019,13 @@
         ```
     - 无论设备可视窗口如何变化，始终设置`rem`为`width`的`1/10`，实现了百分比布局
     - 除此之外，我们还可以利用主流UI框架，如：`ElementUi`、`AntD`提供的栅格布局实现响应式
-  - 小结：
-    - 响应式设计实现通常会从以下几方面思考：
-      - 弹性盒子（包括图片、表格、视频）和媒体查询等技术
-      - 使用百分比布局创建流式布局的弹性`UI`，同时使用媒体查询限制元素的尺寸和内容变更范围
-      - 使用相对单位使得内容自适应调节
-      - 选择断点，针对不同断点实现不同布局和内容展示
+:::
+:::tip 小结
+  - 响应式设计实现通常会从以下几方面思考：
+    - 弹性盒子（包括图片、表格、视频）和媒体查询等技术
+    - 使用百分比布局创建流式布局的弹性`UI`，同时使用媒体查询限制元素的尺寸和内容变更范围
+    - 使用相对单位使得内容自适应调节
+    - 选择断点，针对不同断点实现不同布局和内容展示
 :::
 
 :::tip 总结
@@ -1040,7 +1041,7 @@
 :::
 
 ## 21. CSS提高性能的方法有哪些？
-:::warning 实现方式
+:::info 实现方式
   - 实现方式有很多种，主要有如下：
     - 内联首屏关键`CSS`
       - 在打开一个页面，页面首要内容出现在屏幕的时间影响着用户的体验，而通过内联`css`关键代码能够使浏览器在下载完`html`后就能立刻渲染
@@ -1100,7 +1101,7 @@
 
 ## 22. CSS 画图形
 
-:::tip 三角形
+:::info 三角形
   ```html
   <div class="box"></div>
   ```
@@ -1115,7 +1116,7 @@
   }
   ```
 :::
-:::tip 空心三角形
+:::info 空心三角形
   ```html
   <div class="box"></div>
   ```
@@ -1139,280 +1140,281 @@
   } 
   ```
   :::
-:::tip 麻将
+:::info 麻将
 - 一饼
-  ```html
-  <div class="main">
-    <div></div>
-  </div>
-  ```
-  ```css
-  .main {
-    width: 100px;
-    height: 200px;
-    border: 1px solid #ccc;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-  }
-  .main div {
-    width: 50px;
-    height: 50px;
-    background-color: aquamarine;
-    border-radius: 50%;
-  }
-  ```
-- 二饼
-  ```html
-  <div class="main">
-    <div></div>
-    <div></div>
-  </div>
-  ```
-  ```css{8}
-  .main {
-    width: 100px;
-    height: 200px;
-    border: 1px solid #ccc;
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-    flex-direction: column;
-  }
-  .main div {
-    width: 50px;
-    height: 50px;
-    background-color: aquamarine;
-    border-radius: 50%;
-  }
-  ```
-- 三饼
-  ```html
-  <div class="main">
-    <div></div>
-    <div></div>
-    <div></div>
-  </div>
-  ```
-  ```css{17,20}
-  .main {
-    width: 100px;
-    height: 200px;
-    border: 1px solid #ccc;
-    display: flex;
-    justify-content: space-around;
-    align-items: center;
-    flex-direction: column;
-  }
-  .main div {
-    width: 50px;
-    height: 50px;
-    background-color: aquamarine;
-    border-radius: 50%;
-  }
-  .main div:nth-child(1) {
-    align-self: flex-start;
-  }
-  .main div:nth-child(3) {
-    align-self: flex-end;
-  }
-- 四饼
-  ```html
-  <div class="main">
-    <div></div>
-    <div></div>
-    <div></div>
-    <div></div>
-  </div>
-  ```
-  ```css{6}
-  .main {
-    width: 100px;
-    height: 200px;
-    border: 1px solid #ccc;
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-  }
-  .main div {
-    width: 50px;
-    height: 50px;
-    background-color: aquamarine;
-    border-radius: 50%;
-  }
-  ```
-- 五饼
-  ```html
-  <div class="main">
-    <div></div>
-    <div></div>
-    <div></div>
-    <div></div>
-    <div></div>
-  </div>
-  ```
-  ```css{17}
-  .main {
-    width: 100px;
-    height: 200px;
-    border: 1px solid #ccc;
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    justify-content: space-around;
-  }
-  .main div {
-    width: 50px;
-    height: 50px;
-    background-color: aquamarine;
-    border-radius: 50%;
-  }
-  .main div:nth-child(3) {
-    margin-left: 25px;
-  }
-  ```
-- 六饼
-  ```html
-  <div class="main">
-    <div></div>
-    <div></div>
-    <div></div>
-    <div></div>
-    <div></div>
-    <div></div>
-  </div>
-  ```
-  ```css{6}
-  .main {
-    width: 100px;
-    height: 200px;
-    border: 1px solid #ccc;
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    justify-content: space-around;
-  }
-  .main div {
-    width: 50px;
-    height: 50px;
-    background-color: aquamarine;
-    border-radius: 50%;
-  }
-  ```
-- 七饼
-  ```html
-  <div class="main">
-    <div></div>
-    <div></div>
-    <div></div>
-  </div>
-  <div class="footer">
-    <div></div>
-    <div></div>
-    <div></div>
-    <div></div>
-  </div>
-  ```
-  ```css{6,12-13,25,28}
-  .main {
-    border: 1px solid #ccc;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    flex-direction: column;
-    border-bottom:none;
-  }
-  .footer {
-    border: 1px solid #ccc;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-around;
-    align-items: center;
-    border-top:none
-  }
-  .main div,.footer div  {
-    width: 40px;
-    height: 40px;
-    background-color: aquamarine;
-    border-radius: 50%;
-  }
-
-  .main div:nth-child(1) {
-    align-self: flex-start;
-  }
-  .main div:nth-child(3) {
-    align-self: flex-end;
-  }
-  body{
-    width: 100px;
-    height: 200px;
-  }
-  ```
-- 八饼
-  ```html
-  <div class="main">
-    <div></div>
-    <div></div>
-    <div></div>
-    <div></div>
-    <div></div>
-    <div></div>
-    <div></div>
-    <div></div>
-  </div>
-  ```
-  ```css{8,11-12}
-  .main {
+```html
+<div class="main">
+  <div></div>
+</div>
+```
+```css
+.main {
   width: 100px;
   height: 200px;
   border: 1px solid #ccc;
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
   align-items: center;
-  flex-wrap:wrap;
-  }
-  .main div  {
-    width: 50px;
-    height: 50px;
-    background-color: aquamarine;
-    border-radius: 50%;
-  }
-  ```
-- 九饼
-  ```html
-  <div class="main">
-    <div></div>
-    <div></div>
-    <div></div>
-    <div></div>
-    <div></div>
-    <div></div>
-    <div></div>
-    <div></div>
-    <div></div>
-  </div>
-  ```
-  ```css{6,11-12}
-  .main {
+}
+.main div {
+  width: 50px;
+  height: 50px;
+  background-color: aquamarine;
+  border-radius: 50%;
+}
+```
+- 二饼
+```html
+<div class="main">
+  <div></div>
+  <div></div>
+</div>
+```
+```css{8}
+.main {
   width: 100px;
   height: 200px;
   border: 1px solid #ccc;
   display: flex;
   justify-content: space-around;
   align-items: center;
-  flex-wrap:wrap;
-  }
-  .main div  {
-    width: 30px;
-    height: 30px;
-    background-color: aquamarine;
-    border-radius: 50%;
-  }
-  ```
+  flex-direction: column;
+}
+.main div {
+  width: 50px;
+  height: 50px;
+  background-color: aquamarine;
+  border-radius: 50%;
+}
+```
+- 三饼
+```html
+<div class="main">
+  <div></div>
+  <div></div>
+  <div></div>
+</div>
+```
+```css{17,20}
+.main {
+  width: 100px;
+  height: 200px;
+  border: 1px solid #ccc;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  flex-direction: column;
+}
+.main div {
+  width: 50px;
+  height: 50px;
+  background-color: aquamarine;
+  border-radius: 50%;
+}
+.main div:nth-child(1) {
+  align-self: flex-start;
+}
+.main div:nth-child(3) {
+  align-self: flex-end;
+}
+```
+- 四饼
+```html
+<div class="main">
+  <div></div>
+  <div></div>
+  <div></div>
+  <div></div>
+</div>
+```
+```css{6}
+.main {
+  width: 100px;
+  height: 200px;
+  border: 1px solid #ccc;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+}
+.main div {
+  width: 50px;
+  height: 50px;
+  background-color: aquamarine;
+  border-radius: 50%;
+}
+```
+- 五饼
+```html
+<div class="main">
+  <div></div>
+  <div></div>
+  <div></div>
+  <div></div>
+  <div></div>
+</div>
+```
+```css{17}
+.main {
+  width: 100px;
+  height: 200px;
+  border: 1px solid #ccc;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-around;
+}
+.main div {
+  width: 50px;
+  height: 50px;
+  background-color: aquamarine;
+  border-radius: 50%;
+}
+.main div:nth-child(3) {
+  margin-left: 25px;
+}
+```
+- 六饼
+```html
+<div class="main">
+  <div></div>
+  <div></div>
+  <div></div>
+  <div></div>
+  <div></div>
+  <div></div>
+</div>
+```
+```css{6}
+.main {
+  width: 100px;
+  height: 200px;
+  border: 1px solid #ccc;
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-around;
+}
+.main div {
+  width: 50px;
+  height: 50px;
+  background-color: aquamarine;
+  border-radius: 50%;
+}
+```
+- 七饼
+```html
+<div class="main">
+  <div></div>
+  <div></div>
+  <div></div>
+</div>
+<div class="footer">
+  <div></div>
+  <div></div>
+  <div></div>
+  <div></div>
+</div>
+```
+```css{6,12-13,25,28}
+.main {
+  border: 1px solid #ccc;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-direction: column;
+  border-bottom:none;
+}
+.footer {
+  border: 1px solid #ccc;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-around;
+  align-items: center;
+  border-top:none
+}
+.main div,.footer div  {
+  width: 40px;
+  height: 40px;
+  background-color: aquamarine;
+  border-radius: 50%;
+}
+
+.main div:nth-child(1) {
+  align-self: flex-start;
+}
+.main div:nth-child(3) {
+  align-self: flex-end;
+}
+body{
+  width: 100px;
+  height: 200px;
+}
+```
+- 八饼
+```html
+<div class="main">
+  <div></div>
+  <div></div>
+  <div></div>
+  <div></div>
+  <div></div>
+  <div></div>
+  <div></div>
+  <div></div>
+</div>
+```
+```css{8,11-12}
+.main {
+width: 100px;
+height: 200px;
+border: 1px solid #ccc;
+display: flex;
+justify-content: space-between;
+align-items: center;
+flex-wrap:wrap;
+}
+.main div  {
+  width: 50px;
+  height: 50px;
+  background-color: aquamarine;
+  border-radius: 50%;
+}
+```
+- 九饼
+```html
+<div class="main">
+  <div></div>
+  <div></div>
+  <div></div>
+  <div></div>
+  <div></div>
+  <div></div>
+  <div></div>
+  <div></div>
+  <div></div>
+</div>
+```
+```css{6,11-12}
+.main {
+width: 100px;
+height: 200px;
+border: 1px solid #ccc;
+display: flex;
+justify-content: space-around;
+align-items: center;
+flex-wrap:wrap;
+}
+.main div  {
+  width: 30px;
+  height: 30px;
+  background-color: aquamarine;
+  border-radius: 50%;
+}
+```
 :::
 
 ## 23. CSS隐藏盒子的方式？
-:::tip 多种方式
+:::info 多种方式
   - `display: none`;：渲染树不会包含该渲染对象，因此该元素不会在页面中占据位置，也不会响应绑定的监听事件
   - `visibility: hidden;`：元素在页面中仍占据空间，但是不会响应绑定的监听事件
   - `opacity: 0;`：将元素的透明度设置为 0，以此来实现元素的隐藏。元素在页面中仍然占据空间，并且能够响应元素绑定的监听事件
@@ -1422,7 +1424,7 @@
   - `transform: translate(-1000px,-1000px);`：对元素进行缩放
   - `clip-path: circle(0);`：该属性指定元素应该被剪切的区域。使用这种方法可以将元素的内容隐藏，但它仍然占用空间
 :::
-:::danger `display: none`与`visibility: hidden`的区别
+:::info `display: none`与`visibility: hidden`的区别
    - `display: none`的元素不占据任何空间，`visibility: hidden`的元素空间保留；
    - `display: none`会影响`css3`的`transition`过渡效果，`visibility: hidden`不会
    - `display: none`隐藏产生重排和重绘，`visibility: hidden`只会触发重绘

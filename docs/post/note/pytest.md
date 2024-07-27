@@ -1,7 +1,7 @@
-# pytest
+# Pytest
 
-## requirements.txt
-```txt
+## 1. requirements.txt
+```bash
 # requirements.txt
 # pip install -r requirements.txt
 allure-pytest
@@ -16,7 +16,7 @@ jsonpath-ng
 ```
 
 
-## pytest.ini
+## 2. pytest.ini
 ```ini
 # pytest.ini
 [pytest]
@@ -51,26 +51,41 @@ def pytest_configure(config):
 	config.option.log_file = log_file
 
 ```
-## 命令行参数
-- `-v`, `--verbose`：增加测试运行的冗长程度，显示每个测试函数的名称和结果
-- `-q`, `--quiet`：减少测试运行的冗长程度
-- `-k` `EXPRESSION`：仅运行与表达式匹配的测试。表达式可以是测试函数名称的一部分
-- `--disable-warnings`：禁止显示警告信息
-- `-x`, `--exitfirst`：遇到第一个错误或失败就停止测试
-- `--maxfail=num`：当失败的测试达到指定数量时停止运行
-- `-s`, `--capture=no`：不捕获测试中的输出（例如print语句的输出）
-- `--ignore=path`：忽略指定路径下的测试文件
-- `--durations=N`：显示N个最慢的测试用例和它们的执行时间
-- `--html=report.html`：生成一个HTML格式的测试报告（需要安装`pytest-html`插件）
-- `-n NUM`：并行运行测试，需要安装pytest-xdist插件
-- `pytest -m slow` 将运行所有用装饰器修饰的测试@pytest.mark.slow
-- `pytest --cache-show`查看缓存的内容 
-- `pytest --cache-show example/*`采用可选参数来指定用于过滤的 glob 模式
-- `pytest --cache-clear`清除所有缓存文件和值
+## 3. 命令行参数
+```bash
+# 增加测试运行的冗长程度，显示每个测试函数的名称和结果
+-v, --verbose
+# 减少测试运行的冗长程度
+-q, --quiet
+# 仅运行与表达式匹配的测试。表达式可以是测试函数名称的一部分
+-k EXPRESSION
+# 禁止显示警告信息
+--disable-warnings
+# 遇到第一个错误或失败就停止测试
+-x, --exitfirst：
+# 当失败的测试达到指定数量时停止运行
+--maxfail=num
+# 不捕获测试中的输出（例如print语句的输出）`-s`, `--capture=no`：
+# 忽略指定路径下的测试文件
+--ignore=path
+# 显示N个最慢的测试用例和它们的执行时间
+--durations=N
+# 生成一个HTML格式的测试报告（需要安装`pytest-html`插件）
+--html=report.html
+# 并行运行测试，需要安装pytest-xdist插件
+-n NUM
+# 将运行所有用装饰器修饰的测试@pytest.mark.slow
+pytest -m slow 
+# 查看缓存的内容 
+pytest --cache-show
+# 采用可选参数来指定用于过滤的 glob 模式
+pytest --cache-show example/*
+# 清除所有缓存文件和值
+pytest --cache-clear
 
+```
 
-
-## setup and teardown
+## 4. setup and teardown
 ```py
 # Module-level
 # 在整个模块开始前执行一次
@@ -144,7 +159,7 @@ def test_two():
   print("Test 2 executing")
 ```
 
-## fixture
+## 5. fixture
 #### `scope`:(function(default),class,module,session,package)
 ```py
 # Function Scope 
@@ -275,10 +290,10 @@ def test_custom_name(custom_name_fixture):
 
 ```
 
-## parametrize
-@pytest.mark.parametrize 装饰器允许你为测试函数提供多个参数集。它接收两个主要参数
-- 参数名的字符串，多个参数名用逗号分隔
-- 参数值的列表或列表的列表，每个列表元素是一个参数集
+## 6. parametrize
+**@pytest.mark.parametrize** 装饰器允许你为测试函数提供多个参数集。它接收两个主要参数
+1. 参数名的字符串，多个参数名用逗号分隔
+2. 参数值的列表或列表的列表，每个列表元素是一个参数集
 ```py
 import pytest
 
@@ -344,8 +359,8 @@ def test_with_fixture_and_param(base_value, multiplier):
 
 ```
 
-## 缓存 session 数据
-- 使用 request.config.cache 来缓存 session 数据
+## 7. 缓存 session 数据
+#### 使用 request.config.cache 来缓存 session 数据
 
 ```py
 # test_user.py

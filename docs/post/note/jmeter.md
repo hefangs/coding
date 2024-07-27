@@ -1,5 +1,5 @@
 # Jmeter
-## 创建 Ant 构建脚本
+## 1. 创建 Ant 构建脚本
 ```xml{7-9,17-20,64-65,74}
 <!-- build.xml -->
 <?xml version="1.0" encoding="UTF-8"?>
@@ -91,7 +91,7 @@
 </project>
 
 ```
-## 创建 JMeter 测试脚本
+## 2. 创建 JMeter 测试脚本
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>
 <jmeterTestPlan version="1.2" properties="5.0" jmeter="5.6.3">
@@ -276,7 +276,7 @@
 </jmeterTestPlan>
 
 ```
-## 生成报告
+## 3. 生成报告
 ##### 1.使用 Ant 生成 XML 报告并通过 XSLT 转换成 HTML
 ```bash
 # jmeter.properties
@@ -375,7 +375,7 @@ Command + Shift + R
 Ctrl + F5
 ```
 
-## 跨线程调用 cookie
+## 4. 跨线程调用 cookie
 :::tip BeanShell 与 JSR223
 - 线程1 
   - login
@@ -398,7 +398,7 @@ Ctrl + F5
       - cookie:`${__P(cookie,)}`
 :::
 
-## 压力测试
+## 5. 压力测试
 :::tip 压力测试(Stress Testing)
 - Thread Group1:
   - Number of Threads (users): 1
@@ -435,7 +435,7 @@ Ctrl + F5
 :::
 
 
-## 性能测试
+## 6. 性能测试
 ::: tip 性能测试(Performance Testing)
 - Thread Group1:
   - Number of Threads (users): 1
@@ -506,7 +506,7 @@ Ctrl + F5
 :::
 
 
-
+## 7. 参数
 ::: warning 关键字段解释 
 - Label: 测试名称或请求标签。
 - #Samples: 请求样本总数。

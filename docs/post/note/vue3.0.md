@@ -1,8 +1,8 @@
 
-# Vue3.0相关
+# Vue3.0
 ## 1. Vue3.0做了哪些优化?
 
-:::warning 优化内容
+:::info 优化内容
   - 更小
   - 更快
   - `TypeScript`支持
@@ -10,18 +10,18 @@
   - 提高自身可维护性
   - 开放更多底层功能
 :::
-:::warning 更小
+:::info 更小
   - `Vue3`移除一些不常用的`API`
   - 引入`tree-shaking`，可以将无用模块“剪辑”，仅打包需要的，使打包的整体体积变小了
 :::
-:::warning 更快
+:::info 更快
   - 主要体现在编译方面：
     - `diff`算法优化
     - 静态提升
     - 事件监听缓存
     - `SSR`优化
 :::
-:::warning 更友好
+:::info 更友好
   - `vue3`在兼顾`vue2`的`options API`的同时还推出了`composition API`，大大增加了代码的逻辑组织和代码复用能力
   - 这里代码简单演示下：
     - 存在一个获取鼠标位置的函数
@@ -47,7 +47,7 @@
     - `Vue3`是基于`typeScript`编写的，可以享受到自动的类型定义提示
 :::
 
-:::danger 优化方案
+:::tip 优化方案
   - Vue3从很多层面都做了优化，可以分成三个方面：
     - 源码
       - `Vue3`整个源码是通过`monorepo`的方式维护的，根据功能将不同的模块拆分到`packages`目录下面不同的子目录中
@@ -121,7 +121,7 @@
     - `SSR`优化
 :::
 
-:::warning Diff算法优化
+:::danger Diff算法优化
   - `Vue3`在`Diff`算法中相比`Vue2`增加了静态标记
   - 关于这个静态标记，其作用是为了会发生变化的地方添加一个`flag`标记，下次发生变化的时候直接找该地方进行比较
   - 下图这里，已经标记静态节点的`p`标签在`Diff`过程中则不会比较，把性能进一步提高
@@ -146,7 +146,7 @@
     ```
 :::
 
-:::warning 静态提升
+:::tip 静态提升
   - `Vue3`中对不参与更新的元素，会做静态提升，只会被创建一次，在渲染时直接复用
   - 这样就免去了重复的创建节点，大型应用会受益于这个改动，免去了重复的创建操作，优化了运行时候的内存占用
   - 例子：
@@ -178,7 +178,7 @@
   - 同时`_hoisted_1`被打上了`PatchFlag`，静态标记值为`-1`，特殊标志是负整数表示永远不会用于`Diff`
 :::
 
-:::warning 事件监听缓存
+:::tip 事件监听缓存
   - 默认情况下绑定事件行为会被视为动态绑定，所以每次都会去追踪它的变化
     ```javascript
     <div>
@@ -204,7 +204,8 @@
       ]))
     }
     ```
-::: warning SSR优化
+:::
+::: tip SSR优化
   - 当静态内容大到一定量级时候，会用`createStaticVNode`方法在客户端去生成一个`static node`，这些静态`node`，会被直接`innerHtml`，就不需要创建对象，然后根据对象渲染
     ```javascript
     <div>
@@ -254,7 +255,7 @@
   ```
 :::
 
-:::danger 响应式系统
+:::warning 响应式系统
   - `Vue2`中采用`defineProperty`来劫持整个对象，然后进行深度遍历所有属性，给每个属性添加`getter`和`setter`，实现响应式
     - 对象新增或者删除一个属性无法实现响应式（可以通过Vue.set/Vue.delete来实现响应式）
     - 通过修改数组的length，下标无法实现响应式（通过改写数组的7种方法实现响应式）
@@ -266,7 +267,7 @@
 :::
 
 ## 3. Vue3.0里为什么要用 Proxy API 替代 defineProperty API ？
-:::warning Object.defineProperty
+:::tip Object.defineProperty
   - 定义：`Object.defineProperty()`方法会直接在一个对象上定义一个新属性，或者修改一个对象的现有属性，并返回此对象
     - `get`：属性的`getter` 函数，当访问该属性时，会调用此函数。执行时不传入任何参数，但是会传入`this`对象（由于继承关系，这里的this并不一定是定义该属性的对象）该函数的返回值会被用作属性的值
     - `set`：属性的`setter`函数，当属性值被修改时，会调用此函数。该方法接受一个参数（也就是被赋予的新值），会传入赋值时的`this`对象。默认为`undefined`
@@ -361,7 +362,7 @@
     - 需要对每个属性进行遍历监听，如果嵌套对象，需要深层监听，造成性能问题
 :::
 
-:::warning Proxy
+:::tip Proxy
   - `Proxy`的监听是针对一个对象的，那么对这个对象的所有操作会进入监听操作，这就完全可以代理所有属性了
     - 定义一个响应式方法`reactive`
       ```javascript
@@ -432,7 +433,7 @@
       }
       ```
 :::
-::: danger 总结
+::: warning 总结
   - `Object.defineProperty`只能遍历对象属性进行劫持 
     ```javascript
       function observe(obj) {
@@ -687,7 +688,7 @@ unWatch2()
 ```
 :::
 
-:::danger 总结
+:::warning 总结
   - `watch`是惰性执行的，而`watchEffect`不是
   - 不考虑`watch`第三个配置参数的情况下，`watch`在组件第一次执行的时候是不会执行的
   - 只有在之后依赖项变化的时候再执行，而`watchEffect`是在程序执行到此处的时候就会立即执行，而后再响应其依赖变化执行
@@ -722,7 +723,6 @@ unWatch2()
   <style scoped>
   ```
 
-
 ## 6. ref 和 reactive
 
 :::info 总结
@@ -738,26 +738,25 @@ unWatch2()
 - 实例：
   ```vue{6}
   <script setup lang="ts">
-   import { ref, reactive } from 'vue'
-    let name = ref('张三')
-    let person1 = reactive({ name: 'John', age: 18 })
-    let updatePerson1 = () => {
-      Object.assign(person1, { name: 'Joy', age: 19 })}
+  import { ref, reactive } from 'vue'
+  let name = ref('张三')
+  let person1 = reactive({ name: 'John', age: 18 })
+  let updatePerson1 = () => {
+    Object.assign(person1, { name: 'Joy', age: 19 })}
   </script>
   <template>
-    <div>姓名:{{ name }}</div>
-    <div>姓名:{{ person1.name }}</div>
-    <div>年龄:{{ person1.age }}</div>
-    <button @click="updatePerson1">修改person1</button>
+  <div>姓名:{{ name }}</div>
+  <div>姓名:{{ person1.name }}</div>
+  <div>年龄:{{ person1.age }}</div>
+  <button @click="updatePerson1">修改person1</button>
   </template>
-
   ```
 :::
 
 
 ## 7. toRef 和 toRefs
 
-:::warning 总结
+:::tip 总结
 - 将一个响应式对象里的每个属性，转换为`ref`对象
 - `toRef`和`toRefs`功能一致，但是`toRefs`可以批量操作
 - 实例：
@@ -802,7 +801,7 @@ unWatch2()
   </script>
   ```
 - 通过计算属性的`fullName`是一个可读可写属性
-  ```vue{13-18,21-24,27-28}
+  ```vue{13-17,21-23,27}
   <template>
     姓：<input type="text" v-model="firstName" /> <br />
     名：<input type="text" v-model="lastName" /><br />
@@ -832,12 +831,11 @@ unWatch2()
       fullName.value = 'li-si'
     }
   </script>
-
   ```
   
-  ## 9. Router
-  :::tip 实例：
-  ```typescript
+## 9. Router
+
+  ```ts
   // main.ts
   import { createRouter, createWebHistory } from 'vue-router'
   const router = createRouter({
@@ -869,14 +867,14 @@ unWatch2()
   })
   export default router
   ```
-  ```javascript
+  ```js
   // App.vue
   <RouterLink to="home" active-class="active">主页</RouterLink>
   <RouterLink to="news" active-class="active">新闻</RouterLink>
   <RouterLink to="about " active-class="active">关于</RouterLink>
   ```
-:::
-:::warning query传参
+
+:::tip query传参
 - `query`的第一种写法:`直接通过模版字符串拼接`
   ```javascript{4}
   <div>
@@ -958,7 +956,7 @@ unWatch2()
   ```
 :::
 
-:::danger param传参
+:::tip param传参
 - `params`的第一种写法:`直接通过模版字符串拼接`
   ```javascript{2}
   <RouterLink
@@ -980,7 +978,7 @@ unWatch2()
     >{{ item.title }}
   </RouterLink>
   ```
-- **`需要给参数设置占位符`**(*例如第12行*)
+- 需要给参数设置占位符(**例如第12行**)
   ```javascript{12}
   import { createRouter, createWebHistory } from 'vue-router'
   const router = createRouter({
@@ -1005,7 +1003,7 @@ unWatch2()
 
   ```
 - Detail页面接收`params`参数和使用
-  ```typescript
+  ```typescript{10-12}
   <script setup lang="ts">
   import { useRoute } from 'vue-router'
   import { toRefs } from 'vue'
@@ -1023,24 +1021,24 @@ unWatch2()
   ```
 :::
 
-:::danger 路由的props配置
+:::info 路由的props配置
 - 将路由参数作为props传给组件
-```javascript
-// Details.vue 页面直接使用id，title，content
-<ul>
-  <li>{{id}}<li>
-  <li>{{title}}<li>
-  <li>{{content}}<li>
-<ul>
-```
-```typescript{2}
-<script lang="ts" setup>
-  defineProps(["id","title","content"])
-</scrip>
-```
+  ```javascript
+  // Details.vue 页面直接使用id，title，content
+  <ul>
+    <li>{{id}}<li>
+    <li>{{title}}<li>
+    <li>{{content}}<li>
+  <ul>
+  ```
+  ```typescript{2}
+  <script lang="ts" setup>
+    defineProps(["id","title","content"])
+  </scrip>
+  ```
   - 布尔写法
-  ```javascript{11}
-  routes: [
+    ```javascript{11}
+    routes: [
       {
         name: 'xinwen',
         path: '/news',
@@ -1055,50 +1053,50 @@ unWatch2()
         ]
       }
     ]
-  ```
+    ```
   - 函数写法
-  ```javascript{11-13}
+    ```javascript{11-13}
     routes: [
-        {
-          name: 'xinwen',
-          path: '/news',
-          component: () => import('@/components/News.vue'),
-          children: [
-            {
-              name: 'xiangqing',
-              path: 'details/:id/:title/:content',
-              component: () => import('@/components/Details.vue'),
-              props(route){
-                // 函数写法，可以传query参数也可以传params参数
-                return route.query //return route.query
-              }
+      {
+        name: 'xinwen',
+        path: '/news',
+        component: () => import('@/components/News.vue'),
+        children: [
+          {
+            name: 'xiangqing',
+            path: 'details/:id/:title/:content',
+            component: () => import('@/components/Details.vue'),
+            props(route){
+              // 函数写法，可以传query参数也可以传params参数
+              return route.query //return route.query
             }
-          ]
-        }
-      ]
-  ```
+          }
+        ]
+      }
+    ]
+    ```
   - 对象写法
-  ```javascript{11-14}
+    ```javascript{11-14}
     routes: [
-        {
-          name: 'xinwen',
-          path: '/news',
-          component: () => import('@/components/News.vue'),
-          children: [
-            {
-              name: 'xiangqing',
-              path: 'details/:id/:title/:content',
-              component: () => import('@/components/Details.vue'),
-              props:{ // 可以自己决定将什么作为props传给路由组件
-                a:1,
-                b:2,
-                c:3
-              }
+      {
+        name: 'xinwen',
+        path: '/news',
+        component: () => import('@/components/News.vue'),
+        children: [
+          {
+            name: 'xiangqing',
+            path: 'details/:id/:title/:content',
+            component: () => import('@/components/Details.vue'),
+            props:{ // 可以自己决定将什么作为props传给路由组件
+              a:1,
+              b:2,
+              c:3
             }
-          ]
-        }
-      ]
-  ```
+          }
+        ]
+      }
+    ]
+    ```
 :::
   ## 10. 组件通信
   1. `props`是使用频率最高的一种通信方式 父子可以相互传递
@@ -1125,9 +1123,9 @@ unWatch2()
       ```typescript{4,11,12}
       // 子组件
       <script setup lang="ts">
-      import { ref } from 'vue'
-      defineProps(['name', 'sentAge'])
-      let age = ref(18)
+        import { ref } from 'vue'
+        defineProps(['name', 'sentAge'])
+        let age = ref(18)
       </script>
       <template>
         <div>
@@ -1142,13 +1140,13 @@ unWatch2()
      ```typescript{6-8,15}
       // 父组件
       <script setup lang="ts">
-      import { ref } from 'vue'
-      import Child from '@/pages/02-custom-event/Child.vue'
-      let name = ref('张三')
-      let age = ref()
-      let getAge = (value) => {
-        age.value = value
-      }
+        import { ref } from 'vue'
+        import Child from '@/pages/02-custom-event/Child.vue'
+        let name = ref('张三')
+        let age = ref()
+        let getAge = (value) => {
+          age.value = value
+        }
       </script>
       <template>
         <h1>父组件</h1>
@@ -1160,9 +1158,9 @@ unWatch2()
       ```typescript{4,11}
       // 子组件
       <script setup lang="ts">
-      import { ref } from 'vue'
-      const emit = defineEmits(['sent-age'])
-      let age = ref(18)
+        import { ref } from 'vue'
+        const emit = defineEmits(['sent-age'])
+        let age = ref(18)
       </script>
       <template>
         <div>
@@ -1175,26 +1173,26 @@ unWatch2()
       </template>
       ```
   3. `mitt`
-     ```typescript
-     // @/utils/emitter
+      ```typescript
+      // @/utils/emitter
       import mitt from 'mitt'
       export const emitter = mitt()
+      ```
 
-     ```
-     ```typescript{6-12}
-     // 子组件1
+      ```typescript{7-12}
+      // 子组件1
       <script setup lang="ts">
-      import { ref } from 'vue'
-      import { emitter } from '@/utils/emitter'
-      let age = ref(18)
-      let toy = ref('')
-      let sentAge = () => {
-        emitter.emit('sent-age', age.value)
-      }
-      emitter.on('sent-toy', (value: any) => {
-        console.log('子组件1收到玩具', value)
-        toy.value = value
-      })
+        import { ref } from 'vue'
+        import { emitter } from '@/utils/emitter'
+        let age = ref(18)
+        let toy = ref('')
+        let sentAge = () => {
+          emitter.emit('sent-age', age.value)
+        }
+        emitter.on('sent-toy', (value: any) => {
+          console.log('子组件1收到玩具', value)
+          toy.value = value
+        })
       </script>
       <template>
         <div>
@@ -1208,36 +1206,36 @@ unWatch2()
 
      ```typescript{6-12}
      // 子组件2
-      <script setup lang="ts">
-      import { ref } from 'vue'
-      import { emitter } from '@/utils/emitter'
-      let toy = ref('奥特曼')
-      let age = ref()
-      emitter.on('sent-age', (value: any) => {
-        console.log('子组件2收到年龄', value)
-        age.value = value
+     <script setup lang="ts">
+       import { ref } from 'vue'
+       import { emitter } from '@/utils/emitter'
+       let toy = ref('奥特曼')
+       let age = ref()
+       emitter.on('sent-age', (value: any) => {
+         console.log('子组件2收到年龄', value)
+         age.value = value
       })
-      let sentToy = () => {
-        emitter.emit('sent-toy', toy.value)
+       let sentToy = () => {
+         emitter.emit('sent-toy', toy.value)
       }
-      </script>
-      <template>
-        <div>
-          <h1>子组件2</h1>
-          <h4>儿子的玩具:{{ toy }}</h4>
-          <h4 v-show="age">子组件1传递的年龄:{{ age }}</h4>
-          <button @click="sentToy">把玩具传给子组件1</button>
-        </div>
-      </template>
+     </script>
+     <template>
+      <div>
+        <h1>子组件2</h1>
+        <h4>儿子的玩具:{{ toy }}</h4>
+        <h4 v-show="age">子组件1传递的年龄:{{ age }}</h4>
+        <button @click="sentToy">把玩具传给子组件1</button>
+      </div>
+     </template>
      ```
   4. `v-model`
       ```typescript{13-17,22-23}
       // 父组件
       <script setup lang="ts">
-      import { ref } from 'vue'
-      import ModelInput from './ModelInput.vue'
-      let username = ref('张三')
-      let password = ref(123456)
+        import { ref } from 'vue'
+        import ModelInput from './ModelInput.vue'
+        let username = ref('张三')
+        let password = ref(123456)
       </script>
       <template>
         <h1>父组件</h1>
@@ -1258,11 +1256,11 @@ unWatch2()
         <ModelInput :modelValue="password" @update:modelValue="password = $event" />
       </template>
       ```
-      ```typescript{3-4,7-10}
+      ```typescript{3-4,8-10}
       // 子组件
       <script setup lang="ts">
-      defineProps(['modelValue'])
-      let emit = defineEmits(['update:modelValue'])
+        defineProps(['modelValue'])
+        let emit = defineEmits(['update:modelValue'])
       </script>
       <template>
         <input
@@ -1284,41 +1282,41 @@ unWatch2()
         let updateB = (value: number) => {
           b.value += value
         }
-        </script>
-        <template>
-          <div>
-            <h3>父组件</h3>
-            <h4>a:{{ a }}</h4>
-            <h4>b:{{ b }}</h4>
-            <h4>c:{{ c }}</h4>
-            <Child
-              :a="a"
-              :b="b"
-              :c="c"
-              v-bind="{ x: 100, y: 200 }"
-              :updateB="updateB"
-            />
-          </div>
-        </template>
+      </script>
+      <template>
+        <div>
+          <h3>父组件</h3>
+          <h4>a:{{ a }}</h4>
+          <h4>b:{{ b }}</h4>
+          <h4>c:{{ c }}</h4>
+          <Child
+            :a="a"
+            :b="b"
+            :c="c"
+            v-bind="{ x: 100, y: 200 }"
+            :updateB="updateB"
+          />
+        </div>
+      </template>
         ```
         ```typescript{4,9-10}
         // 子组件
         <script setup lang="ts">
           import GrandChild from './GrandChild.vue'
           defineProps(['a']) // 子组件只接收了数据a 其他数据全部在$attrs中
-          </script>
-          <template>
-            <div>
-              <h3>子组件</h3>
-              a:{{ a }} 其他：{{ $attrs }}
-              <GrandChild v-bind="$attrs" /> // 把$attrs中的数据传递给孙组件
-            </div>
-          </template>
+        </script>
+        <template>
+          <div>
+            <h3>子组件</h3>
+            a:{{ a }} 其他：{{ $attrs }}
+            <GrandChild v-bind="$attrs" /> // 把$attrs中的数据传递给孙组件
+          </div>
+        </template>
         ```
         ```typescript{3,12-13}
         // 孙组件
           <script setup lang="ts">
-          defineProps(['b', 'c', 'x', 'y', 'updateB'])
+            defineProps(['b', 'c', 'x', 'y', 'updateB'])
           </script>
           <template>
             <div>
@@ -1332,38 +1330,38 @@ unWatch2()
             </div>
           </template>
         ```
-6. `$refs-$parent`
+1. `$refs-$parent`
    - 父组件通过`$refs`获取子组件的实例，
    - 子组件通过`$parent`获取父组件的实例
     ```typescript{8-24}
     //父组件
     <script setup lang="ts">
-    import { ref, reactive } from 'vue'
-    import Child1 from './Child1.vue'
-    import Child2 from './Child2.vue'
-    let money = ref(100)
-    let car = reactive({ name: '奔驰', price: 40 })
-    defineExpose({ money, car })
-    let c1 = ref()
-    let c2 = ref()
-    // 对c1子组件进行数据更新
-    let updateC1Data = () => {
-      c1.value.toy = '挖掘机'
-      c1.value.books += 1
-    }
-     // 对c2子组件进行数据更新
-    let updateC2Data = () => {
-      c2.value.computer = 'mac'
-      c2.value.books += 2
-    }
-    // 对于很多个子组件进行数据更新
-    let updateChild = (refs: { [key: string]: any }) => {
-      console.log(refs)
-      refs.c1.toy = '挖掘机'
-      refs.c1.books += 1
-      refs.c2.computer = 'mac'
-      refs.c2.books += 2
-    }
+      import { ref, reactive } from 'vue'
+      import Child1 from './Child1.vue'
+      import Child2 from './Child2.vue'
+      let money = ref(100)
+      let car = reactive({ name: '奔驰', price: 40 })
+      defineExpose({ money, car })
+      let c1 = ref()
+      let c2 = ref()
+      // 对c1子组件进行数据更新
+      let updateC1Data = () => {
+        c1.value.toy = '挖掘机'
+        c1.value.books += 1
+      }
+      // 对c2子组件进行数据更新
+      let updateC2Data = () => {
+        c2.value.computer = 'mac'
+        c2.value.books += 2
+      }
+      // 对于很多个子组件进行数据更新
+      let updateChild = (refs: { [key: string]: any }) => {
+        console.log(refs)
+        refs.c1.toy = '挖掘机'
+        refs.c1.books += 1
+        refs.c2.computer = 'mac'
+        refs.c2.books += 2
+      }
     </script>
     <template>
       <div class="fa">
@@ -1383,14 +1381,14 @@ unWatch2()
     ```typescript{6-8,18}
     // Child1.vue
     <script setup lang="ts">
-    import { ref } from 'vue'
-    let toy = ref('奥特曼')
-    let books = ref(5)
-    defineExpose({ toy, books })
-    // 更新父组件数据
-    let updateMoney = (parent: any) => {
-      parent.money += 1
-    }
+      import { ref } from 'vue'
+      let toy = ref('奥特曼')
+      let books = ref(5)
+      defineExpose({ toy, books })
+      // 更新父组件数据
+      let updateMoney = (parent: any) => {
+        parent.money += 1
+      }
     </script>
     <template>
       <div class="ch1">
@@ -1405,15 +1403,15 @@ unWatch2()
     ```typescript{6-10,19}
     // Child2.vue
     <script setup lang="ts">
-    import { ref } from 'vue'
-    let computer = ref('华为')
-    let books = ref(10)
-    defineExpose({ computer, books })
-    // 更新父组件数据
-    let updateCar = (parent: any) => {
-      parent.car.name = '宝马'
-      parent.car.price = 20
-    }
+      import { ref } from 'vue'
+      let computer = ref('华为')
+      let books = ref(10)
+      defineExpose({ computer, books })
+      // 更新父组件数据
+      let updateCar = (parent: any) => {
+        parent.car.name = '宝马'
+        parent.car.price = 20
+      }
     </script>
     <template>
       <div class="ch1">
@@ -1425,34 +1423,34 @@ unWatch2()
       </div>
     </template>
     ```
-7. `provide`和`inject`
+2. `provide`和`inject`
     - 父组件中使用`provide`来提供数据
     - 在子组件中使用`inject`来开始使用这些数据
     ```typescript{17-23}
     // 父组件
     <script setup lang="ts">
-    import { ref, reactive, provide } from 'vue'
-    import Child from './Child.vue'
-    let money = ref(100)
-    let car = reactive({
-      brand: '奔驰',
-      price: 50
-    })
-    let updateMoney = (value: number) => {
-      money.value -= value
-    }
-    let updateCar = () => {
-      car.price = 20
-      car.brand = '宝马'
-    }
-    provide('money', {
-      money,
-      updateMoney
-    })
-    provide('car', {
-      car,
-      updateCar
-    })
+      import { ref, reactive, provide } from 'vue'
+      import Child from './Child.vue'
+      let money = ref(100)
+      let car = reactive({
+        brand: '奔驰',
+        price: 50
+      })
+      let updateMoney = (value: number) => {
+        money.value -= value
+      }
+      let updateCar = () => {
+        car.price = 20
+        car.brand = '宝马'
+      }
+      provide('money', {
+        money,
+        updateMoney
+      })
+      provide('car', {
+        car,
+        updateCar
+      })
     </script>
     <template>
       <div class="fa">
@@ -1467,15 +1465,15 @@ unWatch2()
     ```typescript{4-10,18,21}
     // 子孙组件
     <script setup lang="ts">
-    import { inject } from 'vue'
-    let { money, updateMoney } = inject('money', {
-      money: 0,
-      updateMoney: (param: number) => {}
-    })
-    let { car, updateCar } = inject('car', {
-      car: { brand: '', price: 0 },
-      updateCar: (param: number) => {}
-    })
+      import { inject } from 'vue'
+      let { money, updateMoney } = inject('money', {
+        money: 0,
+        updateMoney: (param: number) => {}
+      })
+      let { car, updateCar } = inject('car', {
+        car: { brand: '', price: 0 },
+        updateCar: (param: number) => {}
+      })
     </script>
     <template>
       <div class="gr">
@@ -1488,7 +1486,7 @@ unWatch2()
       </div>
     </template>
     ```
-8. `slot`
+3. `slot`
   - 默认插槽
    ```typescript{4-14}
     <!--  父组件 -->
@@ -1511,14 +1509,14 @@ unWatch2()
    ```typescript{3,8}
    // 子组件
    <script setup lang="ts">
-    defineProps<{ title: string }>()
-    </script>
-    <template>
+     defineProps<{ title: string }>()
+   </script>
+   <template>
       <div class="ch">
         <h3>{{ title }}</h3>
         <slot>默认内容</slot>
       </div>
-    </template>
+   </template>
    ```
   - 具名插槽
    ```typescript{5,13,20}
@@ -1591,7 +1589,7 @@ unWatch2()
    ```typescript{14}
    // 子组件
     <script setup lang="ts">
-    import { reactive } from 'vue'
+      import { reactive } from 'vue'
     let games = reactive([
       { id: 1, name: '超级玛丽' },
       { id: 2, name: '冒险岛' },
@@ -1606,43 +1604,26 @@ unWatch2()
       </div>
     </template>
    ```
-  :::danger 总结
-| 组件关系 | 传递方式           |
-| -------- | ------------------ |
-| 父传子   | props              |
-|          | v-model            |
-|          | $refs              |
-|          | 默认插槽，具名插槽 |
+#### 总结
+| 组件关系     | 传递方式                                              |
+| ------------ | ----------------------------------------------------- |
+| 父传子       | `props`, v-model, `$refs`, 默认插槽，具名插槽         |
+| 子传父       | `props`, 自定义事件, `v-model`, `$parent`, 作用域插槽 |
+| 祖孙之间     | `$attrs`, `provide` `inject`                          |
+| 任意组件之间 | `mitt`, `pinia`                                       |
 
-| 组件关系 | 传递方式   |
-| -------- | ---------- |
-| 子传父   | props      |
-|          | 自定义事件 |
-|          | v-model    |
-|          | $parent    |
-|          | 作用域插槽 |
 
-| 组件关系 | 传递方式       |
-| -------- | -------------- |
-| 祖孙之间 | $attrs         |
-|          | provide inject |
 
-| 组件关系     | 传递方式 |
-| ------------ | -------- |
-| 任意组件之间 | mitt     |
-|              | pinia    |
+## 11. toRef,toRefs,toRaw,markRaw,customRef
 
-  :::
-
-  ## 11. toRef,toRefs,toRaw,markRaw,customRef
-
-  :::warning 总结
+  :::tip 总结
   - `toRef`: 基于响应式对象上的一个属性，创建一个对应的`ref`这样创建的`ref`与其源属性保持同步：改变源属性的值将更新 `ref`的值
   - `toRefs`: 将一个响应式对象转换为一个普通对象，这个普通对象的每个属性都是指向源对象相应属性的 ref。每个单独的 ref 都是使用`toRef()`创建的
   - `toRaw`:根据一个`Vue`创建的代理返回其原始对象
   - `markRaw`: 将一个对象标记为不可被转为代理。返回该对象本身
   - `customRef`: 创建一个自定义的`ref`，并对其依赖项跟踪和更新触发进行显式控制
   :::
+
   - `toRef`
     ```typescript{5-11,15,23-24}
     <script setup lang="ts">
@@ -1723,7 +1704,7 @@ unWatch2()
         return value
       }
     ```
-    - `customRef`
+  - `customRef`
     ```typescript
     // useMsgRef.ts  
     import { customRef } from 'vue'

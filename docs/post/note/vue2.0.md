@@ -1,15 +1,15 @@
 
-# Vue2.0相关
+# Vue2.0
 
-## 1.为什么 data 是一个函数
-:::tip 
+## 1. 为什么 data 是一个函数
+:::tip data
   1. 组件中的 `data` 写成一个函数，数据以函数返回值形式定义，
   2. 这样每复用一次组件，就会返回一份新的 `data`，
   3. 类似于给每个组件实例创建一个私有的数据空间，让各个组件实例维护各自的数据。
   4. 而单纯的写成对象形式，就使得所有组件实例共用了一份 `data`，就会造成一个变了全都会变的结果
 :::
 ## 2. Vue 组件通讯有哪几种方式
-:::tip 
+:::tip Vue 组件通讯方式
   1. `props`：父组件向子组件传递数据是通过 `prop`传递的
   2. 子组件传递数据给父组件是通过 `$emit` 触发自定义事件
   3. `$parent`,`$children` 获取当前组件的父组件和当前组件的子组件
@@ -37,13 +37,13 @@
 3. `watch`： 更多的是「观察」的作用，类似于某些数据的监听回调 ，每当监听的数据变化时都会执行回调进行后续操作
 :::
 ## 5. 怎样理解 Vue 的单向数据流
-:::tip
+:::tip 单向数据流
 1. `props`传递数据都是父到子这样的一个单向流转过程，父组件中的`props`数据更新会使得与它关联的子组件数据也发生改变
 2. 反过来则不行，这是为了防止子组件意外改变父组件`props`数据的状态，
 3. 如果子组件想修改父组件的数据，可以通过`$emit`派发一个自定义事件，父组件接收后，再由父组件去修改
 4. 有2种常见的方式去修改`props`：
    ```js
-   //  prop 用来传递一个初始值,本地的 data 将这个 prop 用作其初始值
+    // prop 用来传递一个初始值,本地的 data 将这个 prop 用作其初始值
     props：[count]
     data(){
       return{
@@ -52,7 +52,7 @@
     }
    ```
    ```js
-   //  prop 用来传递一个初始值,通过computed对其进行加工
+    // prop 用来传递一个初始值,通过computed对其进行加工
     props：[count]
     computed{
       show(){
@@ -62,7 +62,7 @@
    ```
 :::
 ##  6. v-model 的原理
-:::warning 原理
+:::tip 原理
 1. `v-model` 本质就是 ：`value` + `input` 方法的语法糖
 2. 可以通过 `model` 属性的 `prop` 和 `event` 属性来进行自定义
 3. 原生的 `v-model`，会根据标签的不同生成不同的事件和属性
@@ -86,7 +86,7 @@
  - 这样就可以监听 `url` 变化来实现更新页面部分内容的操作
 :::
 
-:::tip 区别
+:::warning 区别
  - 首先是在 `URL` `的展示上，hash` 模式有“#`”，history` 模式没有
  - 刷新页面时，`hash` 模式可以正常加载到 `hash` 值对应的页面，而 `history` 没有处理的话，会返回 404，一般需要后端将所有页面都配置重定向到首页路由
  - 在兼容性上，`hash` 可以支持低版本浏览器和 `IE`
@@ -119,7 +119,7 @@ let map = makeIndexByKey(oldCh);
 ```
 
 ## 9. 你有对 Vue 项目进行哪些优化
-:::danger  1. 代码层面的优化：
+:::tip  1. 代码层面的优化：
 1. `v-if` 和 `v-show` 区分使用场景
 2. `computed `和 `watch`  区分使用场景
 3. `v-for` 遍历必须为 `item` 添加 `key`，且避免同时使用 `v-if`
@@ -131,7 +131,7 @@ let map = makeIndexByKey(oldCh);
 9. 优化无限列表性能
 10. 服务端渲染 `SSR` or 预渲染
 :::
-:::warning  2. `Webpack` 层面的优化：
+:::tip  2. `Webpack` 层面的优化：
    1. `Webpack` 对图片进行压缩
    2. 减少 `ES6` 转为 `ES5` 的冗余代码
    3. 提取公共代码
@@ -278,10 +278,10 @@ methodsToPatch.forEach((method) => {
   ```
 :::
 ## 13. nextTick 的作用是什么？它的实现原理是什么
-:::warning 作用
+:::tip 作用
    - `vue` 更新 `DOM` 是异步更新的，数据变化，`DOM` 的更新不会马上完成，`nextTick` 的回调是在下次 `DOM` 更新循环结束之后执行的延迟回调
 :::
-:::warning 实现原理
+:::tip 实现原理
    - `nextTick` 主要使用了宏任务和微任务。根据执行环境分别尝试采用
       - `Promise` 可以将函数延迟到当前函数调用栈最末端
       - `MutationObserver` 是 `H5` 新加的一个功能，其功能是监听 `DOM` 节点的变动，在所有` DOM` 变动完成后，执行回调函数
@@ -443,7 +443,7 @@ function set(target, key, val) {
  }
 ```
 ## 15. vue 内置指令&事件修饰符&v-model修饰符
-:::danger 内置指令
+:::info 内置指令
  - `v-on`：给元素绑定事件监听器
  - `v-bind`： 动态的绑定一个或多个 `attribute` ,也可以是组件的 `prop`
  - `v-if`：基于表达式值的真假性，来条件性地渲染元素或者模板片段
@@ -459,7 +459,7 @@ function set(target, key, val) {
  - `v-cloak`：用于隐藏尚未完成编译的 `DOM` 模板
  - `v-once`：仅渲染元素和组件一次，并跳过之后的更新
 :::
-:::danger 事件修饰符
+:::info 事件修饰符
   - `stop`：阻止事件冒泡(`event.stopPropagation`()方法)
   - `prevent`：用于阻止事件的默认行为(`event.preventDefault`()方法)
   - `self`：只当事件是从事件绑定的元素本身触发时才触发回调
@@ -467,14 +467,14 @@ function set(target, key, val) {
   - `capture`：向下捕获方式触发（完整的事件机制是：捕获阶段--目标阶段--冒泡阶段）
   - `passive`： 滚动事件延迟
 :::
-:::danger `v-model`修饰符：
+:::info `v-model`修饰符：
   - `lazy` ——监听 `change` 事件而不是 `input`
   - `number` ——将输入的合法符串转为数字
   - `trim` ——移除输入内容两端空格
 :::
 
 ## 16. keep-alive 是什么
-:::tip 
+:::tip keep-alive
 - 作用：实现组件缓存，保持组件的状态，避免反复渲染导致的性能问题
 - 工作原理：
   - `Vue.js` 内部将 DOM 节点，抽象成了一个个的 `VNode` 节点
@@ -495,18 +495,18 @@ function set(target, key, val) {
 :::
 
 ## 17. 说说你对slot的理解？slot使用场景有哪些？
-:::tip 使用场景
+:::info 使用场景
   - 通过插槽可以让用户可以拓展组件，去更好地复用组件和对其做定制化处理
   - 如果父组件在使用到一个复用组件的时候，获取这个组件在不同的地方有少量的更改，如果去重写组件是一件不明智的事情
   - 通过`slot`插槽向组件内部指定位置传递内容，完成这个复用组件在不同场景的应用
   - 比如布局组件、表格列、下拉选、弹框显示内容等
 :::
-:::warning 分类
+:::tip 分类
   - 默认插槽
   - 具名插槽
   - 作用域插槽
 :::
-:::tip 默认插槽
+:::info 默认插槽
 ```javascript
   // 父组件
   <Child>
@@ -524,7 +524,7 @@ function set(target, key, val) {
 ```
 :::
 
-:::tip 具名插槽
+:::info 具名插槽
 - 子组件用`name`属性来表示插槽的名字，不传为默认插槽
 - 父组件中在使用时在默认插槽的基础上加上`slot`属性，值为子组件插槽`name`属性值
 ```javascript
@@ -543,7 +543,7 @@ function set(target, key, val) {
 </template>
 ```
 :::
-:::tip 作用域插槽
+:::info 作用域插槽
 - 子组件在作用域上绑定属性来将子组件的信息传给父组件使用，这些属性会被挂在父组件`v-slot`接受的对象上
 - 父组件中在使用时通过`v-slot`:（简写：#）获取子组件的信息，在内容中使用
 
@@ -569,7 +569,7 @@ function set(target, key, val) {
 ```
 :::
 
-:::danger 总结
+:::warning 总结
   - `v-slot`属性只能在`template`上使用，但在只有默认插槽时可以在组件标签上使用
   - 默认插槽名为`default`，可以省略`default`直接写`v-slot`
   - 缩写为`#`时不能不写参数，写成`#default`
@@ -578,7 +578,7 @@ function set(target, key, val) {
 
 
 ## 18. 虚拟DOM
-:::tip Virtual DOM
+:::info Virtual DOM
   - 实际上它只是一层对真实`DOM`的抽象，以`JavaScript`对象 `(VNode`节点) 作为基础的树，用对象的属性来描述节点，最终可以通过一系列操作使这棵树映射到真实环境上
   - 在`Javascript`对象中，虚拟`DOM`表现为一个`Object`对象。并且最少包含标签名 (`tag`)、属性 (`attrs`) 和子元素对象 (`children`) 三个属性，不同框架对这三个属性的名命可能会有差别
   - 创建虚拟`DOM`就是为了更好将虚拟的节点渲染到页面视图中，所以虚拟`DOM`对象的节点与真实`DOM`的属性一一照应
@@ -615,7 +615,7 @@ let oldVDOM = { // 旧虚拟DOM
 }
 ```
 :::
-:::warning h函数
+:::info h函数
 ```javascript
   /**
  * @description:把传入的参数作为对象返出去
@@ -676,18 +676,18 @@ function h(sel, b, c) {
 
 ## 19. diff算法
 
-:::warning diff
+:::tip diff
   - `diff`算法是一种通过同层的树节点进行比较的高效算法
   - 其有两个特点：
     - 比较只会在同层级进行, 不会跨层级比较
     - 在`diff`比较的过程中，循环从两边向中间比较
   - `diff`算法在很多场景下都有应用，在`vue`中，作用于虚拟`DOM`渲染成真实`DOM`的新旧`VNode`节点比较
 :::
-:::danger 原理分析
+:::warning 原理分析
   - 当数据发生改变时，`setter`方法会调用`Dep.notify`通知所有订阅者`Watcher`，订阅者就会调用`patch`给真实的`DOM`打补丁，更新相应的视图
   ![pic](/diff1.png)
 :::
-:::danger patch方法
+:::tip patch方法
   - 对比当前同层的虚拟节点是否为同一种类型的标签
     - 是：继续执行`patchVnode`方法进行深层比对
     - 否：没必要比对了，直接整个节点替换成新虚拟节点
@@ -715,7 +715,7 @@ function patch(oldVnode, newVnode) {
 :::
 
 
-:::danger sameVnode方法
+:::tip sameVnode方法
   - `sameVnode`方法判断是否为同一类型节点
 ```javascript
 function sameVnode(oldVnode, newVnode) {
@@ -730,7 +730,7 @@ function sameVnode(oldVnode, newVnode) {
 ```
 :::
 
-:::danger patchVnode方法
+:::warning patchVnode方法
   - 找到对应的真实`DOM`，称为`el`
   - 判断`newVnode`和`oldVnode`是否指向同一个对象，如果不是，那么直接`return`，直接替换成新的`newVnode`
   - 如果他们都有文本节点并且不相等，那么将`el`的文本节点设置为`newVnode`的文本节点
@@ -768,7 +768,7 @@ function patchVnode(oldVnode, newVnode) {
 ```
 :::
 
-:::danger updateChildren方法
+:::tip updateChildren方法
 ![pic](/diff2.png)
 - 使用`sameVnode`方法 (`oldChStartIdx`  `oldChEndIdx` `newChStartIdx` `newChEndIdx`)
    1. `oldChStartIdx`和`newChStartIdx`使用`sameVnode`方法进行比较，sameVnode(oldChStartIdx, newChStartIdx)
@@ -850,7 +850,7 @@ function updateChildren(parentElm, oldCh, newCh) {
 :::
 
 ## 20. vue要做权限管理该怎么做？
-:::tip 权限
+:::info 权限
   - 权限是对特定资源的访问许可，所谓权限控制，也就是确保用户只能访问到被分配的资源
   - 而前端权限归根结底是请求的发起权，请求的发起可能有下面两种形式触发
     - 页面加载触发
@@ -862,7 +862,7 @@ function updateChildren(parentElm, oldCh, newCh) {
   - 菜单权限
   - 路由权限
 :::
-::: tip 接口权限
+::: info 接口权限
   - 接口权限目前一般采用`jwt`的形式来验证，没有通过的话一般返回`401`
   - 跳转到登录页面重新进行登录,登录完拿到`token`，将`token`存起来
   - 通过`axios`请求拦截器进行拦截，每次请求的时候头部携带`token`
@@ -881,7 +881,7 @@ axios.interceptors.response.use(res=>{},{response}=>{
 :::
 
 
-:::tip 按钮权限
+:::info 按钮权限
   - 方案1
     - 按钮权限用`v-if`判断
     - 但是如果页面过多，每个页面页面都要获取用户权限`role`和路由表里的`meta.btnPermissions`，然后再做判断
@@ -956,7 +956,7 @@ axios.interceptors.response.use(res=>{},{response}=>{
       ```
 :::
 
-:::tip 菜单权限
+:::info 菜单权限
   - 方案1
     - 菜单与路由分离，菜单由后端返回
     - 每次路由跳转的时候都要判断权限，这里的判断也很简单，因为菜单的`name`与路由的`name`是一一对应的，而后端返回的菜单就已经是经过权限过滤的
@@ -965,72 +965,72 @@ axios.interceptors.response.use(res=>{},{response}=>{
     - 这种方式的缺点：
       - 菜单需要与路由做一一对应，前端添加了新功能，需要通过菜单管理功能添加新的菜单，如果菜单配置的不对会导致应用不能正常使用
       - 全局路由守卫里，每次路由跳转都要做判断
-    ```javascript
-    // 定义路由信息
-    {
-      name: "login",
-      path: "/login",
-      component: () => import("@/pages/Login.vue")
-    } 
-    ```
-    ```javascript
-    // 全局路由守卫
-    function hasPermission(router, accessMenu) {
-      if (whiteList.indexOf(router.path) !== -1) {
-        return true
+      ```javascript
+      // 定义路由信息
+      {
+        name: "login",
+        path: "/login",
+        component: () => import("@/pages/Login.vue")
+      } 
+      ```
+      ```javascript
+      // 全局路由守卫
+      function hasPermission(router, accessMenu) {
+        if (whiteList.indexOf(router.path) !== -1) {
+          return true
+        }
+        let menu = Util.getMenuByName(router.name, accessMenu);
+        if (menu.name) {
+          return true
+        }
+        return false
       }
-      let menu = Util.getMenuByName(router.name, accessMenu);
-      if (menu.name) {
-        return true
-      }
-      return false
-    }
-    Router.beforeEach(async (to, from, next) => {
-      if (getToken()) {
-        let userInfo = store.state.user.userInfo;
-        if (!userInfo.name) {
-          try {
-            await store.dispatch("GetUserInfo")
-            await store.dispatch('updateAccessMenu')
+      Router.beforeEach(async (to, from, next) => {
+        if (getToken()) {
+          let userInfo = store.state.user.userInfo;
+          if (!userInfo.name) {
+            try {
+              await store.dispatch("GetUserInfo")
+              await store.dispatch('updateAccessMenu')
+              if (to.path === '/login') {
+                next({ name: 'home_index' })
+              } else {
+                //Util.toDefaultPage([...routers], to.name, router, next);
+                next({ ...to, replace: true })//菜单权限更新完成,重新进一次当前路由
+              }
+            }  
+            catch (e) {
+              if (whiteList.indexOf(to.path) !== -1) { // 在免登录白名单，直接进入
+                next()
+              } else {
+                next('/login')
+              }
+            }
+          } else {
             if (to.path === '/login') {
               next({ name: 'home_index' })
             } else {
-              //Util.toDefaultPage([...routers], to.name, router, next);
-              next({ ...to, replace: true })//菜单权限更新完成,重新进一次当前路由
-            }
-          }  
-          catch (e) {
-            if (whiteList.indexOf(to.path) !== -1) { // 在免登录白名单，直接进入
-              next()
-            } else {
-              next('/login')
+              if (hasPermission(to, store.getters.accessMenu)) {
+                Util.toDefaultPage(store.getters.accessMenu,to, routes, next);
+              } else {
+                next({ path: '/403',replace:true })
+              }
             }
           }
         } else {
-          if (to.path === '/login') {
-            next({ name: 'home_index' })
+          if (whiteList.indexOf(to.path) !== -1) { // 在免登录白名单，直接进入
+            next()
           } else {
-            if (hasPermission(to, store.getters.accessMenu)) {
-              Util.toDefaultPage(store.getters.accessMenu,to, routes, next);
-            } else {
-              next({ path: '/403',replace:true })
-            }
+            next('/login')
           }
         }
-      } else {
-        if (whiteList.indexOf(to.path) !== -1) { // 在免登录白名单，直接进入
-          next()
-        } else {
-          next('/login')
-        }
-      }
-      let menu = Util.getMenuByName(to.name, store.getters.accessMenu);
-      Util.title(menu.title);
-    })
-    Router.afterEach((to) => {
-      window.scrollTo(0, 0);
-    })
-    ```
+        let menu = Util.getMenuByName(to.name, store.getters.accessMenu);
+        Util.title(menu.title);
+      })
+      Router.afterEach((to) => {
+        window.scrollTo(0, 0);
+      })
+      ```
   - 方案2
     - 菜单和路由都由后端返回
     - 在将后端返回路由通过addRoutes动态挂载之间，需要将数据处理一下，将component字段换为真正的组件
@@ -1038,33 +1038,33 @@ axios.interceptors.response.use(res=>{},{response}=>{
     - 这种方法也会存在缺点：
       - 全局路由守卫里，每次路由跳转都要做判断
       - 前后端的配合要求更高
-    ```javascript
-    // 路由组件
-    const Home = () => import("../pages/Home.vue");
-    const UserInfo = () => import("../pages/UserInfo.vue");
-    export default {
-      home: Home,
-      userInfo: UserInfo
-    }
-    ```
-    ```javascript
-    // 后端路由组件返回以下格式
-    [
-      {
-        name: "home",
-        path: "/",
-        component: "Home"
-      },
-      {
-        name: "about",
-        path: "/about",
-        component: "About"
+      ```javascript
+      // 路由组件
+      const Home = () => import("../pages/Home.vue");
+      const UserInfo = () => import("../pages/UserInfo.vue");
+      export default {
+        home: Home,
+        userInfo: UserInfo
       }
-    ]
-    ```
+      ```
+      ```javascript
+      // 后端路由组件返回以下格式
+      [
+        {
+          name: "home",
+          path: "/",
+          component: "Home"
+        },
+        {
+          name: "about",
+          path: "/about",
+          component: "About"
+        }
+      ]
+      ```
 :::
 
-:::tip 路由权限
+:::info 路由权限
   - 方案1
     - 初始化即挂载全部路由，并且在路由上标记相应的权限信息，每次路由跳转前做校验
     - 这种方式存在以下四种缺点：
@@ -1175,7 +1175,7 @@ axios.interceptors.response.use(res=>{},{response}=>{
 
 
 ## 21. Vue项目中你是如何解决跨域的呢？
-:::tip 跨域
+:::info 跨域
   - 跨域本质是浏览器基于同源策略的一种安全手段
   - 同源策略（`Sameoriginpolicy`），是一种约定，它是浏览器最核心也最基本的安全功能
     - 所谓同源（即指在同一个域）具有以下三个相同点
@@ -1185,7 +1185,7 @@ axios.interceptors.response.use(res=>{},{response}=>{
   - 反之非同源请求，也就是协议、端口、主机其中一项不相同的时候，这时候就会产生跨域
 :::
 
-:::warning 如何解决
+:::tip 如何解决
   - 解决跨域的方法有很多，下面列举了三种：
     - `JSONP`
     - `CORS`
@@ -1193,14 +1193,14 @@ axios.interceptors.response.use(res=>{},{response}=>{
   - 在vue项目中，我们主要针对`CORS`或`Proxy`这两种方案进行展开
 :::
 
-:::danger CORS
+:::tip CORS
   - `CORS` （`Cross-Origin Resource Sharing`，跨域资源共享）是一个系统，它由一系列传输的`HTTP`头组成，这些`HTTP`头决定浏览器是否阻止前端`JavaScript`代码获取跨域请求的响应
   - `CORS`实现起来非常方便，只需要增加一些`HTTP`头，让服务器能声明允许的访问来源，只要后端实现了`CORS`就实现了跨域
   - `Access-Control-Allow-Origin`设置为`*`其实意义不大，可以说是形同虚设，实际应用中，上线前我们会将`Access-Control-Allow-Origin`值设为我们目标`host`
   ![pic](/cors.png "notice")
 :::
 
-:::danger Proxy
+:::tip Proxy
   - 代理（`Proxy`）也称网络代理，是一种特殊的网络服务，允许一个（一般为客户端）通过这个服务与另一个网络终端（一般为服务器）进行非直接的连接
   - 一些网关、路由器等网络设备具备网络代理功能。一般认为代理服务有利于保障网络终端的隐私或安全，防止攻击
   - 方案1
@@ -1271,7 +1271,7 @@ axios.interceptors.response.use(res=>{},{response}=>{
 
 ## 22. vue项目本地开发完成后部署到服务器后报404是什么原因？
 
-:::tip 404
+:::info 404
   - `Vue`项目在本地时运行正常，但部署到服务器中，刷新页面，出现了`404`错误
   - `HTTP 404`错误意味着链接指向的资源不存在
 :::

@@ -1,7 +1,7 @@
 # SQL
 ::: tip Postgres 16 + Postico 2.1
 :::
-## 基础部分
+## 1. 基础部分
 ::: info CREATE TABLE
 
 ```sql
@@ -77,7 +77,7 @@ SELECT Id,Year FROM Persons ORDER BY Year ASC,Id DESC
 ```
 
 
-## 高级部分
+## 2. 高级部分
 ::: info CREATE TABLE
 ```sql{16}
 -- 创建 Users 表
@@ -229,7 +229,7 @@ DROP TABLE Users
 ```
 
 
-## 函数部分
+## 3. 函数部分
 ::: info CREATE TABLE
 ```sql
 -- 创建 Goods 表

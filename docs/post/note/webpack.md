@@ -327,28 +327,49 @@
     - `failed`： 编译失败的时候
 :::
 
-:::warning  常见的Plugin
-  - `AggressiveSplittingPlugin`：将原来的chunk 分成更小的 chunk
-  - `BabelMinifyWebpackPlugin`：使用 babel-minify进行压缩
-  - `BannerPlugin`：在每个生成的 chunk 顶部添加 banner
-  - `CommonsChunkPlugin`：提取 chunks 之间共享的通用模块
-  - `CompressionWebpackPlugin`：预先准备的资源压缩版本，使用 Content-Encoding提供访问服务
-  - `ContextReplacementPlugin`：重写 require 表达式的推断上下文
-  - `CopyWebpackPlugin`：将单个文件或整个目录复制到构建目录
-  - `DefinePlugin`：允许在编译时(compile time)配置的全局常量
-  - `DllPlugin`：为了极大减少构建时间，进行分离打包
-  - `EnvironmentPlugin`：DefinePlugin 中 process.env 键的简写方式
-  - `ExtractTextWebpackPlugin`：从 bundle 中提取文本 (CSS) 到单独的文件
-  - `HotModuleReplacementPlugin`：启用模块热替换(Enable Hot Module Replacement-HMR)
-  - `HtmlWebpackPlugin`：简单创建 HTML 文件，用于服务器访问
-  - `I18nWebpackPlugin`：为 bundle 增加国际化支持
-  - `IgnorePlugin`：从 bundle 中排除某些模块
-  - `LimitChunkCountPlugin`：设置 chunk 的最小/最大限制，以微调和控制 chunk
-  - `LoaderOptionsPlugin`：用于从 webpack 1 迁移到 webpack 2
-  - `MinChunkSizePlugin`：确保 chunk 大小超过指定限制
-  - `NoEmitOnErrorsPlugin`：在输出阶段时，遇到编译错误跳过
-  - `NormalModuleReplacementPlugin`：替换与正则表达式匹配的资源
-:::
+#### 常见的Plugin
+```bash
+# 将原来的chunk 分成更小的 chunk
+AggressiveSplittingPlugin
+# 使用 babel-minify进行压缩
+BabelMinifyWebpackPlugin
+# 在每个生成的 chunk 顶部添加 banner
+BannerPlugin
+# 提取 chunks 之间共享的通用模块
+CommonsChunkPlugin
+# 预先准备的资源压缩版本，使用 Content-Encoding提供访问服务
+CompressionWebpackPlugin
+# 重写 require 表达式的推断上下文
+ContextReplacementPlugin
+# 将单个文件或整个目录复制到构建目录
+CopyWebpackPlugin
+# 允许在编译时(compile time)配置的全局常量
+DefinePlugin
+# 为了极大减少构建时间，进行分离打包
+DllPlugin
+# DefinePlugin 中 process.env 键的简写方式
+EnvironmentPlugin
+# 从 bundle 中提取文本 (CSS) 到单独的文件
+ExtractTextWebpackPlugin
+# 启用模块热替换(Enable Hot Module Replacement-HMR)
+HotModuleReplacementPlugin
+# 简单创建 HTML 文件，用于服务器访问
+HtmlWebpackPlugin
+# 为 bundle 增加国际化支持
+I18nWebpackPlugin
+# 从 bundle 中排除某些模块
+IgnorePlugin
+# 设置 chunk 的最小/最大限制，以微调和控制 chunk
+LimitChunkCountPlugin
+# 用于从 webpack 1 迁移到 webpack 2
+LoaderOptionsPlugin
+# 确保 chunk 大小超过指定限制
+MinChunkSizePlugin
+# 在输出阶段时，遇到编译错误跳过
+NoEmitOnErrorsPlugin
+# 替换与正则表达式匹配的资源
+NormalModuleReplacementPlugin
+```
 
 ## 5.  编写Loader，Plugin的思路？
 
@@ -373,22 +394,22 @@
   - 代码如下所示：
     ```javascript
     // 导出一个函数，source为webpack传递给loader的文件源内容
-      module.exports = function(source) {
-        const content = doSomeThing2JsString(source)
-        // 如果 loader 配置了 options 对象，那么this.query将指向 options
-        const options = this.query
-        // 可以用作解析其他模块路径的上下文
-        console.log('this.context')
-        /*
-        * this.callback 参数：
-        * error：Error | null，当 loader 出错时向外抛出一个 error
-        * content：String | Buffer，经过 loader 编译后需要导出的内容
-        * sourceMap：为方便调试生成的编译后内容的 source map
-        * ast：本次编译生成的 AST 静态语法树，之后执行的loader可以直接使用这个 AST，进而省去重复生成AST的过程
-        */
-        this.callback(null, content) // 异步
-        return content // 同步
-      }
+    module.exports = function(source) {
+      const content = doSomeThing2JsString(source)
+      // 如果 loader 配置了 options 对象，那么this.query将指向 options
+      const options = this.query
+      // 可以用作解析其他模块路径的上下文
+      console.log('this.context')
+      /*
+      * this.callback 参数：
+      * error：Error | null，当 loader 出错时向外抛出一个 error
+      * content：String | Buffer，经过 loader 编译后需要导出的内容
+      * sourceMap：为方便调试生成的编译后内容的 source map
+      * ast：本次编译生成的 AST 静态语法树，之后执行的loader可以直接使用这个 AST，进而省去重复生成AST的过程
+      */
+      this.callback(null, content) // 异步
+      return content // 同步
+    }
     ```
     - 一般在编写`loader`的过程中，保持功能单一，避免做多种功能
     - 如`less`文件转换成`css`文件也不是一步到位，而是`less-loader`、`css-loader`、`style-loader`几个`loader`的链式调用才能完成转换
@@ -406,7 +427,7 @@
     - 异步的事件需要在插件处理完任务时调用回调函数通知`Webpack`进入下一个流程，不然会卡住
   - 实现`plugin`的模板如下：
     ```javascript
-      class MyPlugin {
+    class MyPlugin {
         // Webpack 会调用 MyPlugin 实例的 apply 方法给插件实例传入 compiler 对象
       apply (compiler) {
         // 找到合适的事件钩子，实现自己的插件功能
@@ -526,13 +547,13 @@
   - `Proxy`工作原理实质上是利用`http-proxy-middleware` 这个`http`代理中间件，实现请求转发给其他服务器
   - 在开发阶段，本地地址为`http://localhost:3000`，该浏览器发送一个前缀带有/api标识的请求到服务端获取数据，但响应这个请求的服务器只是将请求转发到另一台服务器中
     ```javascript
-      const express = require('express')
-      const proxy = require('http-proxy-middleware')
-      const app = express()
-      app.use('/api', proxy({
-        target: 'http://www.example.com', 
-        changeOrigin: true}))
-      app.listen(3000);
+    const express = require('express')
+    const proxy = require('http-proxy-middleware')
+    const app = express()
+    app.use('/api', proxy({
+      target: 'http://www.example.com', 
+      changeOrigin: true}))
+    app.listen(3000);
     // http://localhost:3000/api/foo/bar -> http://www.example.com/api/foo/bar
     ```
 :::
@@ -549,27 +570,33 @@
 :::
 
 ## 8. 说说如何借助webpack来优化前端性能？
-
-:::tip 优化
-  - `JS`代码压缩（`terser-webpack-plugin`）
-  - `CSS`代码压缩（`css-minimizer-webpack-plugin`）
-  - `HTML`文件代码压缩（`HtmlWebpackPlugin`）
-  - 文件大小压缩（`compression-webpack-plugin`）
-  - 图片压缩（`image-webpack-loader`）
-  - `Tree Shaking`(`usedExports`/`sideEffects`)
-  - 代码分离（`splitChunksPlugin`）
-  - 内联`Chunk`（`InlineChunkHtmlPlugin`）
-:::
+```bash
+# JS 代码压缩
+terser-webpack-plugin
+# CSS 代码压缩
+css-minimizer-webpack-plugin
+# HTML 文件代码压缩
+HtmlWebpackPlugin
+# 文件大小压缩
+compression-webpack-plugin
+# 图片压缩
+image-webpack-loader
+# Tree Shaking
+usedExports/sideEffects
+# 代码分离
+splitChunksPlugin
+# 将代码块（chunk）直接内联到 HTML 文件中，从而减少请求数量并提高加载速度
+ChunkInlineChunkHtmlPlugin
+```
 
 ## 9. 如何提高webpack的构建速度？
-
-:::tip 如何优化
-  - 优化`loader`配置
-  - 合理使用`resolve.extensions`
-  - 优化`resolve.modules`
-  - 优化`resolve.alias`
-  - 使用`DLLPlugin`插件
-  - 使用`cache-loader`
-  - `terser`启动多线程
-  合理使用`sourceMap`
-:::
+```bash
+- 优化`loader`配置
+- 合理使用`resolve.extensions`
+- 优化`resolve.modules`
+- 优化`resolve.alias`
+- 使用`DLLPlugin`插件
+- 使用`cache-loader`
+- `terser`启动多线程
+- 合理使用`sourceMap`
+```

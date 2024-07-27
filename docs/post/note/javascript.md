@@ -1,5 +1,6 @@
+# JavaScript
 ## 1. 数据类型
-:::tip  数据类型
+:::info  数据类型
 - 在JS中共有8种基础的数据类型，分别为：`Undefined`、`Null`、`Boolean`、`Number`、`String`、`Object`、`Symbol`、`BigInt`
 - 其中`Symbol`和`BigInt`是`ES6`新增的数据类型:
    - `Symbol` 代表独一无二的值，最多的用法是用来定义对象的唯一属性名
@@ -18,7 +19,7 @@ b.age = 30;
 console.log(a.age); // 30
 ```
 :::  
-:::tip 数据类型的判断：
+:::info 数据类型的判断：
  1. `typeof`：能判断所有值类型，函数。不可对`null`、对象、数组进行精确判断，因为都返回`object`
     ```javascript
     console.log(typeof undefined); // undefined
@@ -67,7 +68,7 @@ console.log(a.age); // 30
       ```
   :::
 ## 2. 原型和原型链
-:::tip 原型和原型链
+:::info 原型和原型链
 - **原型**：每个对象拥有一个原型对象，通过 `__proto__ `指针指向上一个原型 ，并从中继承方法和属性，同时原型对象也可能拥有原型，这样一层一层，最终指向`null`，这就是原型链
 - **原型链**：由相互关联的原型组成的链状结构就是原型链
 
@@ -85,7 +86,7 @@ console.log(a.age); // 30
 :::
 
 ## 3. 作用域与作用域链
-:::danger 作用域与作用域链
+:::info 作用域与作用域链
 - 作用域：
   - 规定了如何查找变量，也就是确定当前执行代码对变量的访问权限
   - 作用域决定了代码区块中变量和其他资源的可见性（`全局作用域`、`函数作用域`、`块级作用域`）
@@ -122,7 +123,7 @@ person()
 
 ```
 :::
-:::warning 全局作用域
+:::info 全局作用域
   - 任何不在函数中或是大括号中声明的变量，都是在全局作用域下
   - 全局作用域下声明的变量可以在程序的任意位置访问
 ```javascript
@@ -133,7 +134,7 @@ function showMessage() {
 showMessage() // Hello World!
 ```
 :::
-:::warning 函数作用域
+:::info 函数作用域
   - 函数作用域也叫局部作用域，如果一个变量是在函数内部声明的它就在一个函数作用域下面
   - 这些变量只能在函数内部访问，不能在函数以外去访问
 ```javascript
@@ -145,7 +146,7 @@ showMessage() // Hello World!
 console.log(message) // message is not defined
 ```
 :::
-:::warning 块级作用域
+:::info 块级作用域
   - 在大括号中使用`let`和`const`声明的变量存在于块级作用域中
   - 在大括号之外不能访问这些变量
 ```javascript
@@ -157,7 +158,7 @@ console.log(message2) //  Hello World2!
 console.log(message1) //  message1 is not defined
 ```
 :::
-:::danger 词法作用域
+:::info 词法作用域
   - 词法作用域，又叫静态作用域，变量被创建时就确定好了，而非执行阶段确定的
   - 也就是说我们写好代码时它的作用域就确定了，`JavaScript`遵循的就是词法作用域
   ```javascript
@@ -174,7 +175,7 @@ console.log(message1) //  message1 is not defined
 :::
 
 ## 4. 闭包
-:::tip
+:::info 闭包
 - 在`JavaScript`中，每当创建一个函数，闭包就会在函数创建的同时被创建出来。可以在一个内层函数中访问到其外层函数的作用域
 - 闭包是指那些能够访问自由变量的函数。自由变量是指在函数中使用的，但既不是函数参数也不是函数的局部变量的变量。闭包=函数+函数能够访问的自由变量
 ```javascript
@@ -189,7 +190,7 @@ console.log(message1) //  message1 is not defined
   init()
 ```
 :::
-:::tip 使用场景
+:::info 使用场景
   - 任何闭包的使用场景都离不开这两点：
     - 创建私有变量
     - 延长变量的生命周期
@@ -197,7 +198,7 @@ console.log(message1) //  message1 is not defined
 
 
 ##  5. 事件循环
-:::tip Even Loop
+:::info Even Loop
 - **浏览器中的事件循环:**
   - `JavaScript`代码的执行过程中，除了依靠函数调用栈来搞定函数的执行顺序外，还依靠任务队列(`task queue`)来搞定另外一些代码的执行。整个执行过程，我们称为事件循环过程。一个线程中，事件循环是唯一的，但是任务队列可以拥有多个。任务队列又分为`macro-task`（宏任务）与`micro-task`（微任务)
 - **`macro-task`（宏任务）:**
@@ -214,35 +215,34 @@ console.log(message1) //  message1 is not defined
     - `MutationObserver`(html5新特性)
 :::
 
-:::tip  例子：
-:::
-  ```javascript
-  console.log(1)
-  async function async1() {
-    await async2()
-    console.log(2)
-  }
-  async function async2() {
-    console.log(3)
-  }
-  async1()
-  setTimeout(function() {
-    console.log(4)
-  }, 0)
-  new Promise(resolve => {
-    console.log(5)
-    resolve()
-  })
-  .then(()=>{
-      console.log(6)
-  })
-  .then(()=> {
-    console.log(7)
-  })
-  console.log(8)
-  // 执行顺序：1-3-5-8-2-6-7-4
-  ```
-:::warning 分析：
+```javascript
+// demo.js
+console.log(1)
+async function async1() {
+  await async2()
+  console.log(2)
+}
+async function async2() {
+  console.log(3)
+}
+async1()
+setTimeout(function() {
+  console.log(4)
+}, 0)
+new Promise(resolve => {
+  console.log(5)
+  resolve()
+})
+.then(()=>{
+    console.log(6)
+})
+.then(()=> {
+  console.log(7)
+})
+console.log(8)
+// 执行顺序：1-3-5-8-2-6-7-4
+```
+:::info 分析：
   - 执行代码，输出`1`
   - 执行`async1()`,会调用`async2()`,然后输出`3`,此时将会保留`async1`函数的上下文
   - 跳出`async1`函数。
@@ -258,7 +258,7 @@ console.log(message1) //  message1 is not defined
   ```
   - 最后，执行下一个宏任务，即执行`setTimeout`，输出`4`
 :::
-:::warning 再分析：
+:::info 再分析：
   - `2`种情况分析`await`后面跟的内容：
     1. 如果`await`后面直接跟的为一个变量，比如：`await` 1
         - 这种情况的话相当于直接把`await`后面的代码注册为一个微任务
@@ -297,7 +297,7 @@ console.log(message1) //  message1 is not defined
   console.log(9)
   // 1-3-6-9-4-7-8-2-5
   ```
-:::danger 总结
+:::warning 总结
   - 此时执行完`await`并不先把`await`后面的代码注册到微任务队列中去，
   - 而是执行完`await`之后，直接跳出`async1`函数，执行其他代码
   - 然后遇到`promise`的时候，把`promise.then`注册为微任务
@@ -307,7 +307,7 @@ console.log(message1) //  message1 is not defined
   - 可以理解为：这种情况下，`await`后面的代码会在本轮循环的最后被执行
 ::: 
 ## 6. 浏览器的垃圾回收机制（Garbage Collection）
-:::tip 标记清除算法
+:::info 标记清除算法
 
   - 标记阶段即为所有活动对象做上标记，清除阶段则把没有标记（也就是非活动对象)
   - **过程**
@@ -329,7 +329,7 @@ console.log(message1) //  message1 is not defined
       -  它的标记阶段和标记清除算法没有什么不同，只是标记结束后，标记整理算法会将活着的对象（即不需要清理的对象）向内存的一端移动，最后清理掉边界的内存
   :::
 
-  :::tip  引用计数算法
+  :::info  引用计数算法
   - 它把对象是否不再需要简化定义为对象有没有其他对象引用到它。如果没有引用指向该对象（引用计数为 0），对象将被垃圾回收机制回收
   - **过程**
     -  当声明了一个变量并且将一个引用类型赋值给该变量的时候这个值的引用次数就为 1
@@ -338,37 +338,37 @@ console.log(message1) //  message1 is not defined
     -  当这个值的引用次数变为 0 的时候，说明没有变量在使用，这个值没法被访问了，回收空间，垃圾回收器会在运行的时候清理掉引用次数为 0 的值占用的内存
 :::
 ## 7. http 缓存
-:::tip 定义
+:::info 缓存
  - 什么是缓存？把一些不需要重新获取的内容再重新获取一次
  - 为什么需要缓存？网络请求相比于`CPU`的计算和页面渲染是非常非常慢的
  - 哪些资源可以被缓存？静态资源，比如 `js`,`css`,`img`
 :::
 
-:::warning Cache-Control
+:::tip Cache-Control
   - 在 `Response Headers` 中控制强制缓存的逻辑，例如:`Cache-Control`: `max-age`=3153600（单位是秒）
   - **Cache-Control** 有哪些值:
     - **max-age**：缓存最大过期时间
     - **no-cache**：可以在客户端存储资源，每次都必须去服务端做新鲜度校验，来决定从服务端获取新的资源（200）还是使用客户端缓存（304)
     - **no-store**：永远都不要在客户端存储资源，永远都去原始服务器去获取资源
-
+    :::details
     ![图片描述](/cache1.png)
 
 :::
 
-:::warning 协商缓存
+:::tip 协商缓存
   - 服务端缓存策略
   - 服务端判断客户端资源，是否和服务端资源一样
   - 一致则返回304，否则返回200和最新的资源
-
+  :::details
   ![图片描述](/cache2.png)
 :::
 
-:::warning  资源标识
+:::info  资源标识
 - 在 `Response` `Headers`中，有两种:`Last-Modified`和 `Etag`
   - `Last-Modified`：资源的最后修改时间
     - 服务端拿到 `if-Modified-Since` 之后拿这个时间去和服务端资源最后修改时间做比较
     - 如果一致则返回`304`，不一致（也就是资源已经更新了）就返回200和新的资源及新的`Last-Modified`
-   
+    :::details
      ![图片描述](/last-Modified.png)
    
   - `Etag`：资源的唯一标识（一个字符串，类似于人类的指纹）
@@ -376,20 +376,22 @@ console.log(message1) //  message1 is not defined
     - 只不过 `Etag` 是服务端对资源按照一定方式（比如 `contenthash`）计算出来的唯一标识
     - 就像人类指纹一样，传给客户端之后，客户端再传过来时候，服务端会将其与现在的资源计算出来的唯一标识做比较
     - 一致则返回304，不一致就返回`200`和新的资源及新的`Etag`
-
-     ![图片描述](/etag.png)
+    :::details
+    ![图片描述](/etag.png)
+      
   :::
-  :::warning 比较
+
+  :::tip 比较
   - 优先使用`Etag`
   - `Last-Modified`只能精确到秒级
   - 如果资源被重复生成，而内容不变，则`Etag`更精确
   :::
-  :::danger 总结
+  #### 总结
   ![图片描述](/cache3.png)
-  :::
+  
 
 ## 8.  数组的方法
-:::tip Array.prototype.push()
+:::info Array.prototype.push()
   - `push()`方法将一个或多个元素添加到数组的末尾，`并返回该数组的新长度`
   ```javascript
   const colors = ['red', 'green'];
@@ -398,7 +400,7 @@ console.log(message1) //  message1 is not defined
   console.log(length) //  3
   ```
 :::
-:::tip Array.prototype.pop()
+:::info Array.prototype.pop()
   - `pop()`方法从数组中删除最后一个元素，并返回该元素的值。`此方法会更改数组的长度`
   ```javascript
   const colors = ['red', 'green','blue']
@@ -407,7 +409,7 @@ console.log(message1) //  message1 is not defined
   console.log(colors) // ['red', 'green']
   ```
 :::
-:::tip Array.prototype.unshift()
+:::info Array.prototype.unshift()
   - `unshift()`方法将一个或多个元素添加到数组的开头，`并返回该数组的新长度`
   ```javascript
   const colors = ['red', 'green','blue']
@@ -416,7 +418,7 @@ console.log(message1) //  message1 is not defined
   console.log(colors) // ['green', 'blue']
   ```
 :::
-:::tip Array.prototype.shift()
+:::info Array.prototype.shift()
   - `shift()`方法从数组中删除第一个元素，`并返回该元素的值。此方法更改数组的长度`
   ```javascript
   const colors = ['red','green','blue']
@@ -425,7 +427,7 @@ console.log(message1) //  message1 is not defined
   console.log(colors) // ['red', 'green', 'blue']
   ```
 :::
-:::warning Array.prototype.splice()
+:::info Array.prototype.splice()
   - `splice()`方法通过删除或替换现有元素或者原地添加新的元素来修改数组，并以数组形式返回被修改的内容
   - 此方法会`改变原数组`
   ```javascript{1-4,19}
@@ -449,7 +451,7 @@ console.log(message1) //  message1 is not defined
   console.log(colors) // ['yellow', 'red', 'green', 'blue']
   console.log(colors2) // [] // 如果没有删除元素，则返回空数组
 :::
-:::warning Array.prototype.slice()
+:::info Array.prototype.slice()
   - `slice()`方法`返回一个新的数组对象`
   - 这一对象是一个由`begin`和`end`决定的原数组的浅拷贝包括`begin`，不包括`end`原始数组不会被改变
   ```javascript
@@ -464,7 +466,7 @@ console.log(message1) //  message1 is not defined
   console.log(colors3) //  ['green', 'blue']
   ```
 :::
-:::tip Array.prototype.concat()
+:::info Array.prototype.concat()
   - `concat()`方法用于合并两个或多个数组，此方法不会更改现有数组，而是`返回一个新数组`
   ```javascript
   const colors = ['red','green','blue']
@@ -475,7 +477,7 @@ console.log(message1) //  message1 is not defined
   console.log(colors3) //  ['red', 'green', 'blue', 'yellow']
   ```
 :::
-:::tip Array.prototype.reverse()
+:::info Array.prototype.reverse()
   - `reverse()`方法将数组中元素的位置颠倒，并返回该数组。数组的第一个元素会变成最后一个，数组的最后一个元素变成第一个
   - 该方法`会改变原数组`
   ```javascript
@@ -485,7 +487,7 @@ console.log(message1) //  message1 is not defined
   console.log(colors2) //  ['blue', 'green', 'red']
   ```
 :::
-:::tip Array.prototype.sort()
+:::info Array.prototype.sort()
   - `sort()`方法用[原地算法](https://zh.wikipedia.org/wiki/%E5%8E%9F%E5%9C%B0%E7%AE%97%E6%B3%95 "Markdown")，原地算法对数组的元素进行排序，`并返回数组`
   - 默认排序顺序是在将元素转换为字符串，然后比较它们的`UTF-16`代码单元值序列时构建的
   - 由于它取决于具体实现，因此无法保证排序的时间和空间复杂性
@@ -502,7 +504,7 @@ console.log(message1) //  message1 is not defined
   ```
 :::
 
-:::tip Array.prototype.join()
+:::info Array.prototype.join()
   - `join()`方法将一个数组（或一个类数组对象）的所有元素连接成一个字符串并返回这个字符串，用逗号或指定的分隔符字符串分隔
   - 如果数组只有一个元素，那么将返回该元素而不使用分隔符
   ```javascript
@@ -515,7 +517,7 @@ console.log(message1) //  message1 is not defined
   ```
 :::
 
-:::warning Array.prototype.filter()
+:::info Array.prototype.filter()
   - `filter()`方法创建给定数组一部分的浅拷贝，其包含通过所提供函数实现的测试的所有元素
   ```javascript
   filter(callbackFn)
@@ -527,7 +529,7 @@ console.log(message1) //  message1 is not defined
   console.log(colors2) //  ['green', 'blue']
   ```
 :::
-:::warning Array.prototype.forEach()
+:::info Array.prototype.forEach()
   - `forEach()`方法对数组的每个元素执行一次给定的函数，
   - `forEach对原数组进行修改`，返回值为`undefined`
   ```javascript
@@ -540,7 +542,7 @@ console.log(message1) //  message1 is not defined
   console.log(colors2) // undefined
   ```
 :::
-:::warning Array.prototype.map()
+:::info Array.prototype.map()
   - `map()`方法创建一个新数组，这个新数组由原数组中的每个元素都调用一次提供的函数后的返回值组成
   - `返回一个新的数组`
   ```javascript
@@ -554,7 +556,7 @@ console.log(message1) //  message1 is not defined
   ```
 :::
 
-:::warning Array.prototype.reduce()
+:::info Array.prototype.reduce()
   - `reduce()`方法对数组中的每个元素按序执行一个由您提供的`reducer`函数
   - 每一次运行`reducer`会将先前元素的计算结果作为参数传入，最后将其结果汇总为单个返回值
   ```javascript
@@ -567,7 +569,7 @@ console.log(message1) //  message1 is not defined
   console.log(arr2) // 6
   ```
 :::
-:::tip Array.prototype.some()
+:::info Array.prototype.some()
   - `reduce()`方法测试数组中是不是至少有`1`个元素通过了被提供的函数测试
   - 它返回的是一个`Boolean`类型的值
   - **如果用一个空数组进行测试，在任何情况下它返回的都是`False`**
@@ -581,7 +583,7 @@ console.log(message1) //  message1 is not defined
   console.log(arr2) // true
   ```
 :::
-:::tip Array.prototype.every()
+:::info Array.prototype.every()
   - `every()`方法测试一个数组内的所有元素是否都能通过指定函数的测试
   - 它返回的是一个`Boolean`类型的值
   ```javascript
@@ -596,7 +598,7 @@ console.log(message1) //  message1 is not defined
 :::
 
 
-:::tip Array.prototype.indexOf()
+:::info Array.prototype.indexOf()
   - `indexOf()`方法返回在数组中可以找到给定元素的第一个索引
   - 如果不存在，则返回`-1`
   ```javascript
@@ -606,7 +608,7 @@ console.log(message1) //  message1 is not defined
   console.log(colors.indexOf('yellow')) // -1
   ```
 :::
-:::tip Array.prototype.lastIndexOf()
+:::info Array.prototype.lastIndexOf()
   - `lastIndexOf()`方法返回指定元素（也即有效的`JavaScript`值或变量）在数组中的最后一个的索引
   - 如果不存在则返回 -1。从数组的后面向前查找，从`fromIndex`处开始
   ```javascript
@@ -616,7 +618,7 @@ console.log(message1) //  message1 is not defined
   ```
 :::
 
-:::tip Array.prototype.includes()
+:::info Array.prototype.includes()
   - `includes()`方法用来判断一个数组是否包含一个指定的值
   - 如果包含则返回`true`，否则返回`false`
   ```javascript
@@ -627,7 +629,7 @@ console.log(message1) //  message1 is not defined
   ```
 :::
 
-:::tip Array.prototype.find()
+:::info Array.prototype.find()
   - `find()`方法返回数组中满足提供的测试函数的第一个元素的值，否则返回 `undefined`
   ```javascript
   const arr = [1,2,3,4,5]
@@ -636,7 +638,7 @@ console.log(message1) //  message1 is not defined
   ```
 :::
 
-:::tip Array.prototype.fill()
+:::info Array.prototype.fill()
   - `fill()`方法用一个固定值填充一个数组中从起始索引（默认为`0`）到终止索引（默认为`array.length`）内的全部元素
   - 它返回修改后的数组
   ```javascript
@@ -653,7 +655,7 @@ console.log(message1) //  message1 is not defined
   ```
 :::
 
-:::tip Array.prototype.flat()
+:::info Array.prototype.flat()
   - `flat()`方法创建一个新的数组，并根据指定深度递归地将所有子数组元素拼接到新的数组中
   ```javascript
   const arr1 = [0, 1, 2, [3, 4], 5]
@@ -661,7 +663,7 @@ console.log(message1) //  message1 is not defined
   ```
 :::
 
-:::tip Array.from()
+:::info Array.from()
   - `Array.from()`静态方法从可迭代或类数组对象创建一个新的浅拷贝的数组实例
   ```javascript
   const arrayLike = {length:5}
@@ -669,7 +671,7 @@ console.log(message1) //  message1 is not defined
   console.log(Array.isArray(arr))  // true
   ```
 :::
-:::tip Array.of()
+:::info Array.of()
   - `Array.of()`方法通过可变数量的参数创建一个新的`Array`实例，而不考虑参数的数量或类型
   - `Array.of()`和 `Array()`构造函数之间的区别在于对单个参数的处理
   ```javascript
@@ -682,7 +684,7 @@ console.log(message1) //  message1 is not defined
 
 ## 9. 对象的方法
 
-:::tip Object.assign()
+:::info Object.assign()
   - `Object.assign()`方法将所有可枚举（`Object.propertyIsEnumerable()` 返回`true`）的自有（`Object.hasOwnProperty()`返回`true`）属性从一个或多个源对象复制到目标对象
   - 返回修改后的对象
   ```javascript
@@ -696,7 +698,7 @@ console.log(message1) //  message1 is not defined
   console.log(obj1 === obj3) // true
   ```
 :::
-:::tip Object.create()
+:::info Object.create()
   - `Object.create()`方法用于创建一个新对象，使用现有的对象来作为新创建对象的原型（`prototype`）
   - 一个新对象，带着指定的原型对象及其属性
   ```javascript
@@ -714,7 +716,7 @@ console.log(message1) //  message1 is not defined
   p.printIntroduction() // "My name is Joy. Am I human? true"
   ```
 :::
-:::tip Object.entries()
+:::info Object.entries()
   - `Object.entries()`方法返回一个给定对象自身可枚举属性的键值对数组
   ```javascript
   const obj1 = {a:1,b:2}
@@ -722,7 +724,7 @@ console.log(message1) //  message1 is not defined
   console.log(entries) // [ ['a', 1], ['b', 2]] 
   ```
 :::
-:::warning Object.hasOwn()
+:::info Object.hasOwn()
   - 如果指定的对象自身有指定的属性，则静态方法`Object.hasOwn()`返回`true`
   - 如果属性是继承的或者不存在，该方法返回`false`
   - *备注：`Object.hasOwn()`旨在取代`Object.hasOwnProperty()`*
@@ -735,7 +737,7 @@ console.log(message1) //  message1 is not defined
   ```
 :::
 
-:::tip Object.is()
+:::info Object.is()
   - `Object.is()`方法判断两个值是否为同一个值
   - `Object.is()`方法判断两个值是否为同一个值，如果满足以下任意条件则两个值相等：
     - 都是`undefined`
@@ -770,7 +772,7 @@ console.log(message1) //  message1 is not defined
 :::
 
 ## 10. JS 中的类型转换机制
-:::tip 概述
+:::info 概述
   - `JS`中有六种简单数据类型：`undefined`，`null`，`boolean`，`string`，`number`，`symbol`，`object`
   - 但是我们在声明的时候只有一种数据类型，只有到运行期间才会确定当前类型
     ```javascript
@@ -783,14 +785,14 @@ console.log(message1) //  message1 is not defined
     - 自动转换（隐式转换）
 :::
 
-:::warning 显示转换
+:::tip 显示转换
   - 常见的方法有：
     - `Number()`
     - `parseInt()`
     - `String()`
     - `Boolean()`
 :::
-:::danger Number()
+:::info Number()
   - 将任意类型的值转化为数值
     | 原始值    |             转换结果             |
     | --------- | :------------------------------: |
@@ -818,13 +820,13 @@ console.log(message1) //  message1 is not defined
   - `Number`转换的时候是很严格的，只要有一个字符无法转成数值，整个字符串就会被转为`NaN`
 :::
 
-:::danger parseInt()
+:::info parseInt()
   - `parseInt`函数逐个解析字符，遇到不能转换的字符就停下来
   ```javascript
   parseInt('123abc123') // 123
   ```
 :::
-:::danger Sting()
+:::info Sting()
   - 可以将任意类型的值转化成字符串
     | 原始值    |             转换结果             |
     | --------- | :------------------------------: |
@@ -848,7 +850,7 @@ console.log(message1) //  message1 is not defined
   ```
 :::
 
-:::danger Boolean()
+:::info Boolean()
   - 可以将任意类型的值转为布尔值
     | 数据类型  |     转换为true的值     | 转换为false的值 |
     | --------- | :--------------------: | :-------------: |
@@ -871,110 +873,111 @@ console.log(message1) //  message1 is not defined
   ```
 :::
 
-:::warning 隐式转换
+:::tip 隐式转换
   - 两种情况发生隐式转换的场景：
     - 比较运算（`==`、`!=`、`>`、`<`）、`if`、`while`需要布尔值地方
     - 算术运算（`+`、`-`、`*`、`/`、`%`）
     - 除了上面的场景，还要求运算符两边的操作数不是同一类型
 :::
-  :::danger 自动转换为布尔值
-  - 在需要布尔值的地方，就会将非布尔值的参数自动转为布尔值，系统内部会调用`Boolean`函数
-    - 可以得出个小结：
-      - `undefined`
-      - `null`
-      - `false`
-      - `+0`
-      - `-0`
-      - `NaN`
-      - `""`
-    - 除了上面几种会被转化成`false`，其他都换被转化成`true`
+:::info 自动转换为布尔值
+- 在需要布尔值的地方，就会将非布尔值的参数自动转为布尔值，系统内部会调用`Boolean`函数
+  - 可以得出个小结：
+    - `undefined`
+    - `null`
+    - `false`
+    - `+0`
+    - `-0`
+    - `NaN`
+    - `""`
+  - 除了上面几种会被转化成`false`，其他都换被转化成`true`
 :::
-  :::danger 自动转换成字符串
-  - 先将复合类型的值转为原始类型的值，再将原始类型的值转为字符串
-  - 常发生在+运算中，一旦存在字符串，则会进行字符串拼接操作
-  ```javascript
-  '1' + 1 // '11'
-  '1' + true // "1true"
-  '1' + false // "1false"
-  '1' + {} // "1[object Object]"
-  '1' + [] // "1"
-  '1' + function (){} // "1function (){}"
-  '1' + undefined // "1undefined"
-  '1' + null // "1null"
-  ```
+:::info 自动转换成字符串
+- 先将复合类型的值转为原始类型的值，再将原始类型的值转为字符串
+- 常发生在+运算中，一旦存在字符串，则会进行字符串拼接操作
+```javascript
+'1' + 1 // '11'
+'1' + true // "1true"
+'1' + false // "1false"
+'1' + {} // "1[object Object]"
+'1' + [] // "1"
+'1' + function (){} // "1function (){}"
+'1' + undefined // "1undefined"
+'1' + null // "1null"
+```
 :::
 
-  :::danger 自动转换成数值
-  - 除了+有可能把运算子转为字符串，其他运算符都会把运算子自动转成数值
-  ```javascript{11}
-  '1' - '2' // -1
-  '1' * '2' // 2
-  true - 1  // 0
-  false - 1 // -1
-  '1' - 1   // 0
-  '1' * []    // 0
-  false / '1' // 0
-  'abc' - 1   // NaN
-  null + 1 // 1
-  undefined + 1 // NaN
-  // null转为数值后值为0 ,undefined转为数值后值为NaN
-  ```
+:::info 自动转换成数值
+- 除了+有可能把运算子转为字符串，其他运算符都会把运算子自动转成数值
+```javascript{11}
+'1' - '2' // -1
+'1' * '2' // 2
+true - 1  // 0
+false - 1 // -1
+'1' - 1   // 0
+'1' * []    // 0
+false / '1' // 0
+'abc' - 1   // NaN
+null + 1 // 1
+undefined + 1 // NaN
+// null转为数值后值为0 ,undefined转为数值后值为NaN
+```
 :::
 
 ## 11. == 和 ===
-:::tip 等于操作符
+:::info 等于操作符
   - 等于操作符用两个等于号（`==`）表示，如果操作数相等，则会返回`true`
   - 等于操作符（`==`）在比较中会先进行类型转换，再确定操作数是否相等
   - 遵循以下规则：
     - 如果任一操作数是布尔值，则将其转换为数值再比较是否相等
-      ```javascript
-        let result = (true == 1) // true
-      ```
+    ```javascript
+      let result = (true == 1) // true
+    ```
     - 如果一个操作数是字符串，另一个操作数是数值，则尝试将字符串转换为数值，再比较是否相等
-      ```javascript
-        let result = ("55" == 55) // true
-      ```
+    ```javascript
+      let result = ("55" == 55) // true
+    ```
     - 如果一个操作数是对象，另一个操作数不是，则调用对象的`valueOf()`方法取得其原始值，再根据前面的规则进行比较
-      ```javascript
-        let obj = {valueOf:function(){return 1}}
-        let result = (obj == 1)  // true
-      ```
+    ```javascript
+      let obj = {valueOf:function(){return 1}}
+      let result = (obj == 1)  // true
+    ```
     - 如果两个操作数都是对象，则比较它们是不是同一个对象，如果两个操作数都指向同一个对象，则相等操作符返回true
-      ```javascript
-        let obj1 = {name:"xxx"}
-        let obj2 = {name:"xxx"}
-        let result = (obj1 == obj2 ) // false
-      ```
+    ```javascript
+      let obj1 = {name:"xxx"}
+      let obj2 = {name:"xxx"}
+      let result = (obj1 == obj2 ) // false
+    ```
     - `null`和`undefined`相等
-      ```javascript
-        let result = (null == undefined )  // true
-      ```
+    ```javascript
+      let result = (null == undefined )  // true
+    ```
     - 如果有任一操作数是`NaN`，则相等操作符返回`false`
-      ```javascript
-        let result = (NaN == NaN )  // false
-      ```
-  - 小结：
-    - 两个都为简单类型，字符串和布尔值都会转换成数值，再比较
-    - 简单类型与引用类型比较，对象转化成其原始类型的值，再比较
-    - 两个都为引用类型，则比较它们是否指向同一个对象
-    - `null`和`undefined`相等
-    - 存在`NaN`则返回`false`
+    ```javascript
+      let result = (NaN == NaN )  // false
+    ```
+:::
+:::tip 小结
+  - 两个都为简单类型，字符串和布尔值都会转换成数值，再比较
+  - 简单类型与引用类型比较，对象转化成其原始类型的值，再比较
+  - 两个都为引用类型，则比较它们是否指向同一个对象
+  - `null`和`undefined`相等
+  - 存在`NaN`则返回`false`
 :::
 
-:::tip 全等操作符
+:::info 全等操作符
   - 全等操作符由 3 个等于号（`===`）表示，只有两个操作数在不转换的前提下相等才返回`true`。即类型相同，值也需相同
-    ```javascript
-    let result1 = ("55" === 55) // false，不相等，因为数据类型不同
-    let result2 = (55 === 55) // true，相等，因为数据类型相同值也相同  
-    ```
+  ```javascript
+  let result1 = ("55" === 55) // false，不相等，因为数据类型不同
+  let result2 = (55 === 55) // true，相等，因为数据类型相同值也相同  
+  ```
   - `undefined`和`null`与自身严格相等
-    ```javascript
-    let result1 = (null === null)  //true
-    let result2 = (undefined === undefined)  //true
-    ```
+  ```javascript
+  let result1 = (null === null)  //true
+  let result2 = (undefined === undefined)  //true
+  ```
 :::
 
-:::tip 区别
+:::info 区别
   - 相等操作符（`==`）会做类型转换，再进行值的比较
   - 全等运算符不会做类型转换
     ```javascript
@@ -1017,7 +1020,7 @@ console.log(message1) //  message1 is not defined
 
 ## 12. this
 
-:::danger this
+:::info this
   - `this`关键字是函数运行时自动生成的一个内部对象，只能在函数内部使用，总指向调用它的对象
   ```javascript
   function baz() {
@@ -1053,7 +1056,7 @@ console.log(message1) //  message1 is not defined
   ```
 :::
 
-:::warning 绑定规则
+:::tip 绑定规则
   - 根据不同的使用场合，`this`有不同的值，主要分为下面几种情况：
     - 默认绑定
     - 隐式绑定
@@ -1061,7 +1064,7 @@ console.log(message1) //  message1 is not defined
     - 显示绑定
 :::
 
-:::danger 默认绑定
+:::info 默认绑定
   - 全局环境中定义`person`函数，内部使用`this`关键字
   ```javascript
   var name = 'Tom'
@@ -1075,7 +1078,7 @@ console.log(message1) //  message1 is not defined
     - 严格模式下，不能将全局对象用于默认绑定，`this`会绑定到`undefined`
     - 只有函数运行在非严格模式下，默认绑定才能绑定到全局对象
 :::
-:::danger 隐式绑定
+:::info 隐式绑定
   - 函数还可以作为某个对象的方法调用，这时`this`就指这个上级对象
   ```javascript
   function showName2() {
@@ -1116,7 +1119,7 @@ console.log(message1) //  message1 is not defined
   ```
 :::
 
-:::danger new绑定
+:::info new绑定
   - 通过构建函数`new`关键字生成一个实例对象，此时`this`指向这个实例对象
     - `new`过程遇到`return`一个对象，此时`this`指向为返回的对象(`return {}`)
     - 如果返回一个简单类型的时候，则`this`指向实例对象(`return 1`)
@@ -1130,7 +1133,7 @@ console.log(message1) //  message1 is not defined
   ```
 :::
 
-:::danger 显示修改
+:::info 显示修改
   - `apply()`、`call()`、`bind()`是函数的一个方法，作用是改变函数的调用对象
   - 它的第一个参数就表示改变后的调用这个函数的对象。因此这时`this`指的就是这第一个参数
   ```javascript
@@ -1146,7 +1149,7 @@ console.log(message1) //  message1 is not defined
   ```
 :::
 
-:::danger 箭头函数
+:::info 箭头函数
   - 箭头函数不能作为构建函数
   ```javascript
   const obj = {
@@ -1186,12 +1189,12 @@ console.log(message1) //  message1 is not defined
 
 
 ## 13. DOM 常见的操作有哪些
-:::tip DOM
+:::info DOM
   - 文档对象模型(`DOM`)是`HTML`和`XML`文档的编程接口
   - 它提供了对文档的结构化的表述，并定义了一种方式可以使从程序中对该结构进行访问，从而改变文档的结构样式和内容
   - 任何`HTML`或`XML`文档都可以用`DOM`表示为一个由节点构成的层级结构
 :::
-:::warning 操作
+:::tip 操作
   - `DOM`常见的操作主要分为：
     - 创建节点
     - 查询节点
@@ -1200,7 +1203,7 @@ console.log(message1) //  message1 is not defined
     - 删除节点
 :::
 
-:::danger 创建节点
+:::info 创建节点
   - 创建新元素，接受一个参数，即要创建元素的标签名
   ```javascript
   // createElement
@@ -1212,7 +1215,7 @@ console.log(message1) //  message1 is not defined
   ```
 :::
 
-:::danger 获取节点
+:::info 获取节点
   - 创建新元素，接受一个参数，即要创建元素的标签名
   ```javascript
   document.getElementById('id属性值')  // 返回拥有指定id的对象的引用
@@ -1227,7 +1230,7 @@ console.log(message1) //  message1 is not defined
   ```
 :::
 
-:::danger 更新节点
+:::info 更新节点
   - innerHTML：不但可以修改一个`DOM`节点的文本内容，还可以直接通过HTML片段修改`DOM`节点内部的子树
   ```javascript
   // 获取<p id="p">...</p >
@@ -1249,7 +1252,7 @@ console.log(message1) //  message1 is not defined
   // <p id="p-id">&lt;script&gt;alert("Hi")&lt;/script&gt;</p >
   ```
 :::
-:::danger 添加节点
+:::info 添加节点
   - appendChild：把一个子节点添加到父节点的最后一个子节点
   ```javascript
   // HTML结构 
@@ -1275,7 +1278,7 @@ console.log(message1) //  message1 is not defined
   ```
 :::
 
-:::danger setAttribute
+:::info setAttribute
   - setAttribute：在指定元素中添加一个属性节点，如果元素中已有该属性改变属性值
   ```javascript
   const div = document.getElementById('id')
@@ -1283,7 +1286,7 @@ console.log(message1) //  message1 is not defined
   ```
 :::
 
-:::danger 删除节点
+:::info 删除节点
   - 删除一个节点，首先要获得该节点本身以及它的父节点
   - 调用父节点的`removeChild`把自己删掉
   - 删除后的节点虽然不在文档树中了，但其实它还在内存中，可以随时再次被添加到别的位置
@@ -1299,12 +1302,12 @@ console.log(message1) //  message1 is not defined
 :::
 
 ## 14.  BOM 常见的操作有哪些
-:::tip BOM
+:::info BOM
   - `BOM` (`Browser Object Model`)浏览器对象模型，提供了独立于内容与浏览器窗口进行交互的对象
   - 其作用就是跟浏览器做一些交互效果,比如如何进行页面的后退，前进，刷新，浏览器的窗口发生变化，滚动条的滚动
   - 以及获取客户的一些信息如：浏览器品牌版本，屏幕分辨率
 :::
-:::tip window
+:::info Window
   - `BOM`的核心对象是`window`，它表示浏览器的一个实例在浏览器中
   - `window`对象有双重角色，即是浏览器窗口的一个接口，又是全局对象
   - 因此所有在全局作用域中声明的变量、函数都会变成`window`对象的属性和方法
@@ -1326,16 +1329,16 @@ console.log(message1) //  message1 is not defined
     - `scrollBy(x,y)`： 如果有滚动条，将横向滚动条向左移动`x`个像素，将纵向滚动条向下移动`y`个像素
 :::
 
-:::tip location
-  | 属性名   |                说明                 |
-  | -------- | :---------------------------------: |
-  | hash     |  url中#后面的字符，没有则返回空串   |
-  | host     |         服务器名称和端口号          |
-  | hostname |          域名，不带端口号           |
-  | href     |               完整url               |
-  | pathname |        服务器下面的文件路径         |
-  | port     |       url的端口号，没有则为空       |
-  | protocol |             使用的协议              |
+:::info location
+  | 属性名   | 说明                                |
+  | -------- | :---------------------------------- |
+  | hash     | url中#后面的字符，没有则返回空串    |
+  | host     | 服务器名称和端口号                  |
+  | hostname | 域名，不带端口号                    |
+  | href     | 完整url                             |
+  | pathname | 服务器下面的文件路径                |
+  | port     | url的端口号，没有则为空             |
+  | protocol | 使用的协议                          |
   | search   | url的查询字符串，通常为？后面的内容 |
   -  除了`hash`之外，只要修改`location`的一个属性，就会导致页面重新加载新`URL`
   -  `location.reload()`，此方法可以重新刷新当前页面。这个方法会根据最有效的方式刷新页面
@@ -1343,18 +1346,18 @@ console.log(message1) //  message1 is not defined
   -  如果要强制从服务器中重新加载，传递一个参数`true`即可
 :::
 
-:::tip navigator
+:::info navigator
   - `navigator`对象主要用来获取浏览器的属性，区分浏览器类型。属性较多，且兼容性比较复杂
   - 下表列出了`navigator`对象接口定义的属性和方法：
   ![pic](/bom1.png "notice")
   ![pic](/bom2.png "notice")
 :::
 
-:::tip screen
+:::info screen
   - 保存的纯粹是客户端能力信息，也就是浏览器窗口外面的客户端显示器的信息，比如像素宽度和像素高度
   ![pic](/bom3.png "notice")
 :::
-:::tip history
+:::info history
   - `history`对象主要用来操作浏览器`URL`的历史记录，可以通过参数向前，向后，或者向指定`URL`跳转
   - 常用的属性如下：
     - `history.go()`：接收一个整数数字或者字符串参数，向最近的一个记录中包含指定字符串的页面跳转
@@ -1365,14 +1368,14 @@ console.log(message1) //  message1 is not defined
 
 
 ## 15.  JS 本地存储的方式有哪些
-:::warning JavaScript本地缓存：
+:::tip JavaScript本地缓存：
   - `Cookie`
   - `sessionStorage`
   - `localStorage`
   - `indexedDB`
 :::
 
-:::warning Cookie
+:::info Cookie
   - `Cookie`，类型为「小型文本文件」，指某些网站为了辨别用户身份而储存在用户本地终端上的数据。是为了解决`HTTP`无状态导致的问题
   - 作为一段一般不超过`4KB`的小型文本数据，它由一个名称（`Name`）、一个值（`Value`）和其它几个用于控制`Cookie`有效期、安全性、使用范围的可选属性组成
   - 但是`Cookie`在每次请求中都会被发送，如果不使用`HTTPS`并对其加密，其保存的信息很容易被窃取，导致安全风险。举个例子，在一些使用 `Cookie`保持登录态的网站上，如果 `Cookie`被窃取，他人很容易利用你的`Cookie`来假扮成你登录网站
@@ -1404,7 +1407,7 @@ console.log(message1) //  message1 is not defined
     - 最后`Cookie`的删除，最常用的方法就是给`Cookie`设置一个过期的事件，这样`Cookie`过期后会被浏览器删除
 :::
 
-:::warning localStorage
+:::info localStorage
   - `HTML5`新方法，`IE8`及以上浏览器都兼容
   - `localStorage`的特点：
     - 生命周期：持久化的本地存储，除非主动删除数据，否则数据是永远不会过期的
@@ -1443,12 +1446,12 @@ console.log(message1) //  message1 is not defined
     ```
 :::
 
-:::warning sessionStorage
+:::info sessionStorage
   - `sessionStorage`和`localStorage`使用方法基本一致
   - 唯一不同的是生命周期，一旦页面（会话）关闭，`sessionStorage` 将会删除数据
 :::
 
-:::tip indexedDB
+:::info indexedDB
   - `indexedDB`是一种低级`API`，用于客户端存储大量结构化数据(包括, 文件/` blobs`)。该`API`使用索引来实现对该数据的高性能搜索
   - 虽然`Web Storage`对于存储较少量的数据很有用，但对于存储更大量的结构化数据来说，这种方法不太有用。`IndexedDB`提供了一个解决方案
   - 优点：
@@ -1467,14 +1470,14 @@ console.log(message1) //  message1 is not defined
     - 操作结果上进行一些操作（可以在`request`对象中找到）
 :::
 
-:::danger 区别
+:::tip 区别
   - 关于`Cookie`、`sessionStorage`、`localStorage`三者的区别主要如下：
   - 存储大小：`cookie`数据大小不能超过4k，`sessionStorage`和`localStorage`虽然也有存储大小的限制，但比`Cookie`大得多，可以达到`5M`或更大
   - 有效时间：`localStorage`存储持久数据，浏览器关闭后数据不丢失除非主动删除数据；`sessionStorage`数据在当前浏览器窗口关闭后自动删除；`Cookie`设置的`Cookie`过期时间之前一直有效，即使窗口或浏览器关闭
   - 数据与服务器之间的交互方式，`Cookie`的数据会自动的传递到服务器，服务器端也可以写`Cookie`到客户端；`sessionStorage`和`localStorage`不会自动把数据发给服务器，仅在本地保存
 :::
 
-:::warning 应用场景
+:::info 应用场景
   - 针对不对场景的使用选择：
     - 标记用户与跟踪用户行为的情况，推荐使用`Cookie`
     - 适合长期保存在本地的数据（令牌），推荐使用`localStorage`
@@ -1484,7 +1487,7 @@ console.log(message1) //  message1 is not defined
 
 ## 16. JS 中的事件模型
 
-:::tip 事件与事件流
+:::info 事件与事件流
   - `Javascript`中的事件，可以理解就是在`HTML`文档或者浏览器中发生的一种交互操作，使得网页具备互动性，常见的有加载事件、鼠标事件、自定义事件等
   - 由于`DOM`是一个树结构，如果在父子节点绑定事件时候，当触发子节点的时候，就存在一个顺序问题，这就涉及到了事件流的概念
   - 事件流都会经历三个阶段：
@@ -1539,7 +1542,7 @@ console.log(message1) //  message1 is not defined
     - IE事件模型（基本不用）
 :::
 
-:::tip 原始事件模型（DOM0级）
+:::info 原始事件模型（DOM0级）
   - 事件绑定监听函数比较简单, 有两种方式：
     - `HTML`代码中直接绑定
       ```javascript
@@ -1566,7 +1569,7 @@ console.log(message1) //  message1 is not defined
         ```
 :::
 
-:::tip 标准事件模型
+:::info 标准事件模型
   - 在该事件模型中，一次事件共有三个过程：
     - 事件捕获阶段：事件从`document`一直向下传播到目标元素, 依次检查经过的节点是否绑定了事件监听函数，如果有则执行
     - 事件处理阶段：事件到达目标元素, 触发目标元素的监听函数
@@ -1641,7 +1644,7 @@ console.log(message1) //  message1 is not defined
       - 两者都是在捕获阶段响应事件，所以`div`比`p`标签先做出响应
 :::
 
-:::tip IE事件模型
+:::info IE事件模型
   - `IE`事件模型共有两个过程：
     - 事件处理阶段：事件到达目标元素, 触发目标元素的监听函数
     - 事件冒泡阶段：事件从目标元素冒泡到`document`，依次检查经过的节点是否绑定了事件监听函数，如果有则执行
@@ -1662,14 +1665,14 @@ console.log(message1) //  message1 is not defined
 :::
 
 ## 17. 事件代理（事件委托）
-:::warning 是什么
+:::tip 事件代理
   - 事件代理：就是把一个元素响应事件（`click`、`keydown`......）的函数委托到另一个元素
   - 事件流的都会经过三个阶段：捕获阶段 -> 目标阶段 -> 冒泡阶段，`而事件委托就是在冒泡阶段完成`
   - 事件委托，会把一个或者一组元素的事件委托到它的父层或者更外层元素上，真正绑定事件的是外层元素，而不是目标元素
   - 当事件响应到目标元素上时，会通过事件冒泡机制从而触发它的外层元素的绑定事件上，然后在外层元素上去执行函数
 :::
 
-:::tip 应用场景
+:::info 应用场景
   - 如果我们有一个列表，列表之中有大量的列表项，我们需要在点击列表项的时候响应一个事件
     ```javascript
     <ul id="list">
@@ -1733,7 +1736,7 @@ console.log(message1) //  message1 is not defined
   - 可以看到，使用事件委托，在动态绑定事件的情况下是可以减少很多重复工作的
 :::
 
-:::warning 总结
+:::tip 总结
   - 适合事件委托的事件有：`click`，`mousedown`，`mouseup`，`keydown`，`keyup`，`keypress`
   - 从上面应用场景中，我们就可以看到使用事件委托存在两大优点：
     - 减少整个页面所需的内存，提升整体性能
@@ -1746,7 +1749,7 @@ console.log(message1) //  message1 is not defined
 
 ## 18. 跨域
 
-::: tip 同源策略
+::: info 同源策略
   - 跨域本质是浏览器基于同源策略的一种安全手段
   - 同源策略（`Sameoriginpolicy`）是一种约定，它是浏览器最核心也最基本的安全功能
   - 所谓同源（即指在同一个域）具有以下三个相同点：
@@ -1755,7 +1758,7 @@ console.log(message1) //  message1 is not defined
     - 端口相同（`port`）
   - 反之非同源请求，也就是协议、端口、主机其中一项不相同的时候，这时候就会产生跨域
 :::
-::: tip JSONP
+::: info JSONP
   - 利用`script`标签没有跨域限制的漏洞，网页可以得到从其他来源动态产生的`JSON`数据。`JSONP`请求一定需要对方的服务器做支持才可以
   - JSONP的实现流程：
     - 声明一个回调函数，其函数名(如show)当做参数值，要传递给跨域请求数据的服务器，函数形参为要获取目标数据(服务器返回的`data`)
@@ -1783,7 +1786,7 @@ console.log(message1) //  message1 is not defined
     - 支持`GET`请求而不支持`POST`等其它类型的`HTTP`请求；它只支持跨域`HTTP`请求这种情况，不能解决不同域的两个页面之间如何进行`JavaScript`调用的问题
 :::
 
-:::tip CORS
+:::info CORS
   - `CORS`（Cross-Origin Resource Sharing，跨域资源共享）是一个系统，它由一系列传输的`HTTP`头组成，
   - 这些HTTP头决定浏览器是否阻止前端`JavaScript`代码获取跨域请求的响应
   - `CORS`实现起来非常方便，只需要增加一些 HTTP 头，让服务器能声明允许的访问来源，只要后端实现了`CORS`，就实现了跨域

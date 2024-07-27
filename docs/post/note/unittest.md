@@ -1,6 +1,6 @@
-# unittest
+# Unittest
 
-## testcase add to suite
+## 1. testcase add to suite
 
 ```python
 # test_case.py
@@ -49,22 +49,31 @@ runner.run(suite)
 ```
 
 
-## 命令行参数
+## 2. 命令行参数
+```bash
+# 显示帮助信息并退出
+-h, --help
+# 增加输出的详细程度
+-v, --verbose
+# 减少输出的详细程度
+-q, --quiet
+# 在第一次失败后停止测试运行
+-f, --failfast
+# 捕获 KeyboardInterrupt 并显示故障信息
+-c, --catch
+# 将 stdout 和 stderr 缓存，只有测试失败时才显示
+-b, --buffer
+# 只运行匹配表达式的测试
+-k
+# 指定要开始发现测试的目录（默认是当前目录）
+-s, --start-directory
+指定文件名模式(默认是 test*.py)
+-p, --pattern
+# 指定顶层目录，以便于测试发现
+-t, --top-level-directory
 
-:::tip 命令行选项
-- `-h` 或 `--help`显示帮助信息并退出。
-- `-v` 或 `--verbose`增加输出的详细程度。
-- `-q` 或 `--quiet`减少输出的详细程度。
-- `-f` 或 `--failfast`在第一次失败后停止测试运行。
-- `-c` 或 `--catch`捕获 KeyboardInterrupt 并显示故障信息。
-- `-b `或 `--buffer`将 stdout 和 stderr 缓存，只有测试失败时才显示。
-- `-k`只运行匹配表达式的测试。
-- `-s `或 `--start-directory`指定要开始发现测试的目录（默认是当前目录）。
-- `-p`或 `--pattern`指定文件名模式（默认是 test*.py）。
-- `-t` 或 `--top-level-directory`指定顶层目录，以便于测试发现。
-:::
-
-## 跳过测试和预期失败
+```
+## 3. 跳过测试和预期失败
 ```py
 import unittest
 class MyTestCase(unittest.TestCase):
@@ -86,7 +95,7 @@ class MyTestCase(unittest.TestCase):
     self.assertEqual(1, 2)
 ```
 
-## 断言
+## 4. 断言
 | 方法                      |         检查         |
 | ------------------------- | :------------------: |
 | assertEqual(a, b)         |         a=b          |
@@ -102,7 +111,7 @@ class MyTestCase(unittest.TestCase):
 | assertIsInstance(a, b)    |   isinstance(a, b)   |
 | assertNotIsInstance(a, b) | not isinstance(a, b) |
 
-## 日志配置
+## 5. 日志配置
 ```py
 # 配置日志记录
 logging.basicConfig(
@@ -115,7 +124,7 @@ logging.basicConfig(
 ```
 
 
-## 输出报告
+## 6. 输出报告
 ```py
 import unittest
 from test_case import TestStringMethods
@@ -140,9 +149,9 @@ runner.run(suite)
 
 ```
 
-## 缓存 session 数据
-1. 文件系统来缓存 session 数据
-2. SQLite 来缓存 session 数据
+## 7. 缓存 session 数据
+##### 1. 文件系统来缓存 session 数据
+##### 2. SQLite 来缓存 session 数据
 
 #### 公共部分
 

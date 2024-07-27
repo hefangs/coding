@@ -1,10 +1,9 @@
 
+# Coding
 
 ## 1. Array
 
-
-
-:::tip 去重
+:::info 去重
 
 ```javascript
 // filter去重
@@ -26,7 +25,7 @@ let arr = [1,2,3,1,2,4]
 Uniq(arr) // [1, 2, 3, 4] 
 ```
 :::
-:::tip set去重
+:::info set去重
 
 
 ```javascript
@@ -41,7 +40,7 @@ unique(arr) // [1, 2, 3, 4]
 ```
 :::
 
-:::tip 找到数组中重复的元素
+:::info 找到数组中重复的元素
 
 
 ```javascript
@@ -57,7 +56,7 @@ repeat(arr) //[1,2]
 ```
 :::
 
-:::tip 数组扁平
+:::info 数组扁平
 
 ```javascript
 function flatten(arr) {
@@ -84,7 +83,7 @@ Flat(arr) // [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12]
 ```
 :::
 
-:::warning 类数组转换为数组
+:::info 类数组转换为数组
 
 ```javascript
 let arrayLike = {
@@ -104,7 +103,7 @@ let arr2 = Array.prototype.slice.call(arrayLike) // ['a', 'b', 'c']
 
 
 ## 2. 浅拷贝
-:::tip clone
+:::info clone
 - 如果属性是基本类型，拷贝的就是基本类型的值
 - 如果属性是引用类型，拷贝的就是内存地址，所以如果其中一个对象改变了这个地址，就会影响到另一个对象
 ```js
@@ -118,7 +117,7 @@ function clone(obj) {
 ```
 :::
 
-:::tip Object.assign()
+:::info Object.assign()
 Object.assign方法可以把任意多个的源对象自身的可枚举属性拷贝给目标对象，然后返回目标对象
 
 ```js
@@ -127,7 +126,7 @@ let obj2 = Object.assign({},obj1)
 ```
 :::
 
-:::tip 函数库lodash的_.clone方法
+:::info 函数库lodash的_.clone方法
 
 
 ```js
@@ -138,7 +137,7 @@ let obj2 = _.clone(obj1)
 :::
 
 
-:::tip 展开运算符 ...
+:::info 展开运算符 ...
 
 
 
@@ -148,7 +147,7 @@ let obj2 = {... obj1}
 ```
 :::
 
-:::tip Array.prototype.concat()
+:::info Array.prototype.concat()
 
 
 ```js
@@ -157,7 +156,7 @@ let arr2 = [4,5,6]
 let arr3 = arr1.concat(arr2)
 ```
 :::
-:::tip Array.prototype.slice()
+:::info Array.prototype.slice()
 
 
 ```js
@@ -168,7 +167,7 @@ let arr2 = arr1.slice()
 :::
 
 ## 3. 深拷贝
-:::tip deepClone
+:::info deepClone
 - 深拷贝是将一个对象从内存中完整的拷贝一份出来
 - 从堆内存中开辟一个新的区域存放新对象,且修改新对象不会影响原对象
 
@@ -189,7 +188,7 @@ function deepClone(obj){
 }
 ```
 :::
-:::warning JSON.parse(JSON.stringify())
+:::info JSON.parse(JSON.stringify())
   - 这种方法虽然可以实现数组或对象深拷贝,但不能处理正则和函数
   - 如果使用这种方法正则变为空对象，函数变为null
 
@@ -205,7 +204,7 @@ console.log(data2)
 ```
 :::
   
-:::tip 函数库lodash的_.cloneDeep方法
+:::info 函数库lodash的_.cloneDeep方法
 
 ```js
 let _ = require("lodash")
@@ -214,7 +213,7 @@ let obj2 = _.cloneDeep(obj1)
 ```
 :::
 
-:::tip jQuery.extend()方法
+:::info jQuery.extend()方法
 
 ```js
 var $ = require('jquery')
@@ -227,7 +226,7 @@ var obj2 = $.extend(true, {}, obj1)
 
 ## 4. 防抖
 
-:::tip 防抖
+:::info 防抖
 防抖（`debounce`）：在事件被触发`n`秒后再执行回调，如果再这n秒内事件又被触发，则重新计算，最终只执行一次
 
 
@@ -254,7 +253,7 @@ document.getElementByTagName('input').addEventListener('input',onInput)
 
  ## 5. 节流
 
-:::tip 节流
+:::info 节流
 节流（`throttle`）：在规定的时间间隔内不会触发，只有大于时间间隔才会触发，把频繁触发变为少量触发
 
 ```js
@@ -287,7 +286,7 @@ document.querySelector("#div").addEventListener("mousemove", mouseMove)
 
 
 ## 6. 继承
-:::tip 原型链继承
+:::info 原型链继承
   - 将子类的原型对象指向父类的实例
     - 继承了父类的模板，又继承了父类的原型对象
     - 如果要给子类的原型上新增属性和方法，就必须放在`Student.prototype = new Person()`这样的语句后面
@@ -314,7 +313,7 @@ s1.run() // 学生信息: 张三-20-男
 ```
 :::
 
-:::tip 构造函数继承
+:::info 构造函数继承
   - 在子类构造函数内部使用`call`或`apply`来调用父类构造函数
     - 解决了原型链继承中子类实例共享父类引用对象的问题，实现多继承
     - 创建子类实例时，可以向父类传递参数
@@ -341,7 +340,7 @@ s1.run() // 学生信息: 张三-20-男
 ```
 :::
 
-:::tip 组合继承
+:::info 组合继承
 - 原型链继承+构造继承
   - 可以继承父类实例属性和方法，也能够继承父类原型属性和方法
   - 弥补了原型链继承中引用属性共享的问题
@@ -371,7 +370,7 @@ s1.run()   // 学生信息: 张三-20-男
 ```
 :::
 
-:::tip 寄生式继承
+:::info 寄生式继承
 - 寄生组合继承算是`ES6`之前一种比较完美的继承方式
   - 只调用了一次父类构造函数，只创建了一份父类属性
   - 子类可以用到父类原型链上的属性和方法
@@ -430,7 +429,7 @@ s1.run()  //   学生信息: 张三-20-男
 
 ## 7. new
 
-:::tip new
+:::info new
 - 创建一个空对象,作为即将要返回的那个对象实例
 - 将这个对象的`__proto__`指向构造函数的`prototype`
 - 执行构造函数并将this绑定到新创建的对象上
@@ -454,7 +453,7 @@ function myNew(context){
 
 
 ## 8. 懒加载 
-:::tip 懒加载
+:::info 懒加载
 
 - 把图片真正的URL放在另一个属性`data-src`中
 - 然后遍历所有的图片是否到达可视区域
@@ -477,7 +476,7 @@ function lazyLoad() {
 }
 ```
 :::
-:::tip 通过IntersectionObserver实现
+:::info 通过IntersectionObserver实现
   - `IntersectionObserver` 接口（从属于 `Intersection Observer API`）提供了一种异步观察目标元素与其祖先元素或顶级文档视口（`viewport`）交叉状态的方法
   - 其祖先元素或视口被称为根（`root`）
 
@@ -538,7 +537,7 @@ const vLazy: Directive<HTMLImageElement, string> = async (el, banding) => {
 
  ## 9. instanceof
 
-:::tip instanceof
+:::info instanceof
 - `instanceof`运算符用于检测构造函数的`prototype`属性是否出现在某个实例对象的原型链上
 
 ```js
@@ -565,7 +564,7 @@ function myInstanceOf(a,b) = {
 ## 10. call,apply,bind
 
 
-:::danger call
+:::info call
 - 可以改变函数指向
 - 第一个参数是要改变指向的对象
 - 之后的参数形式是 `arg1`, `arg2`... 的形式
@@ -602,7 +601,7 @@ console.log(getDate.myCall(obj,7,9)) // 2022-7-9
 :::
 
 
-:::danger apply
+:::info apply
 
 - 可以改变函数指向
 - 第一个参数与`call`相同,为函数内部`this`指向
@@ -636,7 +635,7 @@ console.log(getDate.myApply(obj, [7,9]))  // 2022-7-9
 ```
 :::
 
-:::danger bind
+:::info bind
 - 第一个参数为要绑定的`this`对象
 - 可以传递多个参数，参数规则类似`call`，
 - 后面的参数传递给要执行函数作为参数
@@ -680,7 +679,7 @@ console.log(getDate.myBind(obj)(7,9)) // 2022-7-9
 
  ## 11. promise
 
-:::warning  promise
+:::tip  promise
 
 - `Promise`存在三个状态（`state`）`pending`、`fulfilled`、`rejected`,
 - `pending`为初始态，并可以转化为`fulfilled`和`rejected`,
@@ -689,7 +688,7 @@ console.log(getDate.myBind(obj)(7,9)) // 2022-7-9
 - 若是`executor`函数报错 直接执行`reject`
 :::
 
-:::tip promise
+:::info promise
 
 ```js
 // promise
@@ -719,7 +718,7 @@ function Promise(executor){
 ```
 :::
 
-:::tip promise.then
+:::info promise.then
 
 ```js
 // then 第一种：只考虑了同步任务
@@ -785,7 +784,7 @@ class Promise{
 ```
 :::
 
-:::tip promise.resolve
+:::info promise.resolve
 
 
 ```js
@@ -808,7 +807,7 @@ Promise.resolve = function(value){
 ```
 :::
 
-:::tip promise.reject
+:::info promise.reject
 
 ```js
 // reject方法用来生成一个直接处于REJECTED状态的Promise
@@ -819,7 +818,7 @@ Promise.reject = function(reason){
 }
 ```
 :::
-:::tip promise.catch
+:::info promise.catch
 
 ```js
 // catch方法用来捕获promise的异常，就相当于一个没有成功的then
@@ -829,7 +828,7 @@ Promise.prototype.catch = function(onRejected){
 ```
 :::
 
-:::tip promise.all
+:::info promise.all
 
 ```js
 // all方法多个异步并发获取最终的结果
@@ -859,7 +858,7 @@ Promise.all = function(promiseAll){
 ```
 :::
 
-:::tip promise.finally
+:::info promise.finally
 
 ```js
 // 不管是resolve还是reject都会调用finally方法
@@ -876,7 +875,7 @@ Promise.prototype.finally = function(callback){
 ```
 :::
 
-:::tip promise.race
+:::info promise.race
 
 ```js
 //  race用来处理多个请求，采用最快的（谁先完成用谁的）
@@ -898,15 +897,15 @@ Promise.race = function(promiseRace){
 ```
 :::
 
-:::tip promiseLike
+:::info promiseLike
 
 ```javascript
- /**
-  * @description: 判断一个值是否是Promise Like
-  * @return {*}
-  */
- function isPromiseLike(value) {
-  return (
+/**
+* @description: 判断一个值是否是Promise Like
+* @return {*}
+*/
+function isPromiseLike(value) {
+return (
     value !== null &&
     (typeof value === 'object' || typeof value === 'function') &&
     typeof value.then === 'function'
@@ -921,7 +920,7 @@ Promise.race = function(promiseRace){
 ## 12. 可拖拽的div
 
 
-:::tip js实现一个可以拖拽的div
+:::info js实现一个可以拖拽的div
 
 ```js
 document.body.style.margin = 0
@@ -974,7 +973,7 @@ document.addEventListener("mouseup", e => {
 
 ## 13. 排序
 
-:::tip 冒泡排序
+:::info 冒泡排序
  - 比较相邻的元素，如果第一个比第二个大，就交换它们两个
  - 对每一对相邻元素作同样的工作，从开始第一对到结尾的最后一对，这样在最后的元素应该会是最大的数
  - 针对所有的元素重复以上的步骤，除了最后一个
@@ -997,7 +996,7 @@ bubbleSort(arr)  // [1, 2, 3, 4, 5, 6, 7, 8, 9]
 ![pic](/sort1.gif)
 :::
 
-:::tip 选择排序
+:::info 选择排序
   - 在未排序序列中找到最小（大）元素，存放到排序序列的起始位置
   - 从剩余未排序元素中继续寻找最小（大）元素，然后放到已排序序列的末尾
   - 重复第二步，直到所有元素均排序完毕
@@ -1022,7 +1021,7 @@ selectSort(arr)  //[1, 2, 3, 4, 5, 6, 7, 8, 9]
  ![pic](/sort2.gif)
 :::
 
-:::tip 快速排序
+:::info 快速排序
   - 从数列中挑出一个元素，称为"基准"（`pivot`）
   - 重新排序数列，所有比基准值小的元素摆放在基准前面，所有比基准值大的元素摆在基准后面（相同的数可以到任何一边）。在这个分区结束之后，该基准就处于数列的中间位置。这个称为分区（`partition`）操作
   - 递归地（`recursively`）把小于基准值元素的子数列和大于基准值元素的子数列排序
@@ -1047,7 +1046,7 @@ quickSort(arr) //[1, 2, 3, 4, 5, 6, 7, 8, 9]
 :::details quickSort 动图演示
 ![pic](/sort3.gif)
 :::
-:::tip 插入排序
+:::info 插入排序
   - 把待排序的数组分成已排序和未排序两部分，初始的时候把第一个元素认为是已排好序的
   - 从第二个元素开始，在已排好序的子数组中寻找到该元素合适的位置并插入该位置（如果待插入的元素与有序序列中的某个元素相等，则将待插入元素插入到相等元素的后面）
   - 重复上述过程直到最后一个元素被插入有序子数组中
@@ -1076,7 +1075,7 @@ insertionSort(arr) //[1, 2, 3, 4, 5, 6, 7, 8, 9]
 
 ## 14. Symbol.iterator
 
-:::tip Object.values
+:::info Object.values
 
 
 ```javascript
@@ -1088,7 +1087,7 @@ for(let value of values){
 ```
 :::
 
-:::tip Object.entries
+:::info Object.entries
 
 
 ```javascript
@@ -1100,7 +1099,7 @@ for(let [key,value] of entries){
 ```
 :::
 
-:::danger Symbol.iterator
+:::warning Symbol.iterator
 
 
 ```javascript
@@ -1133,21 +1132,19 @@ for(let value of obj){
 ```
 :::
 
-:::warning Example
-
- 
+:::tip Example
 ```javascript
 // 使左右俩边相等
 [a,b] = {a:1,b:2}
 Object.prototype[Symbol.iterator] = function(){
- return Object.values(this)[Symbol.iterator]()
+  return Object.values(this)[Symbol.iterator]()
 }
 ```
 :::
 
 ## 15. 获取对象的`key`
 
-:::tip for...in 遍历
+:::info for...in 遍历
 
 ```javascript
 const obj = {a:1,b:2,c:3}
@@ -1157,7 +1154,7 @@ for(let key in obj) {
 ```
 :::
 
-:::tip Object.keys
+:::info Object.keys
 
 ```javascript
 const obj = {a:1,b:2,c:3}
@@ -1166,7 +1163,7 @@ console.log(keys) // ['a', 'b', 'c']
 ```
 :::
 
-:::tip Object.getOwnPropertyNames
+:::info Object.getOwnPropertyNames
 
 
 ```javascript
@@ -1176,7 +1173,7 @@ console.log(keys)  // ['a', 'b', 'c']
 ```
 :::
 
-:::tip Object.getOwnPropertySymbols
+:::info Object.getOwnPropertySymbols
 
 ```javascript
 let d:symbol= Symbol(1)
@@ -1186,7 +1183,7 @@ console.log(keys)  //  [Symbol(1)]
 ```
 :::
 
-:::tip Reflect.ownKeys
+:::info Reflect.ownKeys
 
 
 ```javascript
@@ -1199,7 +1196,7 @@ console.log(keys)  //  ["a", "b", "c", Symbol(1)]
 
 ## 16. forEach,map,filter,reduce
 
-:::tip `forEach`
+:::info `forEach`
 1. 针对每一个元素执行提供的函数
 2. `forEach`方法不会返回执行结果，而是`undefined`
 3. `forEach`对原数组进行修改
@@ -1214,7 +1211,7 @@ console.log(arr) // [2, 4, 6, 8, 10]
 ```
 :::
 
-:::tip `map`
+:::info `map`
 1. 创建一个新的数组，其中每一个元素由调用数组中的每一个元素执行提供的函数得来
 2. `map`方法会得到一个新的数组并返回
 
@@ -1228,7 +1225,7 @@ console.log(doubled) // [2, 4, 6, 8, 10]
 ```
 :::
 
-:::tip `filter`
+:::info `filter`
 1. `filter` 方法创建一个新数组，其包含通过所提供函数实现的测试的所有元素
 2. `filter` 不会改变原数组，它返回过滤后的新数组
 
@@ -1242,7 +1239,7 @@ console.log(filter)  // [3, 4, 5]
 ```
 :::
 
-:::tip `reduce`
+:::info `reduce`
 1. 对数组中的每个元素执行一个自定义的累计器，将其结果汇总为单个返回值
 2. 形式：`Array.prototype.reduce`(`callback`, `initialValue`)
    - `callback`：回调函数(必选)

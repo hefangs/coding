@@ -1,5 +1,5 @@
 # Python
-## 数据类型
+## 1. 数据类型
 ::: tip Data types
 1. **Number**
    - Integer：整数（负、零和正）示例:`-1`,`0`,`1`
@@ -33,8 +33,7 @@
 :::
 
 
-## 检查数据类型
-
+#### 检查数据类型
 ```python
 # Checking data types
 print(type(10))                  # Int
@@ -48,8 +47,9 @@ print(type((9.8, 3.14, 2.7)))    # Tuple
 print(type({9.8, 3.14, 2.7}))    # Set
 ```
 
-## 强制转换
-**强制转换：将一种数据类型转换为另一种数据类型**
+
+#### 强制转换
+
 ```python
 # int to float
 num_int = 10
@@ -79,10 +79,14 @@ first_name_to_list = list(first_name)
 print(first_name_to_list)            # ['h','e']
 ```
 
-## 赋值运算符
+
+
+## 2. 运算符
+
+#### 赋值运算符
 ![pic](/operators1.png "notice")
 
-## 算术运算符
+#### 算术运算符
 ![pic](/operators2.png "notice")
 ```python
 # Integers
@@ -106,7 +110,7 @@ print('Complex number: ', 1 + 1j)
 print('Multiplying complex numbers: ',(1 + 1j) * (1 - 1j))
 ```
 
-## 比较运算符
+#### 比较运算符
 ![pic](/operators3.png "notice")
 ```python
 print(3 > 2)     # True, because 3 is greater than 2
@@ -139,7 +143,7 @@ print('a in an:', 'a' in 'an')      # True
 print('4 is 2 ** 2:', 4 is 2 ** 2)   # True
 ```
 
-## 逻辑运算符
+#### 逻辑运算符
 ![pic](/operators4.png "notice")
 ```python
 print(3 > 2 and 4 > 3) # True - because both statements are true
@@ -157,21 +161,27 @@ print(not not True)  # True
 print(not not False) # False
 ```
 
-## Strings
-#### 字符串中的转义序列
+## 3. Strings
+
+:::tip 字符串中的转义序列
 - \n ：换行符
 - \t ：水平制表符（Tab）
 - \\ ：反斜杠
 - \r ：回车
 - \" ：双引号
 - \' ：单引号
-#### 字符串格式
+:::
+
+
+:::tip 字符串格式
 - %运算符
   - %s - 字符串（或任何具有字符串表示形式的对象，如数字）
   - %d - Integers %d - 整数
   - %f - 浮点数
 - str.format -此格式是在 Python 版本 3 中引入的
 - f-Strings -另一种新的字符串格式是字符串插值，即 f-strings（Python 3.6+）
+:::
+
 ```python
 # %运算符
 first_name = 'he'
@@ -332,7 +342,7 @@ print(challenge.split(', ')) # ['thirty', 'days', 'of', 'python']
 ```
 
 
-## List
+## 4. List
 
 #### Create a List
 1. 使用列表内置函数
@@ -669,4 +679,19 @@ print(fruits)     # ['orange', 'mango', 'lemon', 'banana']
 ```
 
 
-## Tuple
+## 5. Tuple
+
+#### Creating a Tuple 创建元组
+```python
+# 创建空元组
+# syntax
+empty_tuple = ()
+# or using the tuple constructor
+empty_tuple = tuple()
+
+# 具有初始值的元组
+# syntax
+tpl = ('item1', 'item2','item3')
+fruits = ('banana', 'orange', 'mango', 'lemon')
+```
+
