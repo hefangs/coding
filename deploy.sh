@@ -4,13 +4,13 @@
 set -e
 
 # 构建
-yarn build
+pnpm run build
 
 # 进入待发布的目录
 cd docs/.vitepress/dist
 
 # 如果是发布到自定义域名
-echo 'www.hefang.site' > CNAME
+# echo 'www.hefang.site' > CNAME
 
 git init
 git add -A
@@ -25,3 +25,5 @@ git push -f https://github.com/hefangs/coding.git master:gh-pages
 # git push -f git@github.com:hefangs/hefangs.github.io.git main:gh-pages
 
 cd -
+
+rm -rf docs/.vitepress/dist
