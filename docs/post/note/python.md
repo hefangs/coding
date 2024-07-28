@@ -345,20 +345,19 @@ print(challenge.split(', ')) # ['thirty', 'days', 'of', 'python']
 ## 4. List
 
 #### Create a List
-1. 使用列表内置函数
-    ```python
-    # syntax
-    list1 = list()
-    list2 = list() # this is an empty list, no item in the list
-    print(len(list2)) # 0
-    ```
-2. 使用方括号:[]
-    ```python
-    # syntax
-    list1 = []
-    list2 = [] # this is an empty list, no item in the list
-    print(len(list2)) # 0
-    ```
+```python
+# 使用列表内置函数
+list1 = list()
+list2 = list() # this is an empty list, no item in the list
+print(len(list2)) # 0
+```
+```python
+# 使用方括号:[]
+list1 = []
+list2 = [] # this is an empty list, no item in the list
+print(len(list2)) # 0
+```
+
 #### Use len() to find the length of a list
 ```python
 fruits = ['banana', 'orange', 'mango', 'lemon']                     # list of fruits
@@ -517,7 +516,6 @@ print(fruits)       # ['orange', 'mango']
 
 #### Removing Items Using Del 使用 Del 删除项目
 ```python
-# syntax
 # del 关键字用于删除指定的索引，也可用于删除索引范围内的项目。它也可以完全删除列表
 lst = ['item1', 'item2']
 del lst[index] # only a single item
@@ -537,7 +535,6 @@ print(fruits)       # This should give: NameError: name 'fruits' is not defined
 
 #### Clearing List Items 清除列表项
 ```python
-# syntax
 # clear()方法清空列表
 lst = ['item1', 'item2']
 lst.clear()
@@ -605,7 +602,6 @@ print(fruits_copy)       # ['banana', 'orange', 'mango', 'lemon']
 #### Counting Items in a List 对列表中的项目进行计数
 ```python
 # count()方法返回项目在列表中出现的次数
-# syntax
 lst = ['item1', 'item2']
 lst.count(item)
 ```
@@ -619,7 +615,6 @@ print(ages.count(24))           # 3
 #### Finding Index of an Item 查找项的索引
 ```python
 # index()方法返回列表中项目的索引
-# syntax
 lst = ['item1', 'item2']
 lst.index(item)
 ```
@@ -633,7 +628,6 @@ print(ages.index(24))           # 2, the first occurrence
 #### Reversing a List 反转列表
 ```python
 # reverse()方法颠倒列表的顺序
-# syntax
 lst = ['item1', 'item2']
 lst.reverse()
 ```
@@ -650,7 +644,6 @@ print(ages) # [24, 25, 24, 26, 25, 24, 19, 22]
 #### Sorting List Items 对列表项进行排序
 ```python
 # sort()此方法修改原始列表
-# syntax
 lst = ['item1', 'item2']
 lst.sort()                # ascending
 lst.sort(reverse=True)    # descending
@@ -684,14 +677,84 @@ print(fruits)     # ['orange', 'mango', 'lemon', 'banana']
 #### Creating a Tuple 创建元组
 ```python
 # 创建空元组
-# syntax
 empty_tuple = ()
 # or using the tuple constructor
 empty_tuple = tuple()
 
 # 具有初始值的元组
-# syntax
 tpl = ('item1', 'item2','item3')
 fruits = ('banana', 'orange', 'mango', 'lemon')
 ```
 
+#### Slicing tuples 切片元组
+
+```python
+# 正指数范围
+tpl = ('item1', 'item2', 'item3','item4')
+all_items = tpl[0:4]         # all items
+all_items = tpl[0:]         # all items
+middle_two_items = tpl[1:3]  # does not include item at index 3
+```
+
+```python
+# 负指数范围
+tpl = ('item1', 'item2', 'item3','item4')
+all_items = tpl[-4:]         # all items
+middle_two_items = tpl[-3:-1]  # does not include item at index 3 (-1)
+
+fruits = ('banana', 'orange', 'mango', 'lemon')
+all_fruits = fruits[-4:]    # all items
+orange_mango = fruits[-3:-1]  # doesn't include item at index 3
+orange_to_the_rest = fruits[-3:]
+```
+
+#### Changing Tuples to Lists 将元组更改为列表
+```python
+# 将元组更改为列表，将列表更改为元组
+# 元组是不可变的，如果我们想修改元组，我们应该将其更改为列表
+tpl = ('item1', 'item2', 'item3','item4')
+lst = list(tpl)
+
+fruits = ('banana', 'orange', 'mango', 'lemon')
+fruits = list(fruits)
+fruits[0] = 'apple'
+print(fruits)     # ['apple', 'orange', 'mango', 'lemon']
+fruits = tuple(fruits)
+print(fruits)     # ('apple', 'orange', 'mango', 'lemon')
+```
+
+#### Checking an Item in a Tuple 检查元组中的项
+```python
+# 使用 in 检查元组中是否存在一个项目，它返回一个布尔值
+tpl = ('item1', 'item2', 'item3','item4')
+'item2' in tpl # True
+
+fruits = ('banana', 'orange', 'mango', 'lemon')
+print('orange' in fruits) # True
+print('apple' in fruits) # False
+fruits[0] = 'apple' # TypeError: 'tuple' object does not support item assignment
+```
+
+#### Joining Tuples 联接元组
+
+```python
+# 使用 + 运算符连接两个或多个元组
+tpl1 = ('item1', 'item2', 'item3')
+tpl2 = ('item4', 'item5','item6')
+tpl3 = tpl1 + tpl2
+
+fruits = ('banana', 'orange', 'mango', 'lemon')
+vegetables = ('Tomato', 'Potato', 'Cabbage','Onion', 'Carrot')
+fruits_and_vegetables = fruits + vegetables
+```
+
+#### Deleting Tuples 删除元组
+
+```python
+# 无法删除元组中的单个项目，但可以使用 del 删除元组本身
+tpl1 = ('item1', 'item2', 'item3')
+del tpl1
+
+fruits = ('banana', 'orange', 'mango', 'lemon')
+del fruits
+```
