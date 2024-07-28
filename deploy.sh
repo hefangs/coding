@@ -10,7 +10,7 @@ pnpm run build
 cd docs/.vitepress/dist
 
 # 如果是发布到自定义域名
-# echo 'www.hefang.site' > CNAME
+echo 'www.hefang.site' > CNAME
 
 git init
 git add -A
