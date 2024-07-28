@@ -25,20 +25,24 @@ export default {
     ]
   ],
   themeConfig: {
-    lastUpdatedText: '最近更新时间',
-    docFooter: { prev: '上一篇', next: '下一篇' },
-    // editLink: {
-    //   pattern: 'https://github.com/vuejs/vitepress/edit/main/docs/:path',
-    //   text: 'Edit this page on GitHub'
+    // search: {
+    //   provider: 'local'
     // },
+    lastUpdated: {
+      text: 'Updated at',
+      formatOptions: {
+        dateStyle: 'short', // full,long,medium,short
+        timeStyle: 'medium' // full,long,medium,short
+      }
+    },
+    docFooter: { prev: 'prev', next: 'next' },
     siteTitle: 'he',
     logo: '/one-price.png',
     sidebar: {
       '/post/': sideBar()
     },
+    // 社会链接
     socialLinks: [{ icon: 'github', link: 'https://github.com/hefangs' }],
-    // lastUpdatedText: '最近更新时间',
-    // docFooter: { prev: '上一篇', next: '下一篇' },
     nav: [
       { text: 'Home', link: '/' },
       { text: 'Coding', link: '/post/note/coding' },
@@ -46,29 +50,50 @@ export default {
       // { text: 'Vue3', link: '/post/note/vue3.0' },
       // { text: 'React', link: '/post/note/react' },
       // { text: 'Webpack', link: '/post/note/react' },
-      { text: 'Python', link: '/post/note/python', activeMatch: '/post' },
-      { text: 'Tools', link: '/post/note/tools' }
+      { text: 'Python', link: '/post/note/python' },
+      { text: 'Tools', link: '/post/note/tools', activeMatch: '/post' }
+      // 导航链接也可以是下拉菜单
+      // {
+      //   text: 'Dropdown Menu',
+      //   items: [
+      //     { text: 'Item A', link: '/item-1' },
+      //     { text: 'Item B', link: '/item-2' },
+      //     { text: 'Item C', link: '/item-3' }
+      //   ]
+      // }
+      // 外部链接
+      // {
+      //   text: 'Merchandise',
+      //   link: 'https://www.thegithubshop.com/',
+      //   target: '_self',
+      //   rel: 'sponsored'
+      // }
     ],
-    footer: {
-      message: 'Copyright © 2024 Fang He',
-      copyright: '版权所有 浙ICP备2022001576号'
-    },
-    // editLink: {
-    //   pattern: 'https://github.com/hefangs',
-    //   text: 'Edit this page on GitHub'
-    // },
     algolia: {
       appId: '8J64VVRP8K',
       apiKey: 'a18e2f4cc5665f6602c5631fd868adfd',
       indexName: 'vitepress'
+    },
+    footer: {
+      message: 'Copyright © 2024 Fang He',
+      copyright: '版权所有 浙ICP备2022001576号'
     }
+    // editLink: {
+    //   pattern: 'https://github.com/hefangs',
+    //   text: 'Edit this page on GitHub'
+    // },
+    // algolia: {
+    //   appId: '8J64VVRP8K',
+    //   apiKey: 'a18e2f4cc5665f6602c5631fd868adfd',
+    //   indexName: 'vitepress'
+    // }
   }
 }
 
 function sideBar() {
   const menus = [
     {
-      text: 'Note',
+      // text: 'Note',
       collapsible: true,
       // collapsed: true,
       items: [

@@ -1,16 +1,17 @@
 // .vitepress/theme/index.js
 
 import DefaultTheme from 'vitepress/theme'
-import { onMounted, watch, nextTick } from 'vue'
+import { onMounted, watch, nextTick, onUnmounted } from 'vue'
 import { useRoute } from 'vitepress'
 import mediumZoom from 'medium-zoom'
 import NProgress from 'nprogress'
 import 'nprogress/nprogress.css'
 import './index.css'
+import Layout from './Layout.vue'
 
 export default {
   ...DefaultTheme,
-
+  Layout,
   setup() {
     const route = useRoute()
     const initZoom = () => {
