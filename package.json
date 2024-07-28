@@ -7,7 +7,7 @@
   "scripts": {
     "dev": "vitepress dev docs",
     "build": "vitepress build docs",
-    "serve": "vitepress serve docs --port 5000"
+    "server": "vitepress serve docs --port 5000"
   },
   "devDependencies": {
     "vue": "^3.2.37",
