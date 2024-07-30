@@ -318,7 +318,7 @@ nvm current
 # 显示所有可用的 LTS 版本
 nvm ls-remote --lts
 # 列出所有可安装的 Node.js 版本
-nvm ls-remote`
+nvm ls-remote
 ````
 
 
@@ -380,7 +380,7 @@ yarn config set registry https://registry.npm.taobao.org/
 # 下载pyenv
 brew install pyenv
 # 查看所有可用的版本
-pyenv install --list`
+pyenv install --list
 # 安装指定的版本
 pyenv install 3.9.1
 # 查看已安装的版本
