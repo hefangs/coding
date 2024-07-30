@@ -14,7 +14,12 @@ echo 'www.hefang.site' > CNAME
 
 git init
 git add -A
-git commit -m 'deploy'
+# git commit -m 'deploy'
+# 获取当前时间并格式化
+CURRENT_DATE=$(date +"%Y-%m-%d_%H:%M:%S")
+COMMIT_MESSAGE="deploy-$CURRENT_DATE"
+
+git commit -m "$COMMIT_MESSAGE"
 
 # 如果部署到 https://<USERNAME>.github.io
 # git push -f git@github.com:<USERNAME>/<USERNAME>.github.io.git master
