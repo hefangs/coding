@@ -1,39 +1,55 @@
 name: Deploy to GitHub Pages
+
 on:
   push:
     branches:
       - main
+
 jobs:
   build:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout repository
-      uses: actions/checkout@v2
+      - name: Checkout repository
+        uses: actions/checkout@v2
 
-    - name: Setup Node.js
-      uses: actions/setup-node@v3
-      with:
-        node-version: 20
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 20
 
-    - name: Install dependencies
-      run: npm install 
+      - name: Install dependencies
+        run: npm install
 
-    - name: Build project
-      run: npm run build 
+      - name: Build project
+        run: npm run build
 
-    - name: Deploy to GitHub Pages
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      run: |
-        cd docs/.vitepress/dist
-        echo 'www.hefang.site' > CNAME
-        git init
-        git config --global user.email "he529564582@163.com"
-        git config --global user.name "何方"
-        git add -A
-        CURRENT_DATE=$(TZ='Asia/Shanghai' date +"%Y-%m-%d_%H:%M:%S")
-        COMMIT_MESSAGE="deploy-$CURRENT_DATE"
-        git commit -m "$COMMIT_MESSAGE"
-        git remote add origin "https://${GITHUB_ACTOR}:${GITHUB_TOKEN}@github.com/hefangs/coding.git"
-        git push -f origin master:gh-pages
+      - name: Deploy to GitHub Pages
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          cd docs/.vitepress/dist
+
+          # 设置 CNAME 文件（如果需要自定义域名）
+          echo 'www.hefang.site' > CNAME
+
+          # 初始化 Git 仓库
+          git init
+          git config --global user.email "he529564582@163.com"
+          git config --global user.name "何方"
+
+          # 添加远程仓库和获取远程分支的最新状态
+          git remote add origin "https://${GITHUB_ACTOR}:${GITHUB_TOKEN}@github.com/hefangs/coding.git"
+          git fetch origin gh-pages
+
+          # 使用软重置将远程分支的内容应用到当前分支
+          git reset --soft origin/gh-pages
+
+          # 添加变更并提交
+          git add -A
+          CURRENT_DATE=$(TZ='Asia/Shanghai' date +"%Y-%m-%d_%H:%M:%S")
+          COMMIT_MESSAGE="deploy.yml-$CURRENT_DATE"
+          git commit -m "$COMMIT_MESSAGE"
+
+          # 强制推送到 gh-pages 分支
+          git push -f origin HEAD:gh-pages
