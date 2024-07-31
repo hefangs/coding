@@ -13,22 +13,15 @@ cd docs/.vitepress/dist
 echo 'www.hefang.site' > CNAME
 
 git init
+git remote add origin "https://github.com/hefangs/coding.git"
+git fetch origin gh-pages
+git reset --soft origin/gh-pages
+
 git add -A
-# git commit -m 'deploy'
-# 获取当前时间并格式化
 CURRENT_DATE=$(date +"%Y-%m-%d_%H:%M:%S")
-COMMIT_MESSAGE="deploy-$CURRENT_DATE"
-
+COMMIT_MESSAGE="deploy.sh-$CURRENT_DATE"
 git commit -m "$COMMIT_MESSAGE"
-
-# 如果部署到 https://<USERNAME>.github.io
-# git push -f git@github.com:<USERNAME>/<USERNAME>.github.io.git master
-# git push -f git@github.com:hefangs/coding.git master:gh-pages
-git push -f https://github.com/hefangs/coding.git main:gh-pages
-
-# 如果发布到 https://<USERNAME>.github.io/<REPO>
-# git push -f git@github.com:hefangs/hefangs.github.io.git main:gh-pages
+git push -f origin HEAD:gh-pages
 
 cd -
-
 rm -rf docs/.vitepress/dist
