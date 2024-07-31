@@ -33,7 +33,7 @@
 :::
 
 
-#### 检查数据类型
+###### 检查数据类型
 ```python
 # Checking data types
 print(type(10))                  # Int
@@ -48,7 +48,7 @@ print(type({9.8, 3.14, 2.7}))    # Set
 ```
 
 
-#### 强制转换
+###### 强制转换
 
 ```python
 # int to float
@@ -83,10 +83,10 @@ print(first_name_to_list)            # ['h','e']
 
 ## 2. 运算符
 
-#### 赋值运算符
+###### 赋值运算符
 ![pic](/operators1.png "notice")
 
-#### 算术运算符
+###### 算术运算符
 ![pic](/operators2.png "notice")
 ```python
 # Integers
@@ -110,7 +110,7 @@ print('Complex number: ', 1 + 1j)
 print('Multiplying complex numbers: ',(1 + 1j) * (1 - 1j))
 ```
 
-#### 比较运算符
+###### 比较运算符
 ![pic](/operators3.png "notice")
 ```python
 print(3 > 2)     # True, because 3 is greater than 2
@@ -143,7 +143,7 @@ print('a in an:', 'a' in 'an')      # True
 print('4 is 2 ** 2:', 4 is 2 ** 2)   # True
 ```
 
-#### 逻辑运算符
+###### 逻辑运算符
 ![pic](/operators4.png "notice")
 ```python
 print(3 > 2 and 4 > 3) # True - because both statements are true
@@ -218,7 +218,7 @@ print(f'{a} % {b} = {a % b}')
 print(f'{a} // {b} = {a // b}')
 print(f'{a} ** {b} = {a ** b}')
 ```
-####  字符串作为字符序列
+######  字符串作为字符序列
 ```python
 # unpacking sequence characters into variables
 # 解包字符串
@@ -227,7 +227,7 @@ x,y = name
 print(x) # h
 print(y) # e
 ```
-#### 字符串切片
+###### 字符串切片
 ```python
 language = 'Python'
 first_three = language[0:3] # starts at zero index and up to 3 but not include 3
@@ -245,7 +245,7 @@ reverse_name = language[::-1]  # step 为 -1，表示以步长为 -1 从后向�
 print(reverse_name) # nohtyP
 ```
 
-#### String Methods
+###### String 方法
 ```python
 # capitalize():将字符串的第一个字符转换为大写字母
 challenge = 'thirty days of python'
@@ -344,7 +344,7 @@ print(challenge.split(', ')) # ['thirty', 'days', 'of', 'python']
 
 ## 4. List
 
-#### Create a List
+###### 创建 List
 ```python
 # 使用列表内置函数
 list1 = list()
@@ -358,7 +358,7 @@ list2 = [] # this is an empty list, no item in the list
 print(len(list2)) # 0
 ```
 
-#### Use len() to find the length of a list
+###### len()
 ```python
 fruits = ['banana', 'orange', 'mango', 'lemon']                     # list of fruits
 vegetables = ['Tomato', 'Potato', 'Cabbage','Onion', 'Carrot']      # list of vegetables
@@ -381,7 +381,7 @@ print('Number of countries:', len(countries))
 lst = ['he', 20, True, {'country':'Finland', 'city':'Helsinki'}] # list containing different data types
 print(lst) # ['he', 20, True, {'country': 'Finland', 'city': 'Helsinki'}]
 ```
-#### Unpacking List Items 解包List
+###### 解包 List
 ```python
 lst = ['item1','item2','item3', 'item4', 'item5']
 first_item, second_item, third_item, *rest = lst
@@ -416,7 +416,7 @@ print(scandic)     # ['Denmark', 'Finland', 'Norway', 'Iceland']
 print(es)          # Estonia
 ```
 
-#### Slicing Items from a List 从列表中切片
+###### 从列表中切片
 ```python
 # Positive Indexing 正索引
 fruits = ['banana', 'orange', 'mango', 'lemon']
@@ -436,7 +436,7 @@ orange_mango_lemon = fruits[-3:] # this will give starting from -3 to the end,['
 reverse_fruits = fruits[::-1] # a negative step will take the list in reverse order,['lemon', 'mango', 'orange', 'banana']
 ```
 
-#### Modifying Lists 修改列表
+###### 修改列表
 ```python
 fruits = ['banana', 'orange', 'mango', 'lemon']
 fruits[0] = 'avocado'
@@ -448,7 +448,7 @@ fruits[last_index] = 'lime'
 print(fruits)        #  ['avocado', 'apple', 'mango', 'lime']
 ```
 
-#### Checking Items in a List 检查列表中的项目
+###### 检查列表中的项目
 ```python
 fruits = ['banana', 'orange', 'mango', 'lemon']
 does_exist = 'banana' in fruits
@@ -457,9 +457,8 @@ does_exist = 'lime' in fruits
 print(does_exist)  # False
 ```
 
-#### Adding Items to a List 向列表添加项目
+###### 向列表添加项目
 ```python
-# syntax
 lst = list()
 lst.append(item)
 ```
@@ -471,9 +470,8 @@ fruits.append('lime')
 print(fruits)           # ['banana', 'orange', 'mango', 'lemon', 'apple', 'lime']
 ```
 
-#### Inserting Items into a List 将项目插入到列表中
+###### 将项目插入到列表中
 ```python
-# syntax
 lst = ['item1', 'item2']
 lst.insert(index, item)
 ```
@@ -485,9 +483,8 @@ fruits.insert(3, 'lime')
 print(fruits)             # ['banana', 'orange', 'apple', 'lime', 'mango', 'lemon']
 ```
 
-#### Removing Items from a List 从列表中删除项目
+###### 从列表中删除项目
 ```python
-# syntax
 lst = ['item1', 'item2']
 lst.remove(item)
 ```
@@ -498,9 +495,8 @@ print(fruits)  # ['orange', 'mango', 'lemon', 'banana'] - this method removes th
 fruits.remove('lemon')
 print(fruits)  # ['orange', 'mango', 'banana']
 ```
-#### Removing Items Using Pop 使用 Pop 删除项目
+###### 删除项目
 ```python
-# syntax
 pop()方法删除指定的索引（如果未指定索引，则删除最后一项）
 lst = ['item1', 'item2']
 lst.pop()       # last item
@@ -514,7 +510,7 @@ fruits.pop(0)
 print(fruits)       # ['orange', 'mango']
 ```
 
-#### Removing Items Using Del 使用 Del 删除项目
+###### 使用 Del 删除项目
 ```python
 # del 关键字用于删除指定的索引，也可用于删除索引范围内的项目。它也可以完全删除列表
 lst = ['item1', 'item2']
@@ -533,7 +529,7 @@ del fruits
 print(fruits)       # This should give: NameError: name 'fruits' is not defined
 ```
 
-#### Clearing List Items 清除列表项
+###### 清除列表项
 ```python
 # clear()方法清空列表
 lst = ['item1', 'item2']
@@ -545,9 +541,8 @@ fruits.clear()
 print(fruits)       # []
 ```
 
-#### Copying a List 复制列表
+###### 复制列表
 ```python
-# syntax
 lst = ['item1', 'item2']
 lst_copy = lst.copy()
 ```
@@ -557,10 +552,9 @@ fruits_copy = fruits.copy()
 print(fruits_copy)       # ['banana', 'orange', 'mango', 'lemon']
 ```
 
-#### Joining Lists 加入列表
+###### 加入列表
 1. Plus Operator (+) 加号运算符 （+）
     ```python
-    # syntax
     list3 = list1 + list2
     ```
     ```python
@@ -576,7 +570,6 @@ print(fruits_copy)       # ['banana', 'orange', 'mango', 'lemon']
     ```
 2. 使用 extend() 方法 
     ```python
-    # syntax
     list1 = ['item1', 'item2']
     list2 = ['item3', 'item4', 'item5']
     list1.extend(list2)
@@ -599,7 +592,7 @@ print(fruits_copy)       # ['banana', 'orange', 'mango', 'lemon']
     print('Fruits and vegetables:', fruits ) # Fruits and vegetables: ['banana', 'orange', 'mango', 'lemon', 'Tomato', 'Potato', 'Cabbage', 'Onion', 'Carrot']
     ```
 
-#### Counting Items in a List 对列表中的项目进行计数
+###### 对列表中的项目进行计数
 ```python
 # count()方法返回项目在列表中出现的次数
 lst = ['item1', 'item2']
@@ -612,7 +605,7 @@ ages = [22, 19, 24, 25, 26, 24, 25, 24]
 print(ages.count(24))           # 3
 ```
 
-#### Finding Index of an Item 查找项的索引
+###### 查找项的索引
 ```python
 # index()方法返回列表中项目的索引
 lst = ['item1', 'item2']
@@ -625,7 +618,7 @@ ages = [22, 19, 24, 25, 26, 24, 25, 24]
 print(ages.index(24))           # 2, the first occurrence
 ```
 
-#### Reversing a List 反转列表
+###### 反转列表
 ```python
 # reverse()方法颠倒列表的顺序
 lst = ['item1', 'item2']
@@ -641,7 +634,7 @@ print(ages) # [24, 25, 24, 26, 25, 24, 19, 22]
 ```
 
 
-#### Sorting List Items 对列表项进行排序
+###### 对列表项进行排序
 ```python
 # sort()此方法修改原始列表
 lst = ['item1', 'item2']
@@ -674,7 +667,7 @@ print(fruits)     # ['orange', 'mango', 'lemon', 'banana']
 
 ## 5. Tuple
 
-#### Creating a Tuple 创建元组
+###### 创建元组
 ```python
 # 创建空元组
 empty_tuple = ()
@@ -686,13 +679,13 @@ tpl = ('item1', 'item2','item3')
 fruits = ('banana', 'orange', 'mango', 'lemon')
 ```
 
-#### Tuple length 元组长度
+###### 元组长度
 ```python
 #  len()方法来获取元组的长度
 tpl = ('item1', 'item2', 'item3')
 len(tpl)
 ```
-#### Accessing Tuple Items 访问元组项
+###### 访问元组项
 ```python
 # 正索引
 tpl = ('item1', 'item2', 'item3')
@@ -718,7 +711,7 @@ second_fruit = fruits[-3]
 last_fruit = fruits[-1]
 ```
 
-#### Slicing tuples 切片元组
+###### 切片元组
 
 ```python
 # 正指数范围
@@ -740,7 +733,7 @@ orange_mango = fruits[-3:-1]  # doesn't include item at index 3
 orange_to_the_rest = fruits[-3:]
 ```
 
-#### Changing Tuples to Lists 将元组更改为列表
+###### 将元组更改为列表
 ```python
 # 将元组更改为列表，将列表更改为元组
 # 元组是不可变的，如果我们想修改元组，我们应该将其更改为列表
@@ -755,7 +748,7 @@ fruits = tuple(fruits)
 print(fruits)     # ('apple', 'orange', 'mango', 'lemon')
 ```
 
-#### Checking an Item in a Tuple 检查元组中的项
+###### 检查元组中的项
 ```python
 # 使用 in 检查元组中是否存在一个项目，它返回一个布尔值
 tpl = ('item1', 'item2', 'item3','item4')
@@ -767,7 +760,7 @@ print('apple' in fruits) # False
 fruits[0] = 'apple' # TypeError: 'tuple' object does not support item assignment
 ```
 
-#### Joining Tuples 联接元组
+###### #联接元组
 
 ```python
 # 使用 + 运算符连接两个或多个元组
@@ -780,7 +773,7 @@ vegetables = ('Tomato', 'Potato', 'Cabbage','Onion', 'Carrot')
 fruits_and_vegetables = fruits + vegetables
 ```
 
-#### Deleting Tuples 删除元组
+###### 删除元组
 
 ```python
 # 无法删除元组中的单个项目，但可以使用 del 删除元组本身
@@ -794,7 +787,7 @@ del fruits
 
 ## 6. Set
 
-#### Creating a Set 创建集合
+###### 创建集合
 ```python
 # 创建空集
 st = set()
@@ -802,7 +795,7 @@ st = set()
 st = {'item1', 'item2', 'item3', 'item4'}
 ```
 
-#### Getting Set's Length 获取设置的长度
+###### 获取设置的长度
 ```python
 # len() 方法来找到集合的长度
 st = {'item1', 'item2', 'item3', 'item4'}
@@ -812,7 +805,7 @@ fruits = {'banana', 'orange', 'mango', 'lemon'}
 len(fruits)
 ```
 
-#### Checking an Item 检查项目
+######  检查项目
 ```python
 # 检查列表中是否存在一个项目，使用 in 运算符
 st = {'item1', 'item2', 'item3', 'item4'}
@@ -822,7 +815,7 @@ fruits = {'banana', 'orange', 'mango', 'lemon'}
 print('mango' in fruits ) # True
 ```
 
-#### Adding Items to a Set 将项目添加到集合
+###### 将项目添加到集合
 ```python
 # add() 添加一个项目
 st = {'item1', 'item2', 'item3', 'item4'}
@@ -840,7 +833,7 @@ vegetables = ('tomato', 'potato', 'cabbage','onion', 'carrot')
 fruits.update(vegetables)
 ```
 
-#### Removing Items from a Set 从集合中删除项目
+###### 从集合中删除项目
 
 ```python
 # remove() 方法从集合中删除一个项目,如果未找到该项目,将引发错误
@@ -859,7 +852,7 @@ fruits = {'banana', 'orange', 'mango', 'lemon'}
 fruits.pop()  # removes a random item from the set
 ```
 
-#### Clearing Items in a Set 清除集合中的项目
+###### 清除集合中的项目
 ```python
 # clear() 方法清除或清空集合
 st = {'item1', 'item2', 'item3', 'item4'}
@@ -870,7 +863,7 @@ fruits.clear()
 print(fruits) # set()
 ```
 
-#### Deleting a Set 删除集合
+###### 删除集合
 ```python
 # del 删除集合本身
 st = {'item1', 'item2', 'item3', 'item4'}
@@ -880,7 +873,7 @@ fruits = {'banana', 'orange', 'mango', 'lemon'}
 del fruits
 ```
 
-#### Converting List to Set 将列表转换为集合
+###### 将列表转换为集合
 ```python
 # 可以将列表转换为设置，并将设置转换为列表
 # 将列表转换为设置会删除重复项，并且只会保留唯一项
@@ -891,7 +884,7 @@ fruits = ['banana', 'orange', 'mango', 'lemon','orange', 'banana']
 fruits = set(fruits) # {'mango', 'lemon', 'banana', 'orange'}
 ```
 
-#### Joining Sets 连接集合
+###### 连接集合
 ```python
 # union() 方法返回一个新集合
 st1 = {'item1', 'item2', 'item3', 'item4'}
@@ -914,7 +907,7 @@ fruits.update(vegetables)
 print(fruits) # {'lemon', 'carrot', 'tomato', 'banana', 'mango', 'orange', 'cabbage', 'potato', 'onion'}
 ```
 
-#### Finding Intersection Items 查找交集集合
+###### 查找交集集合
 
 ```python
 # Intersection() 方法返回一组items，这些 items 位于两个集合中
@@ -931,7 +924,7 @@ dragon = {'d', 'r', 'a', 'g', 'o','n'}
 python.intersection(dragon)     # {'o', 'n'}
 ```
 
-#### Checking Subset and Super Set 检查子集和超级集
+###### 检查子集和超级集
 
 ```python
 # 集合可以是其他集合的子集或超集
@@ -952,7 +945,7 @@ dragon = {'d', 'r', 'a', 'g', 'o','n'}
 python.issubset(dragon)     # False
 ```
 
-#### Checking the Difference Between Two Sets 检查两组集合之间的差异
+###### 检查两组集合之间的差异
 ```python
 # 它返回两个集合之间的差值
 st1 = {'item1', 'item2', 'item3', 'item4'}
@@ -970,7 +963,7 @@ python.difference(dragon)     # {'p', 'y', 't'}  - the result is unordered (char
 dragon.difference(python)     # {'d', 'r', 'a', 'g'}
 ```
 
-#### Finding Symmetric Difference Between Two Sets 求两个集合之间的对称差
+###### 求两个集合之间的对称差
 ```python
 # 它返回两个集合之间的对称差,返回一个集合
 # 该集合包含两个集合中的所有项目，但两个集合中存在的项目除外
@@ -988,7 +981,7 @@ dragon = {'d', 'r', 'a', 'g', 'o','n'}
 python.symmetric_difference(dragon)  # {'r', 't', 'p', 'y', 'g', 'a', 'd', 'h'}
 ```
 
-#### Joining Set 连接集合
+###### 连接集合
 ```python
 #  isdisjoint() 方法检查两组是并列的还是不相交的
 st1 = {'item1', 'item2', 'item3', 'item4'}
@@ -1006,7 +999,7 @@ python.isdisjoint(dragon)  # False, there are common items {'o', 'n'}
 
 
 ## 7. Dictionary
-#### Creating a Dictionary 创建词典
+###### 创建词典
 ```python
 # {} 或 dict() 内置函数来创建空字典
 empty_dict = {}      # 输出: {}
@@ -1029,7 +1022,7 @@ person = {
 }
 ```
 
-#### Dictionary Length 词典长度
+###### 词典长度
 ```python
 dct = {'key1':'value1', 'key2':'value2', 'key3':'value3', 'key4':'value4'}
 print(len(dct)) # 4
@@ -1050,7 +1043,7 @@ print(len(person)) # 7
 
 ```
 
-#### Accessing Dictionary Items 访问字典项
+###### 访问字典项
 ```python
 # 通过引用它的键名来访问字典项
 dct = {'key1':'value1', 'key2':'value2', 'key3':'value3', 'key4':'value4'}
@@ -1078,7 +1071,7 @@ print(person['city'])       # Error
 
 ```
 
-#### Adding Items to a Dictionary 将项目添加到字典
+###### 将项目添加到字典
 ```python
 # 我们可以向字典中添加新的键值对
 dct = {'key1':'value1', 'key2':'value2', 'key3':'value3', 'key4':'value4'}
@@ -1101,7 +1094,7 @@ person['skills'].append('HTML')
 print(person)
 ```
 
-#### Modifying Items in a Dictionary 修改字典中的项目
+###### 修改字典中的项目
 ```python
 dct = {'key1':'value1', 'key2':'value2', 'key3':'value3', 'key4':'value4'}
 dct['key1'] = 'value-one'
@@ -1121,7 +1114,7 @@ person = {
 person['first_name'] = 'Eyob'
 person['age'] = 252
 ```
-#### Checking Keys in a Dictionary 检查字典中的键
+###### 检查字典中的键
 ```python
 # 我们使用in操作符来检查字典中是否存在键
 dct = {'key1':'value1', 'key2':'value2', 'key3':'value3', 'key4':'value4'}
@@ -1148,7 +1141,7 @@ print(person.get('skills')) #['HTML','CSS','JavaScript', 'React', 'Node', 'Mongo
 print(person.get('city'))   # None
 ```
 
-#### Removing Key and Value Pairs from a Dictionary 从字典中删除键和值对
+###### 从字典中删除键和值对
 ```python
 # pop(key) 删除指定键值的项
 # popitem(key) 删除最后一项
@@ -1177,7 +1170,7 @@ person.popitem()                # Removes the address item
 del person['is_married']        # Removes the is_married item
 ```
 
-#### Changing Dictionary to a List of Items 将字典更改为项目列表
+###### 将字典更改为项目列表
 ```python
 # items() 方法将字典更改为元组列表
 dct = {'key1':'value1', 'key2':'value2', 'key3':'value3', 'key4':'value4'}
@@ -1187,38 +1180,259 @@ print(type(dct))  # <class 'dict'>
 print(type(dct1)) # <class 'dict_items'>
 ```
 
-#### Clearing a Dictionary 清除字典
+###### 清除字典
 ```python
 # clear()
 dct = {'key1':'value1', 'key2':'value2', 'key3':'value3', 'key4':'value4'}
 print(dct.clear()) # None
 ```
 
-#### Deleting a Dictionary 删除字典
+###### 删除字典
 ```python
 # del  完全删除字典
 dct = {'key1':'value1', 'key2':'value2', 'key3':'value3', 'key4':'value4'}
 del dct
 ```
 
-#### Copy a Dictionary 复制字典
+###### 复制字典
 ```python
 # copy()  复制字典
 dct = {'key1':'value1', 'key2':'value2', 'key3':'value3', 'key4':'value4'}
 dct_copy = dct.copy() # {'key1':'value1', 'key2':'value2', 'key3':'value3', 'key4':'value4'}
 ```
 
-#### Getting Dictionary Keys as a List 以列表的形式获取字典键
+###### 以列表的形式获取字典键
 ```python
 # keys() 以列表的形式为我们提供了字典的所有键
 dct = {'key1':'value1', 'key2':'value2', 'key3':'value3', 'key4':'value4'}
 keys = dct.keys()
 print(keys)     # dict_keys(['key1', 'key2', 'key3', 'key4'])
 ```
-#### Getting Dictionary Values as a List 以列表的形式获取字典值
+###### 以列表的形式获取字典值
 ```python
 # values() 方法将字典中的所有值作为列表提供给我们
 dct = {'key1':'value1', 'key2':'value2', 'key3':'value3', 'key4':'value4'}
 values = dct.values()
 print(values)     # dict_values(['value1', 'value2', 'value3', 'value4'])
+```
+
+## 8. Function
+
+###### 无参数函数
+```python
+# 函数可以在没有参数的情况下声明
+def generate_full_name ():
+  first_name = 'he'
+  last_name = 'fang'
+  space = ' '
+  full_name = first_name + space + last_name
+  print(full_name)
+generate_full_name () # calling a function
+
+def add_two_numbers ():
+  num_one = 2
+  num_two = 3
+  total = num_one + num_two
+  print(total)
+add_two_numbers()
+```
+###### 函数有返回值
+```python
+# 函数没有return语句，则函数的值为None
+def generate_full_name ():
+  first_name = 'he'
+  last_name = 'fang'
+  space = ' '
+  full_name = first_name + space + last_name
+  return full_name
+print(generate_full_name())
+
+def add_two_numbers ():
+  num_one = 2
+  num_two = 3
+  total = num_one + num_two
+  return total
+print(add_two_numbers())
+```
+
+###### 带参数的函数
+```python
+# 单参数
+def greetings (name):
+  message = name + ', welcome to Python for Everyone!'
+  return message
+
+print(greetings('he'))
+
+def add_ten(num):
+  ten = 10
+  return num + ten
+print(add_ten(90))
+
+def square_number(x):
+  return x * x
+print(square_number(2))
+
+def area_of_circle (r):
+  PI = 3.14
+  area = PI * r ** 2
+  return area
+print(area_of_circle(10))
+
+def sum_of_numbers(n):
+  total = 0
+  for i in range(n+1):
+    total+=i
+  print(total)
+print(sum_of_numbers(10)) # 55
+print(sum_of_numbers(100)) # 5050
+```
+```python
+# 两个参数
+def generate_full_name (first_name, last_name):
+  space = ' '
+    full_name = first_name + space + last_name
+    return full_name
+print('Full Name: ', generate_full_name('Asabeneh','Yetayeh'))
+
+def sum_two_numbers (num_one, num_two):
+  sum = num_one + num_two
+  return sum
+print('Sum of two numbers: ', sum_two_numbers(1, 9))
+
+def calculate_age (current_year, birth_year):
+  age = current_year - birth_year
+  return age
+
+print('Age: ', calculate_age(2021, 1819))
+
+def weight_of_object (mass, gravity):
+  weight = str(mass * gravity)+ ' N' # the value has to be changed to a string first
+  return weight
+print('Weight of an object in Newtons: ', weight_of_object(100, 9.81))
+```
+
+###### 传递带有键和值的参数
+```python
+# 传递带有key和value的参数,那么参数的顺序并不重要
+def print_full_name(first_name, last_name):
+  space = ' '
+  full_name = first_name  + space + last_name
+  print(full_name)
+print(print_full_name(first_name = 'he', last_name = 'fang'))
+
+def add_two_numbers (num1, num2):
+  total = num1 + num2
+  print(total)
+print(add_two_numbers(num2 = 3, num1 = 2)) # Order does not matter
+```
+
+###### 函数的返回值
+```python
+# 返回一个字符串
+def print_name(first_name):
+  return first_name
+print_name('he') # he
+
+def print_full_name(first_name, last_name):
+  space = ' '
+  full_name = first_name  + space + last_name
+  return full_name
+print_full_name(first_name='he', last_name='fang')
+```
+
+```python
+# 返回一个数字
+def add_two_numbers (num1, num2):
+  total = num1 + num2
+  return total
+print(add_two_numbers(2, 3))
+
+def calculate_age (current_year, birth_year):
+  age = current_year - birth_year
+  return age
+print('Age: ', calculate_age(2019, 1819))
+```
+
+```python
+# 返回一个布尔值
+def is_even (n):
+  if n % 2 == 0:
+    print('even')
+    return True    # return stops further execution of the function, similar to break 
+  return False
+print(is_even(10)) # True
+print(is_even(7))  # False
+```
+
+```python
+# 返回一个列表
+def find_even_numbers(n):
+  evens = []
+  for i in range(n + 1):
+    if i % 2 == 0:
+      evens.append(i)
+  return evens
+print(find_even_numbers(10))
+```
+
+###### 带默认参数的函数
+```python
+# 将默认值传递给参数,如果不传递参数,则将使用它们的默认值
+def greetings (name = 'Peter'):
+  message = name + ', welcome to Python for Everyone!'
+  return message
+print(greetings())
+print(greetings('he'))
+
+def generate_full_name (first_name = 'he', last_name = 'fang'):
+  space = ' '
+  full_name = first_name + space + last_name
+  return full_name
+
+print(generate_full_name())
+print(generate_full_name('David','Smith'))
+
+def calculate_age (birth_year,current_year = 2021):
+  age = current_year - birth_year
+  return age
+print('Age: ', calculate_age(1821))
+
+def weight_of_object (mass, gravity = 9.81):
+  weight = str(mass * gravity)+ ' N' # the value has to be changed to string first
+  return weight
+print('Weight of an object in Newtons: ', weight_of_object(100)) # 9.81 - average gravity on Earth's surface
+print('Weight of an object in Newtons: ', weight_of_object(100, 1.62)) # gravity on the surface of the Moon
+```
+
+###### 任意数量的参数
+```python
+# 不知道传递给函数的参数的数量
+# 通过在参数名前添加 * 来创建一个可以接受任意数量参数的函数
+def sum_all_nums(*nums):
+  total = 0
+  for num in nums:
+    total += num     # same as total = total + num 
+  return total
+print(sum_all_nums(2, 3, 5)) # 10
+```
+
+###### 默认参数和任意数量的参数
+```python
+def generate_groups (team,*args):
+  print(team)
+  for i in args:
+    print(i)
+print(generate_groups('Team-1','he','Brook','David','fang'))
+```
+
+###### 函数作为参数
+
+```python
+#You can pass functions around as parameters
+def square_number (n):
+  return n * n
+def do_something(f, x):
+  return f(x)
+print(do_something(square_number, 3)) # 27
 ```
