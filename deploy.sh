@@ -26,8 +26,5 @@ COMMIT_MESSAGE="deploy.sh-$CURRENT_DATE"
 git commit -m "$COMMIT_MESSAGE"
 git push -f origin HEAD:gh-pages
 
-# 删除本地 gh-pages 分支
-# git branch -D gh-pages || true
-
 cd -
 rm -rf docs/.vitepress/dist
