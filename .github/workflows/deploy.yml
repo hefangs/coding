@@ -1,0 +1,39 @@
+name: Deploy to GitHub Pages
+
+on:
+  push:
+    branches:
+      - main  # 当推送到 main 分支时触发
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
+    - name: Setup Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: 18
+
+    - name: Install dependencies
+      run: npm install # 使用 npm 代替 pnpm
+
+    - name: Build project
+      run: npm run build # 使用 npm 代替 pnpm
+
+    - name: Deploy to GitHub Pages
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      run: |
+        cd docs/.vitepress/dist
+        echo 'www.hefang.site' > CNAME
+        git init
+        git checkout -b main  # 创建并切换到 main 分支
+        git add -A
+        CURRENT_DATE=$(date +"%Y-%m-%d_%H:%M:%S")
+        COMMIT_MESSAGE="deploy-$CURRENT_DATE"
+        git commit -m "$COMMIT_MESSAGE"
+        git push -f https://github.com/hefangs/coding.git main:gh-pages
