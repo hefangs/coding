@@ -37,4 +37,5 @@ jobs:
         CURRENT_DATE=$(date +"%Y-%m-%d_%H:%M:%S")
         COMMIT_MESSAGE="deploy-$CURRENT_DATE"
         git commit -m "$COMMIT_MESSAGE"
-        git push -f https://github.com/hefangs/coding.git master:gh-pages
+        git remote add origin "https://${GITHUB_ACTOR}:${GITHUB_TOKEN}@github.com/hefangs/coding.git"
+        git push -f origin master:gh-pages
