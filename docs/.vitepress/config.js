@@ -29,7 +29,7 @@ export default {
     //   provider: 'local'
     // },
     lastUpdated: {
-      text: 'Updated at',
+      text: 'Updated on',
       formatOptions: {
         dateStyle: 'short', // full,long,medium,short
         timeStyle: 'medium' // full,long,medium,short
