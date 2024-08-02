@@ -47,12 +47,13 @@ jobs:
           # 添加远程仓库
           git remote add origin "https://${GITHUB_ACTOR}:${GITHUB_TOKEN}@github.com/hefangs/coding.git"
 
-          # 拉取远程 gh-pages 分支的最新状态并创建新分支
+          # 获取远程的 gh-pages 分支并覆盖本地内容
           git fetch origin gh-pages
-          git checkout -b gh-pages origin/gh-pages
+          git checkout -B gh-pages origin/gh-pages
 
-          # 删除旧的文件，保留 .git 目录
-          git rm -r *
+          # 清除旧的文件，保留 .git 目录
+          git rm -rf ./*
+          git clean -fd
 
           # 拷贝新的构建文件
           cp -r ../docs/.vitepress/dist/* .
@@ -64,4 +65,4 @@ jobs:
           git commit -m "$COMMIT_MESSAGE"
 
           # 推送到 gh-pages 分支
-          git push origin gh-pages
+          git push -f origin gh-pages
