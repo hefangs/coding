@@ -29,8 +29,6 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           cd docs/.vitepress/dist
-
-          # 设置 CNAME 文件（如果需要自定义域名）
           echo 'www.hefang.site' > CNAME
 
           # 初始化 Git 仓库
