@@ -1,30 +1,53 @@
-- name: Deploy to GitHub Pages
-  env:
-    GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-  run: |
-    cd docs/.vitepress/dist
-    echo 'www.hefang.site' > CNAME
+name: GitHub Action Deploy
 
-    # 初始化 Git 仓库
-    git init
-    git config user.email "he529564582@163.com"
-    git config user.name "何方"
+on:
+  push:
+    branches:
+      - main
 
-    # 添加远程仓库和获取远程分支的最新状态
-    git remote add origin "https://${GITHUB_ACTOR}:${GITHUB_TOKEN}@github.com/hefangs/coding.git"
-    git fetch origin gh-pages
+jobs:
+  build:
+    runs-on: ubuntu-latest
 
-    # 创建一个新的分支，用于合并更改
-    git checkout -b deploy-branch
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
 
-    # 合并远程的 gh-pages 分支
-    git merge origin/gh-pages
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
 
-    # 添加变更并提交
-    git add -A
-    CURRENT_DATE=$(TZ='Asia/Shanghai' date +"%Y-%m-%d_%H:%M:%S")
-    COMMIT_MESSAGE="deploy.yml-$CURRENT_DATE"
-    git commit -m "$COMMIT_MESSAGE" || echo "No changes to commit"
+      - name: Cache Node.js modules
+        uses: actions/cache@v3
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
 
-    # 强制推送到 gh-pages 分支
-    git push -f origin deploy-branch:gh-pages
+      - name: Install dependencies
+        run: npm install
+
+      - name: Build project
+        run: npm run build
+
+      - name: Deploy to GitHub Pages
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          cd docs/.vitepress/dist
+          echo 'www.hefang.site' > CNAME
+
+          git init
+          git config user.email "he529564582@163.com"
+          git config user.name "何方"
+          git remote add origin "https://${GITHUB_ACTOR}:${GITHUB_TOKEN}@github.com/hefangs/coding.git"
+          git fetch origin gh-pages
+          git checkout -b deploy-branch
+          git merge origin/gh-pages
+          git add -A
+          CURRENT_DATE=$(TZ='Asia/Shanghai' date +"%Y-%m-%d_%H:%M:%S")
+          COMMIT_MESSAGE="deploy.yml-$CURRENT_DATE"
+          git commit -m "$COMMIT_MESSAGE" || echo "No changes to commit"
+          git push -f origin deploy-branch:gh-pages
