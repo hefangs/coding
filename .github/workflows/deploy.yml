@@ -44,21 +44,24 @@ jobs:
           git config user.email "he529564582@163.com"
           git config user.name "何方"
       
-          # 添加远程仓库和获取远程分支的最新状态
+          # 添加远程仓库
           git remote add origin "https://${GITHUB_ACTOR}:${GITHUB_TOKEN}@github.com/hefangs/coding.git"
-          git fetch origin gh-pages
       
-          # 检出 gh-pages 分支
-          git checkout -b gh-pages origin/gh-pages
+          # 创建一个工作树目录并检出 gh-pages 分支
+          mkdir -p ../gh-pages
+          git worktree add ../gh-pages gh-pages
       
-          # 添加变更
+          # 将工作树目录切换到 gh-pages 分支
+          cd ../gh-pages
+      
+          # 添加变更并提交
+          cp -r ../docs/.vitepress/dist/* .
           git add -A
-      
-          # 提交变更
           CURRENT_DATE=$(TZ='Asia/Shanghai' date +"%Y-%m-%d_%H:%M:%S")
           COMMIT_MESSAGE="deploy.yml-$CURRENT_DATE"
           git commit -m "$COMMIT_MESSAGE" || echo "No changes to commit"
       
           # 推送到 gh-pages 分支
           git push origin gh-pages
+        
       
