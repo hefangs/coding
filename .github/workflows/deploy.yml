@@ -29,12 +29,12 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           cd docs/.vitepress/dist
-          echo 'www.hefang.site' > CNAME
+          # echo 'www.hefang.site' > CNAME
 
           # 初始化 Git 仓库
           git init
-          git config --global user.email "he529564582@163.com"
-          git config --global user.name "何方"
+          git config user.email "he529564582@163.com"
+          git config user.name "何方"
 
           # 添加远程仓库和获取远程分支的最新状态
           git remote add origin "https://${GITHUB_ACTOR}:${GITHUB_TOKEN}@github.com/hefangs/coding.git"
