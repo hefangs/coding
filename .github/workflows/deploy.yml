@@ -51,15 +51,11 @@ jobs:
           git fetch origin gh-pages
           git reset --hard origin/gh-pages
 
-          # 清除旧的文件，保留 .git 目录
-          find . -mindepth 1 -not -name '.git' -exec rm -rf {} +
-
-          # 拷贝新的构建文件
-          cp -r ../* .
+         
 
           # 添加变更并提交
           git add -A
-         # 提交变更
+          # 提交变更
           if [ -n "$(git diff --cached)" ]; then
 
             CURRENT_DATE=$(TZ='Asia/Shanghai' date +"%Y-%m-%d_%H:%M:%S")
