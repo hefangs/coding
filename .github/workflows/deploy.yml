@@ -47,15 +47,23 @@ jobs:
           # 添加远程仓库和获取远程分支的最新状态
           git remote add origin "https://${GITHUB_ACTOR}:${GITHUB_TOKEN}@github.com/hefangs/coding.git"
           git fetch origin gh-pages
+          git checkout -B gh-pages origin/gh-pages
 
-          # 使用软重置将远程分支的内容应用到当前分支
-          git reset --soft origin/gh-pages
+          # 复制新的构建结果
+          rsync -av --delete . /tmp/gh-pages/
 
-          # 添加变更并提交
+          # 进入临时目录
+          cd /tmp/gh-pages/
+
+          # 检查和添加变更
           git add -A
+          if git diff-index --quiet HEAD; then
+            echo "No changes detected, skipping deployment."
+            exit 0
+          fi
+
+          # 提交并推送变更
           CURRENT_DATE=$(TZ='Asia/Shanghai' date +"%Y-%m-%d_%H:%M:%S")
           COMMIT_MESSAGE="deploy.yml-$CURRENT_DATE"
           git commit -m "$COMMIT_MESSAGE"
-
-          # 强制推送到 gh-pages 分支
-          git push -f origin HEAD:gh-pages
+          git push origin gh-pages

@@ -10,7 +10,7 @@ hero:
     alt: VitePress
   actions:
     - theme: brand
-      text: 快速开始
+      text: 快速开始1
       link: /post/tools/git
 head:
   - - meta
