@@ -1,7 +1,5 @@
 ---
 layout: home
-layoutClass: 'layout'
-h1: he
 
 hero:
   name: Coding
@@ -13,7 +11,7 @@ hero:
   actions:
     - theme: brand
       text: 快速开始
-      link: /post/note/tools
+      link: /post/note/start
 head:
   - - meta
     - name: keywords

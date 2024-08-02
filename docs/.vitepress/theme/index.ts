@@ -6,8 +6,8 @@ import { useRoute } from 'vitepress'
 import mediumZoom from 'medium-zoom'
 import NProgress from 'nprogress'
 import 'nprogress/nprogress.css'
-import './index.css'
 import Layout from './Layout.vue'
+import './index.css'
 
 export default {
   ...DefaultTheme,

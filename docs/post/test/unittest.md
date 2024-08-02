@@ -150,8 +150,11 @@ runner.run(suite)
 ```
 
 ## 7. 缓存 session 数据
-##### 1. 文件系统来缓存 session 数据
-##### 2. SQLite 来缓存 session 数据
+:::info 
+1. 文件系统来缓存 session 数据
+2. SQLite 来缓存 session 数据
+:::
+
 
 #### 公共部分
 
@@ -242,9 +245,9 @@ if __name__ == '__main__':
 
 ```
 
-#### 文件系统来缓存 session 数据
 
-```py
+::: code-group
+```py [使用文件系统]
 # session_manager.py
 import json
 import os
@@ -285,9 +288,9 @@ if __name__ == '__main__':
 ```
 
 
-#### 使用 SQLite 来缓存 session 数据
 
-```py
+
+```py [使用 SQLite]
 # session_manager.py
 import json
 import os
@@ -296,7 +299,6 @@ import unittest
 import requests
 
 CACHE_DB = '../session_cache.db'
-
 
 def login():
 	session = requests.Session()
@@ -340,3 +342,16 @@ def save_session_to_cache(session):
 if __name__ == '__main__':
 	unittest.main()
 ```
+
+:::
+
+
+
+
+
+
+
+
+
+
+

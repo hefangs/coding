@@ -1,11 +1,11 @@
-# Tools
+# Git
 
-## 1. Git
-
+:::details
 
 ![pic](/git1.png "notice")
+:::
 
-#### init
+## init
 ```bash
 # 在当前目录新建一个Git代码库
 git init
@@ -17,7 +17,7 @@ git clone [url]
 rm -rf .git
 ```
 
-#### config
+## config
 ```bash
 # 显示当前的Git配置
 git config --list
@@ -28,7 +28,7 @@ git config [--global] user.name "[name]"
 git config [--global] user.email "[email address]"
 
 ```
-#### add
+## add
 
 ```bash
 # 添加指定文件到暂存区
@@ -50,7 +50,7 @@ git rm --cached [file]
 git mv [file-original] [file-renamed]
 ```
 
-#### commit
+## commit
 ```bash
 # 提交暂存区到仓库区
 git commit -m [message]
@@ -66,7 +66,7 @@ git commit --amend -m [message]
 # 重做上一次commit，并包括指定文件的新变化
 git commit --amend [file1] [file2] ...
 ```
-#### branch
+## branch
 ```bash
 # 列出所有本地分支
 git branch
@@ -98,7 +98,7 @@ git branch -d [branch-name]
 git push origin --delete [branch-name]
 git branch -dr [remote/branch]
 ```
-#### tag
+## tag
 ```bash
 # 列出所有tag
 git tag
@@ -119,7 +119,7 @@ git push [remote] --tags
 # 新建一个分支，指向某个tag
 git checkout -b [branch] [tag]
 ```
-#### log
+## log
 ```bash
 # 显示有变更的文件
 git status
@@ -165,7 +165,7 @@ git reflog origin/main
 git reflog origin/gh-pages
 ```
 
-#### remote
+## remote
 
 ```bash
 # 下载远程仓库的所有变动
@@ -186,7 +186,7 @@ git push [remote] --force
 git push [remote] --all
 ```
 
-#### reset
+## reset
 
 ```bash
 # 恢复暂存区的指定文件到工作区
@@ -212,10 +212,10 @@ git revert [commit]
 ```
 
 
-#### merge
+## merge
 
 
-###### 第一种:
+- 方法 1
 ```bash
 # 从dev分支创建新分支
 cd /path/to/your/project
@@ -248,7 +248,7 @@ git push origin --delete new-feature-branch  # 删除远程分支
 ```
 
 
-###### 第二种:
+- 方法2
 ```bash
 # 从dev分支创建新分支
 cd /path/to/your/project
@@ -269,152 +269,4 @@ git branch -d new-feature-branch
 # 删除远程新分支（如果已推送过）
 git push origin --delete new-feature-branch
 
-```
-
-
-## 2. N
-```bash
-# 以交互方式管理 Node.js版本
-# 全局安装 n
-brew install n
-# 查看已安装node列表并切换
-sudo n
-# 查看已安装node列表
-n ls
-# Displaying 20 matches (use --all to see all)
-n lsr
-# 安装稳定版本
-sudo n stable
-# 安装最新版本
-sudo n latest
-# 安装指定版本
-sudo n 8.4.0
-# 删除某个版本
-sudo n rm 8.4.0
-# 删除除已安装版本外的所有缓存版本
-n prune
-# 以指定的版本来执行脚本
-n use 8.4.0 index.js
-```
-
-
-## 3. nvm
-```bash
-# 节点版本管理器(也可以控制 Node.js版本)
-# 安装特定版本
-nvm install 14.17.0
-# 卸载特定版本的
-nvm uninstall 14.17.0
-# 安装最新的 LTS（长期支持）版本
-nvm install --lts
-# 使用特定版本
-nvm use 14.17.0
-# 使用默认版本
-nvm use default
-# 列出所有已安装的 Node.js 版本
-nvm ls
-# 显示当前使用的 Node.js 版本
-nvm current
-# 显示所有可用的 LTS 版本
-nvm ls-remote --lts
-# 列出所有可安装的 Node.js 版本
-nvm ls-remote
-````
-
-
-
-## 4. Homebrew
-```bash
-# 查询版本
-brew -v
-# 查看帮助信息
-brew -h
-#  更新Homebrew
-brew update
-# 安装软件
-brew install <pkg_name>
-# 卸载软件
-brew uninstall <pkg_name>
-# 查询任意包
-brew search <pkg_name>
-# 查看任意包内容信息
-brew info <pkg_name>
-# 列出已安装的软件列表
-brew list
-# 列出手动使用 brew install 安装的软件包,不包括依赖项
-brew leaves
-# 列出已安装软件git的文件目录
-brew list git
-# 更新所有
-brew upgrade
-# 更新指定包
-brew upgrade <pkg_name>
-# 清理所有包的旧版本
-brew cleanup
-# 清理指定包的旧版本
-brew cleanup <pkg_name>
-# 查询可更新的包
-brew outdated
-更新软件版本-清理旧版本或已删除的软件
-brew update && brew upgrade && brew cleanup
-```
-
-## 5. Vitepress
-```bash
-# vitepress更新到最新版本
-pnpm install vitepress@latest
-# 需要在`main`分支上提交`vitepress`更新后的代码
-# gh-pages`分支无需变动和之前一样提交
-# 遇到`npm install package`时，其实已经安装成功，但是进度还是显示安装中，可以重新设置npn源来解决问题
-npm config get registry : https://registry.npmjs.org/
-yarn config get registry : https://registry.npmjs.org/
-npm config set registry https://registry.npm.taobao.org/
-yarn config set registry https://registry.npm.taobao.org/                           
-
-```
-
-
-## 6. pyenv
-```bash
-# 简单的Python版本管理
-# 下载pyenv
-brew install pyenv
-# 查看所有可用的版本
-pyenv install --list
-# 安装指定的版本
-pyenv install 3.9.1
-# 查看已安装的版本
-pyenv versions
-# 查看当前版本
-pyenv version
-# 将 Python 3.8.10 设定为全局默认版本
-pyenv global 3.8.10
-# 将 Python 3.8.10 设定为当前目录的局部版本
-pyenv local 3.8.10
-# 设置当前 shell 会话的 Python 版本为 3.8.10
-pyenv shell 3.8.10
-卸载指定的版本
-pyenv uninstall 3.8.10
-# 更新pyenv本身和所有插件
-pyenv update
-# 需要添加到 `~/.zshrc`文件中,并且`source ~/.zshrc`
-export PATH="$HOME/.pyenv/bin:$PATH"
-eval "$(pyenv init --path)"
-eval "$(pyenv init -)"
-```
-
-
-## 7. nrm
-```bash
-# NPM镜像管理
-# 列出所有可用的 registry
-nrm ls
-# 显示当前使用的 registry
-nrm current
-# 测试所有 registry 的响应时间
-nrm test
-# 切换到指定的 registry
-nrm use taobao
-# 显示指定 registry 的 URL
-nrm info taobao
 ```

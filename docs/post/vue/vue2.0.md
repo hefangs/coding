@@ -2,14 +2,14 @@
 # Vue2.0
 
 ## 1. 为什么 data 是一个函数
-:::tip data
+:::info data
   1. 组件中的 `data` 写成一个函数，数据以函数返回值形式定义，
   2. 这样每复用一次组件，就会返回一份新的 `data`，
   3. 类似于给每个组件实例创建一个私有的数据空间，让各个组件实例维护各自的数据。
   4. 而单纯的写成对象形式，就使得所有组件实例共用了一份 `data`，就会造成一个变了全都会变的结果
 :::
 ## 2. Vue 组件通讯有哪几种方式
-:::tip Vue 组件通讯方式
+:::info Vue 组件通讯方式
   1. `props`：父组件向子组件传递数据是通过 `prop`传递的
   2. 子组件传递数据给父组件是通过 `$emit` 触发自定义事件
   3. `$parent`,`$children` 获取当前组件的父组件和当前组件的子组件
@@ -20,7 +20,7 @@
   8. `vueX` 状态管理
 :::
 ## 3. v-if 和 v-show 的区别
-:::tip 区别
+:::info 区别
   1. `v-if` 是真正的条件渲染，
   2. 因为它会确保在切换过程中条件块内的事件监听器和子组件适当地被销毁和重建
   3. 也是惰性的：如果在初始渲染时条件为假，则什么也不做——直到条件第一次变为真时，才会开始渲染条件块
@@ -31,13 +31,13 @@
   `v-if`从 `true`到 `false`会触发 `beforeDestroy`,`destroyed`钩子，而 `v-show`则不会
 :::
 ## 4. computed 和 watch 的区别
-:::tip 区别
+:::info 区别
 1. `computed`能做到的`watch`的都能做到,反过来 `watch`能做到的`computed`不一样能做到
 2. `computed`： 是计算属性，依赖其它属性值，并且 `computed` 的值有缓存，只有它依赖的属性值发生改变，下一次获取 `computed` 的值时才会重新计算
 3. `watch`： 更多的是「观察」的作用，类似于某些数据的监听回调 ，每当监听的数据变化时都会执行回调进行后续操作
 :::
 ## 5. 怎样理解 Vue 的单向数据流
-:::tip 单向数据流
+:::info 单向数据流
 1. `props`传递数据都是父到子这样的一个单向流转过程，父组件中的`props`数据更新会使得与它关联的子组件数据也发生改变
 2. 反过来则不行，这是为了防止子组件意外改变父组件`props`数据的状态，
 3. 如果子组件想修改父组件的数据，可以通过`$emit`派发一个自定义事件，父组件接收后，再由父组件去修改
@@ -77,16 +77,16 @@
   ```
 :::
 ## 7. vue-router 路由模式有几种
-:::tip  `hash`模式：
+:::info  `hash`模式：
 - `hash` 就是`URL`#后的那一部分内容，后面 `hash` 值的变化，不会导致浏览器向服务器发出请求，浏览器不发出请求，就不会刷新页面
 - 通过监听 `hashChange` 事件来监测 `hash` 值的改变，然后根据 `hash` 变化来实现更新页面部分内容的操作
 :::
-:::tip  `history`模式：
+:::info  `history`模式：
  - 通过 `pushState` 和 `replaceState`，这两个 `API` 可以在改变 `URL`，但是不会发送请求
  - 这样就可以监听 `url` 变化来实现更新页面部分内容的操作
 :::
 
-:::warning 区别
+:::tip 区别
  - 首先是在 `URL` `的展示上，hash` 模式有“#`”，history` 模式没有
  - 刷新页面时，`hash` 模式可以正常加载到 `hash` 值对应的页面，而 `history` 没有处理的话，会返回 404，一般需要后端将所有页面都配置重定向到首页路由
  - 在兼容性上，`hash` 可以支持低版本浏览器和 `IE`
@@ -108,18 +108,18 @@ function isSameVnode(oldVnode, newVnode) {
 // 根据key来创建老的儿子的index映射表  
 // 类似 {'a'：0,'b'：1} 代表key为'a'的节点在第一个位置 key为'b'的节点在第二个位置
 function makeIndexByKey(children) {
-  let map = {};
+  let map = {}
   children.forEach((item, index) => {
     map[item.key] = index
   })
   return map
 }
 // 生成的映射表
-let map = makeIndexByKey(oldCh);
+let map = makeIndexByKey(oldCh)
 ```
 
 ## 9. 你有对 Vue 项目进行哪些优化
-:::tip  1. 代码层面的优化：
+:::info  1. 代码层面的优化：
 1. `v-if` 和 `v-show` 区分使用场景
 2. `computed `和 `watch`  区分使用场景
 3. `v-for` 遍历必须为 `item` 添加 `key`，且避免同时使用 `v-if`
@@ -131,7 +131,7 @@ let map = makeIndexByKey(oldCh);
 9. 优化无限列表性能
 10. 服务端渲染 `SSR` or 预渲染
 :::
-:::tip  2. `Webpack` 层面的优化：
+:::info  2. `Webpack` 层面的优化：
    1. `Webpack` 对图片进行压缩
    2. 减少 `ES6` 转为 `ES5` 的冗余代码
    3. 提取公共代码
@@ -140,25 +140,25 @@ let map = makeIndexByKey(oldCh);
    6. 构建结果输出分析
    7. `Vue` 项目的编译优化
 :::
-:::tip  3. 基础的 `Web` 技术的优化：
+:::info  3. 基础的 `Web` 技术的优化：
 1. 开启 `gzip` 压缩
 2. 浏览器缓存
 3. `CDN` 的使用
 4. 使用 `Chrome Performance` 查找性能瓶颈
 :::
 ## 10. Vue2中的Object.defineProperty 与 Proxy 优劣对比
-:::tip Proxy 的优势如下：
+:::info Proxy 的优势如下：
    - `Proxy` 可以直接监听对象而非属性
    - `Proxy` 可以直接监听数组的变化；
    - `Proxy` 有多达 13 种拦截方法,不限于 `apply`、`ownKeys`、`deleteProperty`、`has` 等等是 `Object.defineProperty` 不具备的
    - `Proxy` 返回的是一个新对象,我们可以只操作新的对象达到目的,而 `Object.defineProperty` 是劫持对象属性的 `getter` 和 `setter` 方法，不支持数组，更准确的说是不支持数组的各种 `API` (所以 Vue 重写了数组方法）
    - `Proxy` 作为新标准将受到浏览器厂商重点持续的性能优化，也就是传说中的新标准的性能红利
 :::
-:::tip `Object.defineProperty` 的优势如下：
+:::info `Object.defineProperty` 的优势如下：
    - 兼容性好，支持 `IE9`，而 `Proxy` 的存在浏览器兼容性问题,而且无法用 `polyfill` 磨平
 :::
 ## 11. Vue2.0 如何检测数组变化
-:::warning  改写数组方法
+:::tip  改写数组方法
 1. 数组考虑性能原因没有用 `defineProperty` 对数组的每一项进行拦截，
 2. 而是选择对 7 种数组（`push`,`shift`,`pop`,`splice`,`unshift`,`sort`,`reverse`）方法进行重写(AOP 切片思想)
 3. 所以在 `Vue` 中修改数组的索引和长度是无法监控到的。需要通过以上 7 种变异方法修改数组才会触发数组对应的 `watcher` 进行更新
@@ -178,7 +178,7 @@ let methodsToPatch = [
   "splice",
   "reverse",
   "sort",
-];
+]
 methodsToPatch.forEach((method) => {
   arrayMethods[method] = function (...args) {
     //   这里保留原型方法的执行结果
@@ -194,11 +194,11 @@ methodsToPatch.forEach((method) => {
       case "push"：
       case "unshift"：
         inserted = args
-        break;
+        break
       case "splice"：
         inserted = args.slice(2)
       default：
-        break;
+        break
     }
     // 如果有新增的元素 inserted是一个数组 
     // 调用Observer实例的observeArray对数组每一项进行观测
@@ -210,7 +210,7 @@ methodsToPatch.forEach((method) => {
 ```
 :::
 ## 12. Vue2.0 响应式数据的原理
-:::warning 原理
+:::tip 原理
 1. Vue2.0中响应式数据的原理就是使用 Object.defineProperty()把 data 对象中的所有属性转为 getter/setter，
 2. 建立依赖关系，当属性的值发生变化时，setter 方法会通知依赖追踪器，
 3. 然后通知所有的依赖更新。Vue接下来会重新渲染模板，展示更新后的数据。
@@ -236,14 +236,14 @@ methodsToPatch.forEach((method) => {
     }
     observeArray(items) {
       // 对数组上的所有属性依次进行观测
-      for (var i = 0; i < items.length; i++) {
+      for (var i = 0 i < items.length i++) {
         observe(items[i])
       }
     }
     walk(data) {
       // 对对象上的所有属性依次进行观测
       let keys = Object.keys(data)
-      for (let i = 0; i < keys.length; i++) {
+      for (let i = 0 i < keys.length i++) {
         let key = keys[i]
         let value = data[key]
         defineReactive(data, key, value)
@@ -278,10 +278,10 @@ methodsToPatch.forEach((method) => {
   ```
 :::
 ## 13. nextTick 的作用是什么？它的实现原理是什么
-:::tip 作用
+:::info 作用
    - `vue` 更新 `DOM` 是异步更新的，数据变化，`DOM` 的更新不会马上完成，`nextTick` 的回调是在下次 `DOM` 更新循环结束之后执行的延迟回调
 :::
-:::tip 实现原理
+:::warning 实现原理
    - `nextTick` 主要使用了宏任务和微任务。根据执行环境分别尝试采用
       - `Promise` 可以将函数延迟到当前函数调用栈最末端
       - `MutationObserver` 是 `H5` 新加的一个功能，其功能是监听 `DOM` 节点的变动，在所有` DOM` 变动完成后，执行回调函数
@@ -381,7 +381,7 @@ function flushCallbacks() {
     pending = false    
     const copies = callbacks.slice(0)    // 拷贝一份 callbacks
     callbacks.length = 0    // 清空 callbacks
-    for (let i = 0; i < copies.length; i++) {    // 遍历执行传入的回调
+    for (let i = 0 i < copies.length i++) {    // 遍历执行传入的回调
         copies[i]()
     }
 }
@@ -393,12 +393,12 @@ function flushCallbacks() {
 // 否则就可能出现一直循环的情况，
 // 所以需要将 callbacks 复制一份出来然后清空，再遍历备份列表执行回调
 ```
-## 14. Vue.set和this.$set 
-:::warning
+## 14. Vue.set 和 this.$set 
+:::info
 1. 对象和数组在某些情况下无法触发响应式数据更新
   - 对象属性的新增和删除
   - 通过修改数组下标来改变数组某一项
-2. `Vue.se`t和 `vm.$set` 是要将传入的对象的属性变成响应式的
+2. `Vue.set`和 `vm.$set` 是要将传入的对象的属性变成响应式的
 :::
 ```javascript
 function set(target, key, val) {
@@ -406,40 +406,40 @@ function set(target, key, val) {
       warn(
         'Cannot set reactive property on undefined, null, or primitive value： ' +
           target
-      );
+      )
     }
     // 如果 target 是数组并且 key 为有效数组索引
     if (Array.isArray(target) && isValidArrayIndex(key)) {
       // 为了防止某些情况下会报错，比如： 设置的key值，大于数组的长度
-      target.length = Math.max(target.length, key);
+      target.length = Math.max(target.length, key)
       // 使用 splice 方法插入新的元素，将key位置的值替换为val，并触发界面更新
-      target.splice(key, 1, val);
-      return val;
+      target.splice(key, 1, val)
+      return val
     }
     // 如果 target 中已经存在 key，直接修改目标属性值并触发界面更新
     if (key in target && !(key in Object.prototype)) {
-      target[key] = val;
-      return val;
+      target[key] = val
+      return val
     }
     // 获取响应式数据的 ob 对象
-    var ob = target.__ob__;
+    var ob = target.__ob__
     if (target._isVue || (ob && ob.vmCount)) {
       warn(
         'Avoid adding reactive properties to a Vue instance or its root $data ' +
           'at runtime - declare it upfront in the data option.'
-      );
-      return val;
+      )
+      return val
     }
      // 非响应式对象，直接赋值并结束方法
     if (!ob) {
-      target[key] = val;
-      return val;
+      target[key] = val
+      return val
     }
     // 将新添加的属性设置为响应式数据
-    defineReactive$$1(ob.value, key, val);
+    defineReactive$$1(ob.value, key, val)
     // 让dep通知所有watcher重新渲染组件
-    ob.dep.notify();
-    return val;
+    ob.dep.notify()
+    return val
  }
 ```
 ## 15. vue 内置指令&事件修饰符&v-model修饰符
@@ -474,7 +474,7 @@ function set(target, key, val) {
 :::
 
 ## 16. keep-alive 是什么
-:::tip keep-alive
+:::info keep-alive
 - 作用：实现组件缓存，保持组件的状态，避免反复渲染导致的性能问题
 - 工作原理：
   - `Vue.js` 内部将 DOM 节点，抽象成了一个个的 `VNode` 节点
@@ -569,7 +569,7 @@ function set(target, key, val) {
 ```
 :::
 
-:::warning 总结
+:::tip 总结
   - `v-slot`属性只能在`template`上使用，但在只有默认插槽时可以在组件标签上使用
   - 默认插槽名为`default`，可以省略`default`直接写`v-slot`
   - 缩写为`#`时不能不写参数，写成`#default`
@@ -655,7 +655,7 @@ function h(sel, b, c) {
   // 情况2:
   else if (isArray(c)) {
     let children = []
-    for (let i = 0; index < c.length; i++) {
+    for (let i = 0 index < c.length i++) {
       if (!(typeof c === 'object' && c[i].hasOwnProperty('sel')))
         throw new Error('Error')
       children.push(c[i])
@@ -676,15 +676,16 @@ function h(sel, b, c) {
 
 ## 19. diff算法
 
-:::tip diff
+:::info diff
   - `diff`算法是一种通过同层的树节点进行比较的高效算法
   - 其有两个特点：
     - 比较只会在同层级进行, 不会跨层级比较
     - 在`diff`比较的过程中，循环从两边向中间比较
   - `diff`算法在很多场景下都有应用，在`vue`中，作用于虚拟`DOM`渲染成真实`DOM`的新旧`VNode`节点比较
 :::
-:::warning 原理分析
+:::info 原理分析
   - 当数据发生改变时，`setter`方法会调用`Dep.notify`通知所有订阅者`Watcher`，订阅者就会调用`patch`给真实的`DOM`打补丁，更新相应的视图
+  :::details
   ![pic](/diff1.png)
 :::
 :::tip patch方法
@@ -715,7 +716,7 @@ function patch(oldVnode, newVnode) {
 :::
 
 
-:::tip sameVnode方法
+:::info sameVnode方法
   - `sameVnode`方法判断是否为同一类型节点
 ```javascript
 function sameVnode(oldVnode, newVnode) {
@@ -730,7 +731,7 @@ function sameVnode(oldVnode, newVnode) {
 ```
 :::
 
-:::warning patchVnode方法
+:::tip patchVnode方法
   - 找到对应的真实`DOM`，称为`el`
   - 判断`newVnode`和`oldVnode`是否指向同一个对象，如果不是，那么直接`return`，直接替换成新的`newVnode`
   - 如果他们都有文本节点并且不相等，那么将`el`的文本节点设置为`newVnode`的文本节点
@@ -768,8 +769,7 @@ function patchVnode(oldVnode, newVnode) {
 ```
 :::
 
-:::tip updateChildren方法
-![pic](/diff2.png)
+:::warning updateChildren 方法
 - 使用`sameVnode`方法 (`oldChStartIdx`  `oldChEndIdx` `newChStartIdx` `newChEndIdx`)
    1. `oldChStartIdx`和`newChStartIdx`使用`sameVnode`方法进行比较，sameVnode(oldChStartIdx, newChStartIdx)
    2. `oldChStartIdx`和`newChEndIdx`使用`sameVnode`方法进行比较，sameVnode(oldChStartIdx, newChEndIdx)
@@ -847,6 +847,8 @@ function updateChildren(parentElm, oldCh, newCh) {
   }
 }
 ```
+:::details
+![pic](/diff2.png)
 :::
 
 ## 20. vue要做权限管理该怎么做？
@@ -922,10 +924,10 @@ axios.interceptors.response.use(res=>{},{response}=>{
       const has = Vue.directive('has', {
         bind: function (el, binding, vnode) {
           // 获取页面按钮权限
-          let btnPermissionsArr = [];
+          let btnPermissionsArr = []
           if(binding.value){
             // 如果指令传值，获取指令参数，根据指令参数和当前登录人按钮权限做比较
-            btnPermissionsArr = Array.of(binding.value);
+            btnPermissionsArr = Array.of(binding.value)
           }else{
             // 否则获取路由中的参数，根据路由的btnPermissionsArr和当前登录人按钮权限做比较
             btnPermissionsArr = vnode.context.$route.meta.btnPermissions
@@ -979,7 +981,7 @@ axios.interceptors.response.use(res=>{},{response}=>{
         if (whiteList.indexOf(router.path) !== -1) {
           return true
         }
-        let menu = Util.getMenuByName(router.name, accessMenu);
+        let menu = Util.getMenuByName(router.name, accessMenu)
         if (menu.name) {
           return true
         }
@@ -987,7 +989,7 @@ axios.interceptors.response.use(res=>{},{response}=>{
       }
       Router.beforeEach(async (to, from, next) => {
         if (getToken()) {
-          let userInfo = store.state.user.userInfo;
+          let userInfo = store.state.user.userInfo
           if (!userInfo.name) {
             try {
               await store.dispatch("GetUserInfo")
@@ -995,7 +997,7 @@ axios.interceptors.response.use(res=>{},{response}=>{
               if (to.path === '/login') {
                 next({ name: 'home_index' })
               } else {
-                //Util.toDefaultPage([...routers], to.name, router, next);
+                //Util.toDefaultPage([...routers], to.name, router, next)
                 next({ ...to, replace: true })//菜单权限更新完成,重新进一次当前路由
               }
             }  
@@ -1011,7 +1013,7 @@ axios.interceptors.response.use(res=>{},{response}=>{
               next({ name: 'home_index' })
             } else {
               if (hasPermission(to, store.getters.accessMenu)) {
-                Util.toDefaultPage(store.getters.accessMenu,to, routes, next);
+                Util.toDefaultPage(store.getters.accessMenu,to, routes, next)
               } else {
                 next({ path: '/403',replace:true })
               }
@@ -1024,11 +1026,11 @@ axios.interceptors.response.use(res=>{},{response}=>{
             next('/login')
           }
         }
-        let menu = Util.getMenuByName(to.name, store.getters.accessMenu);
-        Util.title(menu.title);
+        let menu = Util.getMenuByName(to.name, store.getters.accessMenu)
+        Util.title(menu.title)
       })
       Router.afterEach((to) => {
-        window.scrollTo(0, 0);
+        window.scrollTo(0, 0)
       })
       ```
   - 方案2
@@ -1040,8 +1042,8 @@ axios.interceptors.response.use(res=>{},{response}=>{
       - 前后端的配合要求更高
       ```javascript
       // 路由组件
-      const Home = () => import("../pages/Home.vue");
-      const UserInfo = () => import("../pages/UserInfo.vue");
+      const Home = () => import("../pages/Home.vue")
+      const UserInfo = () => import("../pages/UserInfo.vue")
       export default {
         home: Home,
         userInfo: UserInfo
@@ -1193,14 +1195,15 @@ axios.interceptors.response.use(res=>{},{response}=>{
   - 在vue项目中，我们主要针对`CORS`或`Proxy`这两种方案进行展开
 :::
 
-:::tip CORS
+:::info CORS
   - `CORS` （`Cross-Origin Resource Sharing`，跨域资源共享）是一个系统，它由一系列传输的`HTTP`头组成，这些`HTTP`头决定浏览器是否阻止前端`JavaScript`代码获取跨域请求的响应
   - `CORS`实现起来非常方便，只需要增加一些`HTTP`头，让服务器能声明允许的访问来源，只要后端实现了`CORS`就实现了跨域
   - `Access-Control-Allow-Origin`设置为`*`其实意义不大，可以说是形同虚设，实际应用中，上线前我们会将`Access-Control-Allow-Origin`值设为我们目标`host`
+  :::details
   ![pic](/cors.png "notice")
 :::
 
-:::tip Proxy
+:::info Proxy
   - 代理（`Proxy`）也称网络代理，是一种特殊的网络服务，允许一个（一般为客户端）通过这个服务与另一个网络终端（一般为服务器）进行非直接的连接
   - 一些网关、路由器等网络设备具备网络代理功能。一般认为代理服务有利于保障网络终端的隐私或安全，防止攻击
   - 方案1
@@ -1269,19 +1272,19 @@ axios.interceptors.response.use(res=>{},{response}=>{
     ```
 :::
 
-## 22. vue项目本地开发完成后部署到服务器后报404是什么原因？
+## 22. vue 项目本地开发完成后部署到服务器后报 404 是什么原因？
 
 :::info 404
   - `Vue`项目在本地时运行正常，但部署到服务器中，刷新页面，出现了`404`错误
   - `HTTP 404`错误意味着链接指向的资源不存在
 :::
-:::tip history模式404问题
+:::info history 模式 404 问题
   - `Vue`是属于单页应用（`single-page application`）
   - 而`SPA`是一种网络应用程序或网站的模型，所有用户交互是通过动态重写当前页面，前面我们也看到了，不管我们应用有多少页面，构建物都只会产出一个`index.html`
   - `Nginx`配置：
     ```javascript
     server {
-      listen  80;
+      listen  80
       server_name  www.xxx.com
       location / {
         index  /data/dist/index.html
@@ -1291,7 +1294,7 @@ axios.interceptors.response.use(res=>{},{response}=>{
   - 可以根据`Nginx`配置得出，当我们在地址栏输入`www.xxx.com`时，这时会打开我们`dist`目录下的`index.html`文件，然后我们在跳转路由进入到 `www.xxx.com/login`
   - 当我们在`xxx.com/login`页执行刷新操作，`Nginx location` 是没有相关配置的，所以就会出现`404`的情况
 :::
-:::tip 解决history模式404问题
+:::info 解决 history 模式 404 问题
   - 产生问题的本质是因为我们的路由是通过`JS`来执行视图切换的
   - 当我们进入到子路由时刷新页面，`web`容器没有相对应的页面此时会出现`404`
   - 所以我们只需要配置将任意页面都重定向到`index.html`，把路由交由前端处理
@@ -1321,7 +1324,7 @@ axios.interceptors.response.use(res=>{},{response}=>{
     })
     ```
 :::
-## 23. vue2自定义的事件总线 Bus
+## 23. vue2 自定义的事件总线 Bus
 ```ts
 // 定义事件总线类所需的接口
 type busClass = {

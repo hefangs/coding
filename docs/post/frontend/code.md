@@ -25,7 +25,7 @@ let arr = [1,2,3,1,2,4]
 Uniq(arr) // [1, 2, 3, 4] 
 ```
 :::
-:::info set去重
+:::info set 去重
 
 
 ```javascript

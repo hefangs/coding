@@ -48,84 +48,84 @@
 :::
 
 :::tip 优化方案
-  - Vue3从很多层面都做了优化，可以分成三个方面：
-    - 源码
-      - `Vue3`整个源码是通过`monorepo`的方式维护的，根据功能将不同的模块拆分到`packages`目录下面不同的子目录中
-      - 这样使得模块拆分更细化，职责划分更明确，模块之间的依赖关系也更加明确，开发人员也更容易阅读、理解和更改所有模块源码，提高代码的可维护性
-      - 另外一些`package`（比如`reactivity`响应式库）是可以独立于`Vue`使用的，这样用户如果只想使用`Vue3`的响应式能力，可以单独依赖这个响应式库而不用去依赖整个`Vue`
-      - `Vue3`是基于`typeScript`编写的，提供了更好的类型检查，能支持复杂的类型推导
-    - 性能
-      - 体积优化
-      - 编译优化
-      - 数据劫持优化
-    - 语法`API`
-      - `Composition API`，其两大显著的优化：
-        - 优化逻辑组织
-          - 一张图，我们可以很直观地感受到 `Composition API`在逻辑组织方面的优势
-          - 相同功能的代码编写在一块，而不像`Options API`那样，各个功能的代码混成一块
-          - ![pic](/optionsApi.png "notice")
-        - 优化逻辑复用
-          - 在`Vue2`中，我们是通过`mixin`实现功能混合，如果多个`mixin`混合，会存在两个非常明显的问题：命名冲突和数据来源不清晰
-          - 而通过`Composition API`这种形式，可以将一些复用的代码抽离出来作为一个函数，只要的使用的地方直接进行调用即可
-          - 同样是上文的获取鼠标位置的例子:
-          ```javascript
-          import { toRefs, reactive, onUnmounted, onMounted } from 'vue';
-          function useMouse(){
-            const state = reactive({x:0,y:0})
-            const update = e=>{
-              state.x = e.pageX
-              state.y = e.pageY
-            }
-            onMounted(()=>{
-              window.addEventListener('mousemove',update)
-            })
-            onUnmounted(()=>{
-              window.removeEventListener('mousemove',update)
-            })
-            return toRefs(state)
-          }
-          // 组件使用
-          import useMousePosition from './mouse'
-          export default {
-            setup() {
-              const { x, y } = useMousePosition()
-              return { x, y }
-            }
-          }
-          ```
-          - 可以看到整个数据来源清晰了，即使去编写更多的`hook`函数，也不会出现命名冲突的问题
+  - 源码
+    - `Vue3`整个源码是通过`monorepo`的方式维护的，根据功能将不同的模块拆分到`packages`目录下面不同的子目录中
+    - 这样使得模块拆分更细化，职责划分更明确，模块之间的依赖关系也更加明确，开发人员也更容易阅读、理解和更改所有模块源码，提高代码的可维护性
+    - 另外一些`package`（比如`reactivity`响应式库）是可以独立于`Vue`使用的，这样用户如果只想使用`Vue3`的响应式能力，可以单独依赖这个响应式库而不用去依赖整个`Vue`
+    - `Vue3`是基于`typeScript`编写的，提供了更好的类型检查，能支持复杂的类型推导
+  - 性能
+    - 体积优化
+    - 编译优化
+    - 数据劫持优化
+  - 语法`API`
+    - 优化逻辑组织
+      - 一张图，我们可以很直观地感受到 `Composition API`在逻辑组织方面的优势
+      - 相同功能的代码编写在一块，而不像`Options API`那样，各个功能的代码混成一块
+    - 优化逻辑复用
+      - 在`Vue2`中，我们是通过`mixin`实现功能混合，如果多个`mixin`混合，会存在两个非常明显的问题：命名冲突和数据来源不清晰
+      - 而通过`Composition API`这种形式，可以将一些复用的代码抽离出来作为一个函数，只要的使用的地方直接进行调用即可
+      - 同样是上文的获取鼠标位置的例子:
+      ```javascript
+      import { toRefs, reactive, onUnmounted, onMounted } from 'vue';
+      function useMouse(){
+        const state = reactive({x:0,y:0})
+        const update = e=>{
+          state.x = e.pageX
+          state.y = e.pageY
+        }
+        onMounted(()=>{
+          window.addEventListener('mousemove',update)
+        })
+        onUnmounted(()=>{
+          window.removeEventListener('mousemove',update)
+        })
+        return toRefs(state)
+      }
+      // 组件使用
+      import useMousePosition from './mouse'
+      export default {
+        setup() {
+          const { x, y } = useMousePosition()
+          return { x, y }
+        }
+      }
+      ```
+:::details
+![pic](/optionsApi.png "notice")
 :::
 
 ## 2. Vue3.0性能提升主要是通过哪几方面体现的
 
 :::warning 编译阶段
-  - 回顾`Vue2`我们知道每个组件实例都对应一个`watcher`实例，它会在组件渲染的过程中把用到的数据`property`记录为依赖，当依赖发生改变，触发`setter`，则会通知`watcher`，从而使关联的组件重新渲染
-  ![pic](/compile.png)
-    ```javascript
-    <template>
-      <div id="content">
-          <p class="text">静态文本</p>
-          <p class="text">静态文本</p>
-          <p class="text">{{ message }}</p>
-          <p class="text">静态文本</p>
-          ...
-          <p class="text">静态文本</p>
-      </div>
-    </template>
-    ```
-  - 可以看到上面例子中，组件内部只有一个动态节点，剩余一堆都是静态节点，所以这里很多`Diff`和遍历其实都是不需要的，造成性能浪费
-  - 因此`Vue3`在编译阶段，做了进一步优化。主要有如下：
-    - `Diff`算法优化
-    - 静态提升
-    - 事件监听缓存
-    - `SSR`优化
+- 回顾`Vue2`我们知道每个组件实例都对应一个`watcher`实例，它会在组件渲染的过程中把用到的数据`property`记录为依赖，当依赖发生改变，触发`setter`，则会通知`watcher`，从而使关联的组件重新渲染
+  ```javascript
+  <template>
+    <div id="content">
+      <p class="text">静态文本</p>
+      <p class="text">静态文本</p>
+      <p class="text">{{ message }}</p>
+      <p class="text">静态文本</p>
+      ...
+      <p class="text">静态文本</p>
+    </div>
+  </template>
+  ```
+- 可以看到上面例子中，组件内部只有一个动态节点，剩余一堆都是静态节点，所以这里很多`Diff`和遍历其实都是不需要的，造成性能浪费
+- 因此`Vue3`在编译阶段，做了进一步优化。主要有如下：
+  - `Diff`算法优化
+  - 静态提升
+  - 事件监听缓存
+  - `SSR`优化
+:::details
+![pic](/compile.png)
 :::
 
-:::danger Diff算法优化
+:::tip Diff算法优化
   - `Vue3`在`Diff`算法中相比`Vue2`增加了静态标记
   - 关于这个静态标记，其作用是为了会发生变化的地方添加一个`flag`标记，下次发生变化的时候直接找该地方进行比较
   - 下图这里，已经标记静态节点的`p`标签在`Diff`过程中则不会比较，把性能进一步提高
    ![pic](/vue3-diff.png)
+   
   - 关于静态类型枚举如下：
     ```javascript
     export const enum PatchFlags {
@@ -267,7 +267,7 @@
 :::
 
 ## 3. Vue3.0里为什么要用 Proxy API 替代 defineProperty API ？
-:::tip Object.defineProperty
+:::info Object.defineProperty
   - 定义：`Object.defineProperty()`方法会直接在一个对象上定义一个新属性，或者修改一个对象的现有属性，并返回此对象
     - `get`：属性的`getter` 函数，当访问该属性时，会调用此函数。执行时不传入任何参数，但是会传入`this`对象（由于继承关系，这里的this并不一定是定义该属性的对象）该函数的返回值会被用作属性的值
     - `set`：属性的`setter`函数，当属性值被修改时，会调用此函数。该方法接受一个参数（也就是被赋予的新值），会传入赋值时的`this`对象。默认为`undefined`
@@ -356,13 +356,16 @@
       })
       arrDate[0] = 99 // 无法劫持
       ```
-  - `小结`：
-    - 检测不到对象属性的添加和删除
-    - 数组`API`方法无法监听到
-    - 需要对每个属性进行遍历监听，如果嵌套对象，需要深层监听，造成性能问题
+:::
+:::warning 小结
+- 检测不到对象属性的添加和删除
+- 数组`API`方法无法监听到
+- 需要对每个属性进行遍历监听，如果嵌套对象，需要深层监听，造成性能问题
 :::
 
-:::tip Proxy
+
+
+:::info Proxy
   - `Proxy`的监听是针对一个对象的，那么对这个对象的所有操作会进入监听操作，这就完全可以代理所有属性了
     - 定义一个响应式方法`reactive`
       ```javascript
@@ -433,7 +436,7 @@
       }
       ```
 :::
-::: warning 总结
+::: tip 总结
   - `Object.defineProperty`只能遍历对象属性进行劫持 
     ```javascript
       function observe(obj) {
@@ -500,17 +503,17 @@
 
 ## 4.  watch与watchEffect
 
-:::tip 不同形式的“数据源”
+:::info 不同形式的“数据源”
   - `Vue3`中`watchEffect`的作用和`Vue2`中的`watch`作用是一样的，他们都是用来监听响应式状态发生变化的，当响应式状态发生变化时，都会触发一个回调函数
-    - 侦听数据源类型： 
-      - 它可以是一个ref(包括计算属性)
-      - 一个响应式对象
-      - 一个getter函数
-      - 或多个数据源组成的数组
+  - 侦听数据源类型： 
+    - 它可以是一个ref(包括计算属性)
+    - 一个响应式对象
+    - 一个getter函数
+    - 或多个数据源组成的数组
 :::
 
 
-:::tip 监听ref代理的单个数据
+:::info 监听 `ref` 代理的单个数据
 ```javascript{2}
 let num1 = ref(1)
 watch(num1, (newValue, oldValue) => {
@@ -521,7 +524,7 @@ let update = () =>{
 }
 ```
 :::
-:::tip 监听ref代理的多个数据
+:::info 监听`ref`代理的多个数据
 ```javascript{3}
 let num1 = ref(1)
 let num2 = ref(2)
@@ -535,7 +538,7 @@ let update =()=>{
 ```
 :::
 
-:::warning 用ref监听对象(需要手动增加deep:true)
+:::info 用`ref`监听对象(需要手动增加deep:true)
 ```javascript{8,10}
 let person = ref({
   name: 'John',
@@ -555,7 +558,7 @@ let update = () =>{
 ```
 :::
 
-:::tip 用reactive监听一个对象
+:::info 用`reactive`监听一个对象
 ```javascript{8}
 let person = reactive({
   name: 'John',
@@ -574,7 +577,7 @@ let update = () =>{
 }
 ```
 :::
-:::tip 用reactive监听对象上的一个属性
+:::info 用`reactive`监听对象上的一个属性
 ```javascript{8}
 let person = reactive({
   name: 'John',
@@ -593,7 +596,7 @@ let update = () =>{
 }
 ```
 :::
-:::tip 用reactive监听对象上的多个属性
+:::info 用`reactive`监听对象上的多个属性
 ```javascript{8}
 let person = reactive({
   name: 'John',
@@ -614,7 +617,7 @@ let update = () =>{
 :::
 
 
-:::tip watchEffect
+:::info watchEffect
 - 使用`watchEffect`方法，它立即执行传入的一个函数，同时响应式追踪其依赖，并在其依赖变更时重新运行该函数
   ```javascript{11-12}
   let num1 = ref(1)
@@ -689,10 +692,10 @@ unWatch2()
 :::
 
 :::warning 总结
-  - `watch`是惰性执行的，而`watchEffect`不是
-  - 不考虑`watch`第三个配置参数的情况下，`watch`在组件第一次执行的时候是不会执行的
-  - 只有在之后依赖项变化的时候再执行，而`watchEffect`是在程序执行到此处的时候就会立即执行，而后再响应其依赖变化执行
-  - `watch`需要传递监听的对象，`watchEffect`不需要
+- `watch`是惰性执行的，而`watchEffect`不是
+- 不考虑`watch`第三个配置参数的情况下，`watch`在组件第一次执行的时候是不会执行的
+- 只有在之后依赖项变化的时候再执行，而`watchEffect`是在程序执行到此处的时候就会立即执行，而后再响应其依赖变化执行
+- `watch`需要传递监听的对象，`watchEffect`不需要
 
 :::
 
@@ -722,6 +725,7 @@ unWatch2()
   </template>
   <style scoped>
   ```
+
 
 ## 6. ref 和 reactive
 
@@ -777,61 +781,61 @@ unWatch2()
   ```
 :::
 
-## 8. computed(计算属性)
+## 8. computed
 - 通过计算属性的`fullName`是一个只读属性
-  ```vue{4,11-16}
-  <template>
-    姓：<input type="text" v-model="firstName" /> <br />
-    名：<input type="text" v-model="lastName" /><br />
-    <div>fullName:{{ fullName }}</div>
-  </template>
+```vue{4,11-16}
+<template>
+  姓：<input type="text" v-model="firstName" /> <br />
+  名：<input type="text" v-model="lastName" /><br />
+  <div>fullName:{{ fullName }}</div>
+</template>
 
-  <script setup lang="ts">
-    import { ref, computed } from 'vue'
-    let firstName = ref('zhang')
-    let lastName = ref('san')
-    let fullName = computed(() => {
+<script setup lang="ts">
+  import { ref, computed } from 'vue'
+  let firstName = ref('zhang')
+  let lastName = ref('san')
+  let fullName = computed(() => {
+    return (
+      firstName.value.slice(0, 1).toUpperCase() +
+      firstName.value.slice(1) +
+      '-' +
+      lastName.value
+    )
+  })
+</script>
+```
+- 通过计算属性的`fullName`是一个可读可写属性
+```vue{13-17,21-23,27}
+<template>
+  姓：<input type="text" v-model="firstName" /> <br />
+  名：<input type="text" v-model="lastName" /><br />
+  <div>fullName:{{ fullName }}</div>
+  <button @click="changeFullName">更新fullName</button>
+</template>
+<script setup lang="ts">
+  import { ref, computed } from 'vue'
+  let firstName = ref('zhang')
+  let lastName = ref('san')
+  let fullName = computed({
+    get() {
       return (
         firstName.value.slice(0, 1).toUpperCase() +
         firstName.value.slice(1) +
         '-' +
         lastName.value
       )
-    })
-  </script>
-  ```
-- 通过计算属性的`fullName`是一个可读可写属性
-  ```vue{13-17,21-23,27}
-  <template>
-    姓：<input type="text" v-model="firstName" /> <br />
-    名：<input type="text" v-model="lastName" /><br />
-    <div>fullName:{{ fullName }}</div>
-    <button @click="changeFullName">更新fullName</button>
-  </template>
-  <script setup lang="ts">
-    import { ref, computed } from 'vue'
-    let firstName = ref('zhang')
-    let lastName = ref('san')
-    let fullName = computed({
-      get() {
-        return (
-          firstName.value.slice(0, 1).toUpperCase() +
-          firstName.value.slice(1) +
-          '-' +
-          lastName.value
-        )
-      },
-      set(val) {
-        let [str1, str2] = val.split('-')
-        firstName.value = str1
-        lastName.value = str2
-      }
-    })
-    let changeFullName = () => {
-      fullName.value = 'li-si'
+    },
+    set(val) {
+      let [str1, str2] = val.split('-')
+      firstName.value = str1
+      lastName.value = str2
     }
-  </script>
-  ```
+  })
+  let changeFullName = () => {
+    fullName.value = 'li-si'
+  }
+</script>
+```
   
 ## 9. Router
 
@@ -874,229 +878,229 @@ unWatch2()
   <RouterLink to="about " active-class="active">关于</RouterLink>
   ```
 
-:::tip query传参
+:::info query传参
 - `query`的第一种写法:`直接通过模版字符串拼接`
-  ```javascript{4}
+```javascript{4}
+<div>
+  <ul>
+    <li v-for="item in newsList" :key="item.id">
+      <RouterLink :to="`/news/details?id=${item.id}&title=${item.title}&content=${item.content}`">{{ item.title }}
+      </RouterLink>
+    </li>
+  </ul>
   <div>
-    <ul>
-      <li v-for="item in newsList" :key="item.id">
-        <RouterLink :to="`/news/details?id=${item.id}&title=${item.title}&content=${item.content}`">{{ item.title }}
-        </RouterLink>
-      </li>
-    </ul>
-    <div>
-      <RouterView></RouterView>
-    </div>
+    <RouterView></RouterView>
   </div>
-  ```
+</div>
+```
 - `query`的第二种写法（对象写法：`path+query`）
-  ```javascript{7-11}
-  // News.vue
+```javascript{7-11}
+// News.vue
+<div>
+  <ul>
+    <li v-for="item in newsList" :key="item.id">
+      <RouterLink
+        :to="{
+          path: '/news/details',
+          query: {
+            id: item.id,
+            title: item.title,
+            content: item.content
+          }
+        }"
+        >{{ item.title }}
+      </RouterLink>
+    </li>
+  </ul>
   <div>
-    <ul>
-      <li v-for="item in newsList" :key="item.id">
-        <RouterLink
-          :to="{
-            path: '/news/details',
-            query: {
-              id: item.id,
-              title: item.title,
-              content: item.content
-            }
-          }"
-          >{{ item.title }}
-        </RouterLink>
-      </li>
-    </ul>
-    <div>
-      <RouterView></RouterView>
-    </div>
+    <RouterView></RouterView>
   </div>
-  ```
+</div>
+```
 - `query`的第二种写法（对象写法：`name+query`）
-  ```javascript{7-11}
-  // News.vue
+```javascript{7-11}
+// News.vue
+<div>
+  <ul>
+    <li v-for="item in newsList" :key="item.id">
+      <RouterLink
+        :to="{
+          name: 'xiangqing',
+          query: {
+            id: item.id,
+            title: item.title,
+            content: item.content
+          }
+        }"
+        >{{ item.title }}
+      </RouterLink>
+    </li>
+  </ul>
   <div>
-    <ul>
-      <li v-for="item in newsList" :key="item.id">
-        <RouterLink
-          :to="{
-            name: 'xiangqing',
-            query: {
-              id: item.id,
-              title: item.title,
-              content: item.content
-            }
-          }"
-          >{{ item.title }}
-        </RouterLink>
-      </li>
-    </ul>
-    <div>
-      <RouterView></RouterView>
-    </div>
+    <RouterView></RouterView>
   </div>
-  ```
+</div>
+```
 - Detail页面接收`query`参数和使用
-  ```typescript
-  // Detail.vue
-  <script setup lang="ts">
-  import { useRoute } from 'vue-router'
-  import { toRefs } from 'vue'
-  let route = useRoute()
-  let { query } = toRefs(route)
-  </script>
-  <template>
-    <ul>
-      <li>id:{{ query.id }}</li>
-      <li>title:{{ query.title }}</li>
-      <li>content:{{ query.content }}</li>
-    </ul>
-  </template>
-  ```
+```typescript
+// Detail.vue
+<script setup lang="ts">
+import { useRoute } from 'vue-router'
+import { toRefs } from 'vue'
+let route = useRoute()
+let { query } = toRefs(route)
+</script>
+<template>
+  <ul>
+    <li>id:{{ query.id }}</li>
+    <li>title:{{ query.title }}</li>
+    <li>content:{{ query.content }}</li>
+  </ul>
+</template>
+```
 :::
 
-:::tip param传参
+:::info param传参
 - `params`的第一种写法:`直接通过模版字符串拼接`
-  ```javascript{2}
-  <RouterLink
-    :to="`/news/details/${item.id}/${item.title}/${item.content}`"
-    >{{ item.title }}
-  </RouterLink>
-  ```
+```javascript{2}
+<RouterLink
+  :to="`/news/details/${item.id}/${item.title}/${item.content}`"
+  >{{ item.title }}
+</RouterLink>
+```
 - `params`的第二种写法:（对象写法：`name+params`）
-  ```typescript{3-7}
-  <RouterLink
-    :to="{
-      name: 'xiangqing',
-      params: {
-        id: item.id,
-        title: item.title,
-        content: item.content
-      }
-    }"
-    >{{ item.title }}
-  </RouterLink>
-  ```
+```typescript{3-7}
+<RouterLink
+  :to="{
+    name: 'xiangqing',
+    params: {
+      id: item.id,
+      title: item.title,
+      content: item.content
+    }
+  }"
+  >{{ item.title }}
+</RouterLink>
+```
 - 需要给参数设置占位符(**例如第12行**)
-  ```javascript{12}
-  import { createRouter, createWebHistory } from 'vue-router'
-  const router = createRouter({
-    history: createWebHistory(),
-    routes: [
-      {
-        name: 'xinwen',
-        path: '/news',
-        component: () => import('@/components/News.vue'),
-        children: [
-          {
-            name: 'xiangqing',
-            path: 'details/:id/:title/:content',
-            component: () => import('@/components/Details.vue')
-          }
-        ]
-      }
-    ]
-  })
-  export default router
+```javascript{12}
+import { createRouter, createWebHistory } from 'vue-router'
+const router = createRouter({
+  history: createWebHistory(),
+  routes: [
+    {
+      name: 'xinwen',
+      path: '/news',
+      component: () => import('@/components/News.vue'),
+      children: [
+        {
+          name: 'xiangqing',
+          path: 'details/:id/:title/:content',
+          component: () => import('@/components/Details.vue')
+        }
+      ]
+    }
+  ]
+})
+export default router
 
 
-  ```
+```
 - Detail页面接收`params`参数和使用
-  ```typescript{10-12}
-  <script setup lang="ts">
-  import { useRoute } from 'vue-router'
-  import { toRefs } from 'vue'
-  let route = useRoute()
-  console.log(route)
-  let { params } = toRefs(route)
-  </script>
-  <template>
-    <ul>
-      <li>id:{{ params.id }}</li>
-      <li>title:{{ params.title }}</li>
-      <li>content:{{ params.content }}</li>
-    </ul>
-  </template>
-  ```
+```typescript{10-12}
+<script setup lang="ts">
+import { useRoute } from 'vue-router'
+import { toRefs } from 'vue'
+let route = useRoute()
+console.log(route)
+let { params } = toRefs(route)
+</script>
+<template>
+  <ul>
+    <li>id:{{ params.id }}</li>
+    <li>title:{{ params.title }}</li>
+    <li>content:{{ params.content }}</li>
+  </ul>
+</template>
+```
 :::
 
 :::info 路由的props配置
 - 将路由参数作为props传给组件
-  ```javascript
-  // Details.vue 页面直接使用id，title，content
-  <ul>
-    <li>{{id}}<li>
-    <li>{{title}}<li>
-    <li>{{content}}<li>
-  <ul>
-  ```
-  ```typescript{2}
-  <script lang="ts" setup>
-    defineProps(["id","title","content"])
-  </scrip>
-  ```
-  - 布尔写法
-    ```javascript{11}
-    routes: [
+```javascript
+// Details.vue 页面直接使用id，title，content
+<ul>
+  <li>{{id}}<li>
+  <li>{{title}}<li>
+  <li>{{content}}<li>
+<ul>
+```
+```typescript{2}
+<script lang="ts" setup>
+  defineProps(["id","title","content"])
+</scrip>
+```
+- 布尔写法
+```javascript{11}
+routes: [
+{
+  name: 'xinwen',
+  path: '/news',
+  component: () => import('@/components/News.vue'),
+  children: [
+    {
+      name: 'xiangqing',
+      path: 'details/:id/:title/:content',
+      component: () => import('@/components/Details.vue'),
+      props: true   // 只能传params参数
+    }
+  ]
+}
+]
+```
+- 函数写法
+```javascript{11-13}
+routes: [
+  {
+    name: 'xinwen',
+    path: '/news',
+    component: () => import('@/components/News.vue'),
+    children: [
       {
-        name: 'xinwen',
-        path: '/news',
-        component: () => import('@/components/News.vue'),
-        children: [
-          {
-            name: 'xiangqing',
-            path: 'details/:id/:title/:content',
-            component: () => import('@/components/Details.vue'),
-            props: true   // 只能传params参数
-          }
-        ]
+        name: 'xiangqing',
+        path: 'details/:id/:title/:content',
+        component: () => import('@/components/Details.vue'),
+        props(route){
+          // 函数写法，可以传query参数也可以传params参数
+          return route.query //return route.query
+        }
       }
     ]
-    ```
-  - 函数写法
-    ```javascript{11-13}
-    routes: [
+  }
+]
+```
+- 对象写法
+```javascript{11-14}
+routes: [
+  {
+    name: 'xinwen',
+    path: '/news',
+    component: () => import('@/components/News.vue'),
+    children: [
       {
-        name: 'xinwen',
-        path: '/news',
-        component: () => import('@/components/News.vue'),
-        children: [
-          {
-            name: 'xiangqing',
-            path: 'details/:id/:title/:content',
-            component: () => import('@/components/Details.vue'),
-            props(route){
-              // 函数写法，可以传query参数也可以传params参数
-              return route.query //return route.query
-            }
-          }
-        ]
+        name: 'xiangqing',
+        path: 'details/:id/:title/:content',
+        component: () => import('@/components/Details.vue'),
+        props:{ // 可以自己决定将什么作为props传给路由组件
+          a:1,
+          b:2,
+          c:3
+        }
       }
     ]
-    ```
-  - 对象写法
-    ```javascript{11-14}
-    routes: [
-      {
-        name: 'xinwen',
-        path: '/news',
-        component: () => import('@/components/News.vue'),
-        children: [
-          {
-            name: 'xiangqing',
-            path: 'details/:id/:title/:content',
-            component: () => import('@/components/Details.vue'),
-            props:{ // 可以自己决定将什么作为props传给路由组件
-              a:1,
-              b:2,
-              c:3
-            }
-          }
-        ]
-      }
-    ]
-    ```
+  }
+]
+```
 :::
   ## 10. 组件通信
   1. `props`是使用频率最高的一种通信方式 父子可以相互传递
@@ -1604,7 +1608,7 @@ unWatch2()
       </div>
     </template>
    ```
-#### 总结
+###### 总结
 | 组件关系     | 传递方式                                              |
 | ------------ | ----------------------------------------------------- |
 | 父传子       | `props`, v-model, `$refs`, 默认插槽，具名插槽         |
@@ -1616,120 +1620,120 @@ unWatch2()
 
 ## 11. toRef,toRefs,toRaw,markRaw,customRef
 
-  :::tip 总结
-  - `toRef`: 基于响应式对象上的一个属性，创建一个对应的`ref`这样创建的`ref`与其源属性保持同步：改变源属性的值将更新 `ref`的值
-  - `toRefs`: 将一个响应式对象转换为一个普通对象，这个普通对象的每个属性都是指向源对象相应属性的 ref。每个单独的 ref 都是使用`toRef()`创建的
-  - `toRaw`:根据一个`Vue`创建的代理返回其原始对象
-  - `markRaw`: 将一个对象标记为不可被转为代理。返回该对象本身
-  - `customRef`: 创建一个自定义的`ref`，并对其依赖项跟踪和更新触发进行显式控制
-  :::
+:::info 总结
+- `toRef`: 基于响应式对象上的一个属性，创建一个对应的`ref`这样创建的`ref`与其源属性保持同步：改变源属性的值将更新 `ref`的值
+- `toRefs`: 将一个响应式对象转换为一个普通对象，这个普通对象的每个属性都是指向源对象相应属性的 ref。每个单独的 ref 都是使用`toRef()`创建的
+- `toRaw`:根据一个`Vue`创建的代理返回其原始对象
+- `markRaw`: 将一个对象标记为不可被转为代理。返回该对象本身
+- `customRef`: 创建一个自定义的`ref`，并对其依赖项跟踪和更新触发进行显式控制
+:::
 
-  - `toRef`
-    ```typescript{5-11,15,23-24}
-    <script setup lang="ts">
-    import { reactive } from 'vue'
-    let state = reactive({ count: 0 })
-    // 自定义一个toRef
-    let _toRef = (object:any, key:any) => {
-      return {
-        get value() {
-          return object[key]
-        },
-        set value(newValue) {
-          object[key] = newValue
-        }
+- `toRef`
+```typescript{5-11,15,23-24}
+<script setup lang="ts">
+import { reactive } from 'vue'
+let state = reactive({ count: 0 })
+// 自定义一个toRef
+let _toRef = (object:any, key:any) => {
+  return {
+    get value() {
+      return object[key]
+    },
+    set value(newValue) {
+      object[key] = newValue
+    }
+  }
+}
+let count = _toRef(state, 'count')
+</script>
+<template>
+  <h1>{{ state.count }}</h1>
+  <h2>{{ count.value }}</h2>
+  <br />
+  // 修改count.value的值会影响state.count的值
+  // 修改state.count的值也会影响count.value的值
+  <button @click="count.value++">count.value</button><br />
+  <button @click="state.count++">state.value.count</button>
+</template>
+<script>
+```
+- `toRefs`
+```typescript{4-13,15}
+<script setup lang="ts">
+import { Ref, reactive, toRef } from 'vue'
+let state = reactive({ name: '张三', age: 18 })
+let _toRefs = <T extends object>(object: T): { [K in keyof T]: Ref<T[K]> } => {
+  // 创建一个对象，用于存储属性名和对应的 ref
+  let refs = {} as { [K in keyof T]: Ref<T[K]> }
+  // 遍历响应式对象的属性
+  for (let key in object) {
+    // 使用 ref 包装属性值
+    refs[key] = toRef(object, key)
+  }
+  // 返回包含所有属性的 ref 对象
+  return refs
+}
+let state1 = _toRefs(state)
+</script>
+<template>
+  <h1>{{ state }}</h1>
+  <h1>{{ state1 }}</h1>
+</template>
+```
+- `toRaw`
+```typescript
+  function toRaw(observed) {
+  // 检查传入的参数是否是一个响应式对象
+  if (!observed || typeof observed !== 'object') {
+    return observed;
+  }
+  // 如果传入的对象具有 __v_raw 字段，说明它是一个 Vue.js 的响应式对象
+  if (observed.__v_raw) {
+    return observed.__v_raw;
+  }
+  // 如果不是 Vue.js 的响应式对象，直接返回传入的对象
+  return observed;
+}
+```
+- `markRaw`
+```typescript
+  function markRaw(value) {
+  // 将传入的对象标记为不可响应的
+  // 通过设置 __v_skip 字段来实现
+  Object.defineProperty(value, '__v_skip', {
+    configurable: true,
+    enumerable: false,
+    value: true
+  })
+    return value
+  }
+```
+- `customRef`
+```typescript
+// useMsgRef.ts  
+import { customRef } from 'vue'
+export default function (initValue: string, delay: number) {
+  let timer: number
+  let msg = customRef((track, trigger) => {
+    return {
+      get() {
+        track()
+        return initValue
+      },
+      set(newValue) {
+        clearTimeout(timer)
+        timer = setTimeout(() => {
+          initValue = newValue
+          trigger()
+        }, delay)
       }
     }
-    let count = _toRef(state, 'count')
-    </script>
-    <template>
-      <h1>{{ state.count }}</h1>
-      <h2>{{ count.value }}</h2>
-      <br />
-      // 修改count.value的值会影响state.count的值
-      // 修改state.count的值也会影响count.value的值
-      <button @click="count.value++">count.value</button><br />
-      <button @click="state.count++">state.value.count</button>
-    </template>
-    <script>
-    ```
-  - `toRefs`
-    ```typescript{4-13,15}
-    <script setup lang="ts">
-    import { Ref, reactive, toRef } from 'vue'
-    let state = reactive({ name: '张三', age: 18 })
-    let _toRefs = <T extends object>(object: T): { [K in keyof T]: Ref<T[K]> } => {
-      // 创建一个对象，用于存储属性名和对应的 ref
-      let refs = {} as { [K in keyof T]: Ref<T[K]> }
-      // 遍历响应式对象的属性
-      for (let key in object) {
-        // 使用 ref 包装属性值
-        refs[key] = toRef(object, key)
-      }
-      // 返回包含所有属性的 ref 对象
-      return refs
-    }
-    let state1 = _toRefs(state)
-    </script>
-    <template>
-      <h1>{{ state }}</h1>
-      <h1>{{ state1 }}</h1>
-    </template>
-    ```
-  - `toRaw`
-    ```typescript
-      function toRaw(observed) {
-      // 检查传入的参数是否是一个响应式对象
-      if (!observed || typeof observed !== 'object') {
-        return observed;
-      }
-      // 如果传入的对象具有 __v_raw 字段，说明它是一个 Vue.js 的响应式对象
-      if (observed.__v_raw) {
-        return observed.__v_raw;
-      }
-      // 如果不是 Vue.js 的响应式对象，直接返回传入的对象
-      return observed;
-    }
-    ```
-  - `markRaw`
-    ```typescript
-      function markRaw(value) {
-      // 将传入的对象标记为不可响应的
-      // 通过设置 __v_skip 字段来实现
-      Object.defineProperty(value, '__v_skip', {
-        configurable: true,
-        enumerable: false,
-        value: true
-      })
-        return value
-      }
-    ```
-  - `customRef`
-    ```typescript
-    // useMsgRef.ts  
-    import { customRef } from 'vue'
-    export default function (initValue: string, delay: number) {
-      let timer: number
-      let msg = customRef((track, trigger) => {
-        return {
-          get() {
-            track()
-            return initValue
-          },
-          set(newValue) {
-            clearTimeout(timer)
-            timer = setTimeout(() => {
-              initValue = newValue
-              trigger()
-            }, delay)
-          }
-        }
-      })
-      return { msg }
-    }
-    // App.vue
-    import useMsgRef from './useMsgRef'
-    let {msg} = useMsgRef('hello', 500)
-    <h2>{{ msg}}<h2>
-    <input type="text" v-model="msg"/>
-    ```
+  })
+  return { msg }
+}
+// App.vue
+import useMsgRef from './useMsgRef'
+let {msg} = useMsgRef('hello', 500)
+<h2>{{ msg}}<h2>
+<input type="text" v-model="msg"/>
+```

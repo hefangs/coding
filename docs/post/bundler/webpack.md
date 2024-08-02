@@ -2,7 +2,7 @@
 
 ## 1. 说说你对webpack的理解？解决了什么问题？
 
-:::tip 背景
+:::info 背景
   - `Webpack`最初的目标是实现前端项目的模块化，旨在更高效地管理和维护项目中的每一个资源
   - 模块化：
     - 最早的时候，我们会通过文件划分的形式实现模块化，也就是将每个功能及其相关状态数据各自单独放到不同的`JS`文件中
@@ -40,7 +40,7 @@
     - 理想的解决方式是，在页面中引入一个`JS`入口文件，其余用到的模块可以通过代码控制，按需加载进来，除了模块加载的问题以外，还需要规定模块化的规范，如今流行的则是`CommonJS`、`ES Modules`
 :::
 
-:::tip 问题
+:::info 问题
   - 从后端渲染的`JSP`、`PHP`，到前端原生`JavaScript`，再到`Jquery`开发，再到目前的三大框架`Vue`、`React`、Angular
   - 开发方式，也从`Javascript`到后面的`ES5`、`ES6`、`7`、`8`、`9`、`10`，再到`TypeScript`，包括编写`CSS`的预处理器`less`、`scss`等
   - 现代前端开发已经变得十分的复杂，所以我们开发过程中会遇到如下的问题：
@@ -51,33 +51,41 @@
     - 开发完成后我们还需要将代码进行压缩、合并以及其他相关的优化
 :::
 
-:::tip 是什么 
-  - `Webpack`是一个用于现代`JavaScript`应用程序的静态模块打包工具
-    - 静态模块：
-      - 这里的静态模块指的是开发阶段，可以被`Webpack`直接引用的资源（可以直接被获取打包进`bundle.js`的资源）
-      - 当`Webpack`处理应用程序时，它会在内部构建一个依赖图，此依赖图对应映射到项目所需的每个模块（不再局限`js`文件），并生成一个或多个`bundle`
-         ![pic](/webpack1.png "notice")
-    - `Webpack`的能力：
-      - 编译代码能力，提高效率，解决浏览器兼容问题
-        ![pic](/webpack2.png "notice")
-      - 模块整合能力，提高性能，可维护性，解决浏览器频繁请求文件的问题
-        ![pic](/webpack3.png "notice")
-      - 万物皆可模块能力，项目维护性增强，支持不同种类的前端模块类型，统一的模块化方案，所有资源文件的加载都可以通过代码控制
-        ![pic](/webpack4.png "notice")
+:::info 是什么 
+- `Webpack`是一个用于现代`JavaScript`应用程序的静态模块打包工具
+- 静态模块：
+  - 这里的静态模块指的是开发阶段，可以被`Webpack`直接引用的资源（可以直接被获取打包进`bundle.js`的资源）
+  - 当`Webpack`处理应用程序时，它会在内部构建一个依赖图，此依赖图对应映射到项目所需的每个模块（不再局限`js`文件），并生成一个或多个`bundle`
+:::details
+![pic](/webpack1.png "notice")
+:::
+
+:::info 编译代码能力，提高效率，解决浏览器兼容问题
+:::details
+![pic](/webpack2.png "notice")
+:::
+:::info 模块整合能力，提高性能，可维护性，解决浏览器频繁请求文件的问题
+:::details
+![pic](/webpack3.png "notice")
+:::
+:::info 项目维护性增强，支持不同种类的前端模块类型，统一的模块化方案，所有资源文件的加载都可以通过代码控制
+:::details
+![pic](/webpack4.png "notice")
 :::
 
 ## 2. 说说webpack的构建流程?
 
-:::tip 运行流程
-  - `Webpack`的运行流程是一个串行的过程，它的工作流程就是将各个插件串联起来
-  - 在运行过程中会广播事件，插件只需要监听它所关心的事件，就能加入到这条`Webpack`机制中，去改变`Webpack`的运作，使得整个系统扩展性良好
-  - 从启动到结束会依次执行以下三大步骤：
-    - 初始化流程：从配置文件和`Shell`语句中读取与合并参数，并初始化需要使用的插件和配置插件等执行环境所需要的参数
-    - 编译构建流程：从`Entry`发出，针对每个`Module`串行调用对应的`Loader`去翻译文件内容，再找到该`Module`依赖的`Module`，递归地进行编译处理
-    - 输出流程：对编译后的`Module`组合成`Chunk`，把`Chunk`转换成文件，输出到文件系统
-    ![pic](/webpack5.png "notice")
+:::info 运行流程
+- `Webpack`的运行流程是一个串行的过程，它的工作流程就是将各个插件串联起来
+- 在运行过程中会广播事件，插件只需要监听它所关心的事件，就能加入到这条`Webpack`机制中，去改变`Webpack`的运作，使得整个系统扩展性良好
+- 从启动到结束会依次执行以下三大步骤：
+  - 初始化流程：从配置文件和`Shell`语句中读取与合并参数，并初始化需要使用的插件和配置插件等执行环境所需要的参数
+  - 编译构建流程：从`Entry`发出，针对每个`Module`串行调用对应的`Loader`去翻译文件内容，再找到该`Module`依赖的`Module`，递归地进行编译处理
+  - 输出流程：对编译后的`Module`组合成`Chunk`，把`Chunk`转换成文件，输出到文件系统
+:::details
+![pic](/webpack5.png "notice")
 :::
-:::tip 初始化流程
+:::info 初始化流程
   - 从配置文件和`Shell`语句中读取与合并参数，得出最终的参数
   - 配置文件默认下为`webpack.config.js`，也或者通过命令的形式指定配置文件，主要作用是用于激活`webpack`的加载项和插件
   - 关于文件配置内容分析，如下注释：
@@ -145,7 +153,7 @@
   - `Compiler`对象继承自`Tapable`，初始化时定义了很多钩子函数
 :::
 
-:::tip 编译构建流程
+:::info 编译构建流程
   - 根据配置中的`entry`找出所有的入口文件
     ```javascript
     module.exports = {
@@ -204,12 +212,12 @@
         }
         ```
   - 在`Compiler`开始生成文件前，钩子`emit`会被执行，这是我们修改最终文件的最后一个机会
-  - 小结：
+  :::details 总结
   ![pic](/webpack6.png "notice")
 :::
 ## 3.  说说webpack中常见的Loader？
 
-:::tip Loader是什么
+:::info Loader
   - `loader`用于对模块的"源代码"进行转换，在`import`或"加载"模块时预处理文件
   - `Webpack`做的事情，仅仅是分析出各种模块的依赖关系，然后形成资源列表，最终打包生成到指定的文件中
   - 在`Webpack`内部中，任何文件都是模块，不仅仅只是`JS`文件
@@ -222,7 +230,7 @@
     - `CLI`方式：在`shell`命令中指定它们
 :::
 
-:::tip  配置方式
+:::info  配置方式
   - 关于`loader`的配置，我们是写在`module.rules`属性中，属性介绍如下：
     - `rules`是一个数组的形式，因此我们可以配置很多个`loader`
     - 每一个`loader`对应一个对象的形式，对象属性`test`为匹配的规则，一般情况为正则表达式
@@ -251,7 +259,7 @@
     ```
 :::
 
-:::tip 特性
+:::info 特性
   - 从上述代码可以看到，在处理`css`模块的时候，`use`属性中配置了三个`loader`分别处理`css`文件
   - 因为`loader`支持链式调用，链中的每个`loader`会处理之前已处理过的资源，最终变为`JS`代码。顺序为相反的顺序执行，即上述执行方式为`sass-loader`、`css-loader`、`style-loader`
   - 除此之外，`loader`的特性还有如下：
@@ -263,7 +271,7 @@
   - 可以通过`loader`的预处理函数，为`JavaScript`生态系统提供更多能力。用户现在可以更加灵活地引入细粒度逻辑，例如：压缩、打包、语言翻译和更多其他特性
 :::
 
-:::warning 常见的Loader
+:::tip 常见的Loader
  - 在页面开发过程中，我们经常性加载除了`JS`文件以外的内容，这时候我们就需要配置响应的`loader`进行加载
  - 常见的`loader`如下：
    - `style-loader`: 将css添加到DOM的内联样式标签style里
@@ -279,13 +287,13 @@
 :::
 
 ## 4. 说说webpack中常见的Plugin？
-:::tip Plugin是什么
+:::info Plugin
   - `Plugin`是一种计算机应用程序，它和主应用程序互相交互，以提供特定的功能
   - 是一种遵循一定规范的应用程序接口编写出来的程序，只能运行在程序规定的系统下，因为其需要调用原纯净系统提供的函数库或者数据
   - `Webpack`中的`plugin`也是如此，`plugin`赋予其各种灵活的功能，例如打包优化、资源管理、环境变量注入等，它们会运行在`webpack`的不同阶段（钩子/生命周期），贯穿了`Webpack`整个编译周期
   - 目的在于解决`loader`无法实现的其他事
 :::
-:::tip 配置方式
+:::info 配置方式
   - 一般情况，通过配置文件导出对象中`plugins`属性传入`new`实例对象。如下所示：
     ```javascript
     const HtmlWebpackPlugin = require('html-webpack-plugin') // 通过 npm 安装
@@ -299,7 +307,7 @@
     }
     ```
 :::
-:::tip 特性
+:::info 特性
   - 其本质是一个具有`apply`方法`Javascript`对象
   - `apply`方法会被`Webpack compiler`调用，并且在整个编译生命周期都可以访问`compiler`对象
     ```javascript
@@ -327,7 +335,9 @@
     - `failed`： 编译失败的时候
 :::
 
-#### 常见的Plugin
+
+:::info 常见的Plugin
+
 ```bash
 # 将原来的chunk 分成更小的 chunk
 AggressiveSplittingPlugin
@@ -370,10 +380,11 @@ NoEmitOnErrorsPlugin
 # 替换与正则表达式匹配的资源
 NormalModuleReplacementPlugin
 ```
+:::
 
-## 5.  编写Loader，Plugin的思路？
+## 5.  编写 Loader，Plugin 的思路？
 
-:::tip 区别
+:::info 区别
   - `loader`是文件加载器，能够加载资源文件，并对这些文件进行一些处理，诸如编译、压缩等，最终一起打包到指定的文件中
   - `plugin`赋予了`Webpack`各种灵活的功能，例如打包优化、资源管理、环境变量注入等，目的是解决`loader`无法实现的其他事
   - 从整个运行时机上来看，如下图所示：
@@ -385,7 +396,7 @@ NormalModuleReplacementPlugin
   - 对于`loader`，实质是一个转换器，将A文件进行编译形成B文件，操作的是文件，比如将`A.scss`或`A.less`转变为`B.css`，单纯的文件转换过程
 :::
 
-:::danger 编写loader
+:::info 编写 loader
   - 在编写`loader`前，我们首先需要了解`loader`的本质
   - 其本质为函数，函数中的`this`作为上下文会被`Webpack`填充，因此我们不能将`loader`设为一个箭头函数
   - 函数接受一个参数，为`Webpack`传递给`loader`的文件源内容
@@ -416,7 +427,7 @@ NormalModuleReplacementPlugin
 :::
 
 
-::: tip 编写plugin
+::: info 编写 plugin
   - 由于`Webpack`基于发布订阅模式，在运行的生命周期中会广播出许多事件，插件通过监听这些事件，就可以在特定的阶段执行自己的插件任务
   - `Webpack`编译会创建两个核心对象：
     - `compiler`：包含了`Webpack`环境的所有的配置信息，包括`options`，`loader`和`plugin`和`Webpack`整个生命周期相关的钩子
@@ -444,7 +455,7 @@ NormalModuleReplacementPlugin
 
 ## 6. 说说webpack的热更新是如何做到的？原理是什么？
 
-:::tip 是什么
+:::info 是什么
   - `HMR`全称 `Hot Module Replacement`，可以理解为模块热替换，指在应用程序运行过程中，替换、添加、删除模块，而无需重新刷新整个应用
   - 例如，我们在应用运行过程中修改了某个模块，通过自动刷新会导致整个应用的整体刷新，那页面中的状态信息都会丢失
   - 如果使用的是`HMR`，就可以实现只将修改的模块实时替换至应用中，不必完全刷新整个应用
@@ -473,42 +484,43 @@ NormalModuleReplacementPlugin
     ```
 :::
 
-:::tip 实现原理
-  - 首先来看看一张图，如下：
-  ![pic](/hrm1.png "notice")
-    - `Webpack Compile`：将`JS`源代码编译成`bundle.js`
-    - `HMR Server`：用来将热更新的文件输出给`HMR Runtime`
-    - `Bundle Server`：静态资源文件服务器，提供文件访问路径
-    - `HMR Runtime`：`socket`服务器，会被注入到浏览器，更新文件的变化
-    - `bundle.js`：构建输出的文件
-    - 在`HMR Runtime`和`HMR Server`之间建立`websocket`，即图上4号线，用于实时更新文件变化
-  - 上面图中，可以分成两个阶段：
-    - 启动阶段为上图`1 - 2 - A - B`
-      - 在编写未经过`Webpack`打包的源代码后，`Webpack Compile`将源代码和`HMR Runtime`一起编译成`bundle`文件，传输给`Bundle Server`静态资源服务器
-    - 更新阶段为上图`1 - 2 - 3 - 4`
-      - 当某一个文件或者模块发生变化时，`Webpack`监听到文件变化对文件重新编译打包，编译生成唯一的`hash`值，这个`hash`值用来作为下一次热更新的标识
-      - 根据变化的内容生成两个补丁文件：`manifest`（包含了`hash`和`chunkId`，用来说明变化的内容）和`chunk.js` 模块
-      - 由于`socket`服务器在`HMR Runtime`和`HMR Server`之间建立`websocket`链接，当文件发生改动的时候，服务端会向浏览器推送一条消息，消息包含文件改动后生成的`hash`值，如下图的h属性，作为下一次热更细的标识
-      ![pic](/hrm2.png "notice")
-      - 在浏览器接受到这条消息之前，浏览器已经在上一次`socket`消息中已经记住了此时的`hash`标识，这时候我们会创建一个`ajax`去服务端请求获取到变化内容的`manifest`文件
-      - `manifest`文件包含重新`build`生成的`hash`值，以及变化的模块，对应上图的c属性
-      - 浏览器根据`manifest`文件获取模块变化的内容，从而触发`render`流程，实现局部模块更新
-      ![pic](/hrm3.png "notice")
+:::info 实现原理
+
+ ![pic](/hrm1.png "notice")
+
+- `Webpack Compile`：将`JS`源代码编译成`bundle.js`
+- `HMR Server`：用来将热更新的文件输出给`HMR Runtime`
+- `Bundle Server`：静态资源文件服务器，提供文件访问路径
+- `HMR Runtime`：`socket`服务器，会被注入到浏览器，更新文件的变化
+- `bundle.js`：构建输出的文件
+- 在`HMR Runtime`和`HMR Server`之间建立`websocket`，即图上4号线，用于实时更新文件变化
+- 上面图中，可以分成两个阶段：
+- 启动阶段为上图`1 - 2 - A - B`
+  - 在编写未经过`Webpack`打包的源代码后，`Webpack Compile`将源代码和`HMR Runtime`一起编译成`bundle`文件，传输给`Bundle Server`静态资源服务器
+- 更新阶段为上图`1 - 2 - 3 - 4`
+  - 当某一个文件或者模块发生变化时，`Webpack`监听到文件变化对文件重新编译打包，编译生成唯一的`hash`值，这个`hash`值用来作为下一次热更新的标识
+  - 根据变化的内容生成两个补丁文件：`manifest`（包含了`hash`和`chunkId`，用来说明变化的内容）和`chunk.js` 模块
+  - 由于`socket`服务器在`HMR Runtime`和`HMR Server`之间建立`websocket`链接，当文件发生改动的时候，服务端会向浏览器推送一条消息，消息包含文件改动后生成的`hash`值，如下图的h属性，作为下一次热更细的标识
+  ![pic](/hrm2.png "notice")
+  - 在浏览器接受到这条消息之前，浏览器已经在上一次`socket`消息中已经记住了此时的`hash`标识，这时候我们会创建一个`ajax`去服务端请求获取到变化内容的`manifest`文件
+  - `manifest`文件包含重新`build`生成的`hash`值，以及变化的模块，对应上图的c属性
+  - 浏览器根据`manifest`文件获取模块变化的内容，从而触发`render`流程，实现局部模块更新
+  ![pic](/hrm3.png "notice")
 :::
 
-:::warning 总结
-  - 关于`Webpack`热模块更新的总结如下：
-    - 通过`webpack-dev-server`创建两个服务器：提供静态资源的服务（`express`）和`Socket`服务
-    - `express server`负责直接提供静态资源的服务（打包后的资源直接被浏览器请求和解析）
-    - `socket server`是一个`websocket`的长连接，双方可以通信
-    - 当`socket server`监听到对应的模块发生变化时，会生成两个文件.json（`manifest`文件）和.js文件（`update chunk`）
-    - 通过长连接，`socket server`可以直接将这两个文件主动发送给客户端（浏览器）
-    - 浏览器拿到两个新的文件后，通过`HMR runtime`机制，加载这两个文件，并且针对修改的模块进行更新
+:::tip 总结
+- 关于`Webpack`热模块更新的总结如下：
+  - 通过`webpack-dev-server`创建两个服务器：提供静态资源的服务（`express`）和`Socket`服务
+  - `express server`负责直接提供静态资源的服务（打包后的资源直接被浏览器请求和解析）
+  - `socket server`是一个`websocket`的长连接，双方可以通信
+  - 当`socket server`监听到对应的模块发生变化时，会生成两个文件.json（`manifest`文件）和.js文件（`update chunk`）
+  - 通过长连接，`socket server`可以直接将这两个文件主动发送给客户端（浏览器）
+  - 浏览器拿到两个新的文件后，通过`HMR runtime`机制，加载这两个文件，并且针对修改的模块进行更新
 :::
 
 ## 7. 说说webpack proxy工作原理？为什么能解决跨域?
 
-:::tip 是什么
+:::info 是什么
   - `Webpack proxy`，即`Webpack`提供的代理服务
     - 基本行为就是接收客户端发送的请求后转发给其他服务器
     - 其目的是为了便于开发者在开发模式下解决跨域问题（浏览器安全策略限制）
@@ -543,7 +555,7 @@ NormalModuleReplacementPlugin
       - `changeOrigin`：它表示是否更新代理后请求的 headers 中host地址
 :::
 
-:::tip 工作原理
+:::info 工作原理
   - `Proxy`工作原理实质上是利用`http-proxy-middleware` 这个`http`代理中间件，实现请求转发给其他服务器
   - 在开发阶段，本地地址为`http://localhost:3000`，该浏览器发送一个前缀带有/api标识的请求到服务端获取数据，但响应这个请求的服务器只是将请求转发到另一台服务器中
     ```javascript
@@ -559,17 +571,18 @@ NormalModuleReplacementPlugin
 :::
 
 
-:::tip 跨域
-  - 在开发阶段，`webpack-dev-server`会启动一个本地开发服务器，所以我们的应用在开发阶段是独立运行在`localhost`的一个端口上，而后端服务又是运行在另外一个地址上
-  - 所以在开发阶段中，由于浏览器同源策略的原因，当本地访问后端就会出现跨域请求的问题
-  - 通过设置`Webpack proxy`实现代理请求后，相当于浏览器与服务端中添加一个代理者
-  - 当本地发送请求的时候，代理服务器响应该请求，并将请求转发到目标服务器，目标服务器响应数据后再将数据返回给代理服务器，最终再由代理服务器将数据响应给本地
+:::info 跨域
+- 在开发阶段，`webpack-dev-server`会启动一个本地开发服务器，所以我们的应用在开发阶段是独立运行在`localhost`的一个端口上，而后端服务又是运行在另外一个地址上
+- 所以在开发阶段中，由于浏览器同源策略的原因，当本地访问后端就会出现跨域请求的问题
+- 通过设置`Webpack proxy`实现代理请求后，相当于浏览器与服务端中添加一个代理者
+- 当本地发送请求的时候，代理服务器响应该请求，并将请求转发到目标服务器，目标服务器响应数据后再将数据返回给代理服务器，最终再由代理服务器将数据响应给本地
+- 在代理服务器传递数据给本地浏览器的过程中，两者同源，并不存在跨域行为，这时候浏览器就能正常接收数据
+- 注意：`服务器与服务器之间请求数据并不会存在跨域行为，跨域行为是浏览器安全策略限制`
+:::details
   ![pic](/proxy1.png "notice")
-  - 在代理服务器传递数据给本地浏览器的过程中，两者同源，并不存在跨域行为，这时候浏览器就能正常接收数据
-  - 注意：`服务器与服务器之间请求数据并不会存在跨域行为，跨域行为是浏览器安全策略限制`
 :::
 
-## 8. 说说如何借助webpack来优化前端性能？
+## 8. 说说如何借助 Webpack 来优化前端性能？
 ```bash
 # JS 代码压缩
 terser-webpack-plugin
@@ -591,12 +604,12 @@ ChunkInlineChunkHtmlPlugin
 
 ## 9. 如何提高webpack的构建速度？
 ```bash
-- 优化`loader`配置
-- 合理使用`resolve.extensions`
-- 优化`resolve.modules`
-- 优化`resolve.alias`
-- 使用`DLLPlugin`插件
-- 使用`cache-loader`
-- `terser`启动多线程
-- 合理使用`sourceMap`
+- 优化 loader 配置
+- 合理使用 resolve.extensions
+- 优化 resolve.modules
+- 优化 resolve.alias
+- 使用 DLLPlugin 插件
+- 使用 cache-loader
+- terser 启动多线程
+- 合理使用 sourceMap 
 ```

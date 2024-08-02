@@ -24,13 +24,12 @@ provide('toggle-appearance', async ({ clientX: x, clientY: y }: MouseEvent) => {
       Math.max(y, innerHeight - y)
     )}px at ${x}px ${y}px)`
   ]
-  const doc = document as DocumentWithViewTransition
-  if (doc.startViewTransition) {
-    await doc.startViewTransition(async () => {
-      isDark.value = !isDark.value
-      await nextTick()
-    }).ready
-  }
+
+  await document.startViewTransition(async () => {
+    isDark.value = !isDark.value
+    await nextTick()
+  }).ready
+
   document.documentElement.animate(
     { clipPath: isDark.value ? clipPath.reverse() : clipPath },
     {
@@ -40,13 +39,6 @@ provide('toggle-appearance', async ({ clientX: x, clientY: y }: MouseEvent) => {
     }
   )
 })
-
-// 类型断言：扩展 Document 类型
-interface DocumentWithViewTransition extends Document {
-  startViewTransition?: (callback: () => Promise<void>) => {
-    ready: Promise<void>
-  }
-}
 </script>
 
 <template>

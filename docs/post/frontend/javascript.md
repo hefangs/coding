@@ -345,13 +345,13 @@ console.log(8)
 :::
 
 :::tip Cache-Control
-  - 在 `Response Headers` 中控制强制缓存的逻辑，例如:`Cache-Control`: `max-age`=3153600（单位是秒）
-  - **Cache-Control** 有哪些值:
-    - **max-age**：缓存最大过期时间
-    - **no-cache**：可以在客户端存储资源，每次都必须去服务端做新鲜度校验，来决定从服务端获取新的资源（200）还是使用客户端缓存（304)
-    - **no-store**：永远都不要在客户端存储资源，永远都去原始服务器去获取资源
-    :::details
-    ![图片描述](/cache1.png)
+- 在 `Response Headers` 中控制强制缓存的逻辑，例如:`Cache-Control`: `max-age`=3153600（单位是秒）
+- **Cache-Control** 有哪些值:
+  - **max-age**：缓存最大过期时间
+  - **no-cache**：可以在客户端存储资源，每次都必须去服务端做新鲜度校验，来决定从服务端获取新的资源（200）还是使用客户端缓存（304)
+  - **no-store**：永远都不要在客户端存储资源，永远都去原始服务器去获取资源
+:::details
+![图片描述](/cache1.png)
 
 :::
 
@@ -369,7 +369,7 @@ console.log(8)
     - 服务端拿到 `if-Modified-Since` 之后拿这个时间去和服务端资源最后修改时间做比较
     - 如果一致则返回`304`，不一致（也就是资源已经更新了）就返回200和新的资源及新的`Last-Modified`
     :::details
-     ![图片描述](/last-Modified.png)
+    ![图片描述](/last-Modified.png)
    
   - `Etag`：资源的唯一标识（一个字符串，类似于人类的指纹）
     - 其实`Etag`和`Last-Modified`一样的
@@ -379,16 +379,16 @@ console.log(8)
     :::details
     ![图片描述](/etag.png)
       
-  :::
+:::
 
   :::tip 比较
   - 优先使用`Etag`
   - `Last-Modified`只能精确到秒级
   - 如果资源被重复生成，而内容不变，则`Etag`更精确
   :::
-  #### 总结
+  :::details 总结
   ![图片描述](/cache3.png)
-  
+  :::
 
 ## 8.  数组的方法
 :::info Array.prototype.push()
@@ -786,23 +786,22 @@ console.log(8)
 :::
 
 :::tip 显示转换
-  - 常见的方法有：
-    - `Number()`
-    - `parseInt()`
-    - `String()`
-    - `Boolean()`
+- `Number()`
+- `parseInt()`
+- `String()`
+- `Boolean()`
 :::
 :::info Number()
-  - 将任意类型的值转化为数值
-    | 原始值    |             转换结果             |
-    | --------- | :------------------------------: |
-    | Undefined |               NaN                |
-    | Null      |                0                 |
-    | Boolean   |              1 、0               |
-    | String    |     根据语法和转换规则来转换     |
-    | Symbol    |   Throw a TypeError exception    |
-    | Object    | 先调用toPrimitive,再调用toNumber |
-  ```javascript{10,13}
+- 将任意类型的值转化为数值
+  | 原始值    |             转换结果             |
+  | --------- | :------------------------------: |
+  | Undefined |               NaN                |
+  | Null      |                0                 |
+  | Boolean   |              1 、0               |
+  | String    |     根据语法和转换规则来转换     |
+  | Symbol    |   Throw a TypeError exception    |
+  | Object    | 先调用toPrimitive,再调用toNumber |
+```javascript{10,13}
   // test
   Number(123) // 123
   Number('123') // 123
@@ -874,22 +873,21 @@ console.log(8)
 :::
 
 :::tip 隐式转换
-  - 两种情况发生隐式转换的场景：
-    - 比较运算（`==`、`!=`、`>`、`<`）、`if`、`while`需要布尔值地方
-    - 算术运算（`+`、`-`、`*`、`/`、`%`）
-    - 除了上面的场景，还要求运算符两边的操作数不是同一类型
+- 比较运算（`==`、`!=`、`>`、`<`）、`if`、`while`需要布尔值地方
+- 算术运算（`+`、`-`、`*`、`/`、`%`）
+- 除了上面的场景，还要求运算符两边的操作数不是同一类型
 :::
 :::info 自动转换为布尔值
 - 在需要布尔值的地方，就会将非布尔值的参数自动转为布尔值，系统内部会调用`Boolean`函数
-  - 可以得出个小结：
-    - `undefined`
-    - `null`
-    - `false`
-    - `+0`
-    - `-0`
-    - `NaN`
-    - `""`
-  - 除了上面几种会被转化成`false`，其他都换被转化成`true`
+- 可以得出个小结：
+  - `undefined`
+  - `null`
+  - `false`
+  - `+0`
+  - `-0`
+  - `NaN`
+  - `""`
+- 除了上面几种会被转化成`false`，其他都换被转化成`true`
 :::
 :::info 自动转换成字符串
 - 先将复合类型的值转为原始类型的值，再将原始类型的值转为字符串
@@ -1057,11 +1055,10 @@ undefined + 1 // NaN
 :::
 
 :::tip 绑定规则
-  - 根据不同的使用场合，`this`有不同的值，主要分为下面几种情况：
-    - 默认绑定
-    - 隐式绑定
-    - `new`绑定
-    - 显示绑定
+- 默认绑定
+- 隐式绑定
+- `new`绑定
+- 显示绑定
 :::
 
 :::info 默认绑定
@@ -1133,7 +1130,7 @@ undefined + 1 // NaN
   ```
 :::
 
-:::info 显示修改
+:::info 显示绑定
   - `apply()`、`call()`、`bind()`是函数的一个方法，作用是改变函数的调用对象
   - 它的第一个参数就表示改变后的调用这个函数的对象。因此这时`this`指的就是这第一个参数
   ```javascript
@@ -1190,143 +1187,143 @@ undefined + 1 // NaN
 
 ## 13. DOM 常见的操作有哪些
 :::info DOM
-  - 文档对象模型(`DOM`)是`HTML`和`XML`文档的编程接口
-  - 它提供了对文档的结构化的表述，并定义了一种方式可以使从程序中对该结构进行访问，从而改变文档的结构样式和内容
-  - 任何`HTML`或`XML`文档都可以用`DOM`表示为一个由节点构成的层级结构
+- 文档对象模型(`DOM`)是`HTML`和`XML`文档的编程接口
+- 它提供了对文档的结构化的表述，并定义了一种方式可以使从程序中对该结构进行访问，从而改变文档的结构样式和内容
+- 任何`HTML`或`XML`文档都可以用`DOM`表示为一个由节点构成的层级结构
 :::
 :::tip 操作
-  - `DOM`常见的操作主要分为：
-    - 创建节点
-    - 查询节点
-    - 更新节点
-    - 添加节点
-    - 删除节点
+- 创建节点
+- 查询节点
+- 更新节点
+- 添加节点
+- 删除节点
 :::
 
 :::info 创建节点
-  - 创建新元素，接受一个参数，即要创建元素的标签名
-  ```javascript
-  // createElement
-  const divEle = document.createElement("div")
-  // createTextNode
-  const textEle = document.createTextNode("content")
-  // createAttribute
-  const dataAttribute = document.createAttribute('custom')
-  ```
+- 创建新元素，接受一个参数，即要创建元素的标签名
+```javascript
+// createElement
+const divEle = document.createElement("div")
+// createTextNode
+const textEle = document.createTextNode("content")
+// createAttribute
+const dataAttribute = document.createAttribute('custom')
+```
 :::
 
 :::info 获取节点
-  - 创建新元素，接受一个参数，即要创建元素的标签名
-  ```javascript
-  document.getElementById('id属性值')  // 返回拥有指定id的对象的引用
-  document.getElementsByClassName('class属性值')  // 返回拥有指定class的对象集合
-  document.getElementsByTagName('标签名')  // 返回拥有指定标签名的对象集合
-  document.getElementsByName('name属性值')  // 返回拥有指定名称的对象结合
-  document.documentElement  // 获取页面中的HTML标签
-  document.body // 获取页面中的BODY标签
-  document.all[''] //   获取页面中的所有元素节点的对象集合型
-  document/element.querySelector('CSS选择器')   //  仅返回第一个匹配的元素
-  document/element.querySelectorAll('CSS选择器')  //   返回所有匹配的元素
-  ```
+- 创建新元素，接受一个参数，即要创建元素的标签名
+```javascript
+document.getElementById('id属性值')  // 返回拥有指定id的对象的引用
+document.getElementsByClassName('class属性值')  // 返回拥有指定class的对象集合
+document.getElementsByTagName('标签名')  // 返回拥有指定标签名的对象集合
+document.getElementsByName('name属性值')  // 返回拥有指定名称的对象结合
+document.documentElement  // 获取页面中的HTML标签
+document.body // 获取页面中的BODY标签
+document.all[''] //   获取页面中的所有元素节点的对象集合型
+document/element.querySelector('CSS选择器')   //  仅返回第一个匹配的元素
+document/element.querySelectorAll('CSS选择器')  //   返回所有匹配的元素
+```
 :::
 
 :::info 更新节点
-  - innerHTML：不但可以修改一个`DOM`节点的文本内容，还可以直接通过HTML片段修改`DOM`节点内部的子树
-  ```javascript
-  // 获取<p id="p">...</p >
-  var p = document.getElementById('p');
-  // 设置文本为abc:
-  p.innerHTML = 'ABC'; // <p id="p">ABC</p >
-  // 设置HTML:
-  p.innerHTML = 'ABC <span style="color:red">RED</span> XYZ'
-  // <p>...</p >的内部结构已修改
-  ```
-  - innerText、textContent：自动对字符串进行`HTML`编码，保证无法设置任何`HTML`标签
-    - 两者的区别在于读取属性时，`innerText`不返回隐藏元素的文本，而`textContent`返回所有文本
-  ```javascript
-  // 获取<p id="p-id">...</p >
-  var p = document.getElementById('p-id');
-  // 设置文本:
-  p.innerText = '<script>alert("Hi")</script>';
-  // HTML被自动编码，无法设置一个<script>节点:
-  // <p id="p-id">&lt;script&gt;alert("Hi")&lt;/script&gt;</p >
-  ```
+- innerHTML：不但可以修改一个`DOM`节点的文本内容，还可以直接通过HTML片段修改`DOM`节点内部的子树
+```javascript
+// 获取<p id="p">...</p >
+var p = document.getElementById('p');
+// 设置文本为abc:
+p.innerHTML = 'ABC'; // <p id="p">ABC</p >
+// 设置HTML:
+p.innerHTML = 'ABC <span style="color:red">RED</span> XYZ'
+// <p>...</p >的内部结构已修改
+```
+- innerText、textContent：自动对字符串进行`HTML`编码，保证无法设置任何`HTML`标签
+- 两者的区别在于读取属性时，`innerText`不返回隐藏元素的文本，而`textContent`返回所有文本
+```javascript
+// 获取<p id="p-id">...</p >
+var p = document.getElementById('p-id');
+// 设置文本:
+p.innerText = '<script>alert("Hi")</script>';
+// HTML被自动编码，无法设置一个<script>节点:
+// <p id="p-id">&lt;script&gt;alert("Hi")&lt;/script&gt;</p >
+```
 :::
+
 :::info 添加节点
-  - appendChild：把一个子节点添加到父节点的最后一个子节点
-  ```javascript
-  // HTML结构 
-  <p id="js">JavaScript</p >
-  <div id="list">
-    <p id="java">Java</p >
-    <p id="python">Python</p >
-    <p id="go">Go</p >
-  </div>
-  // js
-  const php = document.getElementById('php')
-  php.innerHTML = "Php"
-  const list = document.getElementById('list')
-  list.appendChild(php)
-  ```
-  - 动态添加
-  ```javascript
-  const list = document.getElementById('list')
-  const newNode = document.createElement('n')
-  newNode.id = 'newNode'
-  newNode.innerText = 'NewNode'
-  list.appendChild(newNode)
-  ```
+- appendChild：把一个子节点添加到父节点的最后一个子节点
+```javascript
+// HTML结构 
+<p id="js">JavaScript</p >
+<div id="list">
+  <p id="java">Java</p >
+  <p id="python">Python</p >
+  <p id="go">Go</p >
+</div>
+// js
+const php = document.getElementById('php')
+php.innerHTML = "Php"
+const list = document.getElementById('list')
+list.appendChild(php)
+```
+- 动态添加
+```javascript
+const list = document.getElementById('list')
+const newNode = document.createElement('n')
+newNode.id = 'newNode'
+newNode.innerText = 'NewNode'
+list.appendChild(newNode)
+```
 :::
 
 :::info setAttribute
-  - setAttribute：在指定元素中添加一个属性节点，如果元素中已有该属性改变属性值
-  ```javascript
-  const div = document.getElementById('id')
-  div.setAttribute('class', 'white')//第一个参数属性名，第二个参数属性值
-  ```
+- setAttribute：在指定元素中添加一个属性节点，如果元素中已有该属性改变属性值
+```javascript
+const div = document.getElementById('id')
+div.setAttribute('class', 'white')//第一个参数属性名，第二个参数属性值
+```
 :::
 
 :::info 删除节点
-  - 删除一个节点，首先要获得该节点本身以及它的父节点
-  - 调用父节点的`removeChild`把自己删掉
-  - 删除后的节点虽然不在文档树中了，但其实它还在内存中，可以随时再次被添加到别的位置
-  ```javascript
-  // 拿到待删除节点:
-  const remove = document.getElementById('remove')
-  // 拿到父节点:
-  const parent = remove.parentElement
-  // 删除:
-  const removed = parent.removeChild(remove)
-  removed === remove // true
-  ```
+- 删除一个节点，首先要获得该节点本身以及它的父节点
+- 调用父节点的`removeChild`把自己删掉
+- 删除后的节点虽然不在文档树中了，但其实它还在内存中，可以随时再次被添加到别的位置
+```javascript
+// 拿到待删除节点:
+const remove = document.getElementById('remove')
+// 拿到父节点:
+const parent = remove.parentElement
+// 删除:
+const removed = parent.removeChild(remove)
+removed === remove // true
+```
 :::
 
 ## 14.  BOM 常见的操作有哪些
 :::info BOM
-  - `BOM` (`Browser Object Model`)浏览器对象模型，提供了独立于内容与浏览器窗口进行交互的对象
-  - 其作用就是跟浏览器做一些交互效果,比如如何进行页面的后退，前进，刷新，浏览器的窗口发生变化，滚动条的滚动
-  - 以及获取客户的一些信息如：浏览器品牌版本，屏幕分辨率
+- `BOM` (`Browser Object Model`)浏览器对象模型，提供了独立于内容与浏览器窗口进行交互的对象
+- 其作用就是跟浏览器做一些交互效果,比如如何进行页面的后退，前进，刷新，浏览器的窗口发生变化，滚动条的滚动
+- 以及获取客户的一些信息如：浏览器品牌版本，屏幕分辨率
 :::
 :::info Window
-  - `BOM`的核心对象是`window`，它表示浏览器的一个实例在浏览器中
-  - `window`对象有双重角色，即是浏览器窗口的一个接口，又是全局对象
-  - 因此所有在全局作用域中声明的变量、函数都会变成`window`对象的属性和方法
-  ```javascript
-  var name = 'Tom'
-  function showName(){
-    console.log(this.name)
-  }
-  console.log(window.name) // Tom
-  showName() // Tom
-  window.showName() // Tom
-  ```
-  - 关于窗口控制方法如下：
-    - `moveBy(x,y)`：从当前位置水平移动窗体`x`个像素，垂直移动窗体`y`个像素，`x`为负数，将向左移动窗体，`y`为负数，将向上移动窗体
-    - `moveTo(x,y)`：移动窗体左上角到相对于屏幕左上角的(`x`,`y`)点
-    - `resizeBy(w,h)`：相对窗体当前的大小，宽度调整`w`个像素，高度调整`h`个像素。如果参数为负值，将缩小窗体，反之扩大窗体
-    - `resizeTo(w,h)`：把窗体宽度调整为`w`个像素，高度调整为`h`个像素
-    - `scrollTo(x,y)`：如果有滚动条，将横向滚动条移动到相对于窗体宽度为`x`个像素的位置，将纵向滚动条移动到相对于窗体高度为`y`个像素的位置
-    - `scrollBy(x,y)`： 如果有滚动条，将横向滚动条向左移动`x`个像素，将纵向滚动条向下移动`y`个像素
+- `BOM`的核心对象是`window`，它表示浏览器的一个实例在浏览器中
+- `window`对象有双重角色，即是浏览器窗口的一个接口，又是全局对象
+- 因此所有在全局作用域中声明的变量、函数都会变成`window`对象的属性和方法
+```javascript
+var name = 'Tom'
+function showName(){
+  console.log(this.name)
+}
+console.log(window.name) // Tom
+showName() // Tom
+window.showName() // Tom
+```
+- 关于窗口控制方法如下：
+  - `moveBy(x,y)`：从当前位置水平移动窗体`x`个像素，垂直移动窗体`y`个像素，`x`为负数，将向左移动窗体，`y`为负数，将向上移动窗体
+  - `moveTo(x,y)`：移动窗体左上角到相对于屏幕左上角的(`x`,`y`)点
+  - `resizeBy(w,h)`：相对窗体当前的大小，宽度调整`w`个像素，高度调整`h`个像素。如果参数为负值，将缩小窗体，反之扩大窗体
+  - `resizeTo(w,h)`：把窗体宽度调整为`w`个像素，高度调整为`h`个像素
+  - `scrollTo(x,y)`：如果有滚动条，将横向滚动条移动到相对于窗体宽度为`x`个像素的位置，将纵向滚动条移动到相对于窗体高度为`y`个像素的位置
+  - `scrollBy(x,y)`： 如果有滚动条，将横向滚动条向左移动`x`个像素，将纵向滚动条向下移动`y`个像素
 :::
 
 :::info location
@@ -1347,15 +1344,17 @@ undefined + 1 // NaN
 :::
 
 :::info navigator
-  - `navigator`对象主要用来获取浏览器的属性，区分浏览器类型。属性较多，且兼容性比较复杂
-  - 下表列出了`navigator`对象接口定义的属性和方法：
-  ![pic](/bom1.png "notice")
-  ![pic](/bom2.png "notice")
+- `navigator`对象主要用来获取浏览器的属性，区分浏览器类型。属性较多，且兼容性比较复杂
+- 下表列出了`navigator`对象接口定义的属性和方法：
+:::details
+![pic](/bom1.png "notice")
+![pic](/bom2.png "notice")
 :::
 
 :::info screen
-  - 保存的纯粹是客户端能力信息，也就是浏览器窗口外面的客户端显示器的信息，比如像素宽度和像素高度
-  ![pic](/bom3.png "notice")
+- 保存的纯粹是客户端能力信息，也就是浏览器窗口外面的客户端显示器的信息，比如像素宽度和像素高度
+:::details
+![pic](/bom3.png "notice")
 :::
 :::info history
   - `history`对象主要用来操作浏览器`URL`的历史记录，可以通过参数向前，向后，或者向指定`URL`跳转
@@ -1368,7 +1367,7 @@ undefined + 1 // NaN
 
 
 ## 15.  JS 本地存储的方式有哪些
-:::tip JavaScript本地缓存：
+:::tip JavaScript 本地缓存：
   - `Cookie`
   - `sessionStorage`
   - `localStorage`
@@ -1376,74 +1375,54 @@ undefined + 1 // NaN
 :::
 
 :::info Cookie
-  - `Cookie`，类型为「小型文本文件」，指某些网站为了辨别用户身份而储存在用户本地终端上的数据。是为了解决`HTTP`无状态导致的问题
-  - 作为一段一般不超过`4KB`的小型文本数据，它由一个名称（`Name`）、一个值（`Value`）和其它几个用于控制`Cookie`有效期、安全性、使用范围的可选属性组成
-  - 但是`Cookie`在每次请求中都会被发送，如果不使用`HTTPS`并对其加密，其保存的信息很容易被窃取，导致安全风险。举个例子，在一些使用 `Cookie`保持登录态的网站上，如果 `Cookie`被窃取，他人很容易利用你的`Cookie`来假扮成你登录网站
-  - 关于`Cookie`常用的属性如下：
-    - `Expires`用于设置`Cookie`的过期时间
-    ```javascript
-    Expires=Wed, 12 Apr 2023 07:28:00 GMT
-    ```
-    - `Max-Age`用于设置在`Cookie`失效之前需要经过的秒数（优先级比`Expires`高）
-    ```javascript
-    Max-Age=604800
-    ```
-    - `Domain`指定了`Cookie`可以送达的主机名
-    - `Path`指定了一个 URL路径，这个路径必须出现在要请求的资源的路径中才可以发送`Cookie`首部
-    ```javascript
-    Path=/docs   # /docs/Web/ 下的资源会带 Cookie 首部
-    ```
-    - 标记为`Secure`的`Cookie`只应通过被`HTTPS`协议加密过的请求发送给服务端
-  - 通过上述，我们可以看到`Cookie`又开始的作用并不是为了缓存而设计出来，只是借用了`Cookie`的特性实现缓存
-  - 关于`Cookie`的使用如下：
-    ```javascript
-    document.cookie = 'key=value'
-    ```
-    - 关于`Cookie`的修改，首先要确定`domain`和`path`属性都是相同的才可以，其中有一个不同得时候都会创建出一个新的`Cookie`
-    ```javascript
-    Set-cookie:name=aa; domain=aa.net; path=/  # 服务端设置
-    document.cookie =name=bb; domain=aa.net; path=/  # 客户端设置
-    ```
-    - 最后`Cookie`的删除，最常用的方法就是给`Cookie`设置一个过期的事件，这样`Cookie`过期后会被浏览器删除
+- `Cookie`，类型为「小型文本文件」，指某些网站为了辨别用户身份而储存在用户本地终端上的数据。是为了解决`HTTP`无状态导致的问题
+- 作为一段一般不超过`4KB`的小型文本数据，它由一个名称（`Name`）、一个值（`Value`）和其它几个用于控制`Cookie`有效期、安全性、使用范围的可选属性组成
+- 但是`Cookie`在每次请求中都会被发送，如果不使用`HTTPS`并对其加密，其保存的信息很容易被窃取，导致安全风险。举个例子，在一些使用 `Cookie`保持登录态的网站上，如果 `Cookie`被窃取，他人很容易利用你的`Cookie`来假扮成你登录网站
+- `Cookie`属性
+  - `Expires`用于设置`Cookie`的过期时间
+  - `Max-Age`用于设置在`Cookie`失效之前需要经过的秒数（优先级比`Expires`高）
+  - `Domain`指定了`Cookie`可以送达的主机名
+  - `Path`指定了一个 URL路径，这个路径必须出现在要请求的资源的路径中才可以发送`Cookie`首部
+  - 标记为`Secure`的`Cookie`只应通过被`HTTPS`协议加密过的请求发送给服务端
+```shell
+Expires=Wed, 12 Apr 2023 07:28:00 GMT
+Max-Age=604800
+Path=/docs   # /docs/Web/ 下的资源会带 Cookie 首部
+  ```
+- `Cookie`使用
+  - `Cookie`的修改，首先要确定`domain`和`path`属性都是相同的才可以，其中有一个不同得时候都会创建出一个新的`Cookie`
+  - 最后`Cookie`的删除，最常用的方法就是给`Cookie`设置一个过期的事件，这样`Cookie`过期后会被浏览器删除
+```shell
+document.cookie='key=value'
+Set-cookie:name=aa; domain=aa.net; path=/  # 服务端设置
+document.cookie=name=bb; domain=aa.net; path=/  # 客户端设置
+```
 :::
 
 :::info localStorage
-  - `HTML5`新方法，`IE8`及以上浏览器都兼容
-  - `localStorage`的特点：
-    - 生命周期：持久化的本地存储，除非主动删除数据，否则数据是永远不会过期的
-    - 存储的信息在同一域中是共享的
-    - 当本页操作（新增、修改、删除）了`localStorage`的时候，本页面不会触发`storage`事件,但是别的页面会触发`storage`事件
-    - 大小：`5M`（跟浏览器厂商有关系）
-    - `localStorage`本质上是对字符串的读取，如果存储内容多的话会消耗内存空间，会导致页面变卡
-    - 受同源策略的限制
-  - `localStorage`的使用：
-    - 设置
-    ```javascript
-    localStorage.setItem('username','hef')
-    ```
-    - 获取
-    ```javascript
-    localStorage.getItem('username')
-    ```
-    - 获取键名
-    ```javascript
-    localStorage.key(0) 
-    ```
-    - 删除
-    ```javascript
-    localStorage.removeItem('username')
-    ```
-    - 一次性清除所有存储
-    ```javascript
-    localStorage.clear()
-    ```
-  - localStorage 也不是完美的，它有两个缺点：
-    - 无法像`Cookie`一样设置过期时间
-    - 只能存入字符串，无法直接存对象
-    ```javascript
-    localStorage.setItem('key', {name: 'value'})
-    console.log(localStorage.getItem('key')) // '[object, Object]'
-    ```
+- `HTML5`新方法，`IE8`及以上浏览器都兼容
+- `localStorage`的特点：
+  - 生命周期：持久化的本地存储，除非主动删除数据，否则数据是永远不会过期的
+  - 存储的信息在同一域中是共享的
+  - 当本页操作（新增、修改、删除）了`localStorage`的时候，本页面不会触发`storage`事件,但是别的页面会触发`storage`事件
+  - 大小：`5M`（跟浏览器厂商有关系）
+  - `localStorage`本质上是对字符串的读取，如果存储内容多的话会消耗内存空间，会导致页面变卡
+  - 受同源策略的限制
+- `localStorage`的使用：
+  ```javascript
+  localStorage.setItem('username','hef') // 设置
+  localStorage.getItem('username')       // 获取
+  localStorage.key(0)                    // 获取键名
+  localStorage.removeItem('username')    // 删除
+  localStorage.clear()                   // 一次性清除所有存储
+  ```
+- localStorage 也不是完美的，它有两个缺点：
+  - 无法像`Cookie`一样设置过期时间
+  - 只能存入字符串，无法直接存对象
+  ```javascript
+  localStorage.setItem('key', {name: 'value'})
+  console.log(localStorage.getItem('key')) // '[object, Object]'
+  ```
 :::
 
 :::info sessionStorage
