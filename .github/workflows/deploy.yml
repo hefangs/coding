@@ -43,14 +43,14 @@ jobs:
           # Create a new branch for deployment
           git checkout -b gh-pages
 
-          # Remove everything from the branch
-          rm -rf .
+          # 指定目录下的内容来删除，而不是整个目录
+          rm -rf !(docs/.vitepress/dist)
 
           # Copy built files to the root
           cp -a docs/.vitepress/dist/. .
 
           echo 'www.hefang.site' > CNAME
-          
+
           # Commit and push changes
           git add .
           CURRENT_DATE=$(TZ='Asia/Shanghai' date +"%Y-%m-%d_%H:%M:%S")
