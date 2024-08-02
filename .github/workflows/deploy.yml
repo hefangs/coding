@@ -44,12 +44,18 @@ jobs:
           git config user.email "he529564582@163.com"
           git config user.name "何方"
 
-          # 添加远程仓库和获取远程分支的最新状态
+          # 添加远程仓库
           git remote add origin "https://${GITHUB_ACTOR}:${GITHUB_TOKEN}@github.com/hefangs/coding.git"
-          git fetch origin gh-pages
 
-          # 使用软重置将远程分支的内容应用到当前分支
-          git reset --soft origin/gh-pages
+          # 拉取远程 gh-pages 分支的最新状态并创建新分支
+          git fetch origin gh-pages
+          git checkout -b gh-pages origin/gh-pages
+
+          # 删除旧的文件，保留 .git 目录
+          git rm -r *
+
+          # 拷贝新的构建文件
+          cp -r ../docs/.vitepress/dist/* .
 
           # 添加变更并提交
           git add -A
@@ -57,5 +63,5 @@ jobs:
           COMMIT_MESSAGE="deploy.yml-$CURRENT_DATE"
           git commit -m "$COMMIT_MESSAGE"
 
-          # 强制推送到 gh-pages 分支
-          git push -f origin HEAD:gh-pages
+          # 推送到 gh-pages 分支
+          git push origin gh-pages
