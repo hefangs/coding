@@ -47,6 +47,11 @@ jobs:
           # 添加远程仓库和获取远程分支的最新状态
           git remote add origin "https://${GITHUB_ACTOR}:${GITHUB_TOKEN}@github.com/hefangs/coding.git"
           git fetch origin gh-pages
+          
+          # 删除工作目录中的未追踪文件
+          git clean -fd
+
+          # 检出 gh-pages 分支
           git checkout -B gh-pages origin/gh-pages
 
           # 复制新的构建结果
