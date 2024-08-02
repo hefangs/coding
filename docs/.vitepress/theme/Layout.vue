@@ -11,6 +11,8 @@ const enableTransitions = () =>
   'startViewTransition' in document &&
   window.matchMedia('(prefers-reduced-motion: no-preference)').matches
 
+
+
 provide('toggle-appearance', async ({ clientX: x, clientY: y }: MouseEvent) => {
   if (!enableTransitions()) {
     isDark.value = !isDark.value
@@ -25,7 +27,7 @@ provide('toggle-appearance', async ({ clientX: x, clientY: y }: MouseEvent) => {
     )}px at ${x}px ${y}px)`
   ]
 
-  await document.startViewTransition(async () => {
+  await (document as any).startViewTransition(async () => {
     isDark.value = !isDark.value
     await nextTick()
   }).ready
