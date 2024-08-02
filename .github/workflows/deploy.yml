@@ -59,9 +59,14 @@ jobs:
 
           # 添加变更并提交
           git add -A
-          CURRENT_DATE=$(TZ='Asia/Shanghai' date +"%Y-%m-%d_%H:%M:%S")
-          COMMIT_MESSAGE="deploy.yml-$CURRENT_DATE"
-          git commit -m "$COMMIT_MESSAGE"
+         # 提交变更
+          if [ -n "$(git diff --cached)" ]; then
 
-          # 推送到 gh-pages 分支
-          git push -f origin HEAD:gh-pages
+            CURRENT_DATE=$(TZ='Asia/Shanghai' date +"%Y-%m-%d_%H:%M:%S")
+            COMMIT_MESSAGE="deploy.yml-$CURRENT_DATE"
+          
+            git commit -m "$COMMIT_MESSAGE"
+            git push -f origin HEAD:gh-pages
+          else
+            echo "No changes to commit"
+          fi
