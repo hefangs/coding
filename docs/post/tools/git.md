@@ -4,7 +4,7 @@
 
 ![pic](/git1.png "notice")
 :::
-
+## 常用命令
 ## init
 ```bash
 # 在当前目录新建一个Git代码库
