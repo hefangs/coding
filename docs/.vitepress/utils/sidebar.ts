@@ -2,26 +2,6 @@ export default function sideBar() {
   const menus = [
     { text: 'note', items: [{ text: 'start', link: '/post/note/start' }] },
     {
-      text: 'Frontend',
-      collapsible: true,
-      collapsed: true,
-      items: [
-        { text: 'Html', link: '/post/frontend/html' },
-        { text: 'Css', link: '/post/frontend/css' },
-        { text: 'Javascript', link: '/post/frontend/javascript' },
-        { text: 'Code', link: '/post/frontend/code' }
-      ]
-    },
-    {
-      text: 'Vue',
-      collapsible: true,
-      collapsed: true,
-      items: [
-        { text: 'vue2', link: '/post/vue/vue2.0' },
-        { text: 'vue3', link: '/post/vue/vue3.0' }
-      ]
-    },
-    {
       text: 'Tools',
       collapsible: true,
       collapsed: true,
@@ -33,6 +13,19 @@ export default function sideBar() {
         { text: 'Pyenv', link: '/post/tools/pyenv' },
         { text: 'Homebrew', link: '/post/tools/homebrew' },
         { text: 'Vitepress', link: '/post/tools/vitepress' }
+      ]
+    },
+    {
+      text: 'Test',
+      collapsible: true,
+      collapsed: true,
+      items: [
+        { text: 'Pytest', link: '/post/test/pytest' },
+        { text: 'Jmeter', link: '/post/test/jmeter' },
+        { text: 'Unittest', link: '/post/test/unittest' },
+        { text: 'Appium', link: '/post/test/appium' },
+        { text: 'Postman', link: '/post/test/postman' },
+        { text: 'Selenium', link: '/post/test/selenium' }
       ]
     },
     {
@@ -57,16 +50,23 @@ export default function sideBar() {
       ]
     },
     {
-      text: 'Test',
+      text: 'Frontend',
       collapsible: true,
       collapsed: true,
       items: [
-        { text: 'Pytest', link: '/post/test/pytest' },
-        { text: 'Jmeter', link: '/post/test/jmeter' },
-        { text: 'Unittest', link: '/post/test/unittest' },
-        { text: 'Appium', link: '/post/test/appium' },
-        { text: 'Postman', link: '/post/test/postman' },
-        { text: 'Selenium', link: '/post/test/selenium' }
+        { text: 'Html', link: '/post/frontend/html' },
+        { text: 'Css', link: '/post/frontend/css' },
+        { text: 'Javascript', link: '/post/frontend/javascript' },
+        { text: 'Code', link: '/post/frontend/code' }
+      ]
+    },
+    {
+      text: 'Vue',
+      collapsible: true,
+      collapsed: true,
+      items: [
+        { text: 'vue2', link: '/post/vue/vue2.0' },
+        { text: 'vue3', link: '/post/vue/vue3.0' }
       ]
     },
     {
@@ -78,12 +78,6 @@ export default function sideBar() {
         { text: 'Advanced', link: '/post/sql/advanced' },
         { text: 'Function', link: '/post/sql/function' }
       ]
-    },
-    {
-      text: 'Bundler',
-      collapsible: true,
-      collapsed: true,
-      items: [{ text: 'Webpack', link: '/post/bundler/webpack' }]
     },
     {
       text: 'Net',
@@ -104,6 +98,12 @@ export default function sideBar() {
       collapsible: true,
       collapsed: true,
       items: [{ text: 'Node', link: '/post/node/node' }]
+    },
+    {
+      text: 'Bundler',
+      collapsible: true,
+      collapsed: true,
+      items: [{ text: 'Webpack', link: '/post/bundler/webpack' }]
     }
   ]
   return menus
