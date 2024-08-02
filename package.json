@@ -10,8 +10,7 @@
     "server": "vitepress serve docs --port 5000"
   },
   "devDependencies": {
-    "vue": "^3.2.37",
-    "vuepress-plugin-sitemap": "^2.3.1"
+    "vue": "^3.2.37"
   },
   "dependencies": {
     "medium-zoom": "^1.1.0",
