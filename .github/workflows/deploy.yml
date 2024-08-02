@@ -36,24 +36,26 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          # Set up Git
-          git config --global user.name '何方'
-          git config --global user.email 'he529564582@163.com'
-
-          # Create a new branch for deployment
-          git checkout -b gh-pages
-
-          # 指定目录下的内容来删除，而不是整个目录
-          rm -rf !(docs/.vitepress/dist)
-
-          # Copy built files to the root
-          cp -a docs/.vitepress/dist/. .
-
+          cd docs/.vitepress/dist
           echo 'www.hefang.site' > CNAME
 
-          # Commit and push changes
-          git add .
+          # 初始化 Git 仓库
+          git init
+          git config user.email "he529564582@163.com"
+          git config user.name "何方"
+
+          # 添加远程仓库和获取远程分支的最新状态
+          git remote add origin "https://${GITHUB_ACTOR}:${GITHUB_TOKEN}@github.com/hefangs/coding.git"
+          git fetch origin gh-pages
+
+          # 使用软重置将远程分支的内容应用到当前分支
+          git reset --soft origin/gh-pages
+
+          # 添加变更并提交
+          git add -A
           CURRENT_DATE=$(TZ='Asia/Shanghai' date +"%Y-%m-%d_%H:%M:%S")
           COMMIT_MESSAGE="deploy.yml-$CURRENT_DATE"
           git commit -m "$COMMIT_MESSAGE"
-          git push --force origin gh-pages
+
+          # 强制推送到 gh-pages 分支
+          git push -f origin HEAD:gh-pages
