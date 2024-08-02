@@ -11,7 +11,7 @@ hero:
   actions:
     - theme: brand
       text: 快速开始
-      link: /post/note/start
+      link: /post/tools/git
 head:
   - - meta
     - name: keywords
