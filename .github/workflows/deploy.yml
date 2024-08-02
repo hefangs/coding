@@ -39,15 +39,28 @@ jobs:
           cd docs/.vitepress/dist
           echo 'www.hefang.site' > CNAME
 
+          # Initialize Git repository
           git init
           git config user.email "he529564582@163.com"
           git config user.name "何方"
+
+          # Add remote repository
           git remote add origin "https://${GITHUB_ACTOR}:${GITHUB_TOKEN}@github.com/hefangs/coding.git"
+
+          # Fetch and checkout the gh-pages branch
           git fetch origin gh-pages
-          git checkout -b deploy-branch
-          git merge origin/gh-pages
+          git checkout -b gh-pages origin/gh-pages
+
+          # Remove all files in the gh-pages branch
+          git rm -rf .
+
+          # Copy new build files
+          cp -r * /tmp/deploy
+          cp -r /tmp/deploy/* .
+
+          # Add, commit and push changes
           git add -A
           CURRENT_DATE=$(TZ='Asia/Shanghai' date +"%Y-%m-%d_%H:%M:%S")
           COMMIT_MESSAGE="deploy.yml-$CURRENT_DATE"
-          git commit -m "$COMMIT_MESSAGE" || echo "No changes to commit"
-          git push -f origin deploy-branch:gh-pages
+          git commit -m "$COMMIT_MESSAGE"
+          git push -f origin gh-pages
