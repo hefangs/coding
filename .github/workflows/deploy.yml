@@ -52,8 +52,7 @@ jobs:
           git reset --hard origin/gh-pages
 
           # 清除旧的文件，保留 .git 目录
-          git rm -rf ./*
-          git clean -fd
+          find . -mindepth 1 -not -name '.git' -exec rm -rf {} +
 
           # 拷贝新的构建文件
           cp -r ../* .
