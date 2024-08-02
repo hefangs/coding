@@ -25,13 +25,13 @@ export default {
       'link',
       {
         rel: 'icon',
-        href: '/one-price.png'
+        href: '/download.svg'
       }
     ]
   ],
   themeConfig: {
     siteTitle: 'he',
-    logo: '/one-price.png',
+    logo: '/download.svg',
     sidebar: sideBar(),
     // 社交链接
     socialLinks: [{ icon: 'github', link: 'https://github.com/hefangs' }],
