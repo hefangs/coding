@@ -32,39 +32,39 @@ jobs:
       - name: Build project
         run: npm run build
 
-        - name: Deploy to GitHub Pages
-          env:
-            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          run: |
-            cd docs/.vitepress/dist
-            
-            # 设置 Git 环境
-            git config user.email "he529564582@163.com"
-            git config user.name "何方"
-        
-            # 初始化 Git 仓库（如果还未初始化）
-            git init
-        
-            # 添加远程仓库
-            git remote add origin "https://${GITHUB_ACTOR}:${GITHUB_TOKEN}@github.com/hefangs/coding.git"
-        
-            # 拉取远程 gh-pages 分支
-            git fetch origin gh-pages
-        
-            # 检出 gh-pages 分支
-            git checkout gh-pages || git checkout -b gh-pages
-        
-            # 使用 rsync 同步文件，避免覆盖现有文件
-            rsync -av --delete ../* ./
-        
-            # 比对并添加文件变更
-            git add -A
-        
-            # 提交更改
-            CURRENT_DATE=$(TZ='Asia/Shanghai' date +"%Y-%m-%d_%H:%M:%S")
-            COMMIT_MESSAGE="deploy.yml-$CURRENT_DATE"
-            git commit -m "$COMMIT_MESSAGE" || echo "No changes to commit"
-        
-            # 推送更改
-            git push origin gh-pages
-        
+      - name: Deploy to GitHub Pages
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          cd docs/.vitepress/dist
+          
+          # 设置 Git 环境
+          git config user.email "he529564582@163.com"
+          git config user.name "何方"
+      
+          # 初始化 Git 仓库（如果还未初始化）
+          git init
+      
+          # 添加远程仓库
+          git remote add origin "https://${GITHUB_ACTOR}:${GITHUB_TOKEN}@github.com/hefangs/coding.git"
+      
+          # 拉取远程 gh-pages 分支
+          git fetch origin gh-pages
+      
+          # 检出 gh-pages 分支
+          git checkout gh-pages || git checkout -b gh-pages
+      
+          # 使用 rsync 同步文件，避免覆盖现有文件
+          rsync -av --delete ../* ./
+      
+          # 比对并添加文件变更
+          git add -A
+      
+          # 提交更改
+          CURRENT_DATE=$(TZ='Asia/Shanghai' date +"%Y-%m-%d_%H:%M:%S")
+          COMMIT_MESSAGE="deploy.yml-$CURRENT_DATE"
+          git commit -m "$COMMIT_MESSAGE" || echo "No changes to commit"
+      
+          # 推送更改
+          git push origin gh-pages
+      
