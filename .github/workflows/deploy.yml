@@ -38,29 +38,27 @@ jobs:
         run: |
           cd docs/.vitepress/dist
           echo 'www.hefang.site' > CNAME
-
-          # Initialize Git repository
+      
+          # 初始化 Git 仓库
           git init
           git config user.email "he529564582@163.com"
           git config user.name "何方"
-
-          # Add remote repository
+      
+          # 添加远程仓库和获取远程分支的最新状态
           git remote add origin "https://${GITHUB_ACTOR}:${GITHUB_TOKEN}@github.com/hefangs/coding.git"
-
-          # Fetch and checkout the gh-pages branch
           git fetch origin gh-pages
+      
+          # 检出 gh-pages 分支
           git checkout -b gh-pages origin/gh-pages
-
-          # Remove all files in the gh-pages branch
-          git rm -rf .
-
-          # Copy new build files
-          cp -r * /tmp/deploy
-          cp -r /tmp/deploy/* .
-
-          # Add, commit and push changes
+      
+          # 添加变更
           git add -A
+      
+          # 提交变更
           CURRENT_DATE=$(TZ='Asia/Shanghai' date +"%Y-%m-%d_%H:%M:%S")
           COMMIT_MESSAGE="deploy.yml-$CURRENT_DATE"
-          git commit -m "$COMMIT_MESSAGE"
-          git push -f origin gh-pages
+          git commit -m "$COMMIT_MESSAGE" || echo "No changes to commit"
+      
+          # 推送到 gh-pages 分支
+          git push origin gh-pages
+      
