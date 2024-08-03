@@ -13,14 +13,6 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v3
 
-      - name: Cache pnpm store
-        id: cache-pnpm-store
-        uses: actions/cache@v3
-        with:
-          path: ~/.pnpm-store
-          key: ${{ runner.os }}-pnpm-store-${{ hashFiles('pnpm-lock.yaml') }}
-          restore-keys: |
-            ${{ runner.os }}-pnpm-store-
 
       - name: Install pnpm
         uses: pnpm/action-setup@v3
@@ -32,15 +24,6 @@ jobs:
         with:
           node-version: 20
           cache: pnpm
-
-      - name: Cache node_modules
-        id: cache-node-modules
-        uses: actions/cache@v3
-        with:
-          path: node_modules
-          key: ${{ runner.os }}-node-modules-${{ hashFiles('pnpm-lock.yaml') }}
-          restore-keys: |
-            ${{ runner.os }}-node-modules-
 
       - name: Install dependencies
         run: pnpm install
@@ -62,8 +45,12 @@ jobs:
           git remote add origin "https://${GITHUB_ACTOR}:${GITHUB_TOKEN}@github.com/hefangs/coding.git"
           git fetch origin gh-pages
           git reset --soft origin/gh-pages
+
           git add -A
+
           CURRENT_DATE=$(TZ='Asia/Shanghai' date +"%Y-%m-%d_%H:%M:%S")
           COMMIT_MESSAGE="deploy.yml-$CURRENT_DATE"
+          
           git commit -m "$COMMIT_MESSAGE"
+
           git push -f origin HEAD:gh-pages
