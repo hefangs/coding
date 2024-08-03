@@ -1,4 +1,4 @@
-name: GitHub Action Deploy
+name: Deploy to GitHub Pages
 
 on:
   push:
@@ -6,64 +6,47 @@ on:
       - main
 
 jobs:
-  build:
+  deploy:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v3
+    - name: Checkout repository
+      uses: actions/checkout@v3
+      with:
+        fetch-depth: 0  # Fetch all history for all branches
 
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: 20
+    - name: Set up Node.js
+      uses: actions/setup-node@v3
+      with:
+        node-version: '16'
 
-      - name: Cache Node.js modules
-        uses: actions/cache@v3
-        with:
-          path: ~/.npm
-          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-node-
+    - name: Install dependencies
+      run: npm install
 
-      - name: Install dependencies
-        run: npm install
+    - name: Build the project
+      run: npm run build
 
-      - name: Build project
-        run: npm run build
-
-      - name: Deploy to GitHub Pages
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        run: |
-          cd docs/.vitepress/dist
-
-          # 克隆远程 gh-pages 分支到临时目录
-          git clone --branch gh-pages --depth 1 "https://${GITHUB_ACTOR}:${GITHUB_TOKEN}@github.com/hefangs/coding.git" temp
-
-          # 使用 rsync 同步文件，只更新变更部分
-          rsync -av --delete --exclude=".git" . ../temp/
-
-          # 进入临时目录
-          cd ../temp
-
-          # 设置 Git 用户信息
-          git config user.email "he529564582@163.com"
-          git config user.name "何方"
-
-          # 检查是否有变更
-          if [ -n "$(git status --porcelain)" ]; then
-            # 添加并提交变更
-            git add -A
-            CURRENT_DATE=$(TZ='Asia/Shanghai' date +"%Y-%m-%d_%H:%M:%S")
-            COMMIT_MESSAGE="deploy.yml-$CURRENT_DATE"
-            git commit -m "$COMMIT_MESSAGE"
-            # 推送到远程 gh-pages 分支
-            git push origin gh-pages
-          else
-            echo "No changes detected, skipping deployment."
-          fi
-
-          # 清理临时目录
-          cd ..
-          rm -rf temp
+    - name: Deploy to gh-pages
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      run: |
+        # Create a temporary directory to hold the new build
+        mkdir temp
+        
+        # Clone the existing gh-pages branch into temp directory
+        git clone --branch gh-pages "https://${GITHUB_ACTOR}:${GITHUB_TOKEN}@github.com/hefangs/coding.git" temp
+        
+        # Copy the newly built files to temp directory
+        rsync -av --delete --exclude=".git" docs/.vitepress/dist/ temp/
+        
+        # Navigate to the temp directory
+        cd temp
+        
+        # Configure git user
+        git config user.name "何方"
+        git config user.email "he529564582@163.com"
+        
+        # Commit and push changes
+        git add -A
+        git commit -m "Deploy updates from ${GITHUB_SHA}"
+        git push "https://${GITHUB_ACTOR}:${GITHUB_TOKEN}@github.com/hefangs/coding.git" gh-pages
