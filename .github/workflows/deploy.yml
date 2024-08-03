@@ -52,20 +52,19 @@ jobs:
           # Add the remote repository
           git remote add origin "https://${GITHUB_ACTOR}:${GITHUB_TOKEN}@github.com/hefangs/coding.git"
 
-          # Fetch the latest gh-pages branch if it exists
-          git fetch origin gh-pages
-
-          # Checkout the gh-pages branch or create an orphan branch if it doesn't exist
-          if git rev-parse --verify origin/gh-pages; then
+          # Check if the gh-pages branch exists
+          if git ls-remote --heads origin gh-pages; then
+            # Fetch the latest gh-pages branch
+            git fetch origin gh-pages
             git checkout gh-pages
-            git pull origin gh-pages
-          else
-            git checkout --orphan gh-pages
-          fi
 
-          # Sync the new build files to the gh-pages branch
-          rsync -av --delete . ../temp-gh-pages/
-          cd ../temp-gh-pages/
+            # Sync the new build files to the gh-pages branch
+            rsync -av --delete --exclude='.git' ../docs/.vitepress/dist/ .
+          else
+            # Create an orphan branch named gh-pages
+            git checkout --orphan gh-pages
+            cp -r ../docs/.vitepress/dist/* .
+          fi
 
           # Add changes and commit only if there are any changes
           git add -A
