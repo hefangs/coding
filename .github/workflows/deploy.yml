@@ -36,26 +36,46 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
+          set -e  # Exit immediately if a command exits with a non-zero status
+          
+          # Navigate to the build output directory
           cd docs/.vitepress/dist
+          
+          # Create/overwrite the CNAME file with your custom domain
           echo 'www.hefang.site' > CNAME
 
-          # 初始化 Git 仓库
+          # Initialize a new Git repository
           git init
           git config user.email "he529564582@163.com"
           git config user.name "何方"
 
-          # 添加远程仓库和获取远程分支的最新状态
+          # Add the remote repository
           git remote add origin "https://${GITHUB_ACTOR}:${GITHUB_TOKEN}@github.com/hefangs/coding.git"
+
+          # Fetch the latest gh-pages branch if it exists
           git fetch origin gh-pages
 
-          # 使用软重置将远程分支的内容应用到当前分支
-          git reset --soft origin/gh-pages
+          # Checkout the gh-pages branch or create an orphan branch if it doesn't exist
+          if git rev-parse --verify origin/gh-pages; then
+            git checkout gh-pages
+            git pull origin gh-pages
+          else
+            git checkout --orphan gh-pages
+          fi
 
-          # 添加变更并提交
+          # Sync the new build files to the gh-pages branch
+          rsync -av --delete . ../temp-gh-pages/
+          cd ../temp-gh-pages/
+
+          # Add changes and commit only if there are any changes
           git add -A
-          CURRENT_DATE=$(TZ='Asia/Shanghai' date +"%Y-%m-%d_%H:%M:%S")
-          COMMIT_MESSAGE="deploy.yml-$CURRENT_DATE"
-          git commit -m "$COMMIT_MESSAGE"
+          if ! git diff --cached --quiet; then
+            CURRENT_DATE=$(TZ='Asia/Shanghai' date +"%Y-%m-%d_%H:%M:%S")
+            COMMIT_MESSAGE="deploy.yml-$CURRENT_DATE"
+            git commit -m "$COMMIT_MESSAGE"
 
-          # 强制推送到 gh-pages 分支
-          git push -f origin HEAD:gh-pages
+            # Push only the changes to the gh-pages branch
+            git push origin gh-pages
+          else
+            echo "No changes detected, skipping deployment."
+          fi
