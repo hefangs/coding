@@ -38,35 +38,19 @@ jobs:
         run: |
           cd docs/.vitepress/dist
           echo 'www.hefang.site' > CNAME
-      
-          # 初始化 Git 仓库
-          git init
+
+          # 克隆远程 gh-pages 分支
+          git clone --branch gh-pages --depth 1 "https://${GITHUB_ACTOR}:${GITHUB_TOKEN}@github.com/hefangs/coding.git" .
+          
+          # 设置 Git 用户信息
           git config user.email "he529564582@163.com"
           git config user.name "何方"
-      
-          # 添加远程仓库
-          git remote add origin "https://${GITHUB_ACTOR}:${GITHUB_TOKEN}@github.com/hefangs/coding.git"
-      
-          # 获取远程 gh-pages 分支内容
-          git fetch origin gh-pages
-          git checkout -b gh-pages origin/gh-pages
-      
-          # 复制新构建的内容，并覆盖现有文件
-          rsync -av --exclude='.git' . ../new-output/
-          rsync -av --exclude='.git' ../new-output/ .
-      
-          # 添加所有变更并提交
+
+          # 添加并提交变更
           git add -A
-      
-          # 如果有更改，进行提交和推送
-          if git diff-index --quiet HEAD --; then
-            echo "No changes to commit."
-          else
-            CURRENT_DATE=$(TZ='Asia/Shanghai' date +"%Y-%m-%d_%H:%M:%S")
-            COMMIT_MESSAGE="deploy.yml-$CURRENT_DATE"
-            git commit -m "$COMMIT_MESSAGE"
-      
-            # 推送到 gh-pages 分支
-            git push origin HEAD:gh-pages
-          fi
-      
+          CURRENT_DATE=$(TZ='Asia/Shanghai' date +"%Y-%m-%d_%H:%M:%S")
+          COMMIT_MESSAGE="deploy.yml-$CURRENT_DATE"
+          git commit -m "$COMMIT_MESSAGE"
+
+          # 推送到远程 gh-pages 分支
+          git push origin gh-pages
