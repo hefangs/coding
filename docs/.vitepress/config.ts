@@ -14,7 +14,7 @@ export default {
       lazyLoading: true
     }
   },
-  lang: 'zh-CN',
+  lang: 'en-US',
   title: 'he',
   base: '/',
   description: '一个笔记本子而已',
@@ -30,7 +30,7 @@ export default {
     ]
   ],
   themeConfig: {
-    siteTitle: 'he',
+    siteTitle: 'Site',
     logo: '/download.svg',
     sidebar: sideBar(),
     // 社交链接
