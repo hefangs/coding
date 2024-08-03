@@ -5,6 +5,7 @@
 ![pic](/git1.png "notice")
 ![pic](/git1.png "notice")
 :::
+![pic](/git1.png "notice")
 ## 常用命令
 
 ## init
