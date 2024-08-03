@@ -45,12 +45,12 @@ jobs:
           git remote add origin "https://${GITHUB_ACTOR}:${GITHUB_TOKEN}@github.com/hefangs/coding.git"
           git fetch origin gh-pages
           git reset --soft origin/gh-pages
-
+          git status
           git add -A
 
           CURRENT_DATE=$(TZ='Asia/Shanghai' date +"%Y-%m-%d_%H:%M:%S")
           COMMIT_MESSAGE="deploy.yml-$CURRENT_DATE"
-          
+
           git commit -m "$COMMIT_MESSAGE"
 
           git push -f origin HEAD:gh-pages
