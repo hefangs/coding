@@ -47,18 +47,19 @@ jobs:
           # 添加远程仓库
           git remote add origin "https://${GITHUB_ACTOR}:${GITHUB_TOKEN}@github.com/hefangs/coding.git"
       
-          # 创建一个临时目录保存当前构建输出
+          # 备份构建输出
           temp_dir=$(mktemp -d)
-          cp -r ./* "$temp_dir"
+          mv * "$temp_dir"
       
-          # 清理当前目录，并拉取远程 gh-pages 分支的内容
+          # 获取远程 gh-pages 分支的内容
           git fetch origin gh-pages
           git checkout -b gh-pages origin/gh-pages
       
+          # 清理当前目录
+          git rm -rf .
+      
           # 恢复构建输出
           cp -r "$temp_dir"/* .
-      
-          # 清理临时目录
           rm -rf "$temp_dir"
       
           # 添加实际发生变化的文件
