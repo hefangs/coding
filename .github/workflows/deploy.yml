@@ -36,45 +36,36 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
-          set -e  # Exit immediately if a command exits with a non-zero status
-          
-          # Navigate to the build output directory
           cd docs/.vitepress/dist
-          
-          # Create/overwrite the CNAME file with your custom domain
           echo 'www.hefang.site' > CNAME
-
-          # Initialize a new Git repository
+      
+          # 初始化 Git 仓库
           git init
           git config user.email "he529564582@163.com"
           git config user.name "何方"
-
-          # Add the remote repository
+      
+          # 添加远程仓库
           git remote add origin "https://${GITHUB_ACTOR}:${GITHUB_TOKEN}@github.com/hefangs/coding.git"
-
-          # Check if the gh-pages branch exists
-          if git ls-remote --heads origin gh-pages; then
-            # Fetch the latest gh-pages branch
-            git fetch origin gh-pages
-            git checkout gh-pages
-
-            # Sync the new build files to the gh-pages branch
-            rsync -av --delete --exclude='.git' ../docs/.vitepress/dist/ .
-          else
-            # Create an orphan branch named gh-pages
-            git checkout --orphan gh-pages
-            cp -r ../docs/.vitepress/dist/* .
-          fi
-
-          # Add changes and commit only if there are any changes
+      
+          # 从远程 gh-pages 分支获取最新内容
+          git fetch origin gh-pages
+          git checkout -b gh-pages origin/gh-pages
+      
+          # 比较当前文件夹和 gh-pages 分支的差异
+          git diff --name-only HEAD
+      
+          # 添加实际发生变化的文件
           git add -A
-          if ! git diff --cached --quiet; then
+      
+          # 检查是否有更改
+          if git diff-index --quiet HEAD --; then
+            echo "No changes to commit."
+          else
             CURRENT_DATE=$(TZ='Asia/Shanghai' date +"%Y-%m-%d_%H:%M:%S")
             COMMIT_MESSAGE="deploy.yml-$CURRENT_DATE"
             git commit -m "$COMMIT_MESSAGE"
-
-            # Push only the changes to the gh-pages branch
-            git push origin gh-pages
-          else
-            echo "No changes detected, skipping deployment."
+      
+            # 推送到 gh-pages 分支
+            git push origin HEAD:gh-pages
           fi
+      
