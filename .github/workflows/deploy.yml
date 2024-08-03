@@ -44,7 +44,10 @@ jobs:
 
       - name: Build with VitePress
         run: pnpm run build 
-
+        
+      - name: Create CNAME file
+        run: echo 'www.hefang.site' > docs/.vitepress/dist/CNAME
+      
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
