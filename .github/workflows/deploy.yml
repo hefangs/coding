@@ -41,7 +41,7 @@ jobs:
         
         # Navigate to the temp directory
         cd temp
-        
+        echo 'www.hefang.site' > CNAME
         # Configure git user
         git config user.name "何方"
         git config user.email "he529564582@163.com"
