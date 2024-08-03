@@ -1,4 +1,4 @@
-name: Deploy to GitHub Pages
+name: GitHub Action Deploy
 
 on:
   push:
@@ -6,50 +6,56 @@ on:
       - main
 
 jobs:
-  deploy:
+  build:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout repository
-      uses: actions/checkout@v3
-      with:
-        fetch-depth: 0  # Fetch all history for all branches
+      - name: Checkout repository
+        uses: actions/checkout@v3
 
-    - name: Set up Node.js
-      uses: actions/setup-node@v4
-      with:
-        node-version: '20'
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
 
-    - name: Install dependencies
-      run: npm install
+      - name: Cache Node.js modules
+        uses: actions/cache@v3
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
 
-    - name: Build the project
-      run: npm run build
+      - name: Install dependencies
+        run: npm install
 
-    - name: Deploy to gh-pages
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      run: |
-        # Create a temporary directory to hold the new build
-        mkdir temp
-        
-        # Clone the existing gh-pages branch into temp directory
-        git clone --branch gh-pages "https://${GITHUB_ACTOR}:${GITHUB_TOKEN}@github.com/hefangs/coding.git" temp
-        
-        # Copy the newly built files to temp directory
-        rsync -av --delete --exclude=".git" docs/.vitepress/dist/ temp/
-        
-        # Navigate to the temp directory
-        cd temp
-        echo 'www.hefang.site' > CNAME
-        # Configure git user
-        git config user.name "何方"
-        git config user.email "he529564582@163.com"
-        
-        # Commit and push changes
-        git add -A
-        CURRENT_DATE=$(TZ='Asia/Shanghai' date +"%Y-%m-%d_%H:%M:%S")
-        COMMIT_MESSAGE="deploy.yml-$CURRENT_DATE"
-        git commit -m "$COMMIT_MESSAGE"
-        git commit -m "deploy-$COMMIT_MESSAGE"
-        git push "https://${GITHUB_ACTOR}:${GITHUB_TOKEN}@github.com/hefangs/coding.git" gh-pages
+      - name: Build project
+        run: npm run build
+
+      - name: Deploy to GitHub Pages
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        run: |
+          cd docs/.vitepress/dist
+          echo 'www.hefang.site' > CNAME
+
+          # 初始化 Git 仓库
+          git init
+          git config user.email "he529564582@163.com"
+          git config user.name "何方"
+
+          # 添加远程仓库和获取远程分支的最新状态
+          git remote add origin "https://${GITHUB_ACTOR}:${GITHUB_TOKEN}@github.com/hefangs/coding.git"
+          git fetch origin gh-pages
+
+          # 使用软重置将远程分支的内容应用到当前分支
+          git reset --soft origin/gh-pages
+
+          # 添加变更并提交
+          git add -A
+          CURRENT_DATE=$(TZ='Asia/Shanghai' date +"%Y-%m-%d_%H:%M:%S")
+          COMMIT_MESSAGE="deploy.yml-$CURRENT_DATE"
+          git commit -m "$COMMIT_MESSAGE"
+
+          # 强制推送到 gh-pages 分支
+          git push -f origin HEAD:gh-pages
