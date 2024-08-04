@@ -5,8 +5,10 @@
 
 ```shell
 # 本机
-# 生成一份新的 known_hosts，原先的known_hosts改名为known_hosts_old  直接rm known_hosts_old
+# 生成一份新的 known_hosts，原先的known_hosts改名为known_hosts_old  
 ssh-keygen -R 106.15.79.229
+# 删除 known_hosts_old
+rm known_hosts_old
 
 # 使用默认的公钥文件（通常是 ~/.ssh/id_rsa.pub）
 ssh-copy-id root@106.15.79.229
