@@ -100,6 +100,17 @@ export default function sideBar() {
       items: [{ text: 'Node', link: '/post/node/node' }]
     },
     {
+      text: 'Linux',
+      collapsible: true,
+      collapsed: true,
+      items: [
+        { text: 'SSH', link: '/post/linux/ssh' },
+        { text: 'Systemctl', link: '/post/linux/systemctl' },
+        { text: 'FireWalld', link: '/post/linux/firewalld' },
+        { text: 'Fail2Ban', link: '/post/linux/fail2Ban' },
+      ]
+    },
+    {
       text: 'Bundler',
       collapsible: true,
       collapsed: true,
