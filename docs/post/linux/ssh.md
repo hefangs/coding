@@ -3,7 +3,7 @@
 
 ## ssh
 
-```shell
+```bash
 # 本机
 # 生成一份新的 known_hosts，原先的known_hosts改名为known_hosts_old  
 ssh-keygen -R 106.15.79.229
