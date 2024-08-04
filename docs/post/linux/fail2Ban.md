@@ -28,10 +28,10 @@ vim /etc/fail2ban/jail.local
 fail2ban-client reload
 # 显示 Fail2Ban 的总体状态，包括正在运行的 jail 列表及其状态
 fail2ban-client status
-# 检查配置
-fail2ban-client -t
 # 显示 sshd jail 的状态
 fail2ban-client status sshd
+# 检查配置
+fail2ban-client -t
 # 检查 Fail2Ban 是否正常响应，成功返回 pong
 fail2ban-client ping
 # 监控目标被封的 IP 地址
