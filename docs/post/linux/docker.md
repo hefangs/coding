@@ -3,6 +3,9 @@
 ## docker 安装 nginx 
 
 ```bash
+# 示所有运行中的容器的 CPU、内存、网络和 I/O
+docker stats
+
 # 进入容器
 docker exec -it site /bin/bash
 
