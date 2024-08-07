@@ -86,8 +86,8 @@ del fruits
 
 ## 将列表转换为集合
 ```python
-# 可以将列表转换为设置，并将设置转换为列表
-# 将列表转换为设置会删除重复项，并且只会保留唯一项
+# 可以将列表转换为集合，并将集合转换为列表
+# 将列表转换为集合会删除重复项，并且只会保留唯一项
 lst = ['item1', 'item2', 'item3', 'item4', 'item1']
 st = set(lst)  # {'item2', 'item4', 'item1', 'item3'} - the order is random, because sets in general are unordered
 

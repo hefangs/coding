@@ -74,8 +74,8 @@ def pytest_configure(config):
 --html=report.html
 # 并行运行测试，需要安装pytest-xdist插件
 -n NUM
-# 将运行所有用装饰器修饰的测试@pytest.mark.slow
-pytest -m slow 
+# 将运行所有用装饰器修饰的测试@pytest.mark.smoke
+pytest -m smoke 
 # 查看缓存的内容 
 pytest --cache-show
 # 采用可选参数来指定用于过滤的 glob 模式
@@ -362,43 +362,6 @@ def test_with_fixture_and_param(base_value, multiplier):
 ## 7. 缓存 session 数据
 #### 使用 request.config.cache 来缓存 session 数据
 
-```py
-# test_user.py
-import unittest
-import pytest
-
-@pytest.mark.usefixtures('session')
-class TestUser:
-	
-	def test_user_account(self, session):
-		url = 'http://localhost:3000/user/account'
-		response = session.get(url)
-	
-	def test_user_status(self, session):
-		url = 'http://localhost:3000/login/status'
-		response = session.get(url)
-	
-	def test_user_level(self, session):
-		url = 'http://localhost:3000/user/level'
-		response = session.get(url)
-```
-
-```py
-# test_playlist.py
-import pytest
-
-@pytest.mark.usefixtures('session')
-class TestPlaylist:
-  def test_playlist_catlist(self, session):
-    url = 'http://localhost:3000/playlist/catlist'
-    response = session.get(url)
-    assert response.status_code == 200
-
-  def test_playlist_hot(self, session):
-    url = 'http://localhost:3000/playlist/hot'
-    response = session.get(url)
-    assert response.status_code == 200
-```
 
 
 ```py
@@ -456,5 +419,41 @@ def session(request):
 		print('---------session.headers--------->', session.headers)
 		print('---------session.cookies--------->', session.cookies)
 	yield session
+```
+```py
+# test_user.py
+import unittest
+import pytest
 
+@pytest.mark.usefixtures('session')
+class TestUser:
+	
+	def test_user_account(self, session):
+		url = 'http://localhost:3000/user/account'
+		response = session.get(url)
+	
+	def test_user_status(self, session):
+		url = 'http://localhost:3000/login/status'
+		response = session.get(url)
+	
+	def test_user_level(self, session):
+		url = 'http://localhost:3000/user/level'
+		response = session.get(url)
+```
+
+```py
+# test_playlist.py
+import pytest
+
+@pytest.mark.usefixtures('session')
+class TestPlaylist:
+  def test_playlist_catlist(self, session):
+    url = 'http://localhost:3000/playlist/catlist'
+    response = session.get(url)
+    assert response.status_code == 200
+
+  def test_playlist_hot(self, session):
+    url = 'http://localhost:3000/playlist/hot'
+    response = session.get(url)
+    assert response.status_code == 200
 ```
