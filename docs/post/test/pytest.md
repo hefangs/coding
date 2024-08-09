@@ -13,6 +13,7 @@ pytest
 PyYAML
 requests
 jsonpath-ng
+selenium
 ```
 
 
@@ -30,8 +31,8 @@ python_files = test_*.py
 python_classes = Test*
 python_functions = test
 markers =
-    smoke: test environment
-    uat:uat environment
+  smoke: test environment
+  uat:uat environment
 # log日志配置
 log_cli = true
 log_cli_level = info
@@ -43,6 +44,7 @@ log_file_level = info
 log_file_format = %(asctime)s [%(levelname)s] %(message)s (%(filename)s:%(lineno)s)
 log_file_date_format = %Y-%m-%d %H:%M:%S
 
+# conftest.py
 # log_file = ./logs/test.log 重新在conftest.py 里面定义
 def pytest_configure(config):
 	# 配置 pytest设置日志文件名
