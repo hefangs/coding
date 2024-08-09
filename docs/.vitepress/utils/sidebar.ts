@@ -105,7 +105,7 @@ export default function sideBar() {
       collapsed: true,
       items: [
         { text: 'SSH', link: '/post/linux/ssh' },
-        { text: 'Systemctl', link: '/post/linux/systemctl' },
+        { text: 'System', link: '/post/linux/system' },
         { text: 'FireWalld', link: '/post/linux/firewalld' },
         { text: 'Fail2Ban', link: '/post/linux/fail2Ban' },
         { text: 'Docker', link: '/post/linux/docker' },
