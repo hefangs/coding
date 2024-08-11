@@ -36,7 +36,6 @@ markers =
 # log日志配置
 log_cli = true
 log_cli_level = info
-addopts = -s
 log_cli_format = %(asctime)s [%(levelname)s] %(message)s (%(filename)s:%(lineno)s)
 log_cli_date_format = %Y-%m-%d %H:%M:%S
 log_file = ./logs/test.log
