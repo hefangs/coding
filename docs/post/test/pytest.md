@@ -42,9 +42,12 @@ log_file = ./logs/test.log
 log_file_level = info
 log_file_format = %(asctime)s [%(levelname)s] %(message)s (%(filename)s:%(lineno)s)
 log_file_date_format = %Y-%m-%d %H:%M:%S
-
+```
+## 3. conftest.py
+```bash
 # conftest.py
-# log_file = ./logs/test.log 重新在conftest.py 里面定义
+# log_file = ./logs/test.log 已经存在pytest.ini中
+# 在 conftest.py 里面重新定义
 def pytest_configure(config):
 	# 配置 pytest设置日志文件名
 	current_time = datetime.datetime.now().strftime('%Y%m%d%H%M%S')
@@ -52,7 +55,7 @@ def pytest_configure(config):
 	config.option.log_file = log_file
 
 ```
-## 3. 命令行参数
+## 4. 命令行参数
 ```bash
 # 增加测试运行的冗长程度，显示每个测试函数的名称和结果
 -v, --verbose
@@ -86,7 +89,7 @@ pytest --cache-clear
 
 ```
 
-## 4. setup and teardown
+## 5. setup and teardown
 ```py
 # Module-level
 # 在整个模块开始前执行一次
@@ -160,7 +163,7 @@ def test_two():
   print("Test 2 executing")
 ```
 
-## 5. fixture
+## 6. fixture
 #### `scope`:(function(default),class,module,session,package)
 ```py
 # Function Scope 
@@ -291,7 +294,7 @@ def test_custom_name(custom_name_fixture):
 
 ```
 
-## 6. parametrize
+## 7. parametrize
 **@pytest.mark.parametrize** 装饰器允许你为测试函数提供多个参数集。它接收两个主要参数
 1. 参数名的字符串，多个参数名用逗号分隔
 2. 参数值的列表或列表的列表，每个列表元素是一个参数集
@@ -360,7 +363,7 @@ def test_with_fixture_and_param(base_value, multiplier):
 
 ```
 
-## 7. 缓存 session 数据
+## 8. 缓存 session 数据
 #### 使用 request.config.cache 来缓存 session 数据
 
 
