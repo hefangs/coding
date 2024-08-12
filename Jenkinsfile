@@ -29,7 +29,7 @@ pipeline {
                                         allowEmptyArchive: true, // 即使制品为空，仍然允许归档
                                         fingerprint: true,   // 为归档的制品生成一个唯一的指纹（哈希值）
                                         onlyIfSuccessful: true,   // 仅在构建成功时才归档制品
-                                        maxToKeep: 5 // 设置最大保留制品数量为 5
+                                        // maxToKeep: 5 // 设置最大保留制品数量为 5
                     sh 'ls -al'
                     }
                 }
