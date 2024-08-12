@@ -92,18 +92,13 @@ docker run \
 -p 50000:50000 \
 --name jenkins \
 --restart=unless-stopped \
--v jenkins-data:/var/jenkins_home \
+-v /app/jenkins-data:/var/jenkins_home \
 -v /var/run/docker.sock:/var/run/docker.sock \
 -v /etc/localtime:/etc/localtime:ro \
-jenkinszh/jenkins-zh
+jenkins/jenkins:2.471-jdk21
 
-jenkins/jenkins   2.32
-jenkins/jenkins:lts  2.319.1
-jenkins/jenkins:latest 2.328
-docker pull jenkins/jenkins:latest-jdk21
-docker pull jenkins/jenkins:2.470-jdk21
-docker pull jenkins/jenkins:2.470
 ```
+```bash
 docker stop jenkins
 docker rm jenkins
 docker rmi jenkins/jenkins
@@ -113,7 +108,7 @@ docker volume rm jenkins-data
 docker ps -a   
 # 查看所有数据卷
 docker volume ls  
-
+```
 
 
 ## postgres
