@@ -42,6 +42,9 @@
 //         }
 //     }
 // }
+
+
+
 pipeline {
     agent any
 
@@ -49,10 +52,10 @@ pipeline {
         stage('Hello') {
             steps {
                 echo 'Hello World'
-                withDockerContainer('node') {
+                    sh 'docker -v'
                     sh 'node -v'
-                    sh 'npm -v'
-                }
+                    sh 'java -version'
+                
             }
         }
     }
