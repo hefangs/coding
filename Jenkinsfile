@@ -50,8 +50,8 @@ pipeline {
             steps {
                 echo 'Hello World'
                 withDockerContainer('node') {
-                    sh 'node --version'
-                    sh 'npm --version'
+                    sh 'node -v'
+                    sh 'npm -v'
                 }
             }
         }
