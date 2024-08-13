@@ -1,0 +1,23 @@
+name: 'GitHub Actions Mirror'
+
+on:
+  push:
+    branches:
+      - main  # 指定要监听的分支
+
+jobs:
+  mirror_to_gitee:
+    runs-on: ubuntu-latest
+    steps:
+      - name: 'Checkout'
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: 'Mirror to Gitee'
+        uses: pixta-dev/repository-mirroring-action@v1.0.2
+        with:
+          target_repo_url: https://gitee.com/hefangs/site.git  # 使用 HTTPS URL
+          token: ${{ secrets.GITEE_TOKEN }}  # GitHub Secrets 中配置的 Gitee 访问令牌
+          source_branch: main  # 源分支（GitHub）
+          target_branch: master  # 目标分支（Gitee）

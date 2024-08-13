@@ -126,3 +126,17 @@ docker run -d \
   postgres
 
 ```
+
+## gitlab
+
+```bash
+docker run -d \
+  -p 8081:443 -p 8082:80 -p 8083:22 \
+  --name gitlab \
+  --restart always \
+  --volume /app/gitlab/config:/etc/gitlab \
+  --volume /app/gitlab/logs:/var/log/gitlab \
+  --volume /app/gitlab/data:/var/opt/gitlab \
+  --privileged=true \
+  gitlab/gitlab-ce
+```
