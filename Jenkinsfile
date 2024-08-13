@@ -55,6 +55,7 @@ pipeline {
                     sh 'docker -v'
                     sh 'node -v'
                     sh 'java -version'
+                    sh 'git -v'
                 
             }
         }
