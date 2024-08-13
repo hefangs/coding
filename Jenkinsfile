@@ -52,10 +52,11 @@ pipeline {
         stage('Hello') {
             steps {
                 echo 'Hello World'
+                    sh 'ls -al'
+                    sh 'git -v'
                     sh 'docker -v'
                     sh 'node -v'
                     sh 'java -version'
-                    sh 'git -v'
                 
             }
         }
