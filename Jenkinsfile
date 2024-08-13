@@ -45,20 +45,20 @@
 
 
 
-pipeline {
-    agent any
+// pipeline {
+//     agent any
 
-    stages {
-        stage('Hello') {
-            steps {
-                echo 'Hello World'
-                    sh 'ls -al'
-                    sh 'git -v'
-                    sh 'docker -v'
-                    sh 'node -v'
-                    sh 'java -version'
+//     stages {
+//         stage('Hello') {
+//             steps {
+//                 echo 'Hello World'
+//                     sh 'ls -al'
+//                     sh 'git -v'
+//                     sh 'docker -v'
+//                     sh 'node -v'
+//                     sh 'java -version'
                 
-            }
-        }
-    }
-}
+//             }
+//         }
+//     }
+// }
