@@ -1,23 +1,27 @@
-name: 'GitHub Actions Mirror'
+name: Sync to Gitee
 
 on:
   push:
     branches:
-      - main  # 指定要监听的分支
+      - main 
 
 jobs:
-  mirror_to_gitee:
+  sync:
     runs-on: ubuntu-latest
     steps:
-      - name: 'Checkout'
+      - name: Checkout GitHub repository
         uses: actions/checkout@v4
-        with:
-          fetch-depth: 0
 
-      - name: 'Mirror to Gitee'
-        uses: pixta-dev/repository-mirroring-action@v1.0.2
-        with:
-          target_repo_url: https://gitee.com/hefangs/site.git  # 使用 HTTPS URL
-          token: ${{ secrets.GITEE_TOKEN }}  # GitHub Secrets 中配置的 Gitee 访问令牌
-          source_branch: main  # 源分支（GitHub）
-          target_branch: master  # 目标分支（Gitee）
+      - name: Set up Git
+        run: |
+          git config user.name "GitHub Actions"
+          git config user.email "actions@github.com"
+
+      - name: Add Gitee remote
+        run: |
+          git remote add gitee https://oauth2:${{ secrets.GITEE_TOKEN }}@gitee.com/hefangs/site.git
+          git remote -v
+
+      - name: Push to Gitee
+        run: |
+          git push gitee main:master
