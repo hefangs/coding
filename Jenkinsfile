@@ -1,15 +1,15 @@
 pipeline {
     agent any
-
+    tools {
+        nodejs 'node22.6.0' 
+    }
     stages {
         stage('构建') {
             steps {
-                withDockerContainer('node') {
-                    sh 'node -v'
-                    sh 'npm config set registry https://registry.npmmirror.com'
-                    sh 'npm install'
-                    sh 'npm run build'
-                }
+                sh 'node -v'
+                sh 'npm config set registry https://registry.npmmirror.com'
+                sh 'npm install'
+                sh 'npm run build' 
             }
         }
         stage('制品') {
