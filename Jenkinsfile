@@ -18,7 +18,7 @@ pipeline {
                     // 获取当前日期和时间，并格式化
                     def timestamp = new Date().format('yyyy-MM-dd_HH-mm-ss')
                     // 生成制品的文件名
-                    def artifactName = "docs.tar.gz_${timestamp}"
+                    def artifactName = "docs_${timestamp}.tar.gz"
                     
                     // 打包制品
                     dir('docs/.vitepress/dist') {
@@ -36,8 +36,10 @@ pipeline {
         }
         stage('部署') {
             steps {
-                sh 'pwd'
-                sh 'ls -al'
+                dir('docs/.vitepress/dist') {
+                    sh 'pwd'
+                    sh 'ls -al'
+                }
             }
         }
     }
