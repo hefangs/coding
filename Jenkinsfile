@@ -8,7 +8,7 @@ pipeline {
                     sh 'node -v'
                     sh 'npm config set registry https://registry.npmmirror.com'
                     sh 'npm install'
-                    sh 'npm run build'
+                    sh 'npm run build --verbose'
                 }
             }
         }
