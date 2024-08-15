@@ -21,7 +21,7 @@ pipeline {
                     def artifactName = "docs.tar.gz_${timestamp}"
                     
                     // 打包制品
-                    dir('/docs/.vitepress/dist') {
+                    dir('docs/.vitepress/dist') {
                         sh 'pwd'
                         sh 'ls -al'
                         sh "tar -zcvf ${artifactName} *" // 使用生成的文件名打包
