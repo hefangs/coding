@@ -74,6 +74,7 @@ docker run \
 --name jenkins \
 --restart=unless-stopped \
 -v /app/jenkins:/var/jenkins_home \
+-v /usr/bin/docker:/usr/bin/docker \
 -v /var/run/docker.sock:/var/run/docker.sock \
 -v /etc/localtime:/etc/localtime:ro \
 jenkins/jenkins:2.472-jdk21
@@ -128,7 +129,7 @@ docker volume rm jenkins
 
 ```bash
 docker run -p 3306:3306 --name mysql \
--v /app/mysql/logs:/var/log/mysql \
+-v /app/mysql/logs:/var/logs/mysql \
 -v /app/mysql/data:/var/lib/mysql \
 -v /app/mysql/conf:/etc/mysql/conf.d \
 --restart=always \
