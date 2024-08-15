@@ -16,7 +16,7 @@ pipeline {
             steps {
                 script {
                     // 获取当前日期和时间，并格式化
-                    def timestamp = new Date().format('yyyy-MM-dd_HH:mm:ss')
+                    def timestamp = new Date().format('yyyy-MM-dd_HH-mm-ss')
                     // 生成制品的文件名
                     def artifactName = "docs.tar.gz_${timestamp}"
                     
