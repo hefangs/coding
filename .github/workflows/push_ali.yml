@@ -53,7 +53,7 @@ jobs:
           host: 106.15.79.229
           username: ${{ secrets.ALIYUN_USERNAME }}
           password: ${{ secrets.ALIYUN_PASSWORD }}
-          source: "github-pages.zip"
+          source: "/tmp/github-pages/github-pages.zip"
           target: "/app/site/github-pages.zip"
 
       - name: Unpack and clean up
