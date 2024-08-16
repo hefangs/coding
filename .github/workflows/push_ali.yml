@@ -47,7 +47,7 @@ jobs:
         with:
           name: github-pages
           path: ./downloaded-artifact
-          
+
       - name: Verify artifact download
         run: ls -l ./downloaded-artifact/ 
 
@@ -57,8 +57,8 @@ jobs:
           host: 106.15.79.229
           username: ${{ secrets.ALIYUN_USERNAME }}
           password: ${{ secrets.ALIYUN_PASSWORD }}
-          source: "./downloaded-artifact/github-pages.zip"
-          target: "/app/site/github-pages.zip"
+          source: "./downloaded-artifact/artifact.tar"
+          target: "/app/site/artifact.tar"
 
       - name: Unpack and clean up on Aliyun
         uses: appleboy/ssh-action@v1.0.3
@@ -69,5 +69,5 @@ jobs:
           script: |
             cd /app/site
             rm -rf *
-            unzip github-pages.zip
-            rm github-pages.zip
+            tar -xvf artifact.tar
+            rm artifact.tar
