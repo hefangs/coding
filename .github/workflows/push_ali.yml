@@ -54,7 +54,7 @@ jobs:
           username: ${{ secrets.ALIYUN_USERNAME }}
           password: ${{ secrets.ALIYUN_PASSWORD }}
           source: "github-pages.zip"
-          target: "/app/site/site.zip"
+          target: "/app/site/github-pages.zip"
 
       - name: Unpack and clean up
         uses: appleboy/ssh-action@v1.0.3
@@ -65,5 +65,5 @@ jobs:
           script: |
             cd /app/site
             rm -rf *
-            unzip site.zip
-            rm site.zip
+            unzip github-pages.zip
+            rm github-pages.zip
