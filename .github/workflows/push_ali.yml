@@ -47,9 +47,9 @@ jobs:
         with:
           path: docs/.vitepress/dist
           name: github-pages
-          run: |
-            pwd
-            ls -al
+        run: |
+          pwd
+          ls -al
 
       # - name: Download artifact
       #   uses: actions/download-artifact@v3
