@@ -52,7 +52,8 @@ jobs:
         run: |
           pwd
           ls -al
-          ls -al docs/.vitepress/dist
+          # ls -al docs/.vitepress/dist
+          ls /home/runner/work/_temp/
 
 
       # - name: Download artifact
