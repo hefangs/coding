@@ -42,41 +42,46 @@ jobs:
       - name: Build with VitePress
         run: pnpm run build
 
-      - name: Upload artifact
-        uses: actions/upload-pages-artifact@v3
-        with:
-          path: docs/.vitepress/dist
-          name: github-pages
-
-      - name: List files in build directory
+      - name: Create zip file
         run: |
-          pwd
-          ls -al /home/runner/work/_temp/artifact.tar
+          cd docs/.vitepress/dist
+          zip -r /tmp/github-pages/github-pages.zip .
 
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: github-pages
+          path: /tmp/github-pages/github-pages.zip
+          retention-days: 1
 
-      # - name: Download artifact
-      #   uses: actions/download-artifact@v3
-      #   with:
-      #     name: github-pages
-      #     path: /tmp/github-pages
+      - name: Download artifact
+        uses: actions/download-artifact@v3
+        with:
+          name: github-pages
+          path: /tmp/github-pages
 
-      # - name: Deploy to Aliyun
-      #   uses: appleboy/scp-action@v0.1.7
-      #   with:
-      #     host: 106.15.79.229
-      #     username: ${{ secrets.ALIYUN_USERNAME }}
-      #     password: ${{ secrets.ALIYUN_PASSWORD }}
-      #     source: "/tmp/github-pages/github-pages.zip"
-      #     target: "/app/site/github-pages.zip"
+      - name: Verify artifact file
+        run: |
+          echo "Checking files in /tmp/github-pages"
+          ls -al /tmp/github-pages
 
-      # - name: Unpack and clean up on Aliyun
-      #   uses: appleboy/ssh-action@v1.0.3
-      #   with:
-      #     host: 106.15.79.229
-      #     username: ${{ secrets.ALIYUN_USERNAME }}
-      #     password: ${{ secrets.ALIYUN_PASSWORD }}
-      #     script: |
-      #       cd /app/site
-      #       rm -rf *
-      #       unzip github-pages.zip
-      #       rm github-pages.zip
+      - name: Deploy to Aliyun
+        uses: appleboy/scp-action@v0.1.7
+        with:
+          host: 106.15.79.229
+          username: ${{ secrets.ALIYUN_USERNAME }}
+          password: ${{ secrets.ALIYUN_PASSWORD }}
+          source: "/tmp/github-pages/github-pages.zip"
+          target: "/app/site/github-pages.zip"
+
+      - name: Unpack and clean up on Aliyun
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: 106.15.79.229
+          username: ${{ secrets.ALIYUN_USERNAME }}
+          password: ${{ secrets.ALIYUN_PASSWORD }}
+          script: |
+            cd /app/site
+            rm -rf *
+            unzip github-pages.zip
+            rm github-pages.zip
