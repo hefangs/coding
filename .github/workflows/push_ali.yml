@@ -1,10 +1,8 @@
-
 name: Sync to Aliyun
 
 on:
   push:
     branches: [main]
-
 
 jobs:
   build:
@@ -35,21 +33,11 @@ jobs:
       - name: Build with VitePress
         run: pnpm run build 
 
-      - name: Upload artifact
-        uses: actions/upload-pages-artifact@v3
-        with:
-          path: docs/.vitepress/dist
-          name: github-pages
-
-
-      - name: Download artifact
-        uses: actions/download-artifact@v4
-        with:
-          name: github-pages
-          path: ./downloaded-artifact
-
-      - name: Verify artifact download
-        run: ls -l ./downloaded-artifact/ 
+      - name: Manually Package Files
+        run: |
+          cd docs/.vitepress/dist
+          tar -czf github-pages.tar.gz *
+        working-directory: ./downloaded-artifact
 
       - name: Deploy to Aliyun
         uses: appleboy/scp-action@v0.1.7
@@ -57,8 +45,8 @@ jobs:
           host: 106.15.79.229
           username: ${{ secrets.ALIYUN_USERNAME }}
           password: ${{ secrets.ALIYUN_PASSWORD }}
-          source: "./downloaded-artifact/artifact.tar"
-          target: "/app/site/artifact.tar"
+          source: "./downloaded-artifact/github-pages.tar.gz"
+          target: "/app/site/github-pages.tar.gz"
 
       - name: Unpack and clean up on Aliyun
         uses: appleboy/ssh-action@v1.0.3
@@ -69,5 +57,5 @@ jobs:
           script: |
             cd /app/site
             rm -rf *
-            tar -xvf artifact.tar
-            rm artifact.tar
+            tar -xzf github-pages.tar.gz
+            rm github-pages.tar.gz
