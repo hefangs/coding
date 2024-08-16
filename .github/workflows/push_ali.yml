@@ -33,7 +33,7 @@ jobs:
       - name: Build with VitePress
         run: pnpm run build 
 
-      - name: Manually Package Files
+      - name: Package Files
         run: |
           cd docs/.vitepress/dist
           zip -r github-pages.zip ./
