@@ -46,6 +46,13 @@ jobs:
         uses: actions/upload-pages-artifact@v3
         with:
           path: docs/.vitepress/dist
+          name: github-pages
+
+      - name: Download artifact
+        uses: actions/download-artifact@v3
+        with:
+          name: github-pages
+          path: /tmp/github-pages
 
       - name: Deploy to Aliyun
         uses: appleboy/scp-action@v0.1.7
@@ -56,7 +63,7 @@ jobs:
           source: "/tmp/github-pages/github-pages.zip"
           target: "/app/site/github-pages.zip"
 
-      - name: Unpack and clean up
+      - name: Unpack and clean up on Aliyun
         uses: appleboy/ssh-action@v1.0.3
         with:
           host: 106.15.79.229
