@@ -53,24 +53,27 @@ jobs:
         with:
           name: github-pages
           path: /tmp/github-pages
-
-      - name: Deploy to Aliyun
-        uses: appleboy/scp-action@v0.1.7
-        with:
-          host: 106.15.79.229
-          username: ${{ secrets.ALIYUN_USERNAME }}
-          password: ${{ secrets.ALIYUN_PASSWORD }}
-          source: "/tmp/github-pages/github-pages.zip"
-          target: "/app/site/github-pages.zip"
-
-      - name: Unpack and clean up on Aliyun
-        uses: appleboy/ssh-action@v1.0.3
-        with:
-          host: 106.15.79.229
-          username: ${{ secrets.ALIYUN_USERNAME }}
-          password: ${{ secrets.ALIYUN_PASSWORD }}
           script: |
-            cd /app/site
-            rm -rf *
-            unzip github-pages.zip
-            rm github-pages.zip
+            pwd
+            ls -al
+
+      # - name: Deploy to Aliyun
+      #   uses: appleboy/scp-action@v0.1.7
+      #   with:
+      #     host: 106.15.79.229
+      #     username: ${{ secrets.ALIYUN_USERNAME }}
+      #     password: ${{ secrets.ALIYUN_PASSWORD }}
+      #     source: "/tmp/github-pages/github-pages.zip"
+      #     target: "/app/site/github-pages.zip"
+
+      # - name: Unpack and clean up on Aliyun
+      #   uses: appleboy/ssh-action@v1.0.3
+      #   with:
+      #     host: 106.15.79.229
+      #     username: ${{ secrets.ALIYUN_USERNAME }}
+      #     password: ${{ secrets.ALIYUN_PASSWORD }}
+      #     script: |
+      #       cd /app/site
+      #       rm -rf *
+      #       unzip github-pages.zip
+      #       rm github-pages.zip
