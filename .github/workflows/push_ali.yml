@@ -47,16 +47,15 @@ jobs:
         with:
           path: docs/.vitepress/dist
           name: github-pages
+          run: |
+            pwd
+            ls -al
 
-      - name: Download artifact
-        uses: actions/download-artifact@v3
-        with:
-          name: github-pages
-          path: /tmp/github-pages
-      - name: List downloaded files
-        run: |
-          pwd
-          ls -al /tmp/github-pages
+      # - name: Download artifact
+      #   uses: actions/download-artifact@v3
+      #   with:
+      #     name: github-pages
+      #     path: /tmp/github-pages
 
       # - name: Deploy to Aliyun
       #   uses: appleboy/scp-action@v0.1.7
