@@ -51,7 +51,7 @@ jobs:
       - name: List files in build directory
         run: |
           pwd
-          ls /home/runner/work/_temp/artifact.tar
+          ls -al /home/runner/work/_temp/artifact.tar
 
 
       # - name: Download artifact
