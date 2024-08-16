@@ -1,0 +1,74 @@
+name: Sync to Aliyun
+
+on:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Install pnpm
+        uses: pnpm/action-setup@v3
+        with:
+          version: 9.6.0
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: pnpm
+
+      - name: Setup Pages
+        uses: actions/configure-pages@v4
+
+      - name: Install dependencies
+        run: pnpm install
+
+      - name: Build with VitePress
+        run: pnpm run build
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: docs/.vitepress/dist
+
+      - name: Package artifact
+        run: |
+          cd docs/.vitepress/dist
+          tar -czf site.tar.gz .
+
+      - name: Deploy to Aliyun
+        uses: appleboy/scp-action@v1
+        with:
+          host: 106.15.79.229
+          username: ${{ secrets.ALIYUN_USERNAME }}
+          password: ${{ secrets.ALIYUN_PASSWORD }}
+          source: "docs/.vitepress/dist/site.tar.gz"
+          target: "/app/site/site.tar.gz"
+
+      - name: Unpack and clean up
+        uses: appleboy/ssh-action@v1
+        with:
+          host: 106.15.79.229
+          username: ${{ secrets.ALIYUN_USERNAME }}
+          password: ${{ secrets.ALIYUN_PASSWORD }}
+          script: |
+            cd /app/site
+            rm -rf *
+            tar -xzf site.tar.gz
+            rm site.tar.gz
