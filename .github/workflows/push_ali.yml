@@ -51,6 +51,7 @@ jobs:
       - name: List files in build directory
         run: |
           pwd
+          ls -al
           ls -al docs/.vitepress/dist
 
 
