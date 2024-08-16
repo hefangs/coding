@@ -36,7 +36,8 @@ jobs:
       - name: Manually Package Files
         run: |
           cd docs/.vitepress/dist
-          tar -czf github-pages.tar.gz *
+          tar -czf github-pages.tar.gz .
+          ls -l github-pages.tar.gz
 
       - name: Verify artifact
         run: ls -l docs/.vitepress/dist
