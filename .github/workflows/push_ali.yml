@@ -47,19 +47,14 @@ jobs:
         with:
           path: docs/.vitepress/dist
 
-      - name: Package artifact
-        run: |
-          cd docs/.vitepress/dist
-          tar -czf site.tar.gz .
-
       - name: Deploy to Aliyun
         uses: appleboy/scp-action@v0.1.7
         with:
           host: 106.15.79.229
           username: ${{ secrets.ALIYUN_USERNAME }}
           password: ${{ secrets.ALIYUN_PASSWORD }}
-          source: "docs/.vitepress/dist/site.tar.gz"
-          target: "/app/site/site.tar.gz"
+          source: "github-pages.zip"
+          target: "/app/site/site.zip"
 
       - name: Unpack and clean up
         uses: appleboy/ssh-action@v1.0.3
@@ -70,5 +65,5 @@ jobs:
           script: |
             cd /app/site
             rm -rf *
-            tar -xzf site.tar.gz
-            rm site.tar.gz
+            unzip site.zip
+            rm site.zip
