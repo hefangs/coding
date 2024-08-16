@@ -47,6 +47,9 @@ jobs:
         with:
           name: github-pages
           path: ./downloaded-artifact
+          
+      - name: Verify artifact download
+        run: ls -l ./downloaded-artifact/ 
 
       - name: Deploy to Aliyun
         uses: appleboy/scp-action@v0.1.7
