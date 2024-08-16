@@ -53,9 +53,9 @@ jobs:
         with:
           name: github-pages
           path: /tmp/github-pages
-          script: |
+          run: 
             pwd
-            ls -al
+            ls -al /tmp/github-pages
 
       # - name: Deploy to Aliyun
       #   uses: appleboy/scp-action@v0.1.7
