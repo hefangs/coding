@@ -53,6 +53,16 @@ jobs:
       # 确认打包文件路径和内容
       - name: Confirm artifact upload
         run: ls -al /home/runner/work/_temp
+      # 上传打包文件后，检查路径
+      - name: Confirm artifact upload
+        run: |
+          echo "Checking /home/runner/work/_temp for github-pages.zip"
+          find /home/runner/work/_temp -name "github-pages.zip"
+
+      # 如果在 _temp 目录没有找到文件，也可以检查整个文件系统
+      - name: Find github-pages.zip in the entire filesystem
+        run: find / -name "github-pages.zip" 2>/dev/null
+
 
       # - name: Download artifact
       #   uses: actions/download-artifact@v3
