@@ -5,16 +5,6 @@ on:
   push:
     branches: [main]
 
-  workflow_dispatch:
-
-permissions:
-  contents: read
-  pages: write
-  id-token: write
-
-# concurrency:
-#   group: pages
-#   cancel-in-progress: false
 
 jobs:
   build:
@@ -50,36 +40,31 @@ jobs:
         with:
           path: docs/.vitepress/dist
           name: github-pages
-      # 确认打包文件路径和内容
-      - name: Confirm artifact upload
-        run: ls -al /home/runner/work/_temp/artifact.tar
 
 
+      - name: Download artifact
+        uses: actions/download-artifact@v4
+        with:
+          name: github-pages
+          path: ./downloaded-artifact
 
+      - name: Deploy to Aliyun
+        uses: appleboy/scp-action@v0.1.7
+        with:
+          host: 106.15.79.229
+          username: ${{ secrets.ALIYUN_USERNAME }}
+          password: ${{ secrets.ALIYUN_PASSWORD }}
+          source: "./downloaded-artifact/github-pages.zip"
+          target: "/app/site/github-pages.zip"
 
-      # - name: Download artifact
-      #   uses: actions/download-artifact@v3
-      #   with:
-      #     name: github-pages
-      #     path: /tmp/github-pages
-
-      # - name: Deploy to Aliyun
-      #   uses: appleboy/scp-action@v0.1.7
-      #   with:
-      #     host: 106.15.79.229
-      #     username: ${{ secrets.ALIYUN_USERNAME }}
-      #     password: ${{ secrets.ALIYUN_PASSWORD }}
-      #     source: "/tmp/github-pages/github-pages.zip"
-      #     target: "/app/site/github-pages.zip"
-
-      # - name: Unpack and clean up on Aliyun
-      #   uses: appleboy/ssh-action@v1.0.3
-      #   with:
-      #     host: 106.15.79.229
-      #     username: ${{ secrets.ALIYUN_USERNAME }}
-      #     password: ${{ secrets.ALIYUN_PASSWORD }}
-      #     script: |
-      #       cd /app/site
-      #       rm -rf *
-      #       unzip github-pages.zip
-      #       rm github-pages.zip
+      - name: Unpack and clean up on Aliyun
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: 106.15.79.229
+          username: ${{ secrets.ALIYUN_USERNAME }}
+          password: ${{ secrets.ALIYUN_PASSWORD }}
+          script: |
+            cd /app/site
+            rm -rf *
+            unzip github-pages.zip
+            rm github-pages.zip
