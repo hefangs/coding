@@ -50,14 +50,14 @@ jobs:
           source: "docs/.vitepress/dist/github-pages.tar.gz"
           target: "/app/site/github-pages.tar.gz"
 
-      - name: Unpack and clean up on Aliyun
-        uses: appleboy/ssh-action@v1.0.3
-        with:
-          host: 106.15.79.229
-          username: ${{ secrets.ALIYUN_USERNAME }}
-          password: ${{ secrets.ALIYUN_PASSWORD }}
-          script: |
-            cd /app/site
-            rm -rf *
-            tar -xzf github-pages.tar.gz
-            rm github-pages.tar.gz
+      # - name: Unpack and clean up on Aliyun
+      #   uses: appleboy/ssh-action@v1.0.3
+      #   with:
+      #     host: 106.15.79.229
+      #     username: ${{ secrets.ALIYUN_USERNAME }}
+      #     password: ${{ secrets.ALIYUN_PASSWORD }}
+      #     script: |
+      #       cd /app/site
+      #       rm -rf *
+      #       tar -xzf github-pages.tar.gz
+      #       rm github-pages.tar.gz
