@@ -15,12 +15,7 @@ docker rm -f 552
 docker stop 552
 docker rm 552
 
-docker run -d -p 9999:9999 --name site --restart unless-stopped nginx
-docker run -d -p 9999:9999 -v /app/site:/usr/share/nginx/html --name site --restart unless-stopped nginx
 docker run -d -p 9999:9999 -v /app/site:/usr/share/nginx/html -v /app/ssl:/etc/ssl --name site --restart unless-stopped nginx
-
-docker run -d -p 3000:3000 --name NeteaseCloudMusicApi --restart unless-stopped binaryify/netease_cloud_music_api
-docker run --name linux-command -d -p 40255:40255 --restart unless-stopped wcjiang/linux-command:latest
 
 # 重新加载配置或重启 Nginx
 nginx -t
