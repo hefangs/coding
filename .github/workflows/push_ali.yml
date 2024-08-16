@@ -33,7 +33,7 @@ jobs:
       - name: Build with VitePress
         run: pnpm run build 
 
-      - name: Package Files
+      - name: Manually Package Files
         run: |
           cd docs/.vitepress/dist
           zip -r github-pages.zip ./
@@ -48,8 +48,8 @@ jobs:
           host: 106.15.79.229
           username: ${{ secrets.ALIYUN_USERNAME }}
           password: ${{ secrets.ALIYUN_PASSWORD }}
-          source: "docs/.vitepress/dist/github-pages.tar.gz"
-          target: "/app/site/github-pages.tar.gz"
+          source: "docs/.vitepress/dist/github-pages.zip"
+          target: "/app/site/github-pages.zip"
 
       # - name: Unpack and clean up on Aliyun
       #   uses: appleboy/ssh-action@v1.0.3
