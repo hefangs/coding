@@ -53,9 +53,10 @@ jobs:
         with:
           name: github-pages
           path: /tmp/github-pages
-          run: 
-            pwd
-            ls -al /tmp/github-pages
+      - name: List downloaded files
+      run: |
+        pwd
+        ls -al /tmp/github-pages
 
       # - name: Deploy to Aliyun
       #   uses: appleboy/scp-action@v0.1.7
