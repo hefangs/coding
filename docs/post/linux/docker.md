@@ -128,7 +128,9 @@ docker run -p 3306:3306 --name mysql \
 -v /app/mysql/data:/var/lib/mysql \
 -v /app/mysql/conf:/etc/mysql/conf.d \
 --restart=always \
--e MYSQL_ROOT_PASSWORD=123456 \
--d mysql
+-e MYSQL_ROOT_PASSWORD=910920 \
+-e MYSQL_ROOT_HOST='%' \
+-d mysql --default-authentication-plugin=mysql_native_password \
+mysql
 ```
 
