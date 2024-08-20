@@ -133,15 +133,3 @@ docker run -p 3306:3306 --name mysql \
 -d mysql --default-authentication-plugin=mysql_native_password \
 mysql
 ```
-## 安装 open webui
-```bash
-# 运行容器（仅CPU）
-docker run -d \
-   --restart unless-stopped \
-   --name open-webui \
-   -p 11433:8080 \
-   -v /app/open-webui:/app/backend/data \
-   -e OLLAMA_API_BASE_URL=http://106.15.79.229:11434/api \
-   -e WEBUI_SECRET_KEY=TkjGEiQ@5K^j \
-   swr.cn-north-4.myhuaweicloud.com/ddn-k8s/ghcr.io/open-webui/open-webui:main
-```
