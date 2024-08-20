@@ -42,11 +42,7 @@ export default function sideBar() {
         { text: 'Set', link: '/post/python/set' },
         { text: 'Condition', link: '/post/python/condition' },
         { text: 'Loop', link: '/post/python/Loop' },
-        { text: 'Function', link: '/post/python/function' },
-        {
-          text: 'Higher_Order_Function',
-          link: '/post/python/higher_order_function'
-        }
+        { text: 'Function', link: '/post/python/function' }
       ]
     },
     {
