@@ -34,7 +34,7 @@ jobs:
           pnpm run build
           tar -czf dist.tar.gz -C docs/.vitepress/dist .
     
-      - name: Clean remote directory
+      - name: Clean Remote Directory
         uses: appleboy/ssh-action@v1.0.3
         with:
             host: 106.15.79.229
