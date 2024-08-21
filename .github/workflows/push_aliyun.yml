@@ -32,7 +32,7 @@ jobs:
           run: pnpm install
 
         - name: Build and package
-            run: |
+          run: |
             pnpm run build
             tar -czf dist.tar.gz docs/.vitepress/dist
 
