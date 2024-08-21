@@ -33,6 +33,15 @@ jobs:
         run: |
           pnpm run build
           tar -czf dist.tar.gz -C docs/.vitepress/dist .
+    
+      - name: Clean remote directory
+        uses: appleboy/ssh-action@master
+        with:
+            host: 106.15.79.229
+            username: ${{ secrets.ALIYUN_USERNAME }}
+            password: ${{ secrets.ALIYUN_PASSWORD }}
+            script: |
+            rm -rf /app/site/*
 
       - name: Deploy to Aliyun
         uses: appleboy/scp-action@v0.1.7
@@ -50,6 +59,5 @@ jobs:
           username: ${{ secrets.ALIYUN_USERNAME }}
           password: ${{ secrets.ALIYUN_PASSWORD }}
           script: |
-            rm -rf /app/site/*
             tar -xzf /app/site/dist.tar.gz -C /app/site
             rm /app/site/dist.tar.gz
