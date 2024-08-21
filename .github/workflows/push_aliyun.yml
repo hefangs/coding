@@ -41,7 +41,7 @@ jobs:
             username: ${{ secrets.ALIYUN_USERNAME }}
             password: ${{ secrets.ALIYUN_PASSWORD }}
             script: |
-            rm -rf /app/site/*
+                rm -rf /app/site/*
 
       - name: Deploy to Aliyun
         uses: appleboy/scp-action@v0.1.7
