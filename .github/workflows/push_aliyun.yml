@@ -8,33 +8,31 @@ on:
 jobs:
   deploy:
     runs-on: ubuntu-latest
-    steps:
-        - name: Checkout
-          uses: actions/checkout@v4
-          with:
-            fetch-depth: 0 
-  
-        - name: Install pnpm
-          uses: pnpm/action-setup@v3
-          with:
-            version: 9.6.0
-  
-        - name: Setup Node
-          uses: actions/setup-node@v4
-          with:
-            node-version: 20
-            cache: pnpm 
-  
-        - name: Setup Pages
-          uses: actions/configure-pages@v4
-  
-        - name: Install dependencies
-          run: pnpm install
 
-        - name: Build and package
-          run: |
-            pnpm run build
-            tar -czf dist.tar.gz docs/.vitepress/dist
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Install pnpm
+        uses: pnpm/action-setup@v3
+        with:
+          version: 9.6.0
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: pnpm
+
+      - name: Install dependencies
+        run: pnpm install
+
+      - name: Build and package
+        run: |
+          pnpm run build
+          tar -czf dist.tar.gz -C docs/.vitepress/dist .
 
       - name: Deploy to Aliyun
         uses: appleboy/scp-action@v1
@@ -43,7 +41,7 @@ jobs:
           username: ${{ secrets.ALIYUN_USERNAME }}
           password: ${{ secrets.ALIYUN_PASSWORD }}
           source: "dist.tar.gz"
-          target: "/app/site"
+          target: "/app/site/dist.tar.gz"
 
       - name: Unpack and clean up
         uses: appleboy/ssh-action@v1
@@ -53,5 +51,5 @@ jobs:
           password: ${{ secrets.ALIYUN_PASSWORD }}
           script: |
             rm -rf /app/site/*
-            tar -xzf dist.tar.gz -C /app/site
-            rm dist.tar.gz
+            tar -xzf /app/site/dist.tar.gz -C /app/site
+            rm /app/site/dist.tar.gz
