@@ -40,9 +40,14 @@ export default function sideBar() {
         { text: 'Tuple', link: '/post/python/tuple' },
         { text: 'Dictionary', link: '/post/python/dictionary' },
         { text: 'Set', link: '/post/python/set' },
-        { text: 'Condition', link: '/post/python/condition' },
-        { text: 'Loop', link: '/post/python/Loop' },
-        { text: 'Function', link: '/post/python/function' }
+        // { text: 'Condition', link: '/post/python/condition' },
+        // { text: 'Loop', link: '/post/python/Loop' },
+        { text: 'Function', link: '/post/python/function' },
+        { text: 'Module', link: '/post/python/module' },
+        {text:'List_Comprehension',link: '/post/python/list_comprehension'},
+        {text:'Lambda',link: '/post/python/lambda'},
+        {text:'高阶函数',link: '/post/python/higher_order_functions'},
+        {text:'Decorator',link: '/post/python/decorator'},
       ]
     },
     {
