@@ -35,7 +35,7 @@ jobs:
           tar -czf dist.tar.gz -C docs/.vitepress/dist .
 
       - name: Deploy to Aliyun
-        uses: appleboy/scp-action@v1
+        uses: appleboy/scp-action@v0.1.7
         with:
           host: 106.15.79.229
           username: ${{ secrets.ALIYUN_USERNAME }}
@@ -44,7 +44,7 @@ jobs:
           target: "/app/site/dist.tar.gz"
 
       - name: Unpack and clean up
-        uses: appleboy/ssh-action@v1
+        uses: appleboy/ssh-action@v1.0.3
         with:
           host: 106.15.79.229
           username: ${{ secrets.ALIYUN_USERNAME }}
