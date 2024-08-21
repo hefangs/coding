@@ -50,7 +50,7 @@ jobs:
           username: ${{ secrets.ALIYUN_USERNAME }}
           password: ${{ secrets.ALIYUN_PASSWORD }}
           source: "dist.tar.gz"
-          target: "/app/site/dist.tar.gz"
+          target: "/app/site"
 
       - name: Unpack and clean up
         uses: appleboy/ssh-action@v1.0.3
