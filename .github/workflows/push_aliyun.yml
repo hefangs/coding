@@ -1,0 +1,57 @@
+name: Deploy to Aliyun
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+        - name: Checkout
+          uses: actions/checkout@v4
+          with:
+            fetch-depth: 0 
+  
+        - name: Install pnpm
+          uses: pnpm/action-setup@v3
+          with:
+            version: 9.6.0
+  
+        - name: Setup Node
+          uses: actions/setup-node@v4
+          with:
+            node-version: 20
+            cache: pnpm 
+  
+        - name: Setup Pages
+          uses: actions/configure-pages@v4
+  
+        - name: Install dependencies
+          run: pnpm install
+
+        - name: Build and package
+            run: |
+            pnpm run build
+            tar -czf dist.tar.gz docs/.vitepress/dist
+
+      - name: Deploy to Aliyun
+        uses: appleboy/scp-action@v1
+        with:
+          host: 106.15.79.229
+          username: ${{ secrets.ALIYUN_USERNAME }}
+          password: ${{ secrets.ALIYUN_PASSWORD }}
+          source: "dist.tar.gz"
+          target: "/app/site"
+
+      - name: Unpack and clean up
+        uses: appleboy/ssh-action@v1
+        with:
+          host: 106.15.79.229
+          username: ${{ secrets.ALIYUN_USERNAME }}
+          password: ${{ secrets.ALIYUN_PASSWORD }}
+          script: |
+            rm -rf /app/site/*
+            tar -xzf dist.tar.gz -C /app/site
+            rm dist.tar.gz
