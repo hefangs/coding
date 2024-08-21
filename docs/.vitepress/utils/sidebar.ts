@@ -48,6 +48,7 @@ export default function sideBar() {
         {text:'Lambda',link: '/post/python/lambda'},
         {text:'高阶函数',link: '/post/python/higher_order_functions'},
         {text:'Decorator',link: '/post/python/decorator'},
+        {text:'Error',link: '/post/python/error'},
       ]
     },
     {
