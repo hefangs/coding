@@ -35,7 +35,7 @@ jobs:
           tar -czf dist.tar.gz -C docs/.vitepress/dist .
     
       - name: Clean remote directory
-        uses: appleboy/ssh-action@master
+        uses: appleboy/ssh-action@v1.0.3
         with:
             host: 106.15.79.229
             username: ${{ secrets.ALIYUN_USERNAME }}
