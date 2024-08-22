@@ -1,6 +1,9 @@
 export default function sideBar() {
   const menus = [
-    { text: 'note', items: [{ text: 'start', link: '/post/note/start' }] },
+    { text: 'note',
+      collapsible: true,
+      collapsed: true, 
+      items: [{ text: 'start', link: '/post/note/start' }] },
     {
       text: 'Tools',
       collapsible: true,
@@ -49,6 +52,8 @@ export default function sideBar() {
         {text:'高阶函数',link: '/post/python/higher_order_functions'},
         {text:'Decorator',link: '/post/python/decorator'},
         {text:'Error',link: '/post/python/error'},
+        {text:'Exception',link: '/post/python/exception'},
+        {text:'Datetime',link: '/post/python/datetime'},
       ]
     },
     {

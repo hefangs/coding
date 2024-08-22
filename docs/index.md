@@ -11,7 +11,7 @@ hero:
   actions:
     - theme: brand
       text: 快速开始
-      link: /post/linux/ssh
+      link: /post/python/datetime
 head:
   - - meta
     - name: keywords
