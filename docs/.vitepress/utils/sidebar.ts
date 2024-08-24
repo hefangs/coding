@@ -55,6 +55,7 @@ export default function sideBar() {
         {text:'Exception',link: '/post/python/exception'},
         {text:'Datetime',link: '/post/python/datetime'},
         {text:'File',link: '/post/python/file'},
+        {text:'Class',link: '/post/python/class'},
       ]
     },
     {
