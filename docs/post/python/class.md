@@ -109,3 +109,132 @@ China
 Shanghai
 ```
 
+
+
+## Object Methods
+
+```py
+class Person:
+	def __init__(self, firstname, lastname, age, country, city):
+		self.firstname = firstname
+		self.lastname = lastname
+		self.age = age
+		self.country = country
+		self.city = city
+	def person_info(self):
+		return f'{self.firstname} {self.lastname} is {self.age} years old. He lives in {self.city}, {self.country}'
+
+p = Person('he', 'fang', 25, 'China', 'Shanghai')
+print(p.person_info())
+```
+
+## Object Default Methods
+
+:::info
+如果我们为构造函数中的参数提供默认值，则可以避免在调用或实例化不带参数的类时出现错误
+:::
+```py
+class Person:
+	def __init__(self, firstname='he', lastname='fang', age=25, country='China', city='Shanghai'):
+		self.firstname = firstname
+		self.lastname = lastname
+		self.age = age
+		self.country = country
+		self.city = city
+
+	def person_info(self):
+		return f'{self.firstname} {self.lastname} is {self.age} years old. He lives in {self.city}, {self.country}.'
+
+p1 = Person()
+print(p1.person_info())
+p2 = Person('John', 'Doe', 30, 'China', 'Beijing')
+print(p2.person_info())
+```
+
+## Method to Modify Class Default Values
+:::info
+- 在Person 类，所有构造函数参数都有默认值。
+- 除此之外，我们还有 skills 参数，我们可以使用方法访问它。让我们创建 add_skill 方法将技能添加到技能列表中
+:::
+
+```py
+class Person:
+	def __init__(self, firstname='he', lastname='fang', age=25, country='China', city='Shanghai'):
+		self.firstname = firstname
+		self.lastname = lastname
+		self.age = age
+		self.country = country
+		self.city = city
+		self.skills = []
+
+	def person_info(self):
+		return f'{self.firstname} {self.lastname} is {self.age} years old. He lives in {self.city}, {self.country}.'
+	def add_skill(self, skill):
+		self.skills.append(skill)
+
+p1 = Person()
+print(p1.person_info())
+p1.add_skill('HTML')
+p1.add_skill('CSS')
+p1.add_skill('JavaScript')
+p2 = Person('John', 'Doe', 30, 'China', 'Beijing')
+print(p2.person_info())
+print(p1.skills)
+print(p2.skills)
+```
+
+## Inheritance
+
+:::info
+- 使用继承，我们可以重用父类代码
+- 继承允许我们定义一个从父类继承所有方法和属性的类
+- 父类或超类或基类是提供所有方法和属性的类
+- 子类是从另一个或父类继承的类
+- 让我们通过从 Person 类继承来创建一个 Student 类
+:::
+```py
+class Student(Person):
+	pass
+
+s1 = Student('he', 'fang1', 25, 'China', 'Shanghai')
+s2 = Student('he', 'fang2', 26, 'China', 'Beijing')
+print(s1.person_info())
+s1.add_skill('JavaScript')
+s1.add_skill('React')
+s1.add_skill('Python')
+print(s1.skills)
+
+print(s2.person_info())
+s2.add_skill('Organizing')
+s2.add_skill('Marketing')
+s2.add_skill('Digital Marketing')
+print(s2.skills)
+```
+
+## Overriding parent method
+:::info 覆盖父类中的方法
+- 重新在子类中（Student）定义了 person_info 方法，会覆盖父类中的 person_info 方法
+:::
+```py
+class Student(Person):
+	def __init__ (self, firstname='he', lastname='fang',age=25, country='China', city='Shanghai', gender='male'):
+		self.gender = gender
+		super().__init__(firstname, lastname,age, country, city)
+	def person_info(self):
+		gender = 'He' if self.gender =='male' else 'She'
+		return f'{self.firstname} {self.lastname} is {self.age} years old. {gender} lives in {self.city}, {self.country}.'
+
+s1 = Student('Eyob', 'Yetayeh', 30, 'Finland', 'Helsinki','male')
+s2 = Student('Lidiya', 'Teklemariam', 28, 'Finland', 'Espoo', 'female')
+print(s1.person_info())
+s1.add_skill('JavaScript')
+s1.add_skill('React')
+s1.add_skill('Python')
+print(s1.skills)
+
+print(s2.person_info())
+s2.add_skill('Organizing')
+s2.add_skill('Marketing')
+s2.add_skill('Digital Marketing')
+print(s2.skills)
+```
