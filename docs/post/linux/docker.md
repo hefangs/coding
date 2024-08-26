@@ -124,12 +124,56 @@ docker volume rm jenkins
 
 ```bash
 docker run -p 3306:3306 --name mysql \
--v /app/mysql/logs:/var/logs/mysql \
+-v /app/mysql/log:/var/log/mysql \
 -v /app/mysql/data:/var/lib/mysql \
 -v /app/mysql/conf:/etc/mysql/conf.d \
---restart=always \
+--restart=unless-stopped \
 -e MYSQL_ROOT_PASSWORD=910920 \
--e MYSQL_ROOT_HOST='%' \
--d mysql --default-authentication-plugin=mysql_native_password \
-mysql
+mysql:latest
+```
+
+
+
+## docker 安装 glances
+
+```bash
+docker run \
+  -d \
+  --restart="unless-stopped" \
+  -p 61208-61209:61208-61209 \
+  -e GLANCES_OPT="-w" \
+  -v /var/run/docker.sock:/var/run/docker.sock:ro \
+  --pid host \
+	-e TZ="${TZ}" \
+	--name glances \
+  nicolargo/glances:latest
+```
+
+
+## docker 安装 netdata
+
+```bash
+docker run -d --name=netdata \
+--pid=host \
+--network=host \
+-v /app/netdata/netdataconfig:/etc/netdata \
+-v /app/netdata/netdatalib:/var/lib/netdata \
+-v /app/netdata/netdatacache:/var/cache/netdata \
+-v /:/host/root:ro,rslave \
+-v /etc/passwd:/host/etc/passwd:ro \
+-v /etc/group:/host/etc/group:ro \
+-v /etc/localtime:/etc/localtime:ro \
+-v /proc:/host/proc:ro \
+-v /sys:/host/sys:ro \
+-v /etc/os-release:/host/etc/os-release:ro \
+-v /var/log:/host/var/log:ro \
+-v /var/run/docker.sock:/var/run/docker.sock:ro \
+--restart unless-stopped \
+--cap-add SYS_PTRACE \
+--cap-add SYS_ADMIN \
+--security-opt apparmor=unconfined \
+-e NETDATA_CLAIM_TOKEN=TB0MnaUyn8hjT_8mGbOBmt2_xKSuMD_elzHataYBFeyK60_uxD9gi7GkZvsHJ6N8npEjTfSAuTWwOyhPLyYOiQOMbnzc4I8-rt2CS1KITK9882HuEIxYwcVHF4Ff8etxHnVK07I \
+-e NETDATA_CLAIM_URL=https://app.netdata.cloud \
+-e NETDATA_CLAIM_ROOMS=4af0dd02-5d65-4976-89dd-a5b920f12e33 \
+netdata/netdata:edge
 ```
