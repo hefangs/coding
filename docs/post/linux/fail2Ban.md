@@ -53,7 +53,7 @@ tail -f /var/log/fail2ban.log
 # /etc/fail2ban/jail.local
 [DEFAULT]
 # 封禁时间（秒），这里设置为3600秒，即1小时
-bantime = 3600                 
+bantime = 2592000                 
 # 在findtime时间段内允许的最大失败尝试次数，设置为1
 maxretry = 1                   
 # 时间窗口（秒），即在这个时间窗口内允许的最大失败尝试次数
