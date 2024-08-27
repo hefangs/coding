@@ -16,6 +16,7 @@ docker stop 552
 docker rm 552
 
 docker run -d -p 9999:9999 -v /app/site:/usr/share/nginx/html -v /app/ssl:/etc/ssl --name site --restart unless-stopped nginx
+docker run -d -p 3000:3000 --name NeteaseCloudMusicApi --restart unless-stopped  binaryify/netease_cloud_music_api:latest
 
 # 重新加载配置或重启 Nginx
 nginx -t
@@ -85,11 +86,11 @@ docker run -d \
   --name postgres \
   --restart unless-stopped \
   -e POSTGRES_USER=hefang \
-  -e POSTGRES_PASSWORD=123456 \
+  -e POSTGRES_PASSWORD=910920 \
   -e POSTGRES_DB=hefang \
   -p 5432:5432 \
-  -v my_pgdata:/var/lib/postgresql/data \
-  postgres
+  -v /app/postgres:/var/lib/postgresql/data \
+  postgres:latest
 
 ```
 
@@ -144,8 +145,8 @@ docker run \
   -e GLANCES_OPT="-w" \
   -v /var/run/docker.sock:/var/run/docker.sock:ro \
   --pid host \
-	-e TZ="${TZ}" \
-	--name glances \
+  -e TZ="${TZ}" \
+  --name glances \
   nicolargo/glances:latest
 ```
 
@@ -176,4 +177,38 @@ docker run -d --name=netdata \
 -e NETDATA_CLAIM_URL=https://app.netdata.cloud \
 -e NETDATA_CLAIM_ROOMS=4af0dd02-5d65-4976-89dd-a5b920f12e33 \
 netdata/netdata:edge
+```
+
+
+```bash
+docker run -d \
+  --name=fail2ban \
+  --net=host \
+  --cap-add=NET_ADMIN \
+  --cap-add=NET_RAW \
+  -e PUID=1000 \
+  -e PGID=1000 \
+  -e TZ=Etc/UTC \
+  -e VERBOSITY=-vv \
+  -v /app/fail2ban/config:/config \
+  -v /var/log:/var/log:ro \
+  -v /app/fail2ban/log/airsonic:/remotelogs/airsonic:ro \
+  -v /app/fail2ban/log/apache2:/remotelogs/apache2:ro \
+  -v /app/fail2ban/log/authelia:/remotelogs/authelia:ro \
+  -v /app/fail2ban/log/emby:/remotelogs/emby:ro \
+  -v /app/fail2ban/log/filebrowser:/remotelogs/filebrowser:ro \
+  -v /app/fail2ban/log/homeassistant:/remotelogs/homeassistant:ro \
+  -v /app/fail2ban/log/lighttpd:/remotelogs/lighttpd:ro \
+  -v /app/fail2ban/log/nextcloud:/remotelogs/nextcloud:ro \
+  -v /app/fail2ban/log/nginx:/remotelogs/nginx:ro \
+  -v /app/fail2ban/log/nzbget:/remotelogs/nzbget:ro \
+  -v /app/fail2ban/log/overseerr:/remotelogs/overseerr:ro \
+  -v /app/fail2ban/log/prowlarr:/remotelogs/prowlarr:ro \
+  -v /app/fail2ban/log/radarr:/remotelogs/radarr:ro \
+  -v /app/fail2ban/log/sabnzbd:/remotelogs/sabnzbd:ro \
+  -v /app/fail2ban/log/sonarr:/remotelogs/sonarr:ro \
+  -v /app/fail2ban/log/unificontroller:/remotelogs/unificontroller:ro \
+  -v /app/fail2ban/log/vaultwarden:/remotelogs/vaultwarden:ro \
+  --restart unless-stopped \
+  linuxserver/fail2ban:latest
 ```
