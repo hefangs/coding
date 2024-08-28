@@ -192,23 +192,23 @@ docker run -d \
   -e VERBOSITY=-vv \
   -v /app/fail2ban/config:/config \
   -v /var/log:/var/log:ro \
-  -v /app/fail2ban/log/airsonic:/remotelogs/airsonic:ro \
-  -v /app/fail2ban/log/apache2:/remotelogs/apache2:ro \
-  -v /app/fail2ban/log/authelia:/remotelogs/authelia:ro \
-  -v /app/fail2ban/log/emby:/remotelogs/emby:ro \
-  -v /app/fail2ban/log/filebrowser:/remotelogs/filebrowser:ro \
-  -v /app/fail2ban/log/homeassistant:/remotelogs/homeassistant:ro \
-  -v /app/fail2ban/log/lighttpd:/remotelogs/lighttpd:ro \
-  -v /app/fail2ban/log/nextcloud:/remotelogs/nextcloud:ro \
-  -v /app/fail2ban/log/nginx:/remotelogs/nginx:ro \
-  -v /app/fail2ban/log/nzbget:/remotelogs/nzbget:ro \
-  -v /app/fail2ban/log/overseerr:/remotelogs/overseerr:ro \
-  -v /app/fail2ban/log/prowlarr:/remotelogs/prowlarr:ro \
-  -v /app/fail2ban/log/radarr:/remotelogs/radarr:ro \
-  -v /app/fail2ban/log/sabnzbd:/remotelogs/sabnzbd:ro \
-  -v /app/fail2ban/log/sonarr:/remotelogs/sonarr:ro \
-  -v /app/fail2ban/log/unificontroller:/remotelogs/unificontroller:ro \
-  -v /app/fail2ban/log/vaultwarden:/remotelogs/vaultwarden:ro \
+  -v /app/fail2ban/airsonic/log:/remotelogs/airsonic:ro \
+  -v /app/fail2ban/apache2/log:/remotelogs/apache2:ro \
+  -v /app/fail2ban/authelia/log:/remotelogs/authelia:ro \
+  -v /app/fail2ban/emby/log:/remotelogs/emby:ro \
+  -v /app/fail2ban/filebrowser/log:/remotelogs/filebrowser:ro \
+  -v /app/fail2ban/homeassistant/log:/remotelogs/homeassistant:ro \
+  -v /app/fail2ban/lighttpd/log:/remotelogs/lighttpd:ro \
+  -v /app/fail2ban/nextcloud/log:/remotelogs/nextcloud:ro \
+  -v /app/fail2ban/nginx/log:/remotelogs/nginx:ro \
+  -v /app/fail2ban/nzbget/log:/remotelogs/nzbget:ro \
+  -v /app/fail2ban/overseerr/log:/remotelogs/overseerr:ro \
+  -v /app/fail2ban/prowlarr/log:/remotelogs/prowlarr:ro \
+  -v /app/fail2ban/radarr/log:/remotelogs/radarr:ro \
+  -v /app/fail2ban/sabnzbd/log:/remotelogs/sabnzbd:ro \
+  -v /app/fail2ban/sonarr/log:/remotelogs/sonarr:ro \
+  -v /app/fail2ban/unificontroller/log:/remotelogs/unificontroller:ro \
+  -v /app/fail2ban/vaultwarden/log:/remotelogs/vaultwarden:ro \
   --restart unless-stopped \
   linuxserver/fail2ban:latest
 ```
