@@ -13,7 +13,6 @@ rm known_hosts_old
 ssh-keygen -t rsa -b 4096 -C "he529564582@163.com"
 # 使用默认的公钥文件（通常是 ~/.ssh/id_rsa.pub）
 ssh-copy-id root@106.15.79.229
-
 # 或者
 # 将指定的公钥文件（~/.ssh/id_rsa.pub）添加到远程服务器上的 ~/.ssh/authorized_keys 文件中
 ssh-copy-id -i ~/.ssh/id_rsa.pub root@106.15.79.229
