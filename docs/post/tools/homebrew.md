@@ -31,6 +31,7 @@ brew cleanup
 brew cleanup <pkg_name>
 # 查询可更新的包
 brew outdated
-更新软件版本-清理旧版本或已删除的软件
+brew outdated --formula
+# 更新软件版本-清理旧版本或已删除的软件
 brew update && brew upgrade && brew cleanup
 ```

@@ -9,7 +9,8 @@
 ssh-keygen -R 106.15.79.229
 # 删除 known_hosts_old
 rm known_hosts_old
-
+# ssh-keygen 命令来生成新的 SSH 密钥对
+ssh-keygen -t rsa -b 4096 -C "he529564582@163.com"
 # 使用默认的公钥文件（通常是 ~/.ssh/id_rsa.pub）
 ssh-copy-id root@106.15.79.229
 
