@@ -362,6 +362,7 @@ http {
 
 ```bash
 brew services start nginx
+brew services reload nginx
 ```
 
 ```bash
