@@ -1,5 +1,17 @@
 # docker
 
+## volume
+```bash
+# 停止容器 删除容器
+docker stop jenkins
+docker rm jenkins
+# 删除镜像
+docker rmi jenkins/jenkins
+# 查看所有数据卷
+docker volume ls
+# 删除数据卷
+docker volume rm jenkins
+```
 ## docker 安装 nginx 
 
 ```bash
@@ -106,18 +118,6 @@ docker run -d \
   --volume /app/gitlab/data:/var/opt/gitlab \
   --privileged=true \
   gitlab/gitlab-ce
-```
-## volume
-```bash
-# 停止容器 删除容器
-docker stop jenkins
-docker rm jenkins
-# 删除镜像
-docker rmi jenkins/jenkins
-# 查看所有数据卷
-docker volume ls
-# 删除数据卷
-docker volume rm jenkins
 ```
 
 
