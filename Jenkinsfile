@@ -7,6 +7,7 @@ pipeline {
         stage('构建') {
             steps {
                 sh 'node -v'
+                sh 'npm -v'
                 sh 'npm config set registry https://registry.npmmirror.com'
                 sh 'npm install'
                 sh 'npm run build' 
