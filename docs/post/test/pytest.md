@@ -23,7 +23,7 @@ selenium
 [pytest]
 addopts = -vs --alluredir ./temp --clean-alluredir
 # 然后手动执行
-# allure generate ./temp -o ./allure-report --clean
+allure generate ./temp -o ./allure-report --clean
 # 或者：这会在 /var/folder 临时目录下新建的，每次执行serve都会新建的
 # allure serve ./report
 testpaths = testApi
