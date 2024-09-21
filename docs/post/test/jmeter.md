@@ -285,22 +285,55 @@
 jmeter.save.saveservice.output_format=xml
 # build.xml
 style="${jmeter.home}/extras/jmeter-results-shanhe-me.xsl">
-# 执行命令
-ant 或者  ant run
 ```
-##### 2.使用 JMeter Dashboard 生成报告(增加nginx部分，可以通过网络接口来查看报告)
+##### 2.执行命令 ant (ant run)
+```bash
+ant
+Buildfile: /Users/he/Documents/local/netApiJmeter/build.xml
+     [echo] /Users/he/Documents/local/netApiJmeter/report/jtl/TestReport_202409220004.jtl
+     [echo] /Users/he/Documents/local/netApiJmeter/report/html/TestReport_202409220004.html
+     [echo] /Users/he/Documents/local/netApiJmeter/report/html
+
+clean-reports:
+
+test:
+   [jmeter] Executing test plan: /Users/he/Documents/local/netApiJmeter/NeteaseCloudMusicApi.jmx ==> /Users/he/Documents/local/netApiJmeter/report/jtl/TestReport_202409220004.jtl
+   [jmeter] WARN StatusConsoleListener The use of package scanning to locate plugins is deprecated and will be removed in a future release
+   [jmeter] WARN StatusConsoleListener The use of package scanning to locate plugins is deprecated and will be removed in a future release
+   [jmeter] WARN StatusConsoleListener The use of package scanning to locate plugins is deprecated and will be removed in a future release
+   [jmeter] WARN StatusConsoleListener The use of package scanning to locate plugins is deprecated and will be removed in a future release
+   [jmeter] Creating summariser <summary>
+   [jmeter] Created the tree successfully using /Users/he/Documents/local/netApiJmeter/NeteaseCloudMusicApi.jmx
+   [jmeter] Starting standalone test @ 2024 Sep 22 00:04:48 CST (1726934688403)
+   [jmeter] Waiting for possible Shutdown/StopTestNow/HeapDump/ThreadDump message on port 4445
+   [jmeter] summary =      3 in 00:00:01 =    2.3/s Avg:   372 Min:   327 Max:   412 Err:     0 (0.00%)
+   [jmeter] Tidying up ...    @ 2024 Sep 22 00:04:50 CST (1726934690024)
+   [jmeter] ... end of run
+
+report:
+     [xslt] Processing /Users/he/Documents/local/netApiJmeter/report/jtl/TestReport_202409220004.jtl to /Users/he/Documents/local/netApiJmeter/report/html/TestReport_202409220004.html
+     [xslt] Loading stylesheet jmeter-results-shanhe-me.xsl
+
+run:
+     [echo] /Users/he/Documents/local/netApiJmeter/report/html
+     [echo] /Users/he/Documents/local/netApiJmeter/report/jtl
+
+BUILD SUCCESSFUL
+Total time: 5 seconds
+
+```
+##### 3.使用 JMeter Dashboard 生成报告
 ```bash
 # jmeter.properties
 jmeter.save.saveservice.output_format=csv
 
-# Dashboard Report
-# cd /Users/hefang/Documents/demo/jmtAnt
 # 用于从现有结果文件生成报告
 jmeter -g HTTP.jtl -o report/dashboard/
 
 # 运行新的测试并生成报告(每次执行前需要删除 dashboard 文件夹和 HTTP.jtl 文件)
 jmeter -n -t HTTP.jmx -l HTTP.jtl -e -o report/dashboard/
 ```
+##### 4.增加 nginx 部分，可以通过网络接口来查看报告
 ```bash
 brew install nginx
 ```
