@@ -1,7 +1,11 @@
 # Jmeter
-:::tip jmeter 5.6.3
+:::tip Apache Jmeter 5.6.3 Copyright (c) 1999-2024 The Apache Software Foundation
 :::
+:::tip Apache Ant(TM) version 1.10.15 compiled on August 25 2024
+:::
+
 ## 1. 创建 Ant 构建脚本
+:::details
 ```xml{7-9,17-20,64-65,74}
 <!-- build.xml -->
 <?xml version="1.0" encoding="UTF-8"?>
@@ -91,9 +95,10 @@
         </copy>
     </target>
 </project>
-
 ```
+:::
 ## 2. 创建 JMeter 测试脚本
+:::details
 ```xml
 <?xml version="1.0" encoding="UTF-8"?>
 <jmeterTestPlan version="1.2" properties="5.0" jmeter="5.6.3">
@@ -276,19 +281,20 @@
     </hashTree>
   </hashTree>
 </jmeterTestPlan>
-
 ```
+:::
+
+
 ## 3. 生成报告
-##### 1.使用 Ant 生成 XML 报告并通过 XSLT 转换成 HTML
+#### 1. 基于 XML 和 XSL 转换的 HTML 报告
 ```bash
 # jmeter.properties
 jmeter.save.saveservice.output_format=xml
 # build.xml
 style="${jmeter.home}/extras/jmeter-results-shanhe-me.xsl">
 ```
-##### 2.执行命令 ant (ant run)
 ```bash
-ant
+# 输出内容
 Buildfile: /Users/he/Documents/local/netApiJmeter/build.xml
      [echo] /Users/he/Documents/local/netApiJmeter/report/jtl/TestReport_202409220004.jtl
      [echo] /Users/he/Documents/local/netApiJmeter/report/html/TestReport_202409220004.html
@@ -320,24 +326,42 @@ run:
 
 BUILD SUCCESSFUL
 Total time: 5 seconds
-
 ```
-##### 3.使用 JMeter Dashboard 生成报告
+
+#### 2. JMeter 自带的 Dashboard 报告（CSV）
 ```bash
 # jmeter.properties
 jmeter.save.saveservice.output_format=csv
 
 # 用于从现有结果文件生成报告
 jmeter -g HTTP.jtl -o report/dashboard/
-
 # 运行新的测试并生成报告(每次执行前需要删除 dashboard 文件夹和 HTTP.jtl 文件)
 jmeter -n -t HTTP.jmx -l HTTP.jtl -e -o report/dashboard/
+jmeter -n -t HTTP.jmx -l report/jtl/HTTP.jtl -e -o report/dashboard/
 ```
-##### 4.增加 nginx 部分，可以通过网络接口来查看报告
+```bash
+# 输出内容
+WARNING: package sun.awt.X11 not in java.desktop
+WARN StatusConsoleListener The use of package scanning to locate plugins is deprecated and will be removed in a future release
+WARN StatusConsoleListener The use of package scanning to locate plugins is deprecated and will be removed in a future release
+WARN StatusConsoleListener The use of package scanning to locate plugins is deprecated and will be removed in a future release
+WARN StatusConsoleListener The use of package scanning to locate plugins is deprecated and will be removed in a future release
+Creating summariser <summary>
+Created the tree successfully using NeteaseCloudMusicApi.jmx
+Starting standalone test @ 2024 Sep 22 00:28:59 CST (1726936139480)
+Waiting for possible Shutdown/StopTestNow/HeapDump/ThreadDump message on port 4445
+summary +      1 in 00:00:01 =    1.5/s Avg:   518 Min:   518 Max:   518 Err:     0 (0.00%) Active: 1 Started: 1 Finished: 0
+summary +      2 in 00:00:01 =    2.7/s Avg:   365 Min:   290 Max:   441 Err:     0 (0.00%) Active: 0 Started: 1 Finished: 1
+summary =      3 in 00:00:01 =    2.2/s Avg:   416 Min:   290 Max:   518 Err:     0 (0.00%)
+Tidying up ...    @ 2024 Sep 22 00:29:01 CST (1726936141086)
+... end of run
+```
+#### 4.增加 nginx 部分，可以通过网络接口来查看报告
 ```bash
 brew install nginx
 ```
 ```nginx
+# 配置NGINX
 # nginx.conf
 #user  nobody;
 worker_processes  1;
@@ -394,6 +418,7 @@ http {
 
 
 ```bash
+# 启动 & 重新加载 nginx 配置
 brew services start nginx
 brew services reload nginx
 ```
