@@ -85,6 +85,7 @@ docker run \
 -v /usr/bin/docker:/usr/bin/docker \
 -v /var/run/docker.sock:/var/run/docker.sock \
 -v /etc/localtime:/etc/localtime:ro \
+-e JAVA_OPTS="-Dhudson.model.DirectoryBrowserSupport.CSP=\"default-src * 'unsafe-inline' 'unsafe-eval'; script-src * 'unsafe-inline' 'unsafe-eval'; connect-src * 'unsafe-inline'; img-src * data: blob: 'unsafe-inline'; frame-src *; style-src * 'unsafe-inline';\"" \
 jenkins/jenkins:2.472-jdk21
 
 ```
