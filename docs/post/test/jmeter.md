@@ -437,29 +437,93 @@ Ctrl + F5
 ```
 
 ## 4. 跨线程调用 cookie
-:::tip BeanShell 与 JSR223
-- 线程1 
+:::info BeanShell 与 JSR223
+- 线程 1 
   - login
     - 添加 JSON 提取器
-      - 变量名称：cookie
-      - JSON PATH expression : $.cookie
+      - 变量名称：`cookie`
+      - JSON PATH expression : `$.cookie`
     - 添加 BeanShell 后置处理程序（将提取到的cookie设置为全局变量）
-      - script：`${__setProperty(cookie, ${cookie},)}`
+      ```bash
+      ${__setProperty(cookie, ${cookie},)}
+      ```
     - 或者添加 JSR223 后置处理程序（将提取到的cookie设置为全局变量）
-      - script：
-        - // 获取提取的 Cookie 值
-        - String cookie = vars.get("cookie");
-        - // 将 Cookie 值存储到 JMeter 属性中
-        - props.put("cookie", cookie);
+      ```bash
+        // 获取提取的 Cookie 值
+        String cookie = vars.get("cookie");
+        // 将 Cookie 值存储到 JMeter 属性中
+        props.put("cookie", cookie);
+      ```
 
-- 线程2 
+- 线程 2 
   - status 
     - HTTP信息头管理器
-      - Content-Type:application/json
+      - Content-Type:`application/json`
       - cookie:`${__P(cookie,)}`
 :::
 
-## 5. 压力测试
+## 5. 缓存登录态
+:::info 登录接口
+- 登录接口下添加 `JSON提取器`
+  - 变量名称：`cookie`
+  - Json Path Expressions: `$.cookie `
+- 登录接口下添加 `JSR223 后置处理程序`
+  ```bash
+  // 获取提取的 Cookie 值
+  String cookie = vars.get("cookie");
+  // 将 Cookie 值存储到 JMeter 属性中
+  props.put("cookie", cookie);
+
+  // 获取当前时间戳
+  long currentTime = System.currentTimeMillis();
+
+  // 将当前时间戳存储为全局属性，表示登录时间
+  props.put("loginTime", String.valueOf(currentTime));
+
+  // 将cookie也存储为全局属性
+  props.put("cookie", vars.get("cookie"));
+
+  // 假设已经通过登录接口成功获取了cookie
+  String newCookie = vars.get("cookie");
+
+  // 获取当前时间戳
+  long newLoginTime = System.currentTimeMillis();
+
+  // 更新全局属性，存储新的cookie和登录时间
+  props.put("cookie", newCookie);
+  props.put("loginTime", String.valueOf(newLoginTime));
+  ```
+- 登录接口下添加 `JSR223 预处理程序`
+  ```bash
+  // 获取当前时间戳
+  long currentTime = System.currentTimeMillis();
+
+  // 从全局属性中获取之前的登录时间
+  String loginTimeStr = props.get("loginTime");
+
+  // 从全局属性中获取cookie
+  String cookie = props.get("cookie");
+
+  // 设定cookie有效时长（例如1分钟 = 60000毫秒）
+  long sessionTimeout = 60000; 
+
+  // 判断是否需要重新登录
+  if (cookie == null || cookie.isEmpty() || loginTimeStr == null || (currentTime - Long.parseLong(loginTimeStr)) > sessionTimeout) {
+      // 登录态过期，设置标志位，表示需要重新登录
+      vars.put("needLogin", "true");
+  } else {
+      // 登录态有效，无需重新登录
+      vars.put("needLogin", "false");
+  }
+  ```
+- If Controller 控制登录请求的执行
+  ```bash
+  ${needLogin} == true
+  ```
+:::
+
+
+## 6. 压力测试
 :::tip 压力测试(Stress Testing)
 - Thread Group1:
   - Number of Threads (users): 1
@@ -496,7 +560,7 @@ Ctrl + F5
 :::
 
 
-## 6. 性能测试
+## 7. 性能测试
 ::: tip 性能测试(Performance Testing)
 - Thread Group1:
   - Number of Threads (users): 1
@@ -567,7 +631,7 @@ Ctrl + F5
 :::
 
 
-## 7. 参数
+## 8. 参数
 ::: warning 关键字段解释 
 - Label: 测试名称或请求标签。
 - #Samples: 请求样本总数。
