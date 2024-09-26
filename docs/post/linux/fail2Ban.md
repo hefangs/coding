@@ -63,7 +63,7 @@ action = %(action_mwl)s
 # 封禁动作，使用iptables进行多端口封禁
 banaction = iptables-multiport  
 # 忽略的IP地址，127.0.0.1/8表示本地回环地址，不对其进行封禁
-ignoreip = 127.0.0.1/8         
+ignoreip = 127.0.0.1/8 223.166.112.116     
 
 [sshd]
 # 启用这个jail（监狱），即对sshd服务进行监控
