@@ -105,8 +105,13 @@ jmeter.save.saveservice.output_format=xml
 # build.xml
 style="${jmeter.home}/extras/jmeter-results-shanhe-me.xsl">
 ```
+
+```bash
+ant
+ant run 
+ant -Dtestfile=test_plan.jmx
 ```
-# 输出
+```
 Buildfile: /Users/he/Documents/local/netApiJmeter/build.xml
      [echo] /Users/he/Documents/local/netApiJmeter/report/jtl/TestReport_202409220004.jtl
      [echo] /Users/he/Documents/local/netApiJmeter/report/html/TestReport_202409220004.html
@@ -144,7 +149,8 @@ Total time: 5 seconds
 ```bash
 # jmeter.properties
 jmeter.save.saveservice.output_format=csv
-
+```
+```bash
 # 用于从现有结果文件生成报告
 jmeter -g HTTP.jtl -o report/dashboard/
 # 运行新的测试并生成报告(每次执行前需要删除 dashboard 文件夹和 HTTP.jtl 文件)
@@ -252,34 +258,33 @@ Ctrl + F5
 :::code-group 
 ```js [BeanShell]
 - 线程 1
-- login
-  - JSON 提取器
-    - 变量名称：cookie
-    - JSON PATH expression : $.cookie
-  - 添加 BeanShell 后置处理程序
-    - ${__setProperty(cookie, ${cookie},)}
+  - login
+    - JSON 提取器
+      - 变量名称：cookie
+      - JSON PATH expression : $.cookie
+    - 添加 BeanShell 后置处理程序
+      - ${__setProperty(cookie, ${cookie},)}
 - 线程 2 
   - status 
-    - HTTP信息头管理器
-      - Content-Type:application/json
-      - cookie:${__P(cookie,)}
+  - HTTP信息头管理器
+    - Content-Type:application/json
+    - cookie:${__P(cookie,)}
 ```
 
 ```js [JSR223]
 - 线程 1
-- login
-  - JSON 提取器
-    - 变量名称：cookie
-    - JSON PATH expression : $.cookie
-  - 添加 JSR223 后置处理程序
-    - String cookie = vars.get("cookie")
-    - props.put("cookie", cookie)
-
+  - login
+    - JSON 提取器
+      - 变量名称：cookie
+      - JSON PATH expression : $.cookie
+    - 添加 JSR223 后置处理程序
+      - String cookie = vars.get("cookie")
+      - props.put("cookie", cookie)
 - 线程 2 
   - status 
-    - HTTP信息头管理器
-      - Content-Type:application/json
-      - cookie:${__P(cookie,)}
+  - HTTP信息头管理器
+    - Content-Type:application/json
+    - cookie:${__P(cookie,)}
 
 ```
 :::
