@@ -126,9 +126,12 @@ logging.basicConfig(
 
 ## 6. 输出报告
 ```py
+pip install html-testRunner
+```
+```py
 import unittest
 from test_case import TestStringMethods
-from HtmlTestRunner import HTMLTestRunner  # type: ignore
+import HtmlTestRunner
 suite = unittest.defaultTestLoader.loadTestsFromTestCase(TestStringMethods)
 
 # runner = unittest.TextTestRunner()
