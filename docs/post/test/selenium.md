@@ -130,7 +130,7 @@ from selenium.webdriver.support import expected_conditions as EC
 from selenium.webdriver.support.ui import WebDriverWait
 
 
-def test_eight_components():
+def test_net():
     driver = setup()
 
     # 使用显式等待，确保页面元素加载完毕且按钮可点击
@@ -226,9 +226,36 @@ def test_eight_components():
     action.drag_and_drop_by_offset(ele, xoffset=adjusted_x, yoffset=0).perform()
     time.sleep(1)
     # 定位到验证成功
-    time.sleep(1)
+    time.sleep(2)
+
+    # 点击我的音乐-排行榜
+    wait.until(EC.element_to_be_clickable((By.LINK_TEXT, "排行榜"))).click()
+    time.sleep(2)
+    # 点击我的音乐-歌单
+    wait.until(EC.element_to_be_clickable((By.LINK_TEXT, "歌单"))).click()
+    time.sleep(2)
+    # 点击我的音乐-主播电台
+    wait.until(EC.element_to_be_clickable((By.LINK_TEXT, "主播电台"))).click()
+    time.sleep(2)
+    # 点击我的音乐-歌手
+    wait.until(EC.element_to_be_clickable((By.LINK_TEXT, "歌手"))).click()
+    time.sleep(2)
+    # 点击我的音乐-新碟上架
+    wait.until(EC.element_to_be_clickable((By.LINK_TEXT, "新碟上架"))).click()
+    time.sleep(2)
+
+    # 点击我的音乐
+    wait.until(EC.element_to_be_clickable((By.LINK_TEXT, "我的音乐"))).click()
+    time.sleep(2)
+    driver.back()
+    time.sleep(2)
+    driver.forward()
+    # 点击关注
+    wait.until(EC.element_to_be_clickable((By.LINK_TEXT, "关注"))).click()
+    time.sleep(2)
 
     teardown(driver)
+
 
 def setup():
     driver = webdriver.Edge()
@@ -236,10 +263,11 @@ def setup():
     driver.maximize_window()
     return driver
 
+
 def teardown(driver):
     driver.quit()
 
-if __name__ == "__main__":
-    test_eight_components()
 
+if __name__ == "__main__":
+    test_net()
 ```
