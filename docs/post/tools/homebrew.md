@@ -5,6 +5,8 @@
 brew -v
 # 查看帮助信息
 brew -h
+# 查看 Homebrew 源仓库 URL
+brew config
 #  更新Homebrew
 brew update
 # 安装软件
