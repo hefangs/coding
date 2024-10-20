@@ -59,11 +59,24 @@
         <fileset dir="${jmeter.home}/lib" includes="serializer*.jar"/>
     </path>
 
-    <target name="test">
+    <!--<target name="test">
         <taskdef name="jmeter" classname="org.programmerplanet.ant.taskdefs.jmeter.JMeterTask" classpathref="jmeter.classpath"/>
         <jmeter jmeterhome="${jmeter.home}" resultlog="${jmeter.result.jtlName}">
-            <!-- 声明要运行的脚本。"*.jmx"指包含此目录下的所有jmeter脚本 -->
+            声明要运行的脚本。"*.jmx"指包含此目录下的所有jmeter脚本 
             <testplans dir="/Users/hefang/Documents/demo/jmtAnt" includes="${testfile}" />
+            声明ant执行jmeter时，传入jmeter的属性值，可以自定义必须是xml格式 
+            <property name="jmeter.save.saveservice.output_format" value="xml"/>
+        </jmeter>
+    </target>-->
+    <target name="test">
+        <taskdef name="jmeter" classname="org.programmerplanet.ant.taskdefs.jmeter.JMeterTask" classpathref="jmeter.classpath"/>
+        <!-- 检查是否有传递testfile参数 -->
+        <condition property="includes.pattern" value="${testfile}" else="*.jmx">
+            <isset property="testfile"/>
+        </condition>
+        <jmeter jmeterhome="${jmeter.home}" resultlog="${jmeter.result.jtlName}">
+            <!-- 动态选择要执行的脚本，根据是否传递testfile参数 -->
+            <testplans dir="/Users/he/Documents/local/netApiJmeter" includes="${includes.pattern}" />
             <!-- 声明ant执行jmeter时，传入jmeter的属性值，可以自定义必须是xml格式 -->
             <property name="jmeter.save.saveservice.output_format" value="xml"/>
         </jmeter>
