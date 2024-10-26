@@ -214,15 +214,3 @@ docker run -d \
   linuxserver/fail2ban:latest
 ```
 
-## docker 安装 mongoDB
-```bash
-docker run -d --restart unless-stopped \
-  -p 27017:27017 \
-  -v /app/mongo/data:/data/db \
-  -v /app/mongo/conf:/data/configdb \
-  -v /app/mongo/log:/var/log/mongodb \
-  -e MONGO_INITDB_ROOT_USERNAME=root \
-  -e MONGO_INITDB_ROOT_PASSWORD=910920 \
-  --name mongodb \
-  mongo:latest
-```
