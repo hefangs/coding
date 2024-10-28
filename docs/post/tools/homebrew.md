@@ -36,4 +36,6 @@ brew outdated
 brew outdated --formula
 # 更新软件版本-清理旧版本或已删除的软件
 brew update && brew upgrade && brew cleanup
+# 卸载所有不再被使用的依赖包
+brew autoremove
 ```
