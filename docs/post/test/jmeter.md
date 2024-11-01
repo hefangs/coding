@@ -191,6 +191,7 @@ Tidying up ...    @ 2024 Sep 22 00:29:01 CST (1726936141086)
 ```bash
 brew install nginx
 ```
+配置 /usr/local/etc/nginx/nginx.conf
 ```nginx
 # 配置NGINX
 # nginx.conf
@@ -198,7 +199,7 @@ brew install nginx
 worker_processes  1;
 
 #error_log  logs/error.log;
-#error_log  logs/error.log  notice;
+#error_log  logs/error.log  notice;···
 #error_log  logs/error.log  info;
 #pid        logs/nginx.pid;
 
@@ -214,11 +215,28 @@ http {
     
     # HTTP 01
     server {
-        listen       8080;
-        server_name  192.168.0.101;
+        listen       10001;
+        server_name  192.168.1.4;
 
         location / {
-            root /Users/hefang/Documents/demo/jmtAnt/report/dashboard;
+        root /Users/he/Documents/local/netApiJmeter/report/html;
+        autoindex on;      # 启用目录列表
+        autoindex_exact_size off;  # 可选：以人类可读的格式显示文件大小
+        autoindex_localtime on;     # 可选：显示文件的本地时间
+    }
+        
+        error_page   500 502 503 504  /50x.html;
+        location = /50x.html { 
+            root   html;
+        }
+    }
+    # HTTP 02
+    server {
+        listen       10002;
+        server_name  192.168.1.4;
+
+        location / {
+            root /Users/he/Documents/local/netApiJmeter/report/dashboard;            
             index index.html;
         }
         error_page   500 502 503 504  /50x.html;
@@ -226,21 +244,23 @@ http {
             root   html;
         }
     } 
-    # HTTP 02
+
+    # HTTP 03
     server {
-        listen       8090;
-        server_name  192.168.0.101;
+        listen       10003;
+        server_name  192.168.1.4;
 
         location / {
-            root /Users/hefang/Documents/demo/jmtAnt/report/html;
-            index TestReport_latest.html;
+            root /Users/he/Documents/local/netApiPost/newman;
+            autoindex on;      # 启用目录列表
+            autoindex_exact_size off;  # 可选：以人类可读的格式显示文件大小
+            autoindex_localtime on;     # 可选：显示文件的本地时间
         }
-        
         error_page   500 502 503 504  /50x.html;
-        location = /50x.html { 
+        location = /50x.html {
             root   html;
         }
-    }
+    } 
 
     include servers/*;
 }
