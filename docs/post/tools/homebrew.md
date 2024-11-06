@@ -38,4 +38,6 @@ brew outdated --formula
 brew update && brew upgrade && brew cleanup
 # 卸载所有不再被使用的依赖包
 brew autoremove
+# 查看依赖是否仍然被其他已安装的 Homebrew 软件包使用
+brew uses --installed <dependency_name>
 ```
