@@ -23,7 +23,7 @@ selenium
 [pytest]
 addopts = -vs --alluredir ./temp --clean-alluredir
 # 然后手动执行
-allure generate ./temp -o ./allure-report --clean
+# allure generate ./temp -o ./allure-report --clean
 # 或者：这会在 /var/folder 临时目录下新建的，每次执行serve都会新建的
 # allure serve ./report
 testpaths = testApi
@@ -38,7 +38,7 @@ log_cli = true
 log_cli_level = info
 log_cli_format = %(asctime)s [%(levelname)s] %(message)s (%(filename)s:%(lineno)s)
 log_cli_date_format = %Y-%m-%d %H:%M:%S
-log_file = ./logs/test.log
+; log_file = ./logs/test.log  # 在conftest.py文件中重新设置
 log_file_level = info
 log_file_format = %(asctime)s [%(levelname)s] %(message)s (%(filename)s:%(lineno)s)
 log_file_date_format = %Y-%m-%d %H:%M:%S
