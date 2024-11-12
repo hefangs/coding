@@ -382,20 +382,20 @@ Tidying up ...    @ 2024 Sep 27 13:55:45 CST (1727416545869)
 :::
 
 ::: info APDEX (Application Performance Index)
-| Apdex | T (Toleration threshold) | F (Frustration threshold) | Label |
-|:---------:|:------:|:--------:|:------:|
-| 0.591   | 500 ms | 1 sec 500 ms | Total |
-| 0.001   | 500 ms | 1 sec 500 ms | 获取用户动态 |
-| 0.064   | 500 ms | 1 sec 500 ms | 获取用户歌单 |
-| 0.137   | 500 ms | 1 sec 500 ms | 获取每日推荐歌曲 |
-| 0.223   | 500 ms | 1 sec 500 ms | 电台 - 分类 |
-| 0.500   | 500 ms | 1 sec 500 ms | 登录 |
-| 0.596   | 500 ms | 1 sec 500 ms | vip 成长值 |
-| 0.956   | 500 ms | 1 sec 500 ms | 获取账号信息 |
-| 0.976   | 500 ms | 1 sec 500 ms | 云贝账户信息 |
-| 0.980   | 500 ms | 1 sec 500 ms | 获取用户历史评论 |
-| 0.988   | 500 ms | 1 sec 500 ms | 通知 - 私信 |
-| 0.994   | 500 ms | 1 sec 500 ms | 获取用户信息 |
+| Apdex | T (Toleration threshold) | F (Frustration threshold) |      Label       |
+| :---: | :----------------------: | :-----------------------: | :--------------: |
+| 0.591 |          500 ms          |       1 sec 500 ms        |      Total       |
+| 0.001 |          500 ms          |       1 sec 500 ms        |   获取用户动态   |
+| 0.064 |          500 ms          |       1 sec 500 ms        |   获取用户歌单   |
+| 0.137 |          500 ms          |       1 sec 500 ms        | 获取每日推荐歌曲 |
+| 0.223 |          500 ms          |       1 sec 500 ms        |   电台 - 分类    |
+| 0.500 |          500 ms          |       1 sec 500 ms        |       登录       |
+| 0.596 |          500 ms          |       1 sec 500 ms        |    vip 成长值    |
+| 0.956 |          500 ms          |       1 sec 500 ms        |   获取账号信息   |
+| 0.976 |          500 ms          |       1 sec 500 ms        |   云贝账户信息   |
+| 0.980 |          500 ms          |       1 sec 500 ms        | 获取用户历史评论 |
+| 0.988 |          500 ms          |       1 sec 500 ms        |   通知 - 私信    |
+| 0.994 |          500 ms          |       1 sec 500 ms        |   获取用户信息   |
 :::
 
 
@@ -404,15 +404,15 @@ Tidying up ...    @ 2024 Sep 27 13:55:45 CST (1727416545869)
 :::
 
 ::: details Errors
-| Type of error                                                                                         | Number of errors | % in errors | % in all samples |
-|:--------------------------------------------------------------------------------------------------|:----------:|:------------:|:---------------:|
-| Non HTTP response code: org.apache.http.ConnectionClosedException/Non HTTP response message: Premature end of Content-Length delimited message body (expected: 20,946; received: 6,681) | 4        | 4.65       | 0.08          |
-| Non HTTP response code: org.apache.http.ConnectionClosedException/Non HTTP response message: Premature end of Content-Length delimited message body (expected: 20,946; received: 969)  | 4        | 4.65       | 0.08          |
-| Non HTTP response code: org.apache.http.ConnectionClosedException/Non HTTP response message: Premature end of Content-Length delimited message body (expected: 231,411; received: 219,323) | 4        | 4.65       | 0.08          |
-| 502/Bad Gateway                                                                                   | 3        | 3.49       | 0.06          |
-| Non HTTP response code: org.apache.http.ConnectionClosedException/Non HTTP response message: Premature end of Content-Length delimited message body (expected: 231,411; received: 215,039) | 3        | 3.49       | 0.06          |
-| Non HTTP response code: org.apache.http.ConnectionClosedException/Non HTTP response message: Premature end of Content-Length delimited message body (expected: 67,747; received: 25,244) | 3        | 3.49       | 0.06          |
-| Non HTTP response code: org.apache.http.ConnectionClosedException/Non HTTP response message: Premature end of Content-Length delimited message body (expected: 231,411; received: 229,319) | 3        | 3.49       | 0.06          |
+| Type of error                                                                                                                                                                              | Number of errors | % in errors | % in all samples |
+| :----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | :--------------: | :---------: | :--------------: |
+| Non HTTP response code: org.apache.http.ConnectionClosedException/Non HTTP response message: Premature end of Content-Length delimited message body (expected: 20,946; received: 6,681)    |        4         |    4.65     |       0.08       |
+| Non HTTP response code: org.apache.http.ConnectionClosedException/Non HTTP response message: Premature end of Content-Length delimited message body (expected: 20,946; received: 969)      |        4         |    4.65     |       0.08       |
+| Non HTTP response code: org.apache.http.ConnectionClosedException/Non HTTP response message: Premature end of Content-Length delimited message body (expected: 231,411; received: 219,323) |        4         |    4.65     |       0.08       |
+| 502/Bad Gateway                                                                                                                                                                            |        3         |    3.49     |       0.06       |
+| Non HTTP response code: org.apache.http.ConnectionClosedException/Non HTTP response message: Premature end of Content-Length delimited message body (expected: 231,411; received: 215,039) |        3         |    3.49     |       0.06       |
+| Non HTTP response code: org.apache.http.ConnectionClosedException/Non HTTP response message: Premature end of Content-Length delimited message body (expected: 67,747; received: 25,244)   |        3         |    3.49     |       0.06       |
+| Non HTTP response code: org.apache.http.ConnectionClosedException/Non HTTP response message: Premature end of Content-Length delimited message body (expected: 231,411; received: 229,319) |        3         |    3.49     |       0.06       |
 :::
 
 :::info 总结
@@ -552,20 +552,20 @@ WARN StatusConsoleListener The use of package scanning to locate plugins is depr
 
 
 ::: info APDEX (Application Performance Index)
-| Apdex | T (Toleration threshold) | F (Frustration threshold) | Label           |
-|:-----:|:------------------------:|:-------------------------:|:---------------:|
-| 0.613 | 500 ms                   | 1 sec 500 ms              | Total           |
-| 0.002 | 500 ms                   | 1 sec 500 ms              | 获取用户动态    |
-| 0.002 | 500 ms                   | 1 sec 500 ms              | 获取每日推荐歌曲 |
-| 0.094 | 500 ms                   | 1 sec 500 ms              | 电台 - 分类     |
-| 0.207 | 500 ms                   | 1 sec 500 ms              | 获取用户歌单    |
-| 0.828 | 500 ms                   | 1 sec 500 ms              | vip 成长值      |
-| 0.980 | 500 ms                   | 1 sec 500 ms              | 云贝账户信息    |
-| 0.990 | 500 ms                   | 1 sec 500 ms              | 获取账号信息    |
-| 0.994 | 500 ms                   | 1 sec 500 ms              | 获取用户历史评论 |
-| 0.995 | 500 ms                   | 1 sec 500 ms              | 通知 - 私信     |
-| 0.996 | 500 ms                   | 1 sec 500 ms              | 获取用户信息    |
-| 1.000 | 500 ms                   | 1 sec 500 ms              | 登录            |
+| Apdex | T (Toleration threshold) | F (Frustration threshold) |      Label       |
+| :---: | :----------------------: | :-----------------------: | :--------------: |
+| 0.613 |          500 ms          |       1 sec 500 ms        |      Total       |
+| 0.002 |          500 ms          |       1 sec 500 ms        |   获取用户动态   |
+| 0.002 |          500 ms          |       1 sec 500 ms        | 获取每日推荐歌曲 |
+| 0.094 |          500 ms          |       1 sec 500 ms        |   电台 - 分类    |
+| 0.207 |          500 ms          |       1 sec 500 ms        |   获取用户歌单   |
+| 0.828 |          500 ms          |       1 sec 500 ms        |    vip 成长值    |
+| 0.980 |          500 ms          |       1 sec 500 ms        |   云贝账户信息   |
+| 0.990 |          500 ms          |       1 sec 500 ms        |   获取账号信息   |
+| 0.994 |          500 ms          |       1 sec 500 ms        | 获取用户历史评论 |
+| 0.995 |          500 ms          |       1 sec 500 ms        |   通知 - 私信    |
+| 0.996 |          500 ms          |       1 sec 500 ms        |   获取用户信息   |
+| 1.000 |          500 ms          |       1 sec 500 ms        |       登录       |
 :::
 
 
@@ -575,14 +575,14 @@ WARN StatusConsoleListener The use of package scanning to locate plugins is depr
 :::
 
 ::: details Errors
-| Type of error                                                                                     | Number of errors | % in errors | % in all samples |
-|--------------------------------------------------------------------------------------------------|------------------|-------------|------------------|
-| 502/Bad Gateway                                                                                   | 4                | 25.00%      | 0.03%            |
+| Type of error                                                                                                                                                                              | Number of errors | % in errors | % in all samples |
+| ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ | ---------------- | ----------- | ---------------- |
+| 502/Bad Gateway                                                                                                                                                                            | 4                | 25.00%      | 0.03%            |
 | Non HTTP response code: org.apache.http.ConnectionClosedException/Non HTTP response message: Premature end of Content-Length delimited message body (expected: 231,411; received: 210,755) | 1                | 6.25%       | 0.01%            |
 | Non HTTP response code: org.apache.http.ConnectionClosedException/Non HTTP response message: Premature end of Content-Length delimited message body (expected: 231,411; received: 220,751) | 1                | 6.25%       | 0.01%            |
-| Non HTTP response code: org.apache.http.ConnectionClosedException/Non HTTP response message: Premature end of Content-Length delimited message body (expected: 67,741; received: 23,815) | 1                | 6.25%       | 0.01%            |
+| Non HTTP response code: org.apache.http.ConnectionClosedException/Non HTTP response message: Premature end of Content-Length delimited message body (expected: 67,741; received: 23,815)   | 1                | 6.25%       | 0.01%            |
 | Non HTTP response code: org.apache.http.ConnectionClosedException/Non HTTP response message: Premature end of Content-Length delimited message body (expected: 231,411; received: 215,039) | 1                | 6.25%       | 0.01%            |
-| Non HTTP response code: org.apache.http.ConnectionClosedException/Non HTTP response message: Premature end of Content-Length delimited message body (expected: 67,754; received: 18,104) | 1                | 6.25%       | 0.01%            |
+| Non HTTP response code: org.apache.http.ConnectionClosedException/Non HTTP response message: Premature end of Content-Length delimited message body (expected: 67,754; received: 18,104)   | 1                | 6.25%       | 0.01%            |
 :::
 
 
