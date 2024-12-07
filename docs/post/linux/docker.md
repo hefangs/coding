@@ -214,3 +214,21 @@ docker run -d \
   linuxserver/fail2ban:latest
 ```
 
+
+
+## docker 安装 nextcloud
+```bash
+docker run -d \
+    --name nextcloud \
+    --restart=unless-stopped \
+    -p 6868:80 \
+    -v /app/nextcloud/nextcloud:/var/www/html \
+    -v /app/nextcloud/apps:/var/www/html/custom_apps \
+    -v /app/nextcloud/config:/var/www/html/config \
+    -v /app/nextcloud/data:/var/www/html/data \
+    -v /app/nextcloud/theme:/var/www/html/themes/ \
+    -e PUID=1000 \
+    -e PGID=1000 \
+    -e TZ=Asia/Shanghai \
+    nextcloud
+```
