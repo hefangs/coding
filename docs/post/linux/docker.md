@@ -230,7 +230,7 @@ docker run -d \
     -e PUID=1000 \
     -e PGID=1000 \
     -e TZ=Asia/Shanghai \
-    nextcloud
+    nextcloud:latest
 ```
 
 
@@ -244,5 +244,5 @@ docker run -d \
   -e PGID=0 \
   -e UMASK=022 \
   --name=alist \
-  xhofe/alist
+  xhofe/alist:latest
 ```
