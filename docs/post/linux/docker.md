@@ -244,5 +244,5 @@ docker run -d \
   -e PGID=0 \
   -e UMASK=022 \
   --name=alist \
-  xhofe/alist
+  xhofe/alist:latest
 ```
