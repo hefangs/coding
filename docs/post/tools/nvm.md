@@ -10,6 +10,8 @@ nvm uninstall 14.17.0
 nvm install --lts
 # 使用特定版本
 nvm use 14.17.0
+# 设置默认版本
+nvm alias default 22.11.0
 # 使用默认版本
 nvm use default
 # 列出所有已安装的 Node.js 版本
