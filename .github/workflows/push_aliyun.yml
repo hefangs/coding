@@ -61,3 +61,4 @@ jobs:
           script: |
             tar -xzf /app/site/html/dist.tar.gz -C /app/site/html
             rm /app/site/html/dist.tar.gz
+            nginx -s reload
