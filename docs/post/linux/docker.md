@@ -246,3 +246,117 @@ docker run -d \
   --name=alist \
   xhofe/alist:latest
 ```
+
+
+## docker 安装 jackett
+```bash
+docker run -d \
+  --name=jackett \
+  -e PUID=1000 \
+  -e PGID=1000 \
+  -e TZ=Etc/UTC \
+  -e AUTO_UPDATE=true `#optional` \
+  -e RUN_OPTS= `#optional` \
+  -p 9117:9117 \
+  -v /app/jackett/data:/config \
+  -v /app/jackett/blackhole:/downloads \
+  --restart unless-stopped \
+  lscr.io/linuxserver/jackett:latest
+```
+
+## docker 安装 radarr
+```bash
+docker run -d \
+  --name=radarr \
+  -e PUID=1000 \
+  -e PGID=1000 \
+  -e TZ=Etc/UTC \
+  -p 7878:7878 \
+  -v /app//radarr/data:/config \
+  -v /app/radarr/movies:/movies `#optional` \
+  -v /app/radarr/download-client-downloads:/downloads `#optional` \
+  --restart unless-stopped \
+  linuxserver/radarr:latest
+```
+  
+
+## docker 安装 qbittorrent
+```bash
+  docker run -d \
+  --name=qbittorrent \
+  -e PUID=1000 \
+  -e PGID=1000 \
+  -e TZ=Etc/UTC \
+  -e WEBUI_PORT=8080 \
+  -e TORRENTING_PORT=6881 \
+  -p 8080:8080 \
+  -p 6881:6881 \
+  -p 6881:6881/udp \
+  -v /app/qbittorrent/appdata:/config \
+  -v /app/qbittorrent/downloads:/downloads `#optional` \
+  --restart unless-stopped \
+  linuxserver/qbittorrent:latest
+``` 
+
+  
+## docker 安装 jellyfin
+```bash
+docker run -d \
+  --name=jellyfin \
+  -e PUID=1000 \
+  -e PGID=1000 \
+  -e TZ=Etc/UTC \
+  -e JELLYFIN_PublishedServerUrl=http://106.15.79.229`#optional` \
+  -p 8096:8096 \
+  -p 8920:8920 `#optional` \
+  -p 7359:7359/udp `#optional` \
+  -p 1900:1900/udp `#optional` \
+  -v /app/jellyfin/library:/config \
+  -v /app/jellyfin/tvseries:/data/tvshows \
+  -v /app/jellyfin/movies:/data/movies \
+  --restart unless-stopped \
+  linuxserver/jellyfin:latest
+```
+  
+## docker 安装 plex
+```bash
+  docker run -d \
+  --name=plex \
+  -e PUID=1000 \
+  -e PGID=1000 \
+  -p 32400:32400 \
+  -e TZ=Etc/UTC \
+  -e VERSION=docker \
+  -e PLEX_CLAIM= `#optional` \
+  -v /app/plex/library:/config \
+  -v /app/plex/tvseries:/tv \
+  -v /app/plex/movies:/movies \
+  --restart unless-stopped \
+  linuxserver/plex:latest
+```
+  
+## docker 安装 heimdall
+```bash
+docker run -d \
+  --name=heimdall \
+  -e PUID=1000 \
+  -e PGID=1000 \
+  -e TZ=Etc/UTC \
+  -p 7575:7575 \
+  -v /app/heimdall/config:/config \
+  --restart unless-stopped \
+  linuxserver/heimdall:latest
+```
+  
+## docker 安装 qinglong
+```bash
+docker run -dit \
+  -v /app/ql/data:/ql/data \
+  -p 5700:5700 \
+  -e QlBaseUrl="/" \
+  -e QlPort="5700" \
+  --name qinglong \
+  --hostname qinglong \
+  --restart unless-stopped \
+  whyour/qinglong:latest
+```
