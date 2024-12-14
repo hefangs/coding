@@ -67,7 +67,7 @@ server {
 # 403 Forbidden 错误表示服务器拒绝了对某些资源的访问。这通常是由于权限问题或配置不正确导致的
 # 设置权限：
 # 使用 chmod 命令递归地设置目录和文件的权限
-chmod -R 755 /app/site
+chmod -R 755 /app/site/html
 ```
 
 ## docker 安装 Jenkins
