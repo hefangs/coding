@@ -61,6 +61,3 @@ jobs:
           script: |
             tar -xzf /app/site/html/dist.tar.gz -C /app/site/html
             rm /app/site/html/dist.tar.gz
-            
-      - name: Restart Nginx container
-        run: docker compose restart site
