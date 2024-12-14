@@ -298,7 +298,6 @@ docker run -d \
   linuxserver/qbittorrent:latest
 ``` 
 
-
 ## docker 安装 jellyfin
 ```bash
 docker run -d \
