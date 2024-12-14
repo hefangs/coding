@@ -316,6 +316,7 @@ docker run -d \
   --restart unless-stopped \
   linuxserver/jellyfin:latest
 ```
+
 ## docker 安装 plex
 ```bash
   docker run -d \
