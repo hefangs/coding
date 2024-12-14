@@ -278,7 +278,7 @@ docker run -d \
   --restart unless-stopped \
   linuxserver/radarr:latest
 ```
-  
+
 
 ## docker 安装 qbittorrent
 ```bash
@@ -298,7 +298,7 @@ docker run -d \
   linuxserver/qbittorrent:latest
 ``` 
 
-  
+
 ## docker 安装 jellyfin
 ```bash
 docker run -d \
@@ -317,7 +317,6 @@ docker run -d \
   --restart unless-stopped \
   linuxserver/jellyfin:latest
 ```
-  
 ## docker 安装 plex
 ```bash
   docker run -d \
@@ -334,7 +333,7 @@ docker run -d \
   --restart unless-stopped \
   linuxserver/plex:latest
 ```
-  
+
 ## docker 安装 heimdall
 ```bash
 docker run -d \
@@ -347,7 +346,7 @@ docker run -d \
   --restart unless-stopped \
   linuxserver/heimdall:latest
 ```
-  
+
 ## docker 安装 qinglong
 ```bash
 docker run -dit \
