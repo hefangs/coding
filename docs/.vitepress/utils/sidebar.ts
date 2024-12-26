@@ -51,7 +51,7 @@ export default function sideBar() {
 				{ text: 'Function', link: '/post/python/function' },
 				// {text:'List_Comprehension',link: '/post/python/list_comprehension'},
 				// {text:'Lambda',link: '/post/python/lambda'},
-				{ text: '高阶函数', link: '/post/python/higher_order_functions' },
+				{ text: 'HigherOrderFunction', link: '/post/python/higher_order_functions' },
 				{ text: 'Module', link: '/post/python/module' },
 				// {text:'Decorator',link: '/post/python/decorator'},
 				{ text: 'Error', link: '/post/python/error' },
