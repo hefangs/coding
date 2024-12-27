@@ -128,6 +128,12 @@ export default function sideBar() {
 			collapsible: true,
 			collapsed: true,
 			items: [{ text: 'Webpack', link: '/post/bundler/webpack' }]
+		},
+		{
+			text: 'Other',
+			collapsible: true,
+			collapsed: true,
+			items: [{ text: 'Sort', link: '/post/sort/sort.md' }]
 		}
 	]
 	return menus
