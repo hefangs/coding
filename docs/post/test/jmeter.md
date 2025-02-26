@@ -13,9 +13,9 @@
     <tstamp>
         <format property="time" pattern="yyyyMMddHHmm" />
     </tstamp>
-    <property name="jmeter.home" value="/Users/hefang/Documents/tools/apache-jmeter-5.6.3" />
-    <property name="jmeter.result.jtl.dir" value="/Users/hefang/Documents/demo/jmtAnt/report/jtl" />
-    <property name="jmeter.result.html.dir" value="/Users/hefang/Documents/demo/jmtAnt/report/html" />
+    <property name="jmeter.home" value="/usr/local/Cellar/jmeter/5.6.3/libexec" />
+    <property name="jmeter.result.jtl.dir" value="/Users/he/Documents/local/netApiJmeter/report/jtl" />
+    <property name="jmeter.result.html.dir" value="/Users/he/Documents/local/netApiJmeter/report/html" />
     
     <target name="clean-reports">
         <!-- 删除整文件  -->
@@ -24,9 +24,9 @@
         <delete dir="${jmeter.result.html.dir}" />
         <mkdir dir="${jmeter.result.html.dir}" /> -->
         <!-- 删除特定的 .jtl 文件 -->
-        <delete file="${jmeter.result.html.dir}/TestReport_latest.html" />
+        <!-- <delete file="${jmeter.result.html.dir}/TestReport_*.html" /> -->
         <!-- 删除特定的 .html 文件 -->
-        <delete file="${jmeter.result.jtl.dir}/TestReport_latest.jtl" />
+        <!-- <delete file="${jmeter.result.jtl.dir}/TestReport_*.jtl" /> -->
     </target>
 
     <target name="run" depends="clean-reports,test,report">
@@ -36,10 +36,10 @@
 
     <!-- 生成的报告的前缀-->
     <property name="ReportName" value="TestReport" />
-    <!-- <property name="jmeter.result.jtlName" value="${jmeter.result.jtl.dir}/${ReportName}${time}.jtl" />
-    <property name="jmeter.result.htmlName" value="${jmeter.result.html.dir}/${ReportName}${time}.html" /> -->
-    <property name="jmeter.result.htmlName" value="${jmeter.result.html.dir}/${ReportName}_latest.html" />
-    <property name="jmeter.result.jtlName" value="${jmeter.result.jtl.dir}/${ReportName}_latest.jtl" />
+    <property name="jmeter.result.jtlName" value="${jmeter.result.jtl.dir}/${ReportName}_${time}.jtl" />
+    <property name="jmeter.result.htmlName" value="${jmeter.result.html.dir}/${ReportName}_${time}.html" />
+    <!-- <property name="jmeter.result.htmlName" value="${jmeter.result.html.dir}/${ReportName}_latest.html" />
+    <property name="jmeter.result.jtlName" value="${jmeter.result.jtl.dir}/${ReportName}_latest.jtl" /> -->
     
     <!-- 输出生成的报告名称和存放路径 -->
     <echo message="${jmeter.result.jtlName}"/>
@@ -59,15 +59,6 @@
         <fileset dir="${jmeter.home}/lib" includes="serializer*.jar"/>
     </path>
 
-    <!--<target name="test">
-        <taskdef name="jmeter" classname="org.programmerplanet.ant.taskdefs.jmeter.JMeterTask" classpathref="jmeter.classpath"/>
-        <jmeter jmeterhome="${jmeter.home}" resultlog="${jmeter.result.jtlName}">
-            声明要运行的脚本。"*.jmx"指包含此目录下的所有jmeter脚本 
-            <testplans dir="/Users/hefang/Documents/demo/jmtAnt" includes="${testfile}" />
-            声明ant执行jmeter时，传入jmeter的属性值，可以自定义必须是xml格式 
-            <property name="jmeter.save.saveservice.output_format" value="xml"/>
-        </jmeter>
-    </target>-->
     <target name="test">
         <taskdef name="jmeter" classname="org.programmerplanet.ant.taskdefs.jmeter.JMeterTask" classpathref="jmeter.classpath"/>
         <!-- 检查是否有传递testfile参数 -->
@@ -94,8 +85,8 @@
             in="${jmeter.result.jtlName}"
             out="${jmeter.result.htmlName}"
             style="${jmeter.home}/extras/jmeter-results-shanhe-me.xsl">
-            <!-- jmeter-results-detail-report_21.xsl这里的文件名可以换成你想要的报告效果 -->
-            <!-- jmeter-results-shanhe-me.xsl这里的文件名可以换成你想要的报告效果 -->
+            <!-- jmeter-results-shanhe-me.xsl 这里的文件名可以换成你想要的报告效果 -->
+            <!-- jmeter-results-detail-report_21.xsl 这里的文件名可以换成你想要的报告效果 -->
             <!-- 显示dateReport的时间 -->
             <param name="dateReport" expression="${report.datestamp}"/>
         </xslt>
@@ -104,6 +95,7 @@
             <fileset dir="${jmeter.home}/extras">
                 <include name="collapse.png" />
                 <include name="expand.png" />
+                <include name="favicon.ico" />
             </fileset>
         </copy>
     </target>
