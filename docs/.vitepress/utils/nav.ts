@@ -23,6 +23,7 @@ export default function nav() {
 				{ text: 'Postman', link: '/post/test/postman' },
 				{ text: 'Selenium', link: '/post/test/selenium' },
 				{ text: 'Unittest', link: '/post/test/unittest' },
+				{ text: 'Locust', link: '/post/test/locust' },
 			]
 		},
 		{

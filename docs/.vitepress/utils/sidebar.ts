@@ -31,7 +31,8 @@ export default function sideBar() {
 				{ text: 'Unittest', link: '/post/test/unittest' },
 				{ text: 'Appium', link: '/post/test/appium' },
 				{ text: 'Postman', link: '/post/test/postman' },
-				{ text: 'Selenium', link: '/post/test/selenium' }
+				{ text: 'Selenium', link: '/post/test/selenium' },
+				{ text: 'Locust', link: '/post/test/locust' },
 			]
 		},
 		{
